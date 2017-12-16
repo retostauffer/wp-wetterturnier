@@ -1,0 +1,802 @@
+
+
+/* Wetterturnier ORANGE:     #ff6600  */
+/* Wetterturnier DARKBLUE:   #0c3772  */
+/* Wetterturnier GREEN:      #0e9311  */
+/* Wetterturnier LIGHTGREEN  #41c343  */
+/* Wetterturnier LIGHTBLUE:  #6592cf  */
+/* Wetterturnier GRAY:       #b3b3b3  */
+/* Wetterturnier VERLY LIGHT BLUEISH: #eef0f2 */
+
+
+li.page_item.wetterturnier-city-active > a {
+    background-color: #6592cf;
+    font-weight: bold;
+}
+
+/* Code environment, used on the frontend to highlight some parts of the text */
+span.wtcode {
+   display: inline-block;
+   font-family: Monaco, 'MonacoRegular', 'Courier New', monospace !important;
+   line-height: 1em;
+   font-size: .9em;
+   height: inherit;
+   background-color: #F0EEE9;
+   border: 1px solid #DEDCD7;
+   border-style: solid;
+   padding: 0px 0.1em;
+   margin: 0;
+}
+
+
+/* Description tag, used on different positions in the plugin */
+desc {
+    color: gray;
+    font-style: italic;
+    font-size: 1em;
+}
+
+/* Header image logo */
+#site-header {
+    position: relative;
+}
+div#wetterleuchte-header-city {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    min-width: 300px;
+    background-repeat: no-repeat;
+    background-position: top right;
+}
+
+div.content-sidebar aside {
+    margin-bottom: 10px;
+}
+
+/* Table title h3, used for ranking overview */
+.wt-table-title {
+   padding: 0px;
+   margin: 0 0 5px 0;
+}
+
+
+
+/* Wb bet form/table styling */
+#wttable-bet, #wttable-bet tr, #wttable-bet tr td, #wttable-bet tr th {
+    border: none;
+}
+#wttable-bet * input {
+    float: left;
+}
+#wttable-bet * td {
+    padding: 2px;
+    margin: 0px;
+    vertical-align: middle; 
+}
+
+#wttable-bet tr td input {
+    width: 100px;
+    text-align: right;
+    border-color: black;
+}
+
+#wetterturnier-bet-form button {
+    margin-left: 165px;
+    margin-top: 5px;
+    width: 280px;
+}
+
+span.orientation {
+   padding-left: 10px;
+   color: #6592cf;
+   cursor: pointer;
+}
+span.orientation:hover {
+   color: #FF6600;
+}
+
+input[type="submit"] {
+   margin-bottom: 20px;
+}
+
+/* Group tables */
+table.wttable-groups td.inactive {
+   color: gray; 
+   display: none; /* default is hidden */
+}
+
+input[type="button"].groups-show-inactive {
+   margin: 5px 10px;
+   padding-top: 2px;
+   padding-bottom: 2px;
+   cursor: pointer;
+}
+
+input[type="submit"].settings-button {
+   margin: 0;
+   padding: 0;
+   cursor: pointer;
+   margin-right: .5em;
+   height: 1.5em;
+   width:  1.5em;
+   background-color: #0e9311;
+}
+input[type="submit"].settings-button:hover {
+   background-color: #41c343;
+}
+
+/* Tables where the bets are displayed, e,g. archive */
+.wttable-show                          { min-width: 500px; table-layout: auto; }
+.wttable-show * td                     { font-size: 1.0em; }
+.wttable-show.small * td               { font-size: 1.0em; padding: 1px 5px; }
+/*.wttable-show * td.username            { font-weight: bold; }*/
+.wttable-show * td.data                { text-align: right; }
+.wttable-show * td.day                 { text-align: center; }
+.wttable-show                          { table-layout: fixed; } 
+/***.wttable-show * tr:hover td            { background-color: #c0d2eb; }***/
+.wttable-show * td.data.changed-status { font-weight: bold;  }
+.wttable-show * tr.highlighted td                 { background-color: #d1e2f9; }
+.wttable-show * tr.highlighted:nth-child(odd) td  { background-color: #d1e2f9; }
+/*{ background-color: #d1e2f9; }*/
+
+/* Default styling */
+.wttable-show * tr:hover td                          { background-color: #d1e2f9; }
+.wttable-show-bets * tr:hover td                     { background-color: #d1e2f9; }
+.wttable-show-ranking * tr:hover td                  { background-color: #d1e2f9; }
+.wetterturnier-obstable * tr:hover td                { background-color: #d1e2f9; }
+
+.wttable-show-bets * tr:nth-child(odd) td            { background-color: #eef0f2; }
+.wttable-show-bets * tr:nth-child(odd):hover td      { background-color: #c0d2eb; }
+.wttable-show-ranking * tr:nth-child(odd)       td   { background-color: #eef0f2; }
+.wttable-show-ranking * tr:nth-child(odd):hover td   { background-color: #c0d2eb; }
+.wetterturnier-obstable * tr:nth-child(odd)       td { background-color: #eef0f2; }
+.wetterturnier-obstable * tr:nth-child(odd):hover td { background-color: #c0d2eb; }
+
+
+
+/* Custom table styles which can be set via profile page: contrast style  */
+.wetterturnier-obstable.contrast * td,
+.wttable-show.contrast * td,
+.wttable-show-bets.contrast * td
+      { background-color: black; color: white; }
+.wetterturnier-obstable.contrast * td a,
+.wttable-show.contrast * td a,
+.wttable-show-bets.contrast * td a
+      { color: white; }
+.wetterturnier-obstable.contrast * tr:nth-child(odd) td,
+.wttable-show.contrast * tr:nth-child(odd) td,
+.wttable-show-bets.contrast * tr:nth-child(odd) td
+      { color: black; }
+.wetterturnier-obstable.contrast * tr:nth-child(odd) td a,
+.wttable-show.contrast * tr:nth-child(odd) td a,
+.wttable-show-bets.contrast * tr:nth-child(odd) td a
+      { color: black; }
+.wetterturnier-obstable.contrast * tr:hover td,
+.wttable-show.contrast * tr:hover td,
+.wttable-show.contrast * tr:hover td a
+      { background-color: #0c3772; }
+.wetterturnier-obstable.contrast * tr:nth-child(odd):hover td,
+.wttable-show.contrast * tr:nth-child(odd):hover td,
+.wttable-show.contrast * tr:nth-child(odd):hover td a
+      { background-color: #b3b3b3; }
+
+.wttable-archive.contrast * td                      { background-color: black; color: white; }
+.wttable-archive.contrast * td a                    { color: white; }
+.wttable-archive.contrast * tr:nth-child(odd) td    { background-color: white; color: black; }
+.wttable-archive.contrast * tr:nth-child(odd) td a  { color: black; }
+
+.wttable-show.contrast * tr.highlighted td                 { background-color: blue;   }
+.wttable-show.contrast * tr.highlighted:nth-child(odd) td  { background-color: yellow; }
+
+
+/* Custom table styles which can be set via profile page: orangeblue style */
+.wetterturnier-obstable.orangeblue * td,
+.wetterturnier-obstable-bets.orangeblue * td,
+.wetterturnier-obstable.orangeblue * td a,
+.wetterturnier-obstable-bets.orangeblue * td a,
+.wttable-show.orangeblue * td,
+.wttable-show-bets.orangeblue * td,
+.wttable-show.orangeblue * td a,
+.wttable-show-bets.orangeblue * td a
+      { color: #0c3772; }
+.wetterturnier-obstable.orangeblue * tr:nth-child(odd) td,
+.wetterturnier-obstable.orangeblue * tr:nth-child(odd) td a,
+.wttable-show.orangeblue * tr:nth-child(odd) td,
+.wttable-show.orangeblue * tr:nth-child(odd) td a
+      { color: #ff6600; }
+
+.wetterturnier-obstable.orangeblue * tr.highlighted td,
+.wttable-show.orangeblue * tr.highlighted td
+      { background-color: #d1e2f9; }
+.wetterturnier-obstable.orangeblue * tr.highlighted:nth-child(odd) td,
+.wttable-show.orangeblue * tr.highlighted:nth-child(odd) td
+      { background-color: #ffd1b3; }
+
+.wttable-archive.orangeblue * td,
+.wttable-archive.orangeblue * td a
+{ color: #0c3772; }
+.wttable-archive.orangeblue * tr:nth-child(odd) td,
+.wttable-archive.orangeblue * tr:nth-child(odd) td a
+{ color: #ff6600; }
+
+/* Overrulilng the tablesorter properties */
+table.tablesorter tbody td {
+   padding: 1px 3px;
+   margin: 0px;
+}
+
+/* labeling player referenz, automaten and mitteltips */
+/* If you change the color of these things please note that
+ * you have to change them below (wt-legend-text cbox) as well. */
+.wttable-show * td.unsubmitted         { color: red; }
+.wttable-show * td.player              { border-left: 5px solid white;   }
+.wttable-show * td.automat             { border-left: 5px solid black;   }
+.wttable-show * td.mitteltip           { border-left: 5px solid #FF6600; }
+.wttable-show * td.referenz            { border-left: 5px solid #3864a0; }
+.wttable-show * td.deadman             { border-left: 5px solid #BDBDBD; }
+.wttable-show * td.deadman span {
+   display: block;
+   float: right;
+   width: 15px;
+   height: 15px;
+   background-position: middle center;
+   background-repeat: no-repeat;
+   background-image: url('deadman.gif');
+}
+
+.wttable-show * th { padding: 0 2px; }
+.wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 45px; }
+.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 40px; }
+.wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 100px; }
+.wttable-show * td.difference                                 { color: gray; }
+
+.wttable-show-bets,                   .wttable-show-obs    { table-layout: auto; }
+.wttable-show-bets th,                .wttable-show-obs th { text-align: center; }
+.wttable-show-bets th.param-day,      .wttable-show-obs th.param-day     { width: 60px; }
+.wttable-show-bets th.param-col,      .wttable-show-obs th.param-col     { width: 60px; }
+.wttable-show-bets th.param-col-N,    .wttable-show-obs th.param-col-N   { width: 40px; }
+.wttable-show-bets th.param-col-Wv,   .wttable-show-obs th.param-col-Wv  { width: 40px; }
+.wttable-show-bets th.param-col-Wn,   .wttable-show-obs th.param-col-Wn  { width: 40px; }
+.wttable-show-bets th.param-col-PPP,  .wttable-show-obs th.param-col-PPP { width: 80px; }
+.wttable-show-bets th.user-name,      .wttable-show-obs  th.user-name    { min-width: 220px; }
+
+.wttable-show span.button.small {
+   padding: 1px 3px;
+   margin: 0px;
+   cursor: pointer;
+}
+
+.wttable-show span.button.small.detail,
+.wttable-show span.button.small.edit   {
+   background-position: center;
+   background-repeat: no-repeat;
+   min-width: 13px;
+   min-height: 15px;
+   background-size: auto 80%;
+   display: block;
+   float: left;
+   margin-right: 5px;
+}
+.wttable-show span.button.small.detail {
+   background-image: url('../images/wetterturnier_detail.svg');
+}
+.wttable-show span.button.small.edit   {
+   background-image: url('../images/wetterturnier_edit.svg');
+   background-color: #0e9311;
+   float: right;
+}
+.wttable-show span.button.small.detail:hover {
+   background-color: red;
+}
+.entry-content table.wttable-show a {
+   text-decoration: none;
+}
+
+/* Hide the "played n/N tournaments" for weekend and city rankings */
+.wttable-show.ranking-weekend .played { display: none; }
+.wttable-show.ranking-cities  .played { display: none; }
+
+@media screen and (max-width: 1200px) {
+   #content .wttable-show-ranking th:nth-child(4),
+   #content .wttable-show-ranking th:nth-child(5),
+   #content .wttable-show-ranking td:nth-child(4),
+   #content .wttable-show-ranking td:nth-child(5) {
+      display: none;
+   }
+}
+@media screen and (max-width: 1350px) {
+   #content .wttable-show-ranking th:nth-child(7),
+   #content .wttable-show-ranking td:nth-child(7) {
+      display: none;
+   }
+}
+@media screen and (max-width: 1600px) {
+   #content .wttable-show-ranking th:nth-child(8),
+   #content .wttable-show-ranking td:nth-child(8) {
+      display: none;
+   }
+}
+
+/* These 'cboxes' are used for the legend color indicator */
+.colorlegend-wrapper  ul {
+   padding: .5em 0 0 0;
+   margin: 0;
+   font-size: 0.8em;
+   padding: 0px;
+   margin: 0px;
+   display: block;
+   width: 100%;
+}
+.colorlegend-wrapper  ul li {
+   list-style: none;
+   padding-bottom: 3px;
+   padding-right: 1em;
+   line-height: 1.5em;
+   display: block;
+   float: left;
+   width: 33%;
+   min-width: 200px;
+   white-space: nowrap;
+}
+.colorlegend-wrapper  ul li span {
+   display: block;
+   float: left;
+   padding-right: 1em;
+}
+.colorlegend-wrapper ul li           input[type="submit"] { border: 1px solid black;   }
+.colorlegend-wrapper ul li.player    input[type="submit"] { background-color: white;   }
+.colorlegend-wrapper ul li.automat   input[type="submit"] { background-color: black;   }
+.colorlegend-wrapper ul li.mitteltip input[type="submit"] { background-color: #FF6600; }
+.colorlegend-wrapper ul li.referenz  input[type="submit"] { background-color: #3864a0; }
+.colorlegend-wrapper ul li.deadman   input[type="submit"] { background-color: #BDBDBD; }
+.colorlegend-wrapper ul li input[type="submit"].inactive {
+   background-image: url("../images/wetterturnier_X.svg");
+   background-size: 100% 100%;   
+   background-position: center;
+   background-color: #eef0f2;
+}
+
+/* An ajax loader I am using some times */
+span.ajax-loader-bar {
+   display: block;
+   width: 220px;
+   height: 19px;
+   background: url('ajax-loader-bar.gif');
+   background-repeat: no-repeat;
+   background-position: top-left;
+   padding: 0px;
+   margin: 0px;
+   border: 0px;
+}
+
+/* a two-column div used on some pages */
+div.wt-twocolumn.wrapper { width: 100%; }
+div.wt-twocolumn.wrapper div table,
+div.wt-twocolumn.wrapper div table tr,
+div.wt-twocolumn.wrapper div table tr td {
+   border: none;
+   padding: 0;
+   margin: 0;
+}
+div.wt-twocolumn.column-left {
+   display: inline;
+   width: 49%;
+   float: left;
+}
+div.wt-twocolumn.column-right {
+   width: 49%;
+   float: right;
+}
+
+/* a three-column div used on some pages */
+div.wt-twocolumn.wrapper {
+   width: 100%;
+   height: auto;
+}
+
+/* Statusbar for singe playes (ranking paes) */
+span.ranking-statusbar {
+   display: block;
+   height: 15px;
+   background-color: #ff6600;
+   font-size: 0.8em;
+   color: white;
+   vertical-align: center;
+   text-align: left;
+}
+span.ranking-statusbar span {
+   background-color: #6592cf;
+   display: block;
+   height: 15px;
+   background-color: #6592cf;
+   vertical-align: center;
+   text-align: right;
+   float: left;
+   color: black;
+}
+/* span to show the points status bar on the archive pages */
+span.archiv-statusbar {
+   display: block;
+   height: 15px;
+   background-color: #6592cf;
+   font-size: 0.8em;
+   color: white;
+}
+span.archiv-statusbar span {
+   display: block;
+   height: 15px;
+   background-color: #6592cf;
+   float: left;
+   color: black;
+}
+span.archiv-statusbar span {
+   display: block;
+   height: 15px;
+   background-color: #0c3772;
+}
+span.archiv-statusbar span.lower {
+   border-right: 1px solid white;
+}
+span.archiv-statusbar span.upper {
+   border-left: 1px solid white;
+}
+
+/* span with hover for parameter help */
+span.param-tooltip {
+    display: block;
+    float: left;
+    width: 16px;
+    height: 16px;
+    padding-bottom: 5px;
+    background-image: url('../images/validate.help.png');
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+/* jQuery.validate styling on wetterturnier bet form */
+label.error, label.valid {
+    /* display: block; */
+    margin: 0px;
+    padding: 0px;
+    padding-left: 20px;
+    height: 20px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding-right: 15px;
+}
+label.error { background: url('../images/validate.invalid.png') no-repeat; }
+label.valid { background: url('../images/validate.valid.png') no-repeat; }
+
+
+div.wetterturnier-info {
+   background-color: #FAFAFA;
+   color: black;
+   display: block;
+   width: 95%;
+   padding: 10px 20px;
+   margin-bottom: 10px;
+   background-color: #eef0f2;
+   /*
+   background-position: top right; 
+   background-repeat: no-repeat;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   */
+   width: -webkit-calc(100% - 48px);
+   width:    -moz-calc(100% - 48px);
+   width:         calc(100% - 48px);
+}
+div.wetterturnier-info.error   { border-left: 8px solid red; }
+div.wetterturnier-info.warning { border-left: 8px solid #FE9A2E; } 
+div.wetterturnier-info.ok      { border-left: 8px solid #41a62a; }
+div.wetterturnier-info.large   { font-size: 1.6em; }
+div.wetterturnier-info.large.ok span.big { font-size: 1.1em; font-weight: bold; color: #41a62a; }
+
+div.wetterturnier-info.warning span.big { font-size: 1.5em; color: #FF6600; }
+
+/* Image rotator widget images are too big for firefox. Scale */
+ul.irw-slider img { width: 100%; }
+
+/* tooltipster custom theme adaption */
+/* This is how you would create a theme called "my-custom-theme": */
+.tooltipster-wt {
+    border-radius: 5px; 
+    border: 2px solid #41a62a;
+    background: #ddd;
+    color: #black;
+    padding: 5px;
+    max-width: 400px;
+}
+/* Use this next selector to style things like font-size and line-height: */
+.tooltipster-wt .tooltipster-content {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 8px 10px;
+}
+
+.changed-status { color: red; }
+
+/* tournament widget styling */
+.widget_wtwidget_tournaments span.submitted-stat-info,
+.widget_wtwidget_tournaments span.submitted-stat-city,
+.widget_wtwidget_tournaments span.submitted-stat-saved,
+.widget_wtwidget_tournaments span.submitted-stat-submitted,
+.widget_wtwidget_tournaments span.submitted-stat-autobet {
+    display: block;
+    float: left;
+}
+.widget_wtwidget_tournaments span.submitted-stat-info      { width: 35%; font-size: 80%; }
+.widget_wtwidget_tournaments span.submitted-stat-city      { width: 30%; font-weight: bold; }
+.widget_wtwidget_tournaments span.submitted-stat-saved     { width: 10%; text-align: right; }
+.widget_wtwidget_tournaments span.submitted-stat-submitted { width: 10%; text-align: right; }
+.widget_wtwidget_tournaments span.submitted-stat-autobet   { width: 10%; text-align: right; }
+
+/* Styling the mini form where user can enter password to get htaccess */
+#wthtaccess {
+   width: 100%;
+   text-align: center;
+}
+
+/* Styling user--search boxes and stuff */
+div.wetterturnier-user-search input {
+   width: 250px;
+   background-image: url('search-icon.png');
+   background-position: right center;
+   background-repeat: no-repeat;
+}
+div.wetterturnier-user-search ul {
+   display: none;
+   position: absolute;
+   border: 1px solid black;
+   width: 248px;
+   background-color: white;
+   padding: 0px;
+   margin: 0px;
+   list-style: none;
+   z-index: 100;
+}
+div.wetterturnier-user-search ul li {
+   cursor: pointer;
+   padding: 0px 3px;
+}
+div.wetterturnier-user-search ul li:hover {
+   background-color: #6592cf;
+}
+
+
+/* In-table edit links for rows */
+td span.wetterturnier-edit-row {
+   width: 12px;
+   min-height:  12px;
+   display: block;
+   float: right;
+   background-image:url('edit-icon-12.png');
+   background-position: 0px 0px;
+   background-repeat: no-repeat;
+   cursor: pointer;
+}
+td span.wetterturnier-edit-row:hover {
+   background-position: -12px 0px;
+}
+
+/* observation table styling */
+table.wetterturnier-obstable {
+   font-size: .5em;
+}
+table.wetterturnier-obstable tr:hover {
+   background-color: #6592cf;
+}
+table.wetterturnier-obstable td {
+   text-align: right;
+}
+
+/* unit tag styling used on the tables where
+   the user can see the bets/observations    */ 
+unit {
+   color: gray;
+   font-size: 0.8em;
+   font-style: italic;
+}
+
+
+/* form description fields and elements */
+formdesc {
+   display: block;
+   float: left;
+   width: 200px;
+   font-weight: bold;
+}
+
+formfield input, formfield select {
+   min-width: 100px;
+   padding: 8px 10px 7px;
+}
+formfield input[type='button'] {
+   margin-top: 5px;
+}
+
+div.wt-leading,
+table.wt-leading,
+table.wt-leading tr,
+table.wt-leading td
+{ border: none; margin: 0px; padding: 0px; }
+
+div.wt-leading-avatar {
+   margin: 0px;
+   padding: 0px;
+   margin: 0px;
+   float: left;
+}
+div.wt-leading-avatar-default img {
+   width: 90%;
+   margin: 5%;
+   border: 1px solid #0c3772;
+}
+
+table.wt-leading,
+table.wt-leading td,
+table.wt-leading tr {
+   margin: 0px;
+   padding: 0px;
+   border: none;
+   line-height: 0.8em;
+}
+table.wt-leading {
+   width: 100%;
+}
+
+
+
+/* There are some forms where the user can test the judgingclass
+ * in the background (calling a Python script). This is the styling
+ * for the frontend forms */
+form.judging_form input.judging_form_1th,
+form.judging_form input.judging_form_2nd {
+   width: 120px;
+   margin-right: 10px;
+   margin-bottom: 5px;
+}
+form.judging_form input.judging_form_solo {
+   max-width: 250px;
+   width: 250px;
+   margin-bottom: 5px;
+}
+form.judging_form formdesc {
+   padding-top: 3px;
+}
+form.judging_form input.judging_form_1th {
+   float: left;
+}
+
+
+
+/* Question and answer plugin styling. Can be deleted if not
+ * needed anymore. Used this for development purposes. */
+div.cma-content {
+   margin-left: 300px;
+}
+
+
+/* There are some tables showing player details including
+ * bets, points, observations, and so far and so on. This
+ * section is used to format the output there */
+#betdetails table {
+   width: 500px;
+}
+#betdetails table thead th {
+   padding: 3px 5px;
+   font-weight: bold;
+}
+#betdetails table tbody tr td {
+   padding: 0px 5px;
+}
+#betdetails table tr:hover {
+   background-color: #c0d2eb;
+}
+#betdetails table tbody td {
+   text-align: right;
+}
+#betdetails table tbody td:nth-child(1) {
+   text-align: left;
+   font-weight: bold;
+}
+
+
+/* -------------------------------------------------------------- */
+/* User Profile */
+
+/* Ranking icons for the rank history */
+span.rankhistory {
+   display: block;
+   float: left;
+   width: 30px;
+   height: 15px;
+   padding-right: 18px;
+   margin-right: 5px;
+   font-weight: bold;
+   text-align: right;
+   background-size: 15px 15px;
+   background-position: right;
+   background-repeat: no-repeat;
+}
+
+span.rankhistory.first  { background-image: url('../images/trophy_first.svg'); }
+span.rankhistory.second { background-image: url('../images/trophy_second.svg'); }
+span.rankhistory.third  { background-image: url('../images/trophy_third.svg'); }
+
+
+
+/* -------------------------------------------------------------- 
+ * Footer styling
+ * -------------------------------------------------------------- */
+#footer-sidebar  {
+   margin-left: 252px;
+   text-align: left;
+}
+#footer-sidebar .widget .widget-title {
+   color: gray;
+   font-size: 1em; 
+   font-weight: 900;
+   margin: 0 0 18px;
+   padding-top: 7px;
+   text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------
+ * Styling the leader board
+ * ------------------------------------------------------------------ */
+div.wt-leaderboard {
+   position: relative;
+   margin-bottom: 20px;
+}
+div.wt-leaderboard.wide {
+   position: relative;
+   width: 32%;
+   float: left;
+   margin-right: 2.0%;
+}
+div.wt-leaderboard.wide:nth-child(3) {
+   margin-right: 0;
+}
+div.wt-leaderboard .wt-leaderboard-avatar {
+   display: block;
+   position: absolute;
+   left: 5px; top: 0;
+}
+div.wt-leaderboard .wt-leaderboard-info {
+   display: block;
+   top: 0px; left: 0px;
+   padding-left: 105px;
+   width: 100%;
+   width: -moz-calc(100% - 105px);
+   width: -webkit-calc(100% - 105px);
+   width: -o-calc(100% - 105px);
+   width: calc(100% - 105px);
+}
+div.wt-leaderboard .wt-leaderboard-info info {
+   font-weight: bold;
+}
+div.wt-leaderboard div .color  { color: black; } ///#0c3772; }
+div.wt-leaderboard div .small  { font-size: 1em; }
+div.wt-leaderboard div .medium { color: black; }
+div.wt-leaderboard div .big    { font-size: 1.5em; }
+div.wt-leaderboard .wt-leaderboard-info bar {
+   display: block;
+   padding: none;
+   width: 100%;
+   height: 3px;
+   background-color: #6592cf;
+   margin: 2px 0;
+}
+
+@media screen and (max-width: 1500px) {
+   div.wt-leaderboard.wide {
+      width: 100%;
+      float: none;
+   }
+}
+

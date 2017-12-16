@@ -1,0 +1,22 @@
+
+
+#wtwidget-judgement-form fd {
+    display: block;
+    width: 60%;
+    padding-top: 3px;
+    float: left;
+}
+#wtwidget-judgement-form select {
+    margin: 2px 0px;
+    width: 95%;
+}
+#wtwidget-judgement-form input[type=text] {
+    margin: 2px 0px;
+    width: 35%;
+    text-align: right;
+}
+#wtwidget-judgement-form button {
+    display: block;
+    width: 35%;
+    height: 30px;
+}

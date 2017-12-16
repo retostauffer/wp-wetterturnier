@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meteogramdata>
+
+   <!-- GFS ensemble meteogramdata: produced by GENSvis/GENSvis.py: -->
+   <gens>
+      <name>GENS</name>
+      <lastrunfile>GENS.lastrun</lastrunfile>
+      <init>00</init>
+      <init>06</init>
+      <init>12</init>
+      <init>18</init>
+
+      <meteogramdata>
+         <file>GENS_HH_berlin-tegel.dat</file>
+         <name>Berlin Tegel</name>
+      </meteogramdata>
+      <meteogramdata>
+         <file>GENS_HH_innsbruck-flughafen.dat</file>
+         <name>Innsbruck</name>
+      </meteogramdata>
+      <meteogramdata>
+         <file>GENS_HH_leipzig.dat</file>
+         <name>Leipzig</name>
+      </meteogramdata>
+      <meteogramdata>
+         <file>GENS_HH_wien-hohe-warte.dat</file>
+         <name>Wien Hohe Warte</name>
+      </meteogramdata>
+      <meteogramdata>
+         <file>GENS_HH_zurich-kloten.dat</file>
+         <name>Z&#252;rich Kloten</name>
+      </meteogramdata>
+   </gens>
+
+   <!-- GFS deterministic meteogramdata: produced by GENSvis/GFSvis.py -->
+   <gfs>
+      <name>GFS</name>
+      <lastrunfile>GFS.lastrun</lastrunfile>
+      <init>00</init>
+      <init>06</init>
+      <init>12</init>
+      <init>18</init>
+
+      <meteogramdata>
+         <file>GFS_HH_berlin-tegel.dat</file>
+         <name>Berlin Tegel</name>
+      </meteogramdata>
+      <meteogramdata>
+         <file>GFS_HH_innsbruck-flughafen.dat</file>
+         <name>Innsbruck</name>
+      </meteogramdata>
+      <meteogramdata>
+         <file>GFS_HH_leipzig.dat</file>
+         <name>Leipzig</name>
+      </meteogramdata>
+      <meteogramdata>
+         <file>GFS_HH_wien-hohe-warte.dat</file>
+         <name>Wien Hohe Warte</name>
+      </meteogramdata>
+      <meteogramdata>
+         <file>GFS_HH_zurich-kloten.dat</file>
+         <name>Z&#252;rich Kloten</name>
+      </meteogramdata>
+   </gfs>
+
+</meteogramdata>

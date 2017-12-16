@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysis>
+
+   <!-- ICON model analysis -->
+   <icon>
+      <name>ICON</name>
+
+      <atlantic>
+         <name>Atlantik</name>
+
+         <gt200>
+            <name>Geopotential 200hPa</name>
+            <interval>12</interval>
+         </gt200>
+         <gt300>
+            <name>Geopotential 300hPa</name>
+            <interval>12</interval>
+         </gt300>
+         <gt400>
+            <name>Geopotential 400hPa</name>
+            <interval>12</interval>
+         </gt400>
+         <gt500>
+            <name>Geopotential 500hPa</name>
+            <interval>12</interval>
+         </gt500>
+         <gt700>
+            <name>Geopotential 700hPa</name>
+            <interval>12</interval>
+         </gt700>
+         <gt850>
+            <name>Geopotential 850hPa</name>
+            <interval>12</interval>
+         </gt850>
+
+         <pmsl>
+            <name>Luftdruck + Stationsbeobachtungen</name>
+            <interval>12</interval>
+         </pmsl>
+
+      </atlantic>
+
+      <hemisphere>
+         <name>Nordhemisph&#228;re</name>
+
+         <pmsl>
+            <name>Luftdruck + Stationsbeobachtungen</name>
+            <interval>12</interval>
+         </pmsl>
+
+      </hemisphere>
+
+   </icon>
+
+   <!-- dwd surface analysis maps -->
+   <dwd>
+      <name>DWD</name>
+
+      <atlantic>
+         <name>Atlantik</name>
+
+         <fronts>
+            <name>Frontenanalyse</name>
+            <interval>12</interval>
+         </fronts>
+
+      </atlantic>
+
+      <europe>
+         <name>Europa</name>
+
+         <fronts>
+            <name>Frontenanalyse</name>
+            <interval>6</interval>
+         </fronts>
+
+      </europe>
+
+   </dwd>
+
+   <!-- uk metoffice surface analysis maps -->
+   <metoffice>
+      <name>UK Metoffice</name>
+
+      <atlantic>
+         <name>Atlantik</name>
+
+         <fronts>
+            <name>Frontenanalyse</name>
+            <interval>6</interval>
+         </fronts>
+
+      </atlantic>
+
+   </metoffice>
+
+</analysis>

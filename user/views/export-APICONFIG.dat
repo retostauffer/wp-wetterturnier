@@ -1,0 +1,9 @@
+# ------------------------------------------------------------
+# Header lines with leading # will be ignored.
+# Please note: in the data "@" is used as delimiter as we need
+# to be able to specify ";" as a data delimiter.
+# For 'parameter': if you set it to 'all' all columns will be returned.
+# ------------------------------------------------------------
+# hash             @ statnr  @ action  @ NAvalue @ delimiter@ parameter
+  MkpP6SIzYq       @ 11130    @ obslive @  -9999  @ ;        @ datumsec,T,Td 
+  ACINN            @ 11320    @ obslive @  -9999  @ ;        @ datumsec,sun,dd,ff,ffx,ffx1,psta,pmsl,tmin12,tmax12,t,td,rrr1,rrr12,rr24

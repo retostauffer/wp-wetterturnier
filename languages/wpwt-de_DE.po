@@ -1,0 +1,1716 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wpwt\n"
+"POT-Creation-Date: 2017-08-27 19:49+0200\n"
+"PO-Revision-Date: 2017-08-27 19:49+0200\n"
+"Last-Translator: Reto Stauffer <reto.stauffer@uibk.ac.at>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: user\n"
+"X-Poedit-SearchPath-2: user/autosubmit\n"
+"X-Poedit-SearchPath-3: user/templates\n"
+"X-Poedit-SearchPath-4: user/views\n"
+"X-Poedit-SearchPath-5: user/widgets\n"
+"X-Poedit-SearchPath-6: admin\n"
+"X-Poedit-SearchPath-7: admin/templates\n"
+"X-Poedit-SearchPath-8: admin/views\n"
+"X-Poedit-SearchPath-9: admin/templates\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/adminclass.php:208
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: admin/adminclass.php:210
+msgid "Scheduler"
+msgstr "Terminplaner"
+
+#: admin/adminclass.php:212
+msgid "Deactivate Users"
+msgstr "Benutzer deaktivieren"
+
+#: admin/adminclass.php:214
+msgid "Groups"
+msgstr "Gruppen"
+
+#: admin/adminclass.php:216
+msgid "Group Members"
+msgstr "Gruppenmitglieder"
+
+#: admin/adminclass.php:218
+msgid "Group Application"
+msgstr "Gruppenanfragen"
+
+#: admin/adminclass.php:220
+msgid "Cities"
+msgstr "Städte"
+
+#: admin/adminclass.php:222
+msgid "Stations"
+msgstr "Stationen"
+
+#: admin/adminclass.php:224 admin/classes/cities_list.php:61 betclass.php:1055
+#: betclass.php:1136 user/userclass.php:1702
+msgid "Parameter"
+msgstr "Parameter"
+
+#: admin/adminclass.php:226
+msgid "Webcams"
+msgstr "Webcams"
+
+#: admin/adminclass.php:228
+msgid "Bets"
+msgstr "Tipps"
+
+#: admin/adminclass.php:230
+msgid "Observations"
+msgstr "Beobachtungen"
+
+#: admin/adminclass.php:234
+msgid "Rerun Reqeuests"
+msgstr "Rerun Anfragen"
+
+#: admin/adminclass.php:234
+msgid "Rerun Requests"
+msgstr "Rerun Anfrage"
+
+#: admin/adminclass.php:331
+msgid "Nothing selected"
+msgstr "Nichts ausgewählt"
+
+#: admin/classes/api_list.php:67
+msgid "Public"
+msgstr "Öffentlich"
+
+#: admin/classes/api_list.php:68
+msgid "API Key"
+msgstr "API Schlüssel"
+
+#: admin/classes/api_list.php:69
+msgid "Type"
+msgstr "Typ"
+
+#: admin/classes/api_list.php:70
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: admin/classes/api_list.php:71 admin/classes/cities_list.php:60
+#: admin/classes/param_list.php:35 admin/classes/stations_list.php:59
+msgid "Name"
+msgstr "Name"
+
+#: admin/classes/api_list.php:72 admin/classes/webcams_list.php:49
+#: classes.php:356 user/userclass.php:745
+msgid "Description"
+msgstr "Beschreibung"
+
+#: admin/classes/api_list.php:73
+msgid "Since"
+msgstr "Seit"
+
+#: admin/classes/api_list.php:74
+msgid "Until"
+msgstr "Bis"
+
+#: admin/classes/application_list.php:54
+msgid "What"
+msgstr "Was"
+
+#: admin/classes/application_list.php:55 admin/classes/groupusers_list.php:72
+msgid "User Name"
+msgstr "Benutzername"
+
+#: admin/classes/application_list.php:56 admin/classes/groups_list.php:47
+#: admin/classes/groupusers_list.php:73
+msgid "Group Name"
+msgstr "Gruppe erstellt"
+
+#: admin/classes/application_list.php:57
+msgid "Application"
+msgstr "Anfrage"
+
+#: admin/classes/application_list.php:162
+msgid "Applied"
+msgstr "Anfefragt"
+
+#: admin/classes/bets_list.php:50 admin/classes/groupusers_list.php:70
+msgid "userID"
+msgstr "BenutzerID"
+
+#: admin/classes/bets_list.php:51 user/userclass.php:1218
+#: user/userclass.php:1933
+msgid "User"
+msgstr "Benutzername"
+
+#: admin/classes/bets_list.php:52
+msgid "Missing Bets"
+msgstr "Fehlende Tipps"
+
+#: admin/classes/bets_list.php:53
+msgid "Submitted"
+msgstr "Abgeschickt"
+
+#: admin/classes/cities_list.php:57 admin/classes/groups_list.php:46
+#: admin/classes/groupusers_list.php:69 admin/classes/param_list.php:34
+#: admin/classes/rerunrequest_list.php:44 admin/classes/stations_list.php:57
+#: admin/classes/webcams_list.php:46
+msgid "ID"
+msgstr "ID"
+
+#: admin/classes/cities_list.php:58 admin/templates/cities_edit.php:36
+msgid "Sort"
+msgstr "Sortierung"
+
+#: admin/classes/cities_list.php:59
+msgid "City Hash"
+msgstr "Stadt Hash"
+
+#: admin/classes/cities_list.php:62
+msgid "Active Stations"
+msgstr "Aktive Stationen"
+
+#: admin/classes/cities_list.php:63
+msgid "City Status"
+msgstr "Städte-Status"
+
+#: admin/classes/cities_list.php:158 admin/classes/groups_list.php:149
+msgid "Inactive since"
+msgstr "Aktiv seit"
+
+#: admin/classes/cities_list.php:160
+msgid "City created"
+msgstr "Stadt erstellt"
+
+#: admin/classes/deactivateusers_list.php:71
+msgid "UserID"
+msgstr "UserID"
+
+#: admin/classes/deactivateusers_list.php:72 user/views/register.php:5
+#: user/views/userprofile.php:97
+msgid "Username"
+msgstr "Teilnehmer"
+
+#: admin/classes/deactivateusers_list.php:73
+msgid "User e-Mail"
+msgstr "User e-Mail"
+
+#: admin/classes/deactivateusers_list.php:74
+msgid "Participated"
+msgstr "Teilnahmen"
+
+#: admin/classes/deactivateusers_list.php:75
+msgid "Last Played"
+msgstr "Zuletzt getippt"
+
+#: admin/classes/deactivateusers_list.php:76
+msgid "N Days Ago"
+msgstr "Vor N Tagen"
+
+#: admin/classes/deactivateusers_list.php:77
+msgid "Inactive"
+msgstr "Inaktiv"
+
+#: admin/classes/groups_list.php:48
+msgid "Members"
+msgstr "Mitglieder"
+
+#: admin/classes/groups_list.php:49 admin/templates/groups_edit.php:38
+msgid "Group Description"
+msgstr "Beschreibung"
+
+#: admin/classes/groups_list.php:50
+msgid "Group Status"
+msgstr "Gruppenstatus"
+
+#: admin/classes/groups_list.php:151
+msgid "Group created"
+msgstr "Gruppe erstellt"
+
+#: admin/classes/groupusers_list.php:71
+msgid "groupID"
+msgstr "GruppenID"
+
+#: admin/classes/groupusers_list.php:74 user/userclass.php:1130
+#: user/views/ranking.php:338
+msgid "Status"
+msgstr "Status"
+
+#: admin/classes/groupusers_list.php:218
+msgid "Member since"
+msgstr "Mitglied seit"
+
+#: admin/classes/obs_list.php:52
+msgid "Station ID"
+msgstr "Stations ID"
+
+#: admin/classes/obs_list.php:53 admin/classes/webcams_list.php:47
+msgid "City"
+msgstr "Stadt"
+
+#: admin/classes/obs_list.php:54
+msgid "Station Name"
+msgstr "Stationsname"
+
+#: admin/classes/param_list.php:36
+msgid "English (default)"
+msgstr "Englisch (default)"
+
+#: admin/classes/param_list.php:37
+msgid "German"
+msgstr "Deutsch"
+
+#: admin/classes/param_list.php:38
+msgid "Format"
+msgstr "Format"
+
+#: admin/classes/param_list.php:39
+msgid "Maxlen"
+msgstr "MaxLänge"
+
+#: admin/classes/param_list.php:40
+msgid "Range"
+msgstr "Wertebereich"
+
+#: admin/classes/param_list.php:41
+msgid "Decimals"
+msgstr "Dezimalstellen"
+
+#: admin/classes/param_list.php:42
+msgid "Unit"
+msgstr "Einheit"
+
+#: admin/classes/rerunrequest_list.php:45
+msgid "Tournament Date"
+msgstr "Turnierdatum"
+
+#: admin/classes/rerunrequest_list.php:46
+msgid "City ID"
+msgstr "City ID"
+
+#: admin/classes/rerunrequest_list.php:47
+msgid "By"
+msgstr "Durch"
+
+#: admin/classes/rerunrequest_list.php:48
+msgid "Requested"
+msgstr "Angefordert"
+
+#: admin/classes/rerunrequest_list.php:49
+msgid "Done"
+msgstr "Erledigt"
+
+#: admin/classes/stations_list.php:58
+msgid "WMO"
+msgstr "WMO"
+
+#: admin/classes/stations_list.php:61
+msgid "Linked to City"
+msgstr "Verknüpft mit Stadt"
+
+#: admin/classes/stations_list.php:62
+msgid "Added"
+msgstr "Hinzugefügt"
+
+#: admin/classes/webcams_list.php:48
+msgid "Source"
+msgstr "Quelle"
+
+#: admin/classes/webcams_list.php:50
+msgid "Webcam Status"
+msgstr "Webcam Status"
+
+#: admin/templates/api_list.php:74 admin/templates/cities_list.php:52
+msgid "Successfully changed the city entry"
+msgstr "Städte-Eintrag erfolgreich editiert."
+
+#: admin/templates/application_list.php:31 admin/templates/groups_list.php:60
+#: admin/templates/groupusers_list.php:99
+msgid "Successfully changed the group entry"
+msgstr "Gruppeneintrag erfolgreich editiert."
+
+#: admin/templates/bets_list.php:161
+msgid ""
+"You tried to edit a bet, but either the city ID or the user ID is missing. "
+"Seems that there is either a problem with the code, or you tried to "
+"manipulate the URL. Dont do the latter one please. If it is a problem with "
+"the code, please inform your administrator."
+msgstr ""
+"Du hast versucht, einen Tipp zu editieren. Allerdings fehlt entweder die "
+"user ID oder die Städte ID. Entweder ist das ein problem des Codes, oder "
+"aber du versuchtst manuell die URL zu editieren. Bitte nicht machen. Sollte "
+"es ein problem mit dem Code sein, so informiere bitte deinen Administrator."
+
+#: admin/templates/bets_list.php:170
+msgid ""
+"You tried to edit a bet, but either the city ID or the user ID contain non-"
+"integer value. Seems that there is a problem or you tried to manipulate the "
+"URL. Dont do the latter one please. If it is a problem with the code, please "
+"inform your administrator."
+msgstr ""
+"Du hast versucht, einen Tipp zu editieren. Allerdings beinhaltet entweder "
+"die User ID oder die Städte ID einen nicht-Integer Wert. Entweder ist das "
+"ein problem des Codes, oder aber du versuchtst manuell die URL zu editieren. "
+"Bitte nicht machen. Sollte es ein problem mit dem Code sein, so informiere "
+"bitte deinen Administrator."
+
+#: admin/templates/bets_list.php:208 admin/templates/obs_list.php:252
+msgid "Back to bet list"
+msgstr "Zurück zur Tipp-Übersicht"
+
+#: admin/templates/bets_list.php:220
+msgid "Successfully changed the bet entry"
+msgstr "Der Tipp wurde erfolgreich editiert."
+
+#: admin/templates/cities_edit.php:30
+msgid "City name"
+msgstr "Stadtname"
+
+#: admin/templates/cities_edit.php:33
+msgid "City hash"
+msgstr "Stadt-Hash"
+
+#: admin/templates/cities_edit.php:63 admin/templates/groups_edit.php:41
+msgid "Active flag"
+msgstr "Ist aktiv"
+
+#: admin/templates/cities_edit.php:68
+msgid "Parameter for city"
+msgstr "Parameter"
+
+#: admin/templates/groups_edit.php:30
+msgid "Editing inactive groups is not allowed! Are you doing nasty things?"
+msgstr ""
+"Das editieren von inaktiven Gruppen ist nicht erlaubt. Was probierst du da?"
+
+#: admin/templates/groups_edit.php:35
+msgid "Group name"
+msgstr "Gruppe inaktiv"
+
+#: admin/templates/obs_list.php:143
+msgid ""
+"You tried to edit a observation, but either the city ID or the station ID is "
+"missing. Seems that there is either a problem with the code, or you tried to "
+"manipulate the URL. Dont do the latter one please. If it is a problem with "
+"the code, please inform your administrator."
+msgstr ""
+"Du hast versucht, einen Tipp zu editieren. Allerdings fehlt entweder die "
+"Stations ID oder die Städte ID. Entweder ist das ein problem des Codes, oder "
+"aber du versuchtst manuell die URL zu editieren. Bitte nicht machen. Sollte "
+"es ein problem mit dem Code sein, so informiere bitte deinen Administrator."
+
+#: admin/templates/obs_list.php:152
+msgid ""
+"You tried to edit a station, but either the city ID or the station ID "
+"contain non-integer value. Seems that there is a problem or you tried to "
+"manipulate the URL. Dont do the latter one please. If it is a problem with "
+"the code, please inform your administrator."
+msgstr ""
+"Du hast versucht, einen Tipp zu editieren. Allerdings beinhaltet entweder "
+"die Stations ID oder die Städte ID nich-integer Werte. Entweder ist das ein "
+"problem des Codes, oder aber du versuchtst manuell die URL zu editieren. "
+"Bitte nicht machen. Sollte es ein problem mit dem Code sein, so informiere "
+"bitte deinen Administrator."
+
+#: admin/templates/obs_list.php:264
+msgid "Successfully changed the observation entry"
+msgstr "Beobachtungen erfolgreich editiert."
+
+#: admin/templates/param_edit.php:29
+msgid "Param name [fix]"
+msgstr "Parameter name [fix]"
+
+#: admin/templates/param_edit.php:44
+msgid "Validation format"
+msgstr "Validierungs-Format"
+
+#: admin/templates/param_edit.php:51 admin/templates/param_edit.php:63
+msgid "Validation length"
+msgstr "Validierungs-Länge"
+
+#: admin/templates/param_edit.php:54
+msgid "Minimum value"
+msgstr "Minimaler Wert"
+
+#: admin/templates/param_edit.php:57
+msgid "Maximum value"
+msgstr "Maximaler Wert"
+
+#: admin/templates/param_edit.php:60
+msgid "Nr. of decimals"
+msgstr "Anz. Dezimalstellen"
+
+#: admin/templates/param_list.php:100
+msgid "Successfully changed parameter entry"
+msgstr "Parameter-Eintrag erfolgreich editiert."
+
+#: admin/templates/stations_edit.php:40 admin/templates/stations_edit.php:61
+msgid "Parameter NOT observed"
+msgstr "Parameter NICHT beobachtet"
+
+#: admin/templates/stations_edit.php:51
+msgid "Station name"
+msgstr "Stationsname"
+
+#: admin/templates/stations_edit.php:54
+msgid "Station WMO number"
+msgstr "WMO-Stationsnummer"
+
+#: admin/templates/stations_edit.php:57
+msgid "Currently connected to"
+msgstr "Im Moment verbunden mit"
+
+#: admin/templates/stations_edit.php:58
+msgid "Not attached to a city"
+msgstr "Keiner Stadt zugeordnet"
+
+#: admin/views/api.php:107 admin/views/cities.php:115
+msgid "City hash is allready in use. Drop changes."
+msgstr "City-Hash ist leider bereits in Verwendung. Änderungen verworfen."
+
+#: admin/views/api.php:151 admin/views/cities.php:159
+msgid "City with this name or hash is allready existing! Cannot add again!"
+msgstr ""
+"Eine Stadt mit diesem Namen oder diesem Hash existiert bereits. Nochmaliges "
+"hinzufügen nicht erlaubt."
+
+#: admin/views/api.php:158 admin/views/cities.php:166
+msgid "City not added. City name and hash have to be set!"
+msgstr "Stadt nicht hinzugefügt. Der Städtename muss gesetzt sein."
+
+#: admin/views/api.php:167 admin/views/cities.php:175
+msgid "New City set. Shown on front page from now on."
+msgstr ""
+"Neue Stadt hinzugefügt. Diese ist ab sofort auf der Front-Seite sichtbar."
+
+#: admin/views/api.php:195 admin/views/cities.php:203
+#: admin/views/stations.php:107
+msgid "Entered WMO number was no integer. Stop."
+msgstr "Eingegebene WMO-Nummer war kein Integer. Stop."
+
+#: admin/views/api.php:203 admin/views/cities.php:211
+#: admin/views/stations.php:115
+msgid "WMO number allready defined. Stop."
+msgstr "WMO-Stationsnummer bereits definiert. Stop."
+
+#: admin/views/application.php:47 admin/views/application.php:76
+msgid "Problems updating entry in database."
+msgstr "Probleme beim editieren der Datenbank."
+
+#: admin/views/application.php:51
+msgid "User successfully added to the group."
+msgstr "Gruppeneintrag erfolgreich editiert."
+
+#: admin/views/application.php:60 admin/views/application.php:90
+msgid "Problems deleting entry from database."
+msgstr "Probleme beim löschen des Eintrages in der Datenbank."
+
+#: admin/views/application.php:64
+msgid "Application rejected, user not added to the group."
+msgstr ""
+"Mitgliederanfrage abgelehnt. Der Benutzer wurde nicht zur Gruppe hinzugefügt."
+
+#: admin/views/application.php:80
+msgid "User successfully set to inactive for this group."
+msgstr "Der Benutzer wurde erfolgreich auf inaktiv gesetzt."
+
+#: admin/views/application.php:94
+msgid "Application rejected, user is still active in the group."
+msgstr "Anfrage abgelehnt. Der Benutzer bleibt aktiv in der Gruppe."
+
+#: admin/views/application.php:100
+msgid "Undefined action."
+msgstr "Aktion undefiniert!"
+
+#: admin/views/deactivateusers.php:111
+msgid "Search/Filter Options"
+msgstr "Such- und Filteroptionen"
+
+#: admin/views/deactivateusers.php:112
+msgid ""
+"Search options: you can either search for username or for the number of days "
+"since the user last time participated in the tournament. If the search "
+"string matches '< XXX' or  '> XXX' (where 'XXX' is the number of days, e.g., "
+"'> 100') the table below will be filtered  and only shows the users which "
+"have not played within the last XXX days ('> XXX') or  which have played "
+"within the last XXX days ('< XXX')."
+msgstr ""
+
+#: admin/views/groups.php:63
+msgid ""
+"Group not added. Reason: special characters and blanks not allowed for group "
+"names."
+msgstr ""
+"Gruppe nicht hinzugefügt: Sonderzeichen und Leerzeichen sind bei "
+"Gruppennamen nicht erlaubt."
+
+#: admin/views/groups.php:74
+msgid "Group or user with this name is allready existing! Cannot add again!"
+msgstr ""
+"Eine Gruppe mit diesem Namen besteht bereits. Kann nicht nochmals erstellt "
+"werden."
+
+#: admin/views/groups.php:81
+msgid "Group not added. Group name has to be set!"
+msgstr "Gruppe nicht hinzugefügt. Der Gruppenname muss angegeben werden."
+
+#: admin/views/groups.php:88
+msgid "New Group set. You can use it from now on."
+msgstr "Neue Gruppe erstellt. Diese kann ab sofort verwendet werden."
+
+#: admin/views/groupusers.php:80
+msgid "Not added! Please choose user and group propperly!"
+msgstr "Nicht hinzugefügt! Bitte wähle Benutzer/Gruppe korret."
+
+#: admin/views/groupusers.php:93
+msgid "User added to selected group as a group member."
+msgstr "Benutzer wurde zur ausgewählten Gruppe als Mitglied hinzugefügt."
+
+#: admin/views/groupusers.php:97
+msgid "Can't add second time. User is allready an active member of the group."
+msgstr "Du bist bereits ein aktives Mitglied dieser Gruppe."
+
+#: admin/views/param.php:90
+msgid "Parameter with this parameter name existing! Cannot add again!"
+msgstr ""
+"Parameter mit diesem Namen besteht bereits. Er kann nicht nochmals verwendet "
+"werden."
+
+#: admin/views/param.php:97
+msgid ""
+"Parameter not added. Parameter name, english or german description was empty."
+msgstr ""
+"Parameter nicht hinzugefügt. Das Feld Parametername oder eine der "
+"Beschreibungen war leer."
+
+#: admin/views/param.php:105
+msgid "Parameter added. Online right now!"
+msgstr "Parameter hinzugefügt. Dieser ist ab sofort online!"
+
+#: admin/views/webcams.php:35
+msgid "Webcam removed."
+msgstr "Webcam entfernt."
+
+#: admin/views/webcams.php:76
+msgid "Webcam not added. Seems that you forgot to select a city."
+msgstr ""
+"Webcam nicht hinzugefügt. Es scheint, als ob du vergessen hast, eine Stadt "
+"auszuwählen."
+
+#: betclass.php:843
+msgid "Please be sure that this is correct before inserting/sending the data."
+msgstr ""
+"Bitte überprüfe, dass die Werte korrekt sind, bevor du diese speicherst."
+
+#: betclass.php:844
+msgid "Form to submit your bet for"
+msgstr "Formular um deinen Tipp abzugeben für"
+
+#: betclass.php:848
+msgid "YOUR BET HAS BEEN SUBMITTED, EVERYTHING FINE."
+msgstr "DEIN TIPP WURDE ABGEGEBEN, ALLES IN ORDNUNG."
+
+#: betclass.php:851
+msgid "YOUR BET HAS NOT BEEN SUBMITTED YET."
+msgstr "ACHTUNG: DEIN TIPP WURDE GESPEICHERT ABER NOCH NICHT VERSCHICKT!"
+
+#: betclass.php:852
+msgid "Please fill in all values in the propper format."
+msgstr "Bitte fülle zuerst alle Werte im korrekten Format ein."
+
+#: betclass.php:853
+msgid "Afterwards submit your bet by clicking the submit button."
+msgstr ""
+"Beachte, dass der Tipp nach dem erfolgreichen speichern noch verschickt/"
+"eingereicht werden muss, damit du beim Turnier teilnehmen kannst."
+
+#: betclass.php:859 betclass.php:863
+msgid "Form closes"
+msgstr "Abgabeschluss ist"
+
+#: betclass.php:868
+msgid "Your active city is"
+msgstr "Deine aktive Stadt ist"
+
+#: betclass.php:902
+msgid "Form closed! Submissions won't be stored anymore."
+msgstr ""
+"Abgabeformular geschlossen! Änderungen an den Tipps werden nicht mehr "
+"gespeichert."
+
+#: betclass.php:905 betclass.php:910
+msgid "Form closes in more than"
+msgstr "Abgabeformular schliesst in etwas mehr als"
+
+#: betclass.php:905
+msgid "days"
+msgstr "Tagen"
+
+#: betclass.php:905
+msgid "No hurry!"
+msgstr "Kein Stress!"
+
+#: betclass.php:907
+msgid "More than one day left to submit the bet."
+msgstr "Noch mehr als ein Tag bis das Abgabeformular schliesst."
+
+#: betclass.php:910 generalclass.php:914
+msgid "hours"
+msgstr "Stunden"
+
+#: betclass.php:910
+msgid "Keep cool!"
+msgstr "Cool bleiben!"
+
+#: betclass.php:912
+msgid "Still a bit more than one hour until the form closes."
+msgstr "Immer noch etwas mehr als eine Stunde bis Abgabeschluss."
+
+#: betclass.php:915
+msgid "The form closes in about"
+msgstr "Das Abgabeformular schliesst in etwa"
+
+#: betclass.php:915 betclass.php:918 generalclass.php:910 generalclass.php:915
+msgid "minutes"
+msgstr "Minuten"
+
+#: betclass.php:918
+msgid "The form closes in a bit more than"
+msgstr "Das Abgabeformular schliesst in etwas mehr als"
+
+#: betclass.php:918
+msgid "Time to hurry up a bit, my friend!"
+msgstr "Zeit sich etwas zu beeilen, mein Freund!"
+
+#: betclass.php:920
+msgid "Only a bit more than one minute left to submit your bet!"
+msgstr "Nur noch etwas mehr als eine Minute bis das Abgabeformular schliesst!"
+
+#: betclass.php:922
+msgid "Form closes in"
+msgstr "Abgabeformular schliesst in"
+
+#: betclass.php:922
+msgid "seconds"
+msgstr "Sekunden"
+
+#: betclass.php:922
+msgid "Hurry, hurry!"
+msgstr "Los jetzt!"
+
+#: betclass.php:1005 betclass.php:1049 betclass.php:1130
+msgid "Switch orientation"
+msgstr "Darstellung ändern"
+
+#: betclass.php:1093
+msgid "Validate & Save"
+msgstr "Überprüfen & Senden"
+
+#: betclass.php:1094 user/views/ranking.php:185
+#: user/widgets/tournaments.php:203
+msgid "for"
+msgstr "für"
+
+#: betclass.php:1176
+msgid "Save Observations"
+msgstr "Beobachtungen speichern"
+
+#: betclass.php:1203
+msgid ""
+"Unexpected input to the method which has to store the forecast value. This "
+"is a problem in update_bet_database, missing submit. Please inform one of "
+"our administrators!"
+msgstr ""
+"Unerwartete Eingabe in die Funktion, die die Tipps speichern soll. Das ist "
+"ein Problem in der Methode update_bet_database, fehlende Elemente. Bitte den "
+"Administrator informieren."
+
+#: betclass.php:1210
+msgid ""
+"Unexpected input to the method which has to store the forecast value. This "
+"is a problem in update_bet_database, submit value was wrong. Please inform "
+"one of our administrators!"
+msgstr ""
+"Unerwartete Eingabe in die Funktion, die die Tipps speichern soll. Das ist "
+"ein Problem in der Methode update_bet_database, fehlende Elemente. Bitte den "
+"Administrator informieren."
+
+#: betclass.php:1238
+msgid "Sorry, tournament CLOSED. We cannot store your changes anymore."
+msgstr ""
+"Sorry, das Turnier ist bereits GESCHLOSSEN. Wir können deine Änderungen "
+"leider nicht mehr annehmen."
+
+#: chartclass.php:132 user/userclass.php:953 user/userclass.php:1667
+#: user/userclass.php:1670 user/userclass.php:1707 user/userclass.php:1934
+#: user/views/current.php:73 user/views/current.php:82
+#: user/views/ranking.php:333
+msgid "Points"
+msgstr "Punkte"
+
+#: chartclass.php:133 chartclass.php:223 user/userclass.php:950
+msgid "Date"
+msgstr "Datum"
+
+#: chartclass.php:134
+msgid "Full weekend points"
+msgstr "Gesamtpunkte Wochenende"
+
+#: chartclass.php:222
+msgid "Particioners"
+msgstr "Teilnehmer"
+
+#: chartclass.php:224
+msgid "Number of participants"
+msgstr "Anzahl Teilnehmer"
+
+#: classes.php:361
+msgid "Show inactive"
+msgstr "Zeige inaktive Benutzer"
+
+#: classes.php:366 user/userclass.php:766
+msgid "User name"
+msgstr "Benutzername"
+
+#: classes.php:367 user/userclass.php:767
+msgid "since"
+msgstr "Seit"
+
+#: classes.php:368 user/userclass.php:768
+msgid "until"
+msgstr "bis"
+
+#: classes.php:369 user/userclass.php:769
+msgid "Show user profile"
+msgstr "Zum User-Profil"
+
+#: classes.php:389 user/userclass.php:756 user/userclass.php:778
+msgid "Not available"
+msgstr "Nicht verfügbar"
+
+#: classes.php:390 user/userclass.php:782
+msgid "Show profile"
+msgstr "Zum Profil"
+
+#: generalclass.php:771
+msgid "[group]"
+msgstr "[Gruppe]"
+
+#: generalclass.php:828
+msgid "There is an ongoing tournament right now."
+msgstr "Keine Hilfe verfügbar"
+
+#: generalclass.php:829
+msgid "Current values can be found here:"
+msgstr "Die aktuellen Werte findest du hier:"
+
+#: generalclass.php:830
+msgid "Link ... "
+msgstr "Link ..."
+
+#: generalclass.php:837
+msgid "Sorry, no access to these bet form"
+msgstr "Sorry, im Moment kein Zugriff auf das Abgabeformular"
+
+#: generalclass.php:838
+#, php-format
+msgid "The form to submit tips always opens %d days in advance."
+msgstr "Das Abgabeformular öffnet jeweils %d Tage vor dem Turnier"
+
+#: generalclass.php:840
+#, php-format
+msgid "Next tournament will take place on %s"
+msgstr "Das nexte Turnier findet am %s statt"
+
+#: generalclass.php:842
+#, php-format
+msgid "The bet form opens %s"
+msgstr "Das Abgabeformular dafür öffnet am/um %s"
+
+#: generalclass.php:852
+msgid "Sorry, no access to these bet form."
+msgstr "Sorry, kein Zugriff auf das Tippspiel."
+
+#: generalclass.php:853
+msgid "The form to submit tips for todays tournament is allready closed."
+msgstr "Tas Abgabeformular für das heutige Tippspiel ist bereits geschlossen."
+
+#: generalclass.php:854
+#, php-format
+msgid "The next tournament will take place on %s"
+msgstr "Das nächste Turnier findet statt am %s"
+
+#: generalclass.php:883
+msgid "The requested tournament date is in the future."
+msgstr "Das angefragte Turnier-Datum liegt in der Zukunft."
+
+#: generalclass.php:884
+msgid "Do you try to cheat, bro?"
+msgstr "Was probierst du da?"
+
+#: generalclass.php:906
+msgid "Sorry, no access to these data."
+msgstr "Sorry, kein Zugriff auf diese Daten."
+
+#: generalclass.php:907
+msgid "We will show the current bets as soon as the bet-form has been closed."
+msgstr ""
+"Die aktuellen Tipps und abgegebenen Werte werden angezeigt, sobald das "
+"Abgabeformular geschlossen ist."
+
+#: generalclass.php:910 generalclass.php:916
+msgid "You can see the newest tips in "
+msgstr "Du kannst die neuesten Tipps in"
+
+#: generalclass.php:914
+msgid "hour"
+msgstr "Stunde"
+
+#: generalclass.php:915
+msgid "minute"
+msgstr "Minute"
+
+#: generalclass.php:916 user/views/userprofile.php:68
+msgid "and"
+msgstr "und"
+
+#: generalclass.php:924
+msgid ""
+"If you would like to submitt a bet please go to \"TOURNAMENT\" in the "
+"navigation."
+msgstr ""
+"Falls du gerne einen Tipp abgeben möchtest gehe bitte auf \"TURNIER\" in der "
+"Navigation."
+
+#: settings.php:117
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Keine Berechtigung zum Zugriff auf diese Seite."
+
+#: user/userclass.php:190
+msgid "Bet-form orientation"
+msgstr "Abgabeformular Ausrichtung"
+
+#: user/userclass.php:195
+msgid "portrait"
+msgstr "Hochformat"
+
+#: user/userclass.php:198
+msgid "landscape"
+msgstr "Querformat"
+
+#: user/userclass.php:201
+msgid "Select your default orientation"
+msgstr "Wähle deine Standard-Ausrichtung"
+
+#: user/userclass.php:206
+msgid "Table styling"
+msgstr "Tabellen-Styling"
+
+#: user/userclass.php:211
+msgid "default"
+msgstr "Standard"
+
+#: user/userclass.php:214
+msgid "contrast"
+msgstr "Kontrastreich"
+
+#: user/userclass.php:217
+msgid "orange-blue"
+msgstr "Orange-Blau"
+
+#: user/userclass.php:220
+msgid "Select your preferred table styling"
+msgstr "Wähle dein präferiertes Tabellen-Styling"
+
+#: user/userclass.php:271
+msgid "They can be found here"
+msgstr "Diese findest du hier"
+
+#: user/userclass.php:272
+msgid ""
+"Before the registration you have to read and accept our terms and conditions!"
+msgstr ""
+"Bevor du dich registrieren kannst lies und akzeptiere unsere "
+"Nutzungsbedingungen!"
+
+#: user/userclass.php:273
+msgid "Terms and Conditions"
+msgstr "Nutzungsbedingungen"
+
+#: user/userclass.php:305
+msgid "Home"
+msgstr "Home"
+
+#: user/userclass.php:342
+msgid "No help available"
+msgstr "Keine Hilfe verfügbar"
+
+#: user/userclass.php:346
+msgid "Help"
+msgstr "Hilfe"
+
+#: user/userclass.php:397
+msgid "First day"
+msgstr "Tag 1"
+
+#: user/userclass.php:398
+msgid "Second day"
+msgstr "Tag 2"
+
+#: user/userclass.php:637
+msgid "Profile"
+msgstr "Profil"
+
+#: user/userclass.php:688
+msgid "will not be considered"
+msgstr "werden nicht berücksichtigt"
+
+#: user/userclass.php:747
+msgid "Currently no users in this group"
+msgstr "Im Moment befinden sich keine Teilnehmer in dieser Gruppe."
+
+#: user/userclass.php:786
+msgid "active"
+msgstr "aktiv"
+
+#: user/userclass.php:918
+msgid ""
+"Sorry, but at the moment there are no tournaments in our archive for the  "
+"city you have choosen. Please come back  later. If you know that there "
+"should be  archived data you can also contact one  of our administrators. "
+"Thanks."
+msgstr ""
+"Sorry, im Moment sind keine Turniere im unserem Archiv gelistet zu dieser "
+"Stadt. Bitte schau doch später wieder rein. Wenn du dir sicher bist, dass "
+"hier eigentlich Daten im Archiv sein sollten, dann gibt es ein Problem. In "
+"diesem Fall wende dich doch bitte an einen der Wetterturnier-"
+"Administratoren. Besten Dank."
+
+#: user/userclass.php:929 user/userclass.php:933 user/userclass.php:937
+msgid "Show"
+msgstr "Anzeigen"
+
+#: user/userclass.php:941
+msgid "Show All"
+msgstr "Alle anzeigen"
+
+#: user/userclass.php:951
+msgid "Players"
+msgstr "Teilnehmer"
+
+#: user/userclass.php:952
+msgid "Winner"
+msgstr "Gewinner"
+
+#: user/userclass.php:954
+msgid "Stats"
+msgstr "Statistik"
+
+#: user/userclass.php:1019
+msgid "Color legend:"
+msgstr "Farblegende:"
+
+#: user/userclass.php:1020
+msgid ""
+"Shows the color coding of the different player classes. Just click on the "
+"buttons to show/hide a certain type in the tables below!"
+msgstr ""
+"Diese Legende zeigt die Farbkodierung der verschiedenen Teilnehmer-Typen. "
+"Durch anklicken der Buttons kannst du einzelne Typen aus- und wieder "
+"einblenden!"
+
+#: user/userclass.php:1025
+msgid "Human player"
+msgstr "Menschlicher Spieler"
+
+#: user/userclass.php:1029
+msgid "Group"
+msgstr "Gruppe"
+
+#: user/userclass.php:1033
+msgid "Automated forecast"
+msgstr "Automatische Vorhersage"
+
+#: user/userclass.php:1037
+msgid "Reference method"
+msgstr "Referenzmethode"
+
+#: user/userclass.php:1041
+msgid "Deadman"
+msgstr "Deadman"
+
+#: user/userclass.php:1096
+msgid ""
+"Sorry, but at the moment we cannot show  you the weekend ranking for the "
+"choosen date.  Possible problem: we havn't compute the  points yet because "
+"of missing observations."
+msgstr ""
+"Sorry, im Moment können wir dir die Wochenend-Wertung für das gewählte Datum "
+"nicht anzeigen. Möglicher Grund: wir haben noch keine Punkte berechnet, da "
+"noch keine Beobachtungen verfügbar sind."
+
+#: user/userclass.php:1110 user/views/archive.php:60
+#: user/views/ranking.php:250
+msgid "older"
+msgstr "älter"
+
+#: user/userclass.php:1113 user/views/archive.php:69
+#: user/views/ranking.php:255
+msgid "newer"
+msgstr "neuer"
+
+#: user/userclass.php:1118
+msgid "Weekend ranking for"
+msgstr "Wochenendwertung f&uum;r"
+
+#: user/userclass.php:1125 user/userclass.php:1675 user/views/ranking.php:325
+msgid "Rank"
+msgstr "Rang"
+
+#: user/userclass.php:1126 user/views/ranking.php:327
+msgid "Player"
+msgstr "Teilnehmer"
+
+#: user/userclass.php:1127 user/userclass.php:1667 user/views/ranking.php:329
+msgid "Saturday"
+msgstr "Samstag"
+
+#: user/userclass.php:1128 user/userclass.php:1670 user/views/ranking.php:330
+msgid "Sunday"
+msgstr "Sonntag"
+
+#: user/userclass.php:1129 user/views/ranking.php:331
+msgid "Total"
+msgstr "Total"
+
+#: user/userclass.php:1218
+msgid "Name filter"
+msgstr "Namensfilter"
+
+#: user/userclass.php:1222 user/userclass.php:1228
+msgid "User bets"
+msgstr "Spieler-Tipps"
+
+#: user/userclass.php:1227
+#, php-format
+msgid "Day %d"
+msgstr "Tag %d"
+
+#: user/userclass.php:1244 user/views/export-obsarchive.php:43
+#: user/views/export-obslive.php:43
+msgid "Station"
+msgstr "Station"
+
+#: user/userclass.php:1248 user/userclass.php:1254
+msgid "Observation data"
+msgstr "Beobachtungsdaten"
+
+#: user/userclass.php:1251 user/userclass.php:1286
+msgid "Day"
+msgstr "Tag"
+
+#: user/userclass.php:1264
+msgid "Sorry, no bet data available"
+msgstr "Sorry, keine abgegebenen Tipps vorhanden"
+
+#: user/userclass.php:1265
+msgid "There is probably something going wrong?"
+msgstr "Läuft da eventuell etwas schief?"
+
+#: user/userclass.php:1268
+msgid "Sorry, currently no observations available"
+msgstr "Im Moment sind leider keine Beobachtungen vorhanden"
+
+#: user/userclass.php:1269
+msgid "They will be displayed as soon as they are available"
+msgstr "Diese werden hier angezeigt, sobald diese zur Verfügung stehen"
+
+#: user/userclass.php:1295
+msgid "Sum"
+msgstr "Summe"
+
+#: user/userclass.php:1411
+msgid "Modified by"
+msgstr "Modifiziert durch"
+
+#: user/userclass.php:1673
+msgid "Points total"
+msgstr "Gesamtpunkte"
+
+#: user/userclass.php:1702
+msgid "Forecast"
+msgstr "Vorhersage"
+
+#: user/userclass.php:1707
+msgid "Deviation"
+msgstr "Abweichung"
+
+#: user/userclass.php:1854
+msgid "Access denied"
+msgstr "Zugriff verweigert"
+
+#: user/userclass.php:1856
+msgid ""
+"The access for some pages is restricted to registered and logged in users "
+"only. You are not logged in at the moment. To see the content of this "
+"specific page, please login first. Thank you four your understanding."
+msgstr ""
+"Gewisse Inhalte sind nur für registrierte und eingeloggte Benutzer "
+"einsehbar. Bitte logge dich ein um den gewünschten Inhalt angezeigt zu "
+"bekommen. Besten Dank für dein Verständnis."
+
+#: user/userclass.php:1862 user/views/bet.php:15
+msgid "Login form"
+msgstr "Login-Formular"
+
+#: user/userclass.php:1904
+msgid ""
+"Sorry currently no information about the leading users.Possible reason: no "
+"observations (and therefore no points) at all.However, good luck in the "
+"ongoing tournament!"
+msgstr ""
+"Sorry, aktuell keine Information zu den führenden Spielern vorhanden. "
+"Möglicher Grund: aktuell noch keine Beobachtungen in der Datenbank (und "
+"somit noch keine vergebenen Punkte). Wir wünschen dir viel Erfolg beim "
+"aktuellen Turnier!"
+
+#: user/userclass.php:1978
+msgid "Leaderboard"
+msgstr "Bestenliste"
+
+#: user/userclass.php:2001
+msgid "nd"
+msgstr "er"
+
+#: user/userclass.php:2001 user/userclass.php:2003
+msgid "place"
+msgstr "Platz"
+
+#: user/userclass.php:2003
+msgid "th"
+msgstr "er"
+
+#: user/userclass.php:2024
+msgid "points"
+msgstr "Punkte"
+
+#: user/views/applygroup.php:37
+msgid "Cannot send inquiry. Please select a group first!"
+msgstr "Anfrage kann nicht versandt werden. Bitte wähle eine Gruppe."
+
+#: user/views/applygroup.php:39
+msgid "Cannot send inquiry. Please write application text."
+msgstr "Anfrage konnte nicht versandt werden. Bitte die Erklärung ausfüllen."
+
+#: user/views/applygroup.php:51
+msgid "Inquiry successfully sent"
+msgstr "Anfrage erfolgreich verschickt."
+
+#: user/views/applygroup.php:57
+msgid "You are allready an active member of that group."
+msgstr "Du bist bereits ein aktives Mitglied dieser Gruppe."
+
+#: user/views/applygroup.php:78
+msgid "I would like to apply for group:"
+msgstr "Ich möchte folgender Gruppe beitreten:"
+
+#: user/views/applygroup.php:82 user/views/applygroup.php:102
+msgid "Select a group ..."
+msgstr "Wähle eine Gruppe ..."
+
+#: user/views/applygroup.php:88 user/views/applygroup.php:108
+msgid "Hy, my name is"
+msgstr "Hallo, mein Name ist"
+
+#: user/views/applygroup.php:90
+msgid "and I would like to apply for the group because ..."
+msgstr "und ich möchte der Gruppe beitreten, da ..."
+
+#: user/views/applygroup.php:92
+msgid "Apply"
+msgstr "Anfragen"
+
+#: user/views/applygroup.php:99
+msgid "Please remove me from group:"
+msgstr "Bitte entfernt mich aus der Gruppe:"
+
+#: user/views/applygroup.php:110
+msgid "and I wont't be a member of this group anymore because ..."
+msgstr "und ich will aus der Gruppe austreten, da ..."
+
+#: user/views/applygroup.php:112
+msgid "Remove"
+msgstr "Entfernen"
+
+#: user/views/applygroup.php:122
+msgid ""
+"Sorry, you are not logged in. Only logged in users can apply online for a "
+"group membership."
+msgstr ""
+"Sorry, du bist nicht eingeloggt. Nur als eingeloggtes Mitglied kannst du "
+"Gruppen-Mitgliedschaften managen."
+
+#: user/views/archive.php:53 user/views/current.php:57
+msgid "Current tournament"
+msgstr "Aktuelles Turnier"
+
+#: user/views/archive.php:64 user/views/current.php:61
+msgid "Show Values"
+msgstr "Werte anzeigen"
+
+#: user/views/archive.php:65 user/views/current.php:62
+msgid "Show Points"
+msgstr "Punkte anzeigen"
+
+#: user/views/bet.php:11
+msgid "You have to be registered and logged in to place your bet."
+msgstr "Um zu tippen musst du registriert und eingeloggt sein."
+
+#: user/views/current.php:65
+msgid "Current point status:"
+msgstr "Aktueller Punkte-Status:"
+
+#: user/views/current.php:69
+msgid "Average points this weekend:"
+msgstr "Die durchschnittliche Punktzahl beträgt:"
+
+#: user/views/current.php:78
+msgid "Judging for people without attendance:"
+msgstr "Wertung für nicht teilnehmende Mitspieler:"
+
+#: user/views/export-functions.php:118
+msgid "Cannot reach database obs.stations. Ignore station description."
+msgstr ""
+"Datenbank obs.stations nicht erreichbar. Stations-Information wird ignoriert/"
+"nicht dargestellt."
+
+#: user/views/export-functions.php:152
+msgid "Cannot reach database obs.bufrdesc, exit."
+msgstr ""
+"Datenbank obs.bufrdesc nicht erreichbar. Spalten-Beschreibung kann leider "
+"nicht mitgeliefert werden!"
+
+#: user/views/export-obsarchive.php:55 user/views/export-obslive.php:55
+msgid "Request year"
+msgstr "Jahr"
+
+#: user/views/export-obsarchive.php:61 user/views/export-obslive.php:61
+msgid "Missing value"
+msgstr "Fehlwerte"
+
+#: user/views/export-obsarchive.php:76 user/views/export-obslive.php:76
+msgid "Delimiter"
+msgstr "Trennzeichen"
+
+#: user/views/export-obsarchive.php:85 user/views/export-obslive.php:85
+msgid "RAW data"
+msgstr "Rohdaten"
+
+#: user/views/export-obsarchive.php:88 user/views/export-obslive.php:88
+msgid "If checked, output contains RAW database values!"
+msgstr ""
+"Wenn selektiert: Datenexport im Rohdatenmodus (wie in der Datenbank "
+"gespeichert)."
+
+#: user/views/export-obsarchive.php:90 user/views/export-obslive.php:90
+msgid "Export preset"
+msgstr "Preset exportieren"
+
+#: user/views/export-obsarchive.php:93 user/views/export-obslive.php:93
+msgid "Checked: export (useful) preset. Else everything."
+msgstr "Wenn selektiert: exportiere ein Subset aller Daten. Sonst alles."
+
+#: user/views/export.php:57
+msgid "Sorry, APIKEY or the corresponding config is invalid. Stop."
+msgstr ""
+"Sorry, der API Schlüssel oder die hinterlegte Konfiguration sind nicht "
+"gültig. Stop."
+
+#: user/views/export.php:73
+msgid ""
+"You are not logged in! We are very sorry, but we only allow data downloads "
+"for logged in users."
+msgstr ""
+"Du bist leider nicht eingeloggt! Daten-Downloads sind leider nur für "
+"eingeloggte User möglich."
+
+#: user/views/export.php:77
+msgid "Sorry, could not understand your request."
+msgstr ""
+"Sorry, deine Anfrage konnte leider nicht interpretiert werden. Probleme mit "
+"den Inputs."
+
+#: user/views/export.php:83
+msgid ""
+"No 'action' or 'statnr' input received. Cannot do the data export without "
+"them."
+msgstr ""
+"Fehlende inputs. Entweder 'action' oder 'statnr' fehlten. Ohne diese Angaben "
+"kann leider nichts exportiert werden."
+
+#: user/views/googlecharts.php:188
+msgid "No user selected"
+msgstr "Keinen Benutzer ausgewählt"
+
+#: user/views/judgingform.php:34
+msgid "Observed"
+msgstr "Beobachtet"
+
+#: user/views/judgingform.php:40
+msgid "Extra-Observed?"
+msgstr "Spezialbeobachtung?"
+
+#: user/views/judgingform.php:46
+msgid "My forecast"
+msgstr "Meine Vorhersage"
+
+#: user/views/judgingform.php:50
+msgid "Points you'll get"
+msgstr "Deine Punkte"
+
+#: user/views/judgingform.php:55
+msgid "Compute points"
+msgstr "Punkte berechnen"
+
+#: user/views/linkcollection.php:36
+msgid "Sorry, no links available at the moment."
+msgstr "Sorry, im Moment sind keine Links verfügbar."
+
+#: user/views/linkcollection.php:53
+msgid "Sorry, currently no links in this category ..."
+msgstr "Sorry, im Moment keine Links in dieser Kategorie ..."
+
+#: user/views/ranking.php:60
+msgid "This is the weekend ranking for the weekend around"
+msgstr "Dies ist die Wochenendwertung für das Wochenende vom"
+
+#: user/views/ranking.php:69
+msgid "/ranking/weekend-rankings/"
+msgstr "/rangliste/wochenendwertungen/"
+
+#: user/views/ranking.php:94
+msgid "Sorry, no proper city definition for"
+msgstr "Sorry, keine Definition für Stadt"
+
+#: user/views/ranking.php:98
+msgid "City-ranking for the cities "
+msgstr "Städte-Rangliste für die Städte"
+
+#: user/views/ranking.php:99 user/views/ranking.php:104
+msgid " and "
+msgstr "und"
+
+#: user/views/ranking.php:101
+msgid "for the weekend around"
+msgstr "für das Wochenende vom"
+
+#: user/views/ranking.php:111
+msgid "/ranking/3-city-ranking/"
+msgstr "/rangliste/3-staedte-wertung/"
+
+#: user/views/ranking.php:113
+msgid "/ranking/5-city-ranking/"
+msgstr "/rangliste/5-staedte-wertung/"
+
+#: user/views/ranking.php:138 user/views/ranking.php:154
+msgid "Winter"
+msgstr "Winter"
+
+#: user/views/ranking.php:142
+msgid "Spring"
+msgstr "Frühling"
+
+#: user/views/ranking.php:146
+msgid "Summer"
+msgstr "Sommer"
+
+#: user/views/ranking.php:150
+msgid "Fall"
+msgstr "Herbst"
+
+#: user/views/ranking.php:162
+msgid "season ranking for"
+msgstr "Jahreszeitenwertung für"
+
+#: user/views/ranking.php:163 user/views/ranking.php:186
+#: user/views/ranking.php:208
+msgid "including"
+msgstr "beinhaltet"
+
+#: user/views/ranking.php:163 user/views/ranking.php:208
+msgid "tournaments from"
+msgstr "Turniere vom"
+
+#: user/views/ranking.php:164 user/views/ranking.php:209
+msgid "to"
+msgstr "bis zum"
+
+#: user/views/ranking.php:184
+msgid "Ranking for"
+msgstr "Wertung für"
+
+#: user/views/ranking.php:186
+msgid "tournaments"
+msgstr "Turniere"
+
+#: user/views/ranking.php:207
+msgid "Total ranking for"
+msgstr "Gesamtwertung für"
+
+#: user/views/ranking.php:221
+msgid "Sorry, cannot understand input 'type' for"
+msgstr "Sorry, Input 'type' nicht erkannt"
+
+#: user/views/ranking.php:279
+msgid ""
+"Ranking can't be shown yet. The reason: this is the weekend ranking of the "
+"ongoing tournament and as we don't have any observed parameters, we can't "
+"compute points, or ranks, at the moment. As soon as we can judge the "
+"parameter you can access the live-ranking here. Thank you for your "
+"understanding."
+msgstr ""
+"Die Rangliste kann noch nicht angezeigt werden. Grund: dies ist die "
+"Rangliste für das laufende Turnier. Da noch keine Beobachtungen vorhanden "
+"sind können auch noch keine Punkte oder Ränge berechnet werden. Sobald wir "
+"den ersten Parameter bewerten können, kannst du die Live-Rangliste hier "
+"verfolgen. Danke für dein Verständnis."
+
+#: user/views/ranking.php:289
+msgid ""
+"Sorry, but we do have a problem computing the  ranking you'll have. If the "
+"problem exists  for a longer time period please inform  one of our "
+"administrators. Please note that  the message also shows up if this is the  "
+"ongoing tournament. Thank you."
+msgstr ""
+"Sorry, es gibt ein Problem beim generieren der von dir angeforderten "
+"Rangliste. Sollte dieser Fehler in ein paar Stunden immer noch erscheinen, "
+"informiere bitte einen unserer Administratoren. Bitte beachte, dass diese "
+"Meldung auch für das laufende Turnier angezeigt wird. Vielen Dank."
+
+#: user/views/ranking.php:310
+msgid "The maximum score (total) for the ranking is"
+msgstr "Die maximal zu erreichende Punktzahl ist"
+
+#: user/views/ranking.php:337
+msgid "Difference"
+msgstr "Unterschied"
+
+#: user/views/register.php:9
+msgid "Email"
+msgstr "Email"
+
+#: user/views/register.php:20
+msgid "Registration confirmation will be emailed to you."
+msgstr ""
+"Eine Registrierungs-Bestätigung wird dir an die angegebene e-Mail Adresse "
+"zugestellt."
+
+#: user/views/register.php:27
+msgid "Log in"
+msgstr "Einloggen"
+
+#: user/views/register.php:28
+msgid "Lost your password?"
+msgstr "Passwort verloren?"
+
+#: user/views/userprofile.php:38
+msgid "No information available"
+msgstr "Keine Information verfügbar"
+
+#: user/views/userprofile.php:67 user/views/userprofile.php:120
+msgid "participations"
+msgstr "Teilnahmen"
+
+#: user/views/userprofile.php:67
+msgid "between"
+msgstr "zwischen"
+
+#: user/views/userprofile.php:73
+msgid "<span style='color: gray;'>Never participated</span>"
+msgstr "Bisher nie teilgenommen"
+
+#: user/views/userprofile.php:98
+msgid "Real-life name"
+msgstr "Tatsächlicher Name"
+
+#: user/views/userprofile.php:99
+msgid "Registered since"
+msgstr "Registriert seit"
+
+#: user/views/userprofile.php:108
+msgid "Biography"
+msgstr "Biographie"
+
+#: user/views/userprofile.php:114
+msgid "capabilities"
+msgstr "Berechtigungen"
+
+#: user/widgets/bbpmessages.php:23 user/widgets/bbpmessages.php:26
+msgid "Wetterturnier bbPM messages"
+msgstr "Wetterturnier bbPM Mitteilungen"
+
+#: user/widgets/bbpmessages.php:47 user/widgets/blitzortung.php:46
+#: user/widgets/latestobs.php:44 user/widgets/leading.php:46
+#: user/widgets/tournaments.php:59 user/widgets/webcams.php:47
+msgid "Widget Title"
+msgstr "Widget Titel"
+
+#: user/widgets/bbpmessages.php:52 user/widgets/blitzortung.php:51
+#: user/widgets/latestobs.php:51 user/widgets/leading.php:51
+#: user/widgets/tournaments.php:64 user/widgets/webcams.php:52
+msgid "Textarea:"
+msgstr "Textarea:"
+
+#: user/widgets/bbpmessages.php:124
+msgid "No unread messages in your inbox."
+msgstr "Keine ungelesene Mitteilung im Posteingang."
+
+#: user/widgets/bbpmessages.php:126 user/widgets/bbpmessages.php:175
+msgid "Open Messenger"
+msgstr "Messenger öffnen"
+
+#: user/widgets/bbpmessages.php:167
+msgid "You have"
+msgstr "Du hast"
+
+#: user/widgets/bbpmessages.php:171
+msgid "Unread message"
+msgstr "Nachricht"
+
+#: user/widgets/bbpmessages.php:171
+msgid "Unread messages"
+msgstr "Nachrichten"
+
+#: user/widgets/blitzortung.php:22 user/widgets/blitzortung.php:25
+msgid "Wetterturnier Blitzortung"
+msgstr "Wetterturnier Blitzortung"
+
+#: user/widgets/blitzortung.php:120
+msgid "Information about last run not available!"
+msgstr "Informationen über den letzten Lauf nicht verfügbar!"
+
+#: user/widgets/blitzortung.php:123
+msgid "Last run: "
+msgstr "Letzter Lauf:"
+
+#: user/widgets/blitzortung.php:132
+msgid "Seems that we have lost the lightning data stream!"
+msgstr "Sieht aus, als hätten wir den Blitzortungs-Datenstream verloren!"
+
+#: user/widgets/blitzortung.php:136
+msgid "Currently no lightning activity in the region."
+msgstr "Im Moment keine Blitzaktivität in der Umgebung."
+
+#: user/widgets/latestobs.php:22 user/widgets/latestobs.php:25
+msgid "Wetterturnier latest obs"
+msgstr "Neueste Beobachtungen"
+
+#: user/widgets/latestobs.php:117
+#, php-format
+msgid "Cannot reach table <b>%s</b>! Sorry."
+msgstr "Kann Datenbanktabelle <b>%s</b> nicht erreichen! Sorry."
+
+#: user/widgets/latestobs.php:174
+msgid "Temperature"
+msgstr "Temperatur"
+
+#: user/widgets/latestobs.php:178
+msgid "Dew point temp"
+msgstr "Taupunkt"
+
+#: user/widgets/latestobs.php:189
+msgid "Cloud cover"
+msgstr "Bedeckungsgrad"
+
+#: user/widgets/latestobs.php:194
+msgid "Wind speed"
+msgstr "Windgeschwindigkeit"
+
+#: user/widgets/latestobs.php:198
+msgid "Wind direction"
+msgstr "Windrichtung"
+
+#: user/widgets/latestobs.php:202
+msgid "Pressure [msl]"
+msgstr "Reduzierter Luftdruck"
+
+#: user/widgets/latestobs.php:209
+#, php-format
+msgid "Sorry, no valid observations available for station %s within "
+msgstr "Sorry, keine gültigen Beobachtungen für die Station %s innerhalb"
+
+#: user/widgets/latestobs.php:210
+#, php-format
+msgid "the last %d hours"
+msgstr "den letzten %d Stunden"
+
+#: user/widgets/leading.php:22 user/widgets/leading.php:25
+msgid "Wetterturnier Leading Users"
+msgstr "Führende Mitspieler"
+
+#: user/widgets/tournaments.php:23
+msgid "Wetterturnier Tournament Dates"
+msgstr "Turniertermine"
+
+#: user/widgets/tournaments.php:26
+msgid "Wetterturnier Dates"
+msgstr "Turniertermine"
+
+#: user/widgets/tournaments.php:69
+msgid "Textarea2:"
+msgstr "Textarea:"
+
+#: user/widgets/tournaments.php:110
+msgid "Tournament date"
+msgstr "Turniertermine"
+
+#: user/widgets/tournaments.php:111
+msgid "No tournament"
+msgstr "Kein Turnier"
+
+#: user/widgets/tournaments.php:200
+msgid "Registered bets"
+msgstr "Eingetragene Tipps"
+
+#: user/widgets/tournaments.php:202
+msgid "Saved/Sent/Group"
+msgstr "Gespeichert/Versant/Gruppe"
+
+#: user/widgets/tournaments.php:217
+msgid ""
+"Currently no data available about the submitted bets for the upcoming "
+"tournament. Will be shown as soon as the first bets are submitted to the "
+"wetterturnier."
+msgstr ""
+"Aktuell keine Statistik zu den abgegebenen Tipps für das aktuelle Turnier "
+"vorhanden. Die Information wird angezeigt, sobald die ersten Tipps abgegeben "
+"wurden."
+
+#: user/widgets/webcams.php:23 user/widgets/webcams.php:26
+msgid "Wetterturnier Webcams"
+msgstr "Wetterturnier Webcams"
+
+#: wp-wetterturnier.php:112
+msgid "Wetterturnier Admin"
+msgstr "Wetterturnier Admin"
+
+#~ msgid "Display name"
+#~ msgstr "Anzeigename"
+
+#~ msgid "The next tournament will take place on"
+#~ msgstr "Das nächste Turnier findet statt am"
+
+#~ msgid "Sorry, no user data available."
+#~ msgstr "Sorry, keine Mitspieler-Daten vorhanden."
+
+#~ msgid "Sorry, currently no observations available."
+#~ msgstr "Sorry, im Moment keine Beobachtungen vorhanden."
+
+#~ msgid "They will be displayed as soon as they are available."
+#~ msgstr "Diese werden dargestellt, sobald sie verf&uuml;gbar sind."

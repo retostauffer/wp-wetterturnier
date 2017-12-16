@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forecasts>
+
+   <!-- Cosmo forecast maps are no more available
+   <cosmoeu>
+      <name>COSMO-EU</name>
+
+      <alps>
+         <name>Alpen</name>
+         <x4g>
+            <name>Signifikantes Wetter</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </x4g>
+         <clm>
+            <name>Mittelhohe Bew&#246;lkung</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </clm>
+         <cln>
+            <name>Tiefe Bew&#246;lkung</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </cln>
+         <ccl>
+            <name>Konvektion</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </ccl>
+         <win>
+            <name>Wind 10m</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </win>
+         <rsa>
+            <name>6-h Niederschlag</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </rsa>
+         <ttc>
+            <name>Temperatur 2m</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </ttc>
+         <txn>
+            <name>Minimum/Maximumtemperatur</name>
+            <lt>18</lt>
+            <lt>30</lt>
+            <lt>42</lt>
+         </txn>
+      </alps>
+
+      <germany>
+         <name>Deutschland</name>
+         <clm>
+            <name>Mittelhohe Bew&#246;lkung</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </clm>
+         <cln>
+            <name>Tiefe Bew&#246;lkung</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </cln>
+         <ccl>
+            <name>Konvektion</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </ccl>
+         <win>
+            <name>Wind 10m</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </win>
+         <wix>
+            <name>Windb&#246;en 10m</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </wix>
+         <rsa>
+            <name>6-h Niederschlag</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </rsa>
+         <ttc>
+            <name>Temperatur 2m</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </ttc>
+         <txn>
+            <name>Minimum/Maximumtemperatur</name>
+            <lt>18</lt>
+            <lt>30</lt>
+            <lt>42</lt>
+         </txn>
+      </germany>
+
+      <europe>
+         <name>Europa</name>
+         <x4g>
+            <name>Signifikantes Wetter</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </x4g>
+         <clm>
+            <name>Mittelhohe Bew&#246;lkung</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </clm>
+         <cln>
+            <name>Tiefe Bew&#246;lkung</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </cln>
+         <ccl>
+            <name>Konvektion</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </ccl>
+         <win>
+            <name>Wind 10m</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </win>
+         <rsa>
+            <name>6-h Niederschlag</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </rsa>
+         <ttc>
+            <name>Temperatur 2m</name>
+            <lt>6</lt>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>42</lt>
+            <lt>48</lt>
+         </ttc>
+         <txn>
+            <name>Minimum/Maximumtemperatur</name>
+            <lt>18</lt>
+            <lt>30</lt>
+            <lt>42</lt>
+         </txn>
+      </europe>
+
+   </cosmoeu>
+   -->
+
+   <!-- ICON model -->
+   <icon>
+      <name>ICON</name>
+
+      <atlantic>
+         <name>Deutschland</name>
+
+         <pmsl>
+            <name>Druck MSL</name>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>48</lt>
+            <lt>60</lt>
+            <lt>72</lt>
+            <lt>84</lt>
+            <lt>96</lt>
+            <lt>108</lt>
+            <lt>120</lt>
+            <lt>132</lt>
+            <lt>144</lt>
+            <lt>156</lt>
+            <lt>168</lt>
+         </pmsl>
+
+         <gt500>
+            <name>Geopotential 500hPa</name>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>48</lt>
+            <lt>60</lt>
+            <lt>72</lt>
+            <lt>84</lt>
+            <lt>96</lt>
+            <lt>108</lt>
+            <lt>120</lt>
+            <lt>132</lt>
+            <lt>144</lt>
+            <lt>156</lt>
+            <lt>168</lt>
+         </gt500>
+
+         <gt850>
+            <name>Geopotential 850hPa</name>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>48</lt>
+            <lt>60</lt>
+            <lt>72</lt>
+            <lt>84</lt>
+            <lt>96</lt>
+            <lt>108</lt>
+            <lt>120</lt>
+            <lt>132</lt>
+            <lt>144</lt>
+            <lt>156</lt>
+            <lt>168</lt>
+         </gt850>
+
+         <rh700>
+            <name>Feuchte 700Pa</name>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>48</lt>
+            <lt>60</lt>
+            <lt>72</lt>
+            <lt>84</lt>
+            <lt>96</lt>
+            <lt>108</lt>
+            <lt>120</lt>
+            <lt>132</lt>
+            <lt>144</lt>
+            <lt>156</lt>
+            <lt>168</lt>
+         </rh700>
+
+         <sfcmap>
+            <name>Frontenanalyse</name>
+            <lt>36</lt>
+            <lt>48</lt>
+            <lt>60</lt>
+            <lt>84</lt>
+            <lt>108</lt>
+         </sfcmap>
+
+      </atlantic>
+
+      <europe>
+         <name>Europa</name>
+
+         <rr12>
+            <name>12-h Niederschlag</name>
+            <lt>18</lt>
+            <lt>30</lt>
+            <lt>42</lt>
+            <lt>54</lt>
+            <lt>66</lt>
+            <lt>78</lt>
+         </rr12>
+
+         <rr24>
+            <name>24-h Niederschlag</name>
+            <lt>30</lt>
+            <lt>54</lt>
+            <lt>78</lt>
+         </rr24>
+
+      </europe>
+
+      <germany>
+         <name>Deutschland</name>
+
+         <rr24>
+            <name>24-h Niederschlag</name>
+            <lt>24</lt>
+            <lt>48</lt>
+            <lt>72</lt>
+            <lt>96</lt>
+            <lt>120</lt>
+            <lt>144</lt>
+         </rr24>
+
+      </germany>
+
+   </icon>
+
+   <!-- ECMWF forecast maps -->
+   <ecmwf>
+      <name>ECMWF</name>
+
+      <atlantic>
+         <name>Atlantik</name>
+
+         <pmsl>
+            <name>Druck MSL</name>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>48</lt>
+            <lt>96</lt>
+            <lt>108</lt>
+            <lt>120</lt>
+            <lt>132</lt>
+            <lt>144</lt>
+            <lt>156</lt>
+            <lt>168</lt>
+         </pmsl>
+
+         <gt500>
+            <name>Geopotential 500hPa</name>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>48</lt>
+            <lt>60</lt>
+            <lt>72</lt>
+            <lt>84</lt>
+            <lt>96</lt>
+            <lt>108</lt>
+            <lt>120</lt>
+            <lt>132</lt>
+            <lt>144</lt>
+            <lt>156</lt>
+            <lt>168</lt>
+         </gt500>
+
+         <gt850>
+            <name>Geopotential 850hPa</name>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>48</lt>
+            <lt>60</lt>
+            <lt>72</lt>
+            <lt>84</lt>
+            <lt>96</lt>
+            <lt>108</lt>
+            <lt>120</lt>
+            <lt>132</lt>
+            <lt>144</lt>
+            <lt>156</lt>
+            <lt>168</lt>
+         </gt850>
+
+         <rh700>
+            <name>Feuchte 700Pa</name>
+            <lt>12</lt>
+            <lt>18</lt>
+            <lt>24</lt>
+            <lt>30</lt>
+            <lt>36</lt>
+            <lt>48</lt>
+            <lt>60</lt>
+            <lt>72</lt>
+            <lt>84</lt>
+            <lt>96</lt>
+            <lt>108</lt>
+            <lt>120</lt>
+            <lt>132</lt>
+            <lt>144</lt>
+            <lt>156</lt>
+            <lt>168</lt>
+         </rh700>
+
+      </atlantic>
+
+   </ecmwf>
+
+</forecasts>

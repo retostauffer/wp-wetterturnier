@@ -1,0 +1,188 @@
+
+
+/* Admin table styling */
+tr.row-active-0 {
+    background-color: #FBEFEF;
+}
+tr.row-active-0 td.column-col_name,
+tr.row-active-0 td.column-col_status {
+    color: red;
+}
+td.column-col_name {
+    font-weight: bold;
+}
+
+/* ------------------------------------------------------- */
+/* Admin application_list table styling */
+table.wetterturnier_application_list th#col_what      { width: 50px; }
+table.wetterturnier_application_list th#col_user      { width: 200px; }
+table.wetterturnier_application_list th#col_groupName { width: 200px; }
+/* ------------------------------------------------------- */
+/* Admin group_list table styling */
+table.wetterturnier_group_list {
+    border: 2px solid red;
+}
+table.wetterturnier_group_list th#col_id {
+    width: 50px; 
+}
+table.wetterturnier_group_list th#col_members {
+    width: 70px;
+    text-align: center;
+}
+table.wetterturnier_group_list th#col_name {
+    width: 250px;
+}
+table.wetterturnier_group_list th#col_status {
+    width: 200px;
+}
+table.wetterturnier_group_list td.col_id,
+table.wetterturnier_group_list td.col_members {
+    text-align: center;
+}
+/* ------------------------------------------------------- */
+/* Admin groupusers_list table styling */
+table.wetterturnier_groupusers_list th#col_id,
+table.wetterturnier_groupusers_list th#col_groupid,
+table.wetterturnier_groupusers_list th#col_userid {
+    width: 70px; 
+    text-align: center;
+}
+table.wetterturnier_groupusers_list th#col_user {
+    width: 250px;
+    font-weight: bold;
+}
+table.wetterturnier_groupusers_list th#col_status {
+    width: 400px;
+}
+/* ------------------------------------------------------- */
+/* Admin cities_list table styling */
+table.wetterturnier_cities_list th#col_id,
+table.wetterturnier_cities_list th#col_sort,
+table.wetterturnier_cities_list th#col_hash {
+    width: 100px; 
+}
+table.wetterturnier_cities_list th#col_name {
+    width: 250px;
+    font-weight: bold;
+}
+table.wetterturnier_cities_list th#col_station1,
+table.wetterturnier_cities_list th#col_station2 {
+    width: 250px;
+}
+/* ------------------------------------------------------- */
+/* Admin param_list table styling */
+table.wetterturnier_param_list th#col_paramID {
+    width: 50px; 
+}
+table.wetterturnier_param_list th#col_paramName,
+table.wetterturnier_param_list td.col_paramName {
+    width: 250px;
+    font-weight: bold;
+}
+table.wetterturnier_param_list th#col_status {
+    width: 400px;
+}
+/* ------------------------------------------------------- */
+
+/* fd = form description field */
+fd {
+    display: block;
+    min-width: 200px;
+    float: left;
+}
+/* ff = form field */
+ff {
+   display: block;
+   padding-left: 210px; 
+}
+#wetterturnier-admin-settings fd    { min-width: 350px; }
+#wetterturnier-admin-settings input {  width: 400px;  }
+div.wpwt-admin-info { width: 700px; padding: 20px 0px; }
+
+#wetterturnier-admin-settings input[type=submit] { width: 150px; margin-left: 350px; }
+
+/* Help boxes */
+help {
+   display: block;
+   max-width: 100%;
+   min-height: 30px;
+   margin: 5px 0px 15px; 
+   padding: 12px 12px; 
+   background: #fff;
+   border-left: 4px solid #3864a0;
+   box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+   padding: 1px 12px
+   background-image: url('../images/info-icon.svg');
+}
+/* Highlighted spans (will occur in orange */
+span.wt-admin-highlight {
+   color: #FF6600;
+}
+
+/* Messages for the admin user */
+div.wetterturnier-info {
+    background-color: #FAFAFA;
+    color: black;
+    display: block;
+    width: 95%;
+    padding: 10px 20px;
+    margin: 10px;
+}
+div.wetterturnier-info.error   { border-left: 8px solid red; }
+div.wetterturnier-info.ok      { border-left: 8px solid #41a62a; }
+div.wetterturnier-info.warning { border-left: 8px solid orange; }
+
+
+input.wetterturnier-status-red {
+   background-color: #F2D7CE;
+   border-color: red; 
+}
+input.wetterturnier-status-green {
+   background-color: #CEF2D1;
+   border-color: green;
+}
+input.wetterturnier-status-blue {
+   background-color: #CEE9F2;
+   border-color: blue;
+}
+
+
+/* Styling the user-search boxes */
+div.wetterturnier-user-search input {
+   width: 250px;
+}
+div.wetterturnier-user-search ul {
+   display: none; 
+   position: absolute;
+   border: 1px solid black;
+   width: 248px;
+   background-color: white;
+   padding: 0px;
+   margin: 0px;
+   list-style: none;
+}
+div.wetterturnier-user-search ul li {
+   cursor: pointer;
+   padding: 0px 3px;
+}
+div.wetterturnier-user-search ul li:hover {
+   background-color: yellow;
+}
+
+/* ------------------------------------------------------- 
+ * Special styling for the beform ul
+/* ------------------------------------------------------- */
+.wt-betform .setnull {
+   background-color: #FF6600;
+}
+
+span.orientation {
+   padding-left: 10px;
+   color: #6592cf;
+   cursor: pointer;
+}
+span.orientation:hover {
+   color: #FF6600;
+}
+
+

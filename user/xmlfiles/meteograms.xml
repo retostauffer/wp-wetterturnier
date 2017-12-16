@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meteograms>
+
+   <!-- ICON meteograms: produced by ForecastProducts/DownloadAll.py -->
+   <icon>
+      <name>ICON</name>
+      <lastrunfile>ICON.lastrun</lastrunfile>
+      <init>00</init>
+      <init>12</init>
+
+      <meteogram>
+         <file>ICON_det_HH_berlin.gif</file>
+         <name>Berlin Tempelhof</name>
+      </meteogram>
+      <meteogram>
+         <file>ICON_det_HH_essen.gif</file>
+         <name>Essen</name>
+      </meteogram>
+      <meteogram>
+         <file>ICON_det_HH_frankfurt.gif</file>
+         <name>Frankfurt</name>
+      </meteogram>
+      <meteogram>
+         <file>ICON_det_HH_hamburg.gif</file>
+         <name>Hamburg</name>
+      </meteogram>
+      <meteogram>
+         <file>ICON_det_HH_leipzig-halle.gif</file>
+         <name>Leipzig Halle</name>
+      </meteogram>
+      <meteogram>
+         <file>ICON_det_HH_muenchen.gif</file>
+         <name>M&#252;nchen</name>
+      </meteogram>
+   </icon>
+
+   <!-- COSMOEU meteograms: produced by ForecastProducts/DownloadAll.py -->
+   <!-- Cosmo products are no more available
+   <cosmoeu>
+      <name>COSMO-EU</name>
+      <lastrunfile>COSMOEU.lastrun</lastrunfile>
+      <init>00</init>
+      <init>12</init>
+
+      <meteogram>
+         <file>COSMOEU_det_HH_berlin-tempelhof.gif</file>
+         <name>Berlin Tempelhof</name>
+      </meteogram>
+      <meteogram>
+         <file>COSMOEU_det_HH_greifswald.gif</file>
+         <name>Greifswald</name>
+      </meteogram>
+      <meteogram>
+         <file>COSMOEU_det_HH_innsbruck-flughafen.gif</file>
+         <name>Innsbruck Flughafen</name>
+      </meteogram>
+      <meteogram>
+         <file>COSMOEU_det_HH_leipzig-halle.gif</file>
+         <name>Leipzig Halle</name>
+      </meteogram>
+      <meteogram>
+         <file>COSMOEU_det_HH_meiningen.gif</file>
+         <name>Meiningen</name>
+      </meteogram>
+      <meteogram>
+         <file>COSMOEU_det_HH_salzburg.gif</file>
+         <name>Salzburg</name>
+      </meteogram>
+   </cosmoeu>
+   -->
+
+   <!-- GFS ensemble meteograms: produced by GENSvis/GENSvis.py: eps style -->
+   <gens_eps>
+      <name>GENS Type I</name>
+      <lastrunfile>GENS.lastrun</lastrunfile>
+      <init>00</init>
+      <init>06</init>
+      <init>12</init>
+      <init>18</init>
+
+      <meteogram>
+         <file>GENS_eps_HH_berlin-tegel.png</file>
+         <name>Berlin Tegel</name>
+      </meteogram>
+      <meteogram>
+         <file>GENS_eps_HH_innsbruck-flughafen.png</file>
+         <name>Innsbruck</name>
+      </meteogram>
+      <meteogram>
+         <file>GENS_eps_HH_leipzig.png</file>
+         <name>Leipzig</name>
+      </meteogram>
+      <meteogram>
+         <file>GENS_eps_HH_wien-hohe-warte.png</file>
+         <name>Wien Hohe Warte</name>
+      </meteogram>
+      <meteogram>
+         <file>GENS_eps_HH_zurich-kloten.png</file>
+         <name>Z&#252;rich Kloten</name>
+      </meteogram>
+   </gens_eps>
+
+   <!-- GFS ensemble meteograms: produced by GENSvis/GENSvis.py: leps style -->
+   <gens_leps>
+      <name>GENS Type II</name>
+      <lastrunfile>GENS.lastrun</lastrunfile>
+      <init>00</init>
+      <init>06</init>
+      <init>12</init>
+      <init>18</init>
+
+      <meteogram>
+         <file>GENS_leps_HH_berlin-tegel.png</file>
+         <name>Berlin Tegel</name>
+      </meteogram>
+      <meteogram>
+         <file>GENS_leps_HH_innsbruck-flughafen.png</file>
+         <name>Innsbruck</name>
+      </meteogram>
+      <meteogram>
+         <file>GENS_leps_HH_leipzig.png</file>
+         <name>Leipzig</name>
+      </meteogram>
+      <meteogram>
+         <file>GENS_leps_HH_wien-hohe-warte.png</file>
+         <name>Wien Hohe Warte</name>
+      </meteogram>
+      <meteogram>
+         <file>GENS_leps_HH_zurich-kloten.png</file>
+         <name>Z&#252;rich Kloten</name>
+      </meteogram>
+   </gens_leps>
+
+   <!-- GFS deterministic meteograms: produced by GENSvis/GFSvis.py -->
+   <gfs>
+      <name>GFS</name>
+      <lastrunfile>GFS.lastrun</lastrunfile>
+      <init>00</init>
+      <init>06</init>
+      <init>12</init>
+      <init>18</init>
+
+      <meteogram>
+         <file>GFS_det_HH_berlin-tegel.png</file>
+         <name>Berlin Tegel</name>
+      </meteogram>
+      <meteogram>
+         <file>GFS_det_HH_innsbruck-flughafen.png</file>
+         <name>Innsbruck</name>
+      </meteogram>
+      <meteogram>
+         <file>GFS_det_HH_leipzig.png</file>
+         <name>Leipzig</name>
+      </meteogram>
+      <meteogram>
+         <file>GFS_det_HH_wien-hohe-warte.png</file>
+         <name>Wien Hohe Warte</name>
+      </meteogram>
+      <meteogram>
+         <file>GFS_det_HH_zurich-kloten.png</file>
+         <name>Z&#252;rich Kloten</name>
+      </meteogram>
+   </gfs>
+
+</meteograms>
