@@ -379,7 +379,7 @@ class wetterturnier_groupsObject {
                      <?php print $mem->user_login; ?>
                   </td>
                   <td <?php print $class; ?>>
-                     <?php print $WTuser->datetime_format($mem->since); ?>
+                     <?php print $WTuser->date_format( strtotime($mem->since)/86400 ); ?>
                   </td>
                   <td <?php print $class; ?>>
                      <?php print (is_null($mem->until) ? "active" : $WTuser->datetime_format($mem->until)); ?>
