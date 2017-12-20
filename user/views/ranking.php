@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2017-08-27 18:49 on thinkreto
+# - L@ST MODIFIED: 2017-12-20 08:46 on thinkreto
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -384,6 +384,7 @@ if ( empty($ranking->data) && ($today-$tdate) <= 1 ) {
       // Show profile link (if not mitteltip/Gruppe)
       if ( $rec_tmp->userclass == "mitteltip" ) {
          $user_name = $rec->display_name;
+         $user_name = $WTuser->get_user_display_class_and_name( $rec->userID, $rec )->display_name;
       } else {
          $user_name = $WTuser->get_user_profile_link( $rec ); //->user_login );
       }
