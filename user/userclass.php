@@ -2010,11 +2010,20 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                <div class="wt-leaderboard">
                <?php } ?>
 
+                  <?php
+                  // If bbpress is installed: load profile link and avatar.
+                  // Else show name only.
+                  if ( function_exists("bbp_get_user_profile_url") ) { ?>
                   <div class="wt-leaderboard-avatar" style="width: <?php print $width; ?>%;">
                      <a href="<?php print bbp_get_user_profile_url($rec->userID); ?>" target="_self">
                      <?php print get_wp_user_avatar( $rec->userID, 96); ?>
                      </a>
                   </div>
+                  <?php } else { ?>
+                  <div class="wt-leaderboard-avatar" style="width: <?php print $width; ?>%;">
+                     BBP Not Active
+                  </div>
+                  <?php } ?>
                   <div class="wt-leaderboard-info">
                      <?php
                      printf("<info>%s</info><br>\n",$rec->rank_string);

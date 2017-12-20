@@ -115,6 +115,7 @@ class WP_wetterturnier_widget_blitzortung extends WP_Widget
         } else {
            # - Reading lastrun file if existing
            function lastrun_fn() {
+              if ( ! file_exists("/var/www/html/Rimages/blitzortung/lastrun") ) { return( False ); }
               $lastrun_file = "/var/www/html/Rimages/blitzortung/lastrun";
               $fid = @fopen($lastrun_file, "r");
               if ( ! $fid ) { return(__('Information about last run not available!','wpwt')); }
@@ -127,7 +128,11 @@ class WP_wetterturnier_widget_blitzortung extends WP_Widget
            }
            $lastrun = lastrun_fn();
            // Age of the lastrun
-           if ( $lastrun->age > 12*3600 ) {
+           if ( ! $lastrun ) {
+               echo "<div style=\"width: 100; text-align: center\">"
+                   .__("Cannot display lightning data, \"lastrun\" file not found!","wpwt")
+                   ."<br>\n</div>\n";
+           } else if ( $lastrun->age > 12*3600 ) {
                echo "<div style=\"width: 100; text-align: center\">"
                    .__("Seems that we have lost the lightning data stream!","wpwt")
                    ."<br>\n".$lastrun->string."</div>\n";
