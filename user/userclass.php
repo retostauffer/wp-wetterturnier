@@ -902,9 +902,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         array_push($sql,'( SELECT ID, user_login FROM %susers) AS u');
         array_push($sql,'ON u.ID = p.userID');
 
-        ///////print "FULL SQL:<br>";
-        ///////printf( join("<br>\n",$sql), $date_sql, $maxp_sql, $wpdb->prefix );
-        ///////print "<br><br>";
+        //print "FULL SQL:<br>";
+        //printf( join("<br>\n",$sql), $date_sql, $maxp_sql, $wpdb->prefix );
+        //print "<br><br>";
 
 
         // Loading data from database
@@ -965,11 +965,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                    $wt_link = $link.'?tdate='.$rec->tdate; 
                }
 
-
-
                $user  = $WTuser->get_user_display_class_and_name($rec->userID, $rec);
                if ( $user->userclass == "mitteltip" ) {
-                  $user_name = $user->username;
+                  $user_name = $user->display_name;
                } else {
                   $user_name = $WTuser->get_user_profile_link( $user );
                }
