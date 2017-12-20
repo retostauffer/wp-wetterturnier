@@ -767,7 +767,7 @@ class wetterturnier_generalclass
        // Check if user is Automat or mix or so
        if      ( $this->check_user_is_in_group($userID, 'Automaten') ) {
           $userclass = 'automat';
-       } elseif      ( $this->check_user_is_in_group($userID, 'Referenztips') ) {
+       } elseif      ( $this->check_user_is_in_group($userID, 'Referenztipps') ) {
           $userclass = 'referenz';
        } else if ( substr($usr->user_login,0,4) == 'GRP_' ) {
           $userclass = 'mitteltip';
