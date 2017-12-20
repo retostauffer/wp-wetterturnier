@@ -234,15 +234,15 @@ table.tablesorter tbody td {
 .wttable-show * td.automat             { border-left: 5px solid black;   }
 .wttable-show * td.mitteltip           { border-left: 5px solid #FF6600; }
 .wttable-show * td.referenz            { border-left: 5px solid #3864a0; }
-.wttable-show * td.deadman             { border-left: 5px solid #BDBDBD; }
-.wttable-show * td.deadman span {
+.wttable-show * td.sleepy             { border-left: 5px solid #BDBDBD; }
+.wttable-show * td.sleepy span {
    display: block;
    float: right;
    width: 15px;
    height: 15px;
    background-position: middle center;
    background-repeat: no-repeat;
-   background-image: url('deadman.gif');
+   background-image: url('sleepy.gif');
 }
 
 .wttable-show * th { padding: 0 2px; }
@@ -297,6 +297,13 @@ table.tablesorter tbody td {
 .wttable-show.ranking-weekend .played { display: none; }
 .wttable-show.ranking-cities  .played { display: none; }
 
+/* Show 'sleepy marker', a gray asterisk */
+.wttable-show-sleepymarker {
+   color: #6592cf;
+   font-weight: bold;
+   padding-right: 3px;
+}
+
 @media screen and (max-width: 1200px) {
    #content .wttable-show-ranking th:nth-child(4),
    #content .wttable-show-ranking th:nth-child(5),
@@ -349,7 +356,7 @@ table.tablesorter tbody td {
 .colorlegend-wrapper ul li.automat   input[type="submit"] { background-color: black;   }
 .colorlegend-wrapper ul li.mitteltip input[type="submit"] { background-color: #FF6600; }
 .colorlegend-wrapper ul li.referenz  input[type="submit"] { background-color: #3864a0; }
-.colorlegend-wrapper ul li.deadman   input[type="submit"] { background-color: #BDBDBD; }
+.colorlegend-wrapper ul li.sleepy   input[type="submit"] { background-color: #BDBDBD; }
 .colorlegend-wrapper ul li input[type="submit"].inactive {
    background-image: url("../images/wetterturnier_X.svg");
    background-size: 100% 100%;   

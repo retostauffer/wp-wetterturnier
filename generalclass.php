@@ -759,7 +759,7 @@ class wetterturnier_generalclass
     /// @param $userID. Integer, numeric user ID.
     /// @param $user_login. String containing the user_login name.
     /// @return stdClass containing two strings. `userclass` contains
-    ///   the main class (automat, referenz, mitteltip, or deadman), 
+    ///   the main class (automat, referenz, mitteltip, or Sleepy), 
     ///   `username` the modified username.
     // ------------------------------------------------------------------
     public function get_user_display_class_and_name($userID,$usr) {
@@ -772,8 +772,8 @@ class wetterturnier_generalclass
        } else if ( substr($usr->user_login,0,4) == 'GRP_' ) {
           $userclass = 'mitteltip';
           $username  = str_replace('GRP_','',$usr->user_login).' '.__('[group]','wpwt');
-       } else if ( strtolower($usr->user_login) == 'deadman' ) {
-          $userclass = 'deadman';
+       } else if ( strtolower($usr->user_login) == 'Sleepy' ) {
+          $userclass = 'Sleepy';
           $username  = sprintf('%s <span></span>',$usr->user_login);
        } else { $userclass = 'player'; }
        $res = new stdClass();
@@ -993,15 +993,15 @@ class wetterturnier_generalclass
         $tdsql = sprintf($tdsql,$wpdb->prefix,$city_slug,(int)$tdate_first,(int)$tdate_last);
         $tdate_count = count($wpdb->get_results($tdsql));
 
-        // Loading userID for the Deadman player (to compute points
+        // Loading userID for the Sleepy player (to compute points
         // for players without a bet).
-        $deadman = $this->get_user_by_username('Deadman');
-        if ( ! $deadman ) { die('Could not find userID for Deadman! Stop! Error!'); }
+        $sleepy = $this->get_user_by_username('Sleepy');
+        if ( ! $sleepy ) { die('Could not find userID for Sleepy! Stop! Error!'); }
 
         // [1] create the sql_usrdate statement.
         //     This statement gets a full but unique
         //     list of CITY/DATE/USER. We need this
-        //     to fill in the points and deadman points later on.
+        //     to fill in the points and sleepy points later on.
         $sql_usrdate = array();
         array_push($sql_usrdate,"      SELECT dateUsr.cityID, dateUsr.userID, dateDate.tdate FROM (");
         array_push($sql_usrdate,"         SELECT cityID, userID FROM %swetterturnier_betstat");
@@ -1016,16 +1016,16 @@ class wetterturnier_generalclass
         //print "<div style='font-weight:bold;'>[1] sql_usrdate</div>";
         //printf( join("<br>\n",$sql_usrdate),
         //        $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,
-        //        $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,(int)$deadman->ID);
+        //        $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,(int)$sleepy->ID);
         $sql_usrdate = sprintf( join("\n",$sql_usrdate),
                        $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,
-                       $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,(int)$deadman->ID);
+                       $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,(int)$sleepy->ID);
         //sprintf("<div style='font-weight:bold;'>%d</div>",
         //      count($wpdb->get_results($sql_usrdate)));
         
         
-        // [2] The second thing we need are the points of the deadman.
-        //     The deadman is the user containing the points for all the
+        // [2] The second thing we need are the points of the sleepy.
+        //     The sleepy is the user containing the points for all the
         //     players not having inserted a bet and therefore get the
         //     mean-std points for this weekend.
         $sql_dead = array();
@@ -1035,15 +1035,15 @@ class wetterturnier_generalclass
         
         //print "<div style='font-weight:bold;'>[2] sql_dead</div>";
         //printf( join("<br>\n",$sql_dead),
-        //        $wpdb->prefix,(int)$deadman->ID,$city_slug,(int)$tdate_first,(int)$tdate_last);
+        //        $wpdb->prefix,(int)$sleepy->ID,$city_slug,(int)$tdate_first,(int)$tdate_last);
         $sql_dead = sprintf( join("\n",$sql_dead),
-                       $wpdb->prefix,(int)$deadman->ID,$city_slug,(int)$tdate_first,(int)$tdate_last);
+                       $wpdb->prefix,(int)$sleepy->ID,$city_slug,(int)$tdate_first,(int)$tdate_last);
         //printf("<div style='font-weight:bold;'>%d</div>",
         //      count($wpdb->get_results($sql_dead)));
         
-        // [3] Now we have the deadman and the USER/DADTE/CITY combination.
+        // [3] Now we have the sleepy and the USER/DADTE/CITY combination.
         //     We can combine now the points based on USR/DATE/CITY from
-        //     the user itself and the deadman. Note: not yet the sum
+        //     the user itself and the sleepy. Note: not yet the sum
         //     over the periode tdate_first to tdate_last. There is
         //     a step [4] to get the sum of points.
         $sql_points = array();

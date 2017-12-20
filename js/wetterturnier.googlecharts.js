@@ -61,10 +61,10 @@ jQuery(document).on('ready',function() {
          var wtdata;
          // Input arguments to ajax call
          var args = { action:"timeseries_user_points_ajax", userID:inputs.userID, cityID:inputs.cityID,
-                      deadman: inputs.deadman, column: inputs.column } 
+                      sleepy: inputs.sleepy, column: inputs.column } 
 
          // Enable options for this plot type
-         $.each( ["#plot-type","#user-search","#selected-users","#cityID","#deadman","#pointselector"], function(k,v) {
+         $.each( ["#plot-type","#user-search","#selected-users","#cityID","#sleepy","#pointselector"], function(k,v) {
             $("#chart-options").children(v).show()
          });
 

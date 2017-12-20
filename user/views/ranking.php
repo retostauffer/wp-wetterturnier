@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2017-12-20 08:46 on thinkreto
+# - L@ST MODIFIED: 2017-12-20 18:22 on thinkreto
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -30,11 +30,11 @@ if ( is_bool($args->city) | $args->city == 'false' ) {
 }
 
 // ------------------------------------------------------------------
-// Loading userID for the Deadman player (to compute points
+// Loading userID for the Sleepy player (to compute points
 // for players without a bet).
 // ------------------------------------------------------------------
-$deadman = $WTuser->get_user_by_username('Deadman');
-if ( ! $deadman ) { echo('Could not find userID for Deadman! Stop! Error!'); return; }
+$sleepy = $WTuser->get_user_by_username('Sleepy');
+if ( ! $sleepy ) { echo('Could not find userID for Sleepy! Stop! Error!'); return; }
 
 // ------------------------------------------------------------------
 // Getting "date" information if nothing is given
@@ -340,6 +340,7 @@ if ( empty($ranking->data) && ($today-$tdate) <= 1 ) {
    }
 
    // Width of the points status bar
+   $show_sleepy_note = False;
    $points_hold = 99999; $rank = 0; $hidden_rank = 0;
    $points_leader = $ranking->data[0]->points;
    foreach ( $ranking->data as $rec ) {
@@ -389,14 +390,26 @@ if ( empty($ranking->data) && ($today-$tdate) <= 1 ) {
          $user_name = $WTuser->get_user_profile_link( $rec ); //->user_login );
       }
 
+      // Show an asteriks if not played all tournaments to indicate
+      // that Saturdau and Sunday Points do NOT SUM UP to total points
+      // as sleepy is used to fillup!
+      if ( $rec->played < $ranking->tdate_count ) {
+         $show_sleepy_note = True;
+         $sleepy_marker    = "<span class='wttable-show-sleepymarker'>*</span>";
+      } else { $sleepy_marker = ""; } 
       // Show the data
       echo "  <tr class='".$rec_tmp->userclass."' userid='".$rec->userID."'>\n"
           ."    <td class=\"rank ".$rec_tmp->userclass."\">".$rank."</td>\n"
           ."    <td class=\"played\">".$rec->played."/".$ranking->tdate_count."</td>\n"
           ."    <td class=\"user\">".$edit_button.$user_details.$user_name."</td>\n";
       if ( ! $args->slim ) {
-         echo "    <td class=\"points\">".$this->number_format($rec->points_d1,1)."</td>\n"
-             ."    <td class=\"points\">".$this->number_format($rec->points_d2,1)."</td>\n";
+         if ( $rec->userID == 1130 ) {
+            echo "    <td class=\"points\">---</td>\n"
+                ."    <td class=\"points\">---</td>\n";
+         } else {
+            echo "    <td class=\"points\">".$sleepy_marker.$this->number_format($rec->points_d1,1)."</td>\n"
+                ."    <td class=\"points\">".$sleepy_marker.$this->number_format($rec->points_d2,1)."</td>\n";
+         }
       }
       echo "    <td class=\"points\">".$this->number_format($rec->points,1)."</td>\n";
       if ( ! $args->slim ) {
@@ -407,6 +420,12 @@ if ( empty($ranking->data) && ($today-$tdate) <= 1 ) {
    }
    // End table
    echo "</table>\n";
+
+   // Show sleepy note
+   if ( $show_sleepy_note ) {
+      printf("<span class='wttable-show-sleepymarker'>*</span> %s",
+             __("Points marked with a blue asterisk indicate are the points the players got but they do not sum up to the total points. Reason: they have not played all tournaments. For all tournaments they did not participate they get the \"Sleepy\" points, but these points do only exist for the whole weekend but not for the individual days. Therefore the \"total points\" are comparable across all playres, the individual points only for those having the same number of participations.","wpwt"));
+   }
 
 }
 

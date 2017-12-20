@@ -1036,9 +1036,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                      <span><input class="settings-button" type="submit" name="referenz" value="" /></span>
                      <?php _e("Reference method","wpwt"); ?>
                   </li>
-                  <li class="deadman">
-                     <span><input class="settings-button" type="submit" name="deadman" value="" /></span>
-                     <?php _e("Deadman","wpwt"); ?>
+                  <li class="sleepy">
+                     <span><input class="settings-button" type="submit" name="sleepy" value="" /></span>
+                     <?php _e("Sleepy","wpwt"); ?>
                   </li>
                </ul>
     <?php }
@@ -1338,17 +1338,17 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // Create all the rows
         foreach ( $data->data as $rec ) {
 
-            // There is a user called the Deadman which contains
+            // There is a user called the Sleepy  which contains
             // the points for non-players. There are only
             // points, no bets. Therefore just show 'n' instead
             // of values.
-            // Decide if this is the deadman player
+            // Decide if this is the sleepy player
             // WARNING: has to be done before get_user_display_class_and_name
             // will be called (or at least before $rec->username will be
             // overwritten).
-            if ( strcmp( strtolower($rec->user_login),'deadman' ) == 0 ) {
-                $deadman = True;
-            } else { $deadman = False; }
+            if ( strcmp( strtolower($rec->user_login),'sleepy' ) == 0 ) {
+                $sleepy = True;
+            } else { $sleepy = False; }
 
             // Reset sumpoints (sum of points for the player)
             $sumpoints = 0.0;
@@ -1413,8 +1413,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                         printf("      <td class=\"data changed-status\" title=\"%s\">%s</td>\n",
                                  $title, $showval);
                     } else {
-                        // Deadman should never be shown - but just in case :) 
-                        if ( $deadman ) {
+                        // Sleepy  should never be shown - but just in case :) 
+                        if ( $sleepy ) {
                            printf("      <td class=\"data\">----</td>\n");
                         // Show cell "normal", unmodified
                         } else {
@@ -1483,19 +1483,19 @@ class wetterturnier_userclass extends wetterturnier_generalclass
          $current = $this->current_tournament(0,false,0,true);
          $tdate   = $current->tdate;
       } 
-      $deadman = $this->get_user_by_username('Deadman');
+      $sleepy = $this->get_user_by_username('Sleepy');
       // Generate SQL statement
       $sql = sprintf("SELECT AVG(points) AS points FROM %swetterturnier_betstat WHERE tdate=%d "
                     ."AND cityID=%d AND userID != %d",$wpdb->prefix,
-                     $tdate,$cityID,$deadman->ID);
+                     $tdate,$cityID,$sleepy->ID);
       $res = $wpdb->get_row( $sql );
       return $this->number_format($res->points,1);
    }
 
    // ---------------------------------------------------------------
-   // Loading current deadman points 
+   // Loading current sleepy points 
    // ---------------------------------------------------------------
-   public function get_deadman_points( $cityID=False, $tdate=False ) {
+   public function get_sleepy_points( $cityID=False, $tdate=False ) {
       
       global $wpdb;
 
@@ -1509,11 +1509,11 @@ class wetterturnier_userclass extends wetterturnier_generalclass
          $current = $this->current_tournament(0,false,0,true);
          $tdate   = $current->tdate;
       } 
-      $deadman = $this->get_user_by_username('Deadman');
+      $sleepy = $this->get_user_by_username('Sleepy');
       // Generate SQL statement
       $sql = sprintf("SELECT points FROM %swetterturnier_betstat WHERE tdate=%d "
                     ."AND cityID=%d AND userID = %d",$wpdb->prefix,
-                     $tdate,$cityID,$deadman->ID);
+                     $tdate,$cityID,$sleepy->ID);
       $res = $wpdb->get_row( $sql );
       return $this->number_format($res->points,1);
    }

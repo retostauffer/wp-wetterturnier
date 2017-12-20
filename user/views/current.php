@@ -78,7 +78,7 @@ foreach ( $showdays as $showday ) {
                         <desc><?php _e("Judging for people without attendance:","wpwt"); ?></desc>
                      </td>
                      <td>
-                        <?php print $WTuser->get_deadman_points(); ?>
+                        <?php print $WTuser->get_sleepy_points(); ?>
                         &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
                      </td>
                      </td>

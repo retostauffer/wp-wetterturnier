@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wpwt\n"
-"POT-Creation-Date: 2017-08-27 19:49+0200\n"
-"PO-Revision-Date: 2017-08-27 19:49+0200\n"
+"POT-Creation-Date: 2017-12-20 18:22+0100\n"
+"PO-Revision-Date: 2017-12-20 18:25+0100\n"
 "Last-Translator: Reto Stauffer <reto.stauffer@uibk.ac.at>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -103,6 +103,7 @@ msgstr "Konfiguration"
 
 #: admin/classes/api_list.php:71 admin/classes/cities_list.php:60
 #: admin/classes/param_list.php:35 admin/classes/stations_list.php:59
+#: user/views/userprofile.php:98
 msgid "Name"
 msgstr "Name"
 
@@ -660,7 +661,7 @@ msgstr "Kein Stress!"
 msgid "More than one day left to submit the bet."
 msgstr "Noch mehr als ein Tag bis das Abgabeformular schliesst."
 
-#: betclass.php:910 generalclass.php:914
+#: betclass.php:910 generalclass.php:917
 msgid "hours"
 msgstr "Stunden"
 
@@ -676,7 +677,7 @@ msgstr "Immer noch etwas mehr als eine Stunde bis Abgabeschluss."
 msgid "The form closes in about"
 msgstr "Das Abgabeformular schliesst in etwa"
 
-#: betclass.php:915 betclass.php:918 generalclass.php:910 generalclass.php:915
+#: betclass.php:915 betclass.php:918 generalclass.php:913 generalclass.php:918
 msgid "minutes"
 msgstr "Minuten"
 
@@ -798,89 +799,89 @@ msgstr "Nicht verfügbar"
 msgid "Show profile"
 msgstr "Zum Profil"
 
-#: generalclass.php:771
+#: generalclass.php:774
 msgid "[group]"
 msgstr "[Gruppe]"
 
-#: generalclass.php:828
+#: generalclass.php:831
 msgid "There is an ongoing tournament right now."
 msgstr "Keine Hilfe verfügbar"
 
-#: generalclass.php:829
+#: generalclass.php:832
 msgid "Current values can be found here:"
 msgstr "Die aktuellen Werte findest du hier:"
 
-#: generalclass.php:830
+#: generalclass.php:833
 msgid "Link ... "
 msgstr "Link ..."
 
-#: generalclass.php:837
+#: generalclass.php:840
 msgid "Sorry, no access to these bet form"
 msgstr "Sorry, im Moment kein Zugriff auf das Abgabeformular"
 
-#: generalclass.php:838
+#: generalclass.php:841
 #, php-format
 msgid "The form to submit tips always opens %d days in advance."
 msgstr "Das Abgabeformular öffnet jeweils %d Tage vor dem Turnier"
 
-#: generalclass.php:840
+#: generalclass.php:843
 #, php-format
 msgid "Next tournament will take place on %s"
 msgstr "Das nexte Turnier findet am %s statt"
 
-#: generalclass.php:842
+#: generalclass.php:845
 #, php-format
 msgid "The bet form opens %s"
 msgstr "Das Abgabeformular dafür öffnet am/um %s"
 
-#: generalclass.php:852
+#: generalclass.php:855
 msgid "Sorry, no access to these bet form."
 msgstr "Sorry, kein Zugriff auf das Tippspiel."
 
-#: generalclass.php:853
+#: generalclass.php:856
 msgid "The form to submit tips for todays tournament is allready closed."
 msgstr "Tas Abgabeformular für das heutige Tippspiel ist bereits geschlossen."
 
-#: generalclass.php:854
+#: generalclass.php:857
 #, php-format
 msgid "The next tournament will take place on %s"
 msgstr "Das nächste Turnier findet statt am %s"
 
-#: generalclass.php:883
+#: generalclass.php:886
 msgid "The requested tournament date is in the future."
 msgstr "Das angefragte Turnier-Datum liegt in der Zukunft."
 
-#: generalclass.php:884
+#: generalclass.php:887
 msgid "Do you try to cheat, bro?"
 msgstr "Was probierst du da?"
 
-#: generalclass.php:906
+#: generalclass.php:909
 msgid "Sorry, no access to these data."
 msgstr "Sorry, kein Zugriff auf diese Daten."
 
-#: generalclass.php:907
+#: generalclass.php:910
 msgid "We will show the current bets as soon as the bet-form has been closed."
 msgstr ""
 "Die aktuellen Tipps und abgegebenen Werte werden angezeigt, sobald das "
 "Abgabeformular geschlossen ist."
 
-#: generalclass.php:910 generalclass.php:916
+#: generalclass.php:913 generalclass.php:919
 msgid "You can see the newest tips in "
 msgstr "Du kannst die neuesten Tipps in"
 
-#: generalclass.php:914
+#: generalclass.php:917
 msgid "hour"
 msgstr "Stunde"
 
-#: generalclass.php:915
+#: generalclass.php:918
 msgid "minute"
 msgstr "Minute"
 
-#: generalclass.php:916 user/views/userprofile.php:68
+#: generalclass.php:919 user/views/userprofile.php:68
 msgid "and"
 msgstr "und"
 
-#: generalclass.php:924
+#: generalclass.php:927
 msgid ""
 "If you would like to submitt a bet please go to \"TOURNAMENT\" in the "
 "navigation."
@@ -1042,8 +1043,8 @@ msgid "Reference method"
 msgstr "Referenzmethode"
 
 #: user/userclass.php:1041
-msgid "Deadman"
-msgstr "Deadman"
+msgid "Sleepy"
+msgstr "Sleepy"
 
 #: user/userclass.php:1096
 msgid ""
@@ -1196,7 +1197,7 @@ msgstr "Platz"
 msgid "th"
 msgstr "er"
 
-#: user/userclass.php:2024
+#: user/userclass.php:2033
 msgid "points"
 msgstr "Punkte"
 
@@ -1501,6 +1502,25 @@ msgstr "Die maximal zu erreichende Punktzahl ist"
 msgid "Difference"
 msgstr "Unterschied"
 
+#: user/views/ranking.php:427
+msgid ""
+"Points marked with a blue asterisk indicate are the points the players got "
+"but they do not sum up to the total points. Reason: they have not played all "
+"tournaments. For all tournaments they did not participate they get the "
+"\"Sleepy\" points, but these points do only exist for the whole weekend but "
+"not for the individual days. Therefore the \"total points\" are comparable "
+"across all playres, the individual points only for those having the same "
+"number of participations."
+msgstr ""
+"Punkte die mit einem blauen Sternchen markiert bestehen aus der Summe der "
+"Punkte, die der Spieler selbst erreicht hat durch seine Teilnahme. An "
+"Wochenenden an denen der Mitspieler nicht teilgenommen hat bekommt er/sie "
+"die Punkte von \"Sleepy\". \"Sleepy\" vergibt jedoch nur Wochenendpunkte und "
+"keine Punkte für die einzelnen Tage, weshalb sich die Punkte der "
+"individuellen Tage nicht zur Gesamtpunktzahl aufsummieren. Die "
+"Gesamtpunktzahl ist für alle Spieler vergleichbar, die individuellen Tages-"
+"Punkte nur bei Spielern, die dieselbe Anzahl an Teilnahmen haben."
+
 #: user/views/register.php:9
 msgid "Email"
 msgstr "Email"
@@ -1534,10 +1554,6 @@ msgstr "zwischen"
 #: user/views/userprofile.php:73
 msgid "<span style='color: gray;'>Never participated</span>"
 msgstr "Bisher nie teilgenommen"
-
-#: user/views/userprofile.php:98
-msgid "Real-life name"
-msgstr "Tatsächlicher Name"
 
 #: user/views/userprofile.php:99
 msgid "Registered since"
@@ -1591,19 +1607,24 @@ msgstr "Nachrichten"
 msgid "Wetterturnier Blitzortung"
 msgstr "Wetterturnier Blitzortung"
 
-#: user/widgets/blitzortung.php:120
+#: user/widgets/blitzortung.php:121
 msgid "Information about last run not available!"
 msgstr "Informationen über den letzten Lauf nicht verfügbar!"
 
-#: user/widgets/blitzortung.php:123
+#: user/widgets/blitzortung.php:124
 msgid "Last run: "
 msgstr "Letzter Lauf:"
 
-#: user/widgets/blitzortung.php:132
+#: user/widgets/blitzortung.php:133
+msgid "Cannot display lightning data, \"lastrun\" file not found!"
+msgstr ""
+"Kann die Blitzaktivität nicht anzeigen, \"lastrun\" Datei nicht gefunden."
+
+#: user/widgets/blitzortung.php:137
 msgid "Seems that we have lost the lightning data stream!"
 msgstr "Sieht aus, als hätten wir den Blitzortungs-Datenstream verloren!"
 
-#: user/widgets/blitzortung.php:136
+#: user/widgets/blitzortung.php:141
 msgid "Currently no lightning activity in the region."
 msgstr "Im Moment keine Blitzaktivität in der Umgebung."
 
@@ -1699,6 +1720,9 @@ msgstr "Wetterturnier Webcams"
 #: wp-wetterturnier.php:112
 msgid "Wetterturnier Admin"
 msgstr "Wetterturnier Admin"
+
+#~ msgid "Real-life name"
+#~ msgstr "Tatsächlicher Name"
 
 #~ msgid "Display name"
 #~ msgstr "Anzeigename"

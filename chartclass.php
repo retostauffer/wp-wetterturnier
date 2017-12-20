@@ -50,8 +50,8 @@ class wetterturnier_chartHandler {
    ///   and a string on $_POST['userID'] which can be a single integer or a list
    ///   of comma separated user ID's.
    ///   Uses $_POST arguments. cityID: an integer; userID: one integer
-   ///   or a colon separated list of several userID's; deadman (if missing
-   ///   default will be set to 1), deadman takes either 0 or 1.
+   ///   or a colon separated list of several userID's; Sleepy (if missing
+   ///   default will be set to 1), Sleepy takes either 0 or 1.
    ///   column (default is set to 'points' which is full weekend points),
    ///   can also be 'points_d1' for Saturday or 'points_d2' for Sunday.   
    // ---------------------------------------------------------------
@@ -60,9 +60,9 @@ class wetterturnier_chartHandler {
       global $WTuser;
 
       $args = (object)$_POST;
-      // Append default deadman = 1 (show deadman)
-      if ( ! property_exists($args,"deadman") ) { $args->deadman = 1; }
-      else                                      { $args->deadman = (int)$args->deadman; }
+      // Append default Sleepy = 1 (show Sleepy)
+      if ( ! property_exists($args,"sleepy") ) { $args->sleepy = 1; }
+      else                                      { $args->sleepy = (int)$args->sleepy; }
 
       if ( ! property_exists($args,"column") ) { $args->column = "points"; }
 
@@ -80,13 +80,13 @@ class wetterturnier_chartHandler {
       $sql = array();
       array_push($sql,"SELECT * FROM");
       array_push($sql,"(SELECT dead.tdate*86400 AS timestamp, "); // Begin of ( ) AS tmp table
-      array_push($sql," ROUND(dead.points,2) AS deadman,");
+      array_push($sql," ROUND(dead.points,2) AS sleepy,");
       $playerdata = array();
       for ( $i=0; $i < count($users); $i++ ) { 
-         if ( ! $args->deadman ) {
+         if ( ! $args->sleepy ) {
             array_push($playerdata,sprintf(" ROUND(p%d.points,2) AS player%d",$i+1,$i+1));
          } else {
-            // Fill missing (not played) weekends with deadman points
+            // Fill missing (not played) weekends with sleepy points
             array_push($playerdata,sprintf(" ROUND(CASE WHEN p%d.points IS NULL THEN "
                        ."dead.points ELSE p%d.points END,2) AS player%d",$i+1,$i+1,$i+1));
          }
@@ -105,7 +105,7 @@ class wetterturnier_chartHandler {
       array_push($sql,") AS tmp"); // End of ( ) AS tmp table
 
       // Kill empty lines
-      if ( ! $args->deadman ) {
+      if ( ! $args->sleepy ) {
          $wherenot = array();
          for ( $i = 0; $i < count($users); $i++ )
          { array_push($wherenot,sprintf("player%d IS NOT NULL",$i+1)); }
@@ -134,7 +134,7 @@ class wetterturnier_chartHandler {
       $result->title       = __("Full weekend points","wpwt");
 
       // Append readable usernames
-      $result->user_login  = array("Deadman");
+      $result->user_login  = array("Sleepy");
       for ( $i = 0; $i < count($users); $i++ ) {
          $tmp = $WTuser->get_user_by_ID( (int)$users[$i] );
          array_push($result->user_login,$tmp->user_login);

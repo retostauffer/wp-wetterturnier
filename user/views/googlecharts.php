@@ -61,12 +61,12 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
                $("#selected-users li.placeholder").show()
             } else { $("#selected-users li.placeholder").hide()  }
 
-            // Getting deadman option
+            // Getting sleepy option
             var opt_column    = $("#chart-options").find("[name='opt-column']:checked").val()
             if ( opt_column !== "points" ) {
-               $("#chart-options").find("[name='opt-deadman'][value='0']").attr("checked",true)
+               $("#chart-options").find("[name='opt-sleepy'][value='0']").attr("checked",true)
             }
-            var opt_deadman   = $("#chart-options").find("[name='opt-deadman']:checked").val()
+            var opt_sleepy   = $("#chart-options").find("[name='opt-sleepy']:checked").val()
             var opt_cityID    = $("#chart-options").find("[name='opt-cityID']").val()
 
             // Read selected users
@@ -80,7 +80,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
 
             // Argument options for googlechart function call
             if ( call === "timeseries_user_points" ) {
-               var opts = {call: call, userID: uid, cityID: opt_cityID, deadman: opt_deadman,
+               var opts = {call: call, userID: uid, cityID: opt_cityID, sleepy: opt_sleepy,
                            column: opt_column }
             } else if ( call === "participants_counts" ) {
                var opts = {call: call, cityID: opt_cityID}
@@ -221,10 +221,10 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
       ?>
       </select>
    </div>
-   <div id="deadman">
-      <b>Expand with Deadman:</b>&nbsp;
-      <input class="observe" type="radio" name="opt-deadman" value="0"> No
-      <input class="observe" type="radio" name="opt-deadman" value="1" checked> Yes
+   <div id="sleepy">
+      <b>Expand with Sleepy:</b>&nbsp;
+      <input class="observe" type="radio" name="opt-sleepy" value="0"> No
+      <input class="observe" type="radio" name="opt-sleepy" value="1" checked> Yes
    </div>
    <div id="pointselector">
       <b>Show points for Saturday/Sunday/Total:</b>&nbsp;
