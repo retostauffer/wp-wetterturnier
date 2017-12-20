@@ -97,6 +97,9 @@ class wetterturnier_generalclass
         }
         $options->wetterturnier_bet_closing_timestamp = $lock;
 
+        // Loading floatin point format
+        $this->load_float_format();
+
         return( $options );
     }
 
