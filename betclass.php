@@ -861,7 +861,6 @@ class wetterturnier_betclass
                   $WTuser->datetime_format($ct,"%H:%M %Z"));
             printf("<div class='wetterturnier-info warning'>%s <span class='big'>%s</span> %s, "
                   ."<span class='big'>%s</span>.<br><span class='big' id='live-closingstring'></span> "
-                  ."<span class='big' id='live-closingtime'></span>"
                   ."</div>",
                   __("Form closes","wpwt"),$WTuser->date_format($tournament->tdate,"%A"),
                   $WTuser->date_format($ct/86400),
@@ -898,6 +897,9 @@ class wetterturnier_betclass
             <?php // Only if not admin and not station 
             if ( ! $admin_mode && ! $isstation ) { ?>
                closingstring( <?php print $ct; ?> );
+               ///////////function getServerTime() {
+               ///////////   return $.ajax({async: false}).getResponseHeader( 'Date' );
+               ///////////}
                function show_closingstring( timestamp ) {
                   var now  = parseInt( $.now() / 1000 )
                   var diff = timestamp - now
@@ -928,18 +930,9 @@ class wetterturnier_betclass
                   $("#live-closingstring").html( val )
                }
                // Sever time
-               function getServerTime() {
-                  var x = $.ajax({async: false}).getResponseHeader( 'Date' );
-                  return x
-               }
-               function show_servertime() {
-                  $("#live-closingtime").html( getServerTime() )
-               }
                function closingstring( timestamp ) {
                   show_closingstring(timestamp)
-                  show_servertime();
                   var intv = self.setInterval( function() { show_closingtime(timestamp) }, 1000 ) 
-                  var intv2 = self.setInterval( function() { show_servertime() }, 100 ) 
                }
                closingstring( timestamp );
                //function closingtime( timestamp ) {
