@@ -40,7 +40,11 @@ $actionlink =  sprintf("%s?page=%s",$WTadmin->curPageURL( true ),$_REQUEST["page
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input type='radio' name='active' value='1' <?php if ( $group->active == 1 ) { print 'checked'; } ?>> Active<br>
         <fd>&nbsp;</fd>
-        <span style='color: red;'>WARNING: IF YOU CHANGE TO INACTIVE IT IS PERMANENT!</span>
+        <span style='color: red;'>WARNING: IF YOU CHANGE TO INACTIVE IT IS PERMANENT!
+        Permanent meens: if you change the group name the group will from now on have this
+        new name. The old group bets will KEEP THEIR OLD NAME and the history is getting lost.
+        After renaming a new wordpress user will be created (GRP_&lt;newname&gt;). The points
+        will then be written on this new user. So please be sure what you do!</span>
 
         <input type='hidden' name='groupID' value='<?php print $group->groupID; ?>'>
 
