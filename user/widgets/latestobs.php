@@ -203,10 +203,8 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
 
                 // Nothing shown?
                 if ( $count == 0 ) {
-                    //printf("<gray>%s</gray>",__("Sorry, no valid observations available for station %s within "
-                    //        ."the last %d hours.","wpwt"),$stn->wmo,$nhours);
                     printf( "%s %s",
-                            sprintf(__("Sorry, no valid observations available for station %s within ","wpwt"),$stn->wmo),
+                            sprintf(__("Sorry, no valid observations available for station %s within ","wpwt"),$stnObj->get("wmo")),
                             sprintf(__("the last %d hours","wpwt"),$nhours) );
                 }
             }
