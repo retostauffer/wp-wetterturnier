@@ -1003,7 +1003,7 @@ class wetterturnier_generalclass
 
         // Count number of tournaments between these two dates
         $tdsql = 'SELECT tdate FROM %swetterturnier_betstat WHERE %s '
-                .'AND tdate >= %d AND tdate <= %d GROUP BY tdate';
+                .'AND tdate >= %d AND tdate <= %d AND rank IS NOT NULL GROUP BY tdate';
         $tdsql = sprintf($tdsql,$wpdb->prefix,$city_slug,(int)$tdate_first,(int)$tdate_last);
         $tdate_count = count($wpdb->get_results($tdsql));
 
