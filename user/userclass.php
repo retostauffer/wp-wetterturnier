@@ -676,16 +676,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        foreach ( $this->get_all_cityObj() as $cityObj ) {
           // Fetching stations
           foreach ( $cityObj->stations() as $stnObj ) {
-            $tmp = $stnObj->nullconfig();
-            if ( is_null($tmp) ) { continue; }
-            $nullArr = array();
-            foreach ( $tmp as $rec ) {
-               array_push($nullArr,sprintf("<span class='wtcode'>%s</span>",$rec));
-            }
+            $inactive_params = $stnObj->showInactiveParams();
+            if ( is_null($inactive_params) ) { continue; }
             // Else
-            array_push($res,sprintf("<li>%s, <b>%s</b> (%d): %s %s</li>",
+            array_push($res,sprintf("<li>%s, <b>%s</b> (%d): <span class='wtcode'>%s</span> %s</li>",
                $cityObj->get("name"),$stnObj->get("name"),$stnObj->get("wmo"),
-               join(", ",$nullArr),__("will not be considered","wpwt")));
+               $inactive_params,__("will not be considered","wpwt")));
           }
        }
        array_push($res,"</ul>");
@@ -1377,17 +1373,22 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                   ."      <td class='day'>%s</td>\n",$number,$rec->userclass,$rec->userID,
                   $rec->userclass,$edit_button,$user_detail,$day);
 
-
             // Adding values
             foreach ( $data->params as $param ) {
 
                 $phash = sprintf("pid_%d",$param->paramID);
+
                 // If observation, check if this parameter
-                // was set to null-parameter in nullconfig (database).
-                // In this case display a 'n'.
-                if ( $obs && $this->is_paramid_in_config($param->paramID,$rec->nullconfig) )
-                {
-                    echo "      <td class='data'>n</td>\n";
+                // was active for parameter $param->paramID and $tdate. If not, display "n".
+                if ( $obs ) {
+                   $stationID = $this->get_station_by_wmo( (int)$rec->wmo)->ID;
+                   $paramObj  = new wetterturnier_paramObject( $param->paramID, "ID", $tdate );
+                   $active    = $paramObj->isParameterActive( $stationID );
+                } else { $active = false; } // Default
+
+                // If observation and not active: show the "n" now
+                if ( $obs && ! $active ) {
+                    echo "      <td class='data' style='color: #BDBDBD;'>n</td>\n";
                 // Normal procedure
                 } else if ( property_exists($rec,$phash) ) {
 

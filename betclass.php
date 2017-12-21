@@ -1136,12 +1136,7 @@ class wetterturnier_betclass
       // Getting propper current page url
       global $WTuser;
       $curURL = $WTuser->curPageURL();
-      $station = $WTuser->get_station_by_wmo( $station );
-      if ( strlen($station->nullconfig) > 0 ) {
-         $station->nullconfig = json_decode($station->nullconfig);
-      } else {
-         $station->nullconfig = array();
-      }
+      $stnObj = new wetterturnier_stationObject( $station, "wmo" );
 
       // ------------------------------------------------------------
       // Looping over all necessary forecast days
@@ -1167,16 +1162,16 @@ class wetterturnier_betclass
 
       // Adding data ul's
       for ( $day=1; $day <= $obj->betdays; $day++ ) {
-         $data = $WTuser->get_obs_from_db($station->wmo,$tournament,$day);
+         $data = $WTuser->get_obs_from_db($stnObj->get("wmo"),$tournament,$day);
          $day_string = $WTuser->date_format( (int)$tournament->tdate + $day, "%A" ); 
          printf("<div id=\"wt-betform-%d-wrapper\" class=\"wt-betform %s\">\n",$day,$obj->defaultview);
          printf("<title>%s</title>\n",$day_string);
          print "<ul class=\"wt-betform\">\n";
          // Adding one list element per parameter
-         foreach ( $obj->parameter as $param ) {
-            if ( in_array($param->paramID,$station->nullconfig) )
+         foreach ( $stnObj->getParams() as $paramObj ) {
+            if ( ! $paramObj->isParameterActive( $stnObj->get("ID") ) )
             { $disabled = true; } else { $disabled = false; }
-            $input_name  = sprintf("%s_%d",$param->paramName,$day);
+            $input_name  = sprintf("%s_%d",$paramObj->get("paramName"),$day);
             if ( property_exists($data,$input_name) ) {
                $input_value = (is_null($data->$input_name) ? "-xxx-" : $data->$input_name);
                $nullclass   = (is_null($data->$input_name) ? "setnull" : "");
@@ -1185,8 +1180,8 @@ class wetterturnier_betclass
                $nullclass   = "";
             }
             printf("   <li><input type=\"text\" name=\"%s\" value=\"%s\" "
-                        ."maxlengt=\"6\" class=\"%s\" %s></input></li>",
-                        $input_name,$input_value,$nullclass,($disabled ? " disabled" : "")); 
+                        ."maxlengt=\"6\" %s></input></li>",
+                        $input_name,$input_value,($disabled ? " disabled" : "")); 
          }
          print "</ul>\n" // End ul element
               ."</div>\n"; // End wrapper
@@ -1194,7 +1189,7 @@ class wetterturnier_betclass
       } // End looping over all days
       print "  <input type=\"hidden\" name=\"tdate\" value=\"".$tournament->tdate."\"></input>\n";
       print "  <button type=\"submit\" id=\"save-submit\" name=\"submit\" value=\"save\">\n"
-           .__("Save Observations","wpwt").": [".$station->wmo."] ".$station->name."</button><br>\n"
+           .__("Save Observations","wpwt").": [".$stnObj->get("wmo")."] ".$stnObj->get("name")."</button><br>\n"
            ."</form>";
    
    } // End of print_bet_form()

@@ -68,7 +68,15 @@ $CURRENT = sprintf("http://%s%s?page=%s",$_SERVER['HTTP_HOST'],$REQ_URL[0],$_REQ
        <fd><?php _e('Parameter for city','wpwt'); ?>:</fd>
        <div style='display: block;'>
        <?php
-       $WTadmin->show_parameter_checkboxes($cityObj->get('paramconfig'));
+       // Create checkboxes
+       $html = array();
+       foreach ( $cityObj->getParams() as $paramObj ) {
+          array_push( $html, sprintf("<input type=\"checkbox\" name=\"config_%d\"%s> %s",
+             $paramObj->get("paramID"),
+             ( in_array($paramObj->get("paramID"),$cityObj->get("paramconfig")) ) ? " checked" : "",
+             $paramObj->get("paramName")) );
+       } 
+       print implode(", ",$html);
        ?>
        </div><br>
 

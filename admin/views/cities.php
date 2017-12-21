@@ -13,6 +13,10 @@
    The city will only be hidden for the user (set to inactive). The
    data corresponding to the city won't be lost therefore, and you are
    able to "switch a city off" for a certain time - if needed.
+
+   <b>Disabled parameters:</b> If parameters are disabled they will not
+   be included in the tournament (the bet-form won't show them as soon
+   as they are disabled).
 </help>
 
 <?php
@@ -41,8 +45,8 @@ if ( ! empty($_REQUEST['submit']) && ! empty($_REQUEST['city']) ) {
       }
    }
 
-   // If nullconfig is necessary return string,
-   // else boolean false.
+   // Sets $paramconfig to something. Sorry, forgot what, but looks like
+   // the old 'nullconfig' array. 
    if ( count($paramconfig) == 0 ) { $paramconfig = NULL; }
    else                            { $paramconfig = json_encode($paramconfig); }
 

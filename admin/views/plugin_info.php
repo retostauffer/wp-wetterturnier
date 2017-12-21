@@ -163,7 +163,7 @@ available and theyr options.
    <code>[wetterturnier_meteogram]</code> Meteogram navigation.<br>
    <code>[wc]...[/wc]</code> Shows "..." in code-styling.<br>
    <code>[wetterturnier_stationinfo]</code> Shows a list of all cities and their corresponding stations (used in rules/Spielregeln).<br>
-   <code>[wetterturnier_stationparamdisabled]</code> Shows a list of the stations in use which have a nullconfig (parameters which will not be considered). Used in rules/Spielregeln.<br>
+   <code>[wetterturnier_stationparamdisabled]</code> Shows a list of the stations in use have disabled parameters, parameters which are currently excluded from the tournament. Used in rules/Spielregeln.<br>
 </div>
 
 

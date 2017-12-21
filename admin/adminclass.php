@@ -355,33 +355,6 @@ console.log( dateTomorrow )
    }
 
    // --------------------------------------------------------------
-   // Shows the parameter list. Here you can choose
-   // which station does not observ a certain parameter.
-   /// @param array containing the parameter ID's which checkbox
-   ///   is flagged or not.
-   // --------------------------------------------------------------
-   function show_parameter_checkboxes($nullconfig) {
-
-      global $wpdb;
-
-      // - Loading all param entries from database 
-      $param = $this->get_param_names();
-
-      // - Loop trough all parameters, add a checkbox.
-      //   Checked box means "does only send NULL (not observed
-      //   at a given station).
-      foreach ( $param as $rec ) {
-         // - If checked
-         if ( $this->is_paramid_in_config($rec->paramID,$nullconfig) ) {
-            printf('<input type=\'checkbox\' name=\'config_%d\' checked / > %s&nbsp;&nbsp;',$rec->paramID,$rec->paramName);
-         } else {
-            printf('<input type=\'checkbox\' name=\'config_%d\' / > %s&nbsp;&nbsp;',$rec->paramID,$rec->paramName);
-         }
-      }
-
-   }
-
-   // --------------------------------------------------------------
    // Returns true or fals if a wmo station is in use of a city
    // or not.
    // --------------------------------------------------------------

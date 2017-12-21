@@ -160,6 +160,20 @@ class wetterturnier_cityObject {
       return( $this->stations );
    }
 
+   // ---------------------------------------------------------------
+   /// @details Return parameter object array from first station, they are
+   /// the same (except the 'active' flag which is killed in here)
+   /// for all stations.
+   /// @return Returns an array with paramObjects.
+   // ---------------------------------------------------------------
+   function getParams() {
+      $params = $this->stations[0]->getParams();
+      for ( $i=0; $i<count($params); $i++ ) {
+         $params[$i]->setActive( NULL );
+      }
+      return( $params );
+   }
+
 }
 
 // ------------------------------------------------------------------
@@ -179,6 +193,7 @@ class wetterturnier_stationObject {
    /// Attribute to store the station information. Similar to 
    /// the @ref wetterturnier_cityObject class. Initial value is NULL.
    private $data = NULL;
+   private $params = NULL;
 
    function __construct( $init, $by='ID' ) {
       global $wpdb; $this->wpdb = $wpdb;
@@ -196,37 +211,62 @@ class wetterturnier_stationObject {
                                            ." WHERE ID = %d;", $this->wpdb->prefix, $init));
       }
 
-      // Decode nullconfig (JSON->array)
-      if ( ! is_null( $this->data ) ) {
-         $this->_decode_nullconfig_();
+      // Getting parameter config
+      $params = $this->wpdb->get_results(sprintf("SELECT paramID "
+         ." FROM %swetterturnier_param ORDER BY sort ASC", $wpdb->prefix));
+
+      $this->params = array();
+      foreach ( $params as $rec ) {
+         array_push( $this->params, new wetterturnier_paramObject( $rec->paramID ));
       }
    }
 
    // ---------------------------------------------------------------
-   /// @details There is a json array stored in the database containing
-   ///   the 'nullconfig' (parameters not observed at this station). It
-   ///   is an array of parameter ID's.
-   ///   This function converts the string into an array and stores
-   ///   the result on $this->data->nullconfig.
+   /// @details Helper function, returns a string with all active
+   ///   parameters. 
+   /// @param $active. Boolean, default true for showActiveParams.
+   ///   showInactiveParams (which is only a wrapper) uses $active=false
+   ///   to return inactive parameters, @see showInactiveParams.
+   /// @return Character string with active parameters.
    // ---------------------------------------------------------------
-   function _decode_nullconfig_() {
-      $this->data->nullconfig = json_decode( $this->get('nullconfig') );
-   }
-
-   // ---------------------------------------------------------------
-   /// @details Returns the nullconfig
-   // ---------------------------------------------------------------
-   function nullconfig() {
-      global $WTuser;
-
-      $nullconfig = $this->data->nullconfig;
-      if ( count($nullconfig) === 0 ) { return(Null); }
-      // Else check which parameters are set to null
-      $isnull = array();
-      foreach ( $nullconfig as $paramID ) {
-         array_push($isnull,$WTuser->get_param_by_ID($paramID)->paramName);
+   function showActiveParams( $active = true ) {
+      $param = array();
+      foreach ( $this->getParams() as $paramObj ) {
+         if ( $paramObj->isParameterActive( $this->data->ID ) === $active ) {
+            array_push( $param, $paramObj->get("paramName") );
+         }
       }
-      return( $isnull );
+      return ( count($param) == 0 ) ? NULL : join(",",$param);
+   }
+   // ---------------------------------------------------------------
+   /// @details Helper function, returns a string with all inactive
+   ///   parameters. See also @see showActiveParams.
+   /// @return Character string with inactive parameters.
+   // ---------------------------------------------------------------
+   function showInactiveParams() { return $this->showActiveParams( false ); }
+      
+
+   // ---------------------------------------------------------------
+   /// @details Returns the parameter array containing paramObjects.
+   /// @return Array of @see wetterturnier_paramObjects.
+   // ---------------------------------------------------------------
+   function getParams() { return( $this->params ); }
+
+   // ---------------------------------------------------------------
+   /// @details Helper function for the admin interface. Showas checkboxes
+   ///   for the parameters.
+   /// @return Html code for the checkboxes. Each parameter gets a box which
+   ///   is either checked if active or not checked if inactive.
+   // ---------------------------------------------------------------
+   function showParamCheckboxes() {
+      $html = array();
+      foreach ( $this->getParams() as $paramObj ) {
+         array_push( $html, sprintf("<input type=\"checkbox\" name=\"config_%d\"%s> %s",
+            $paramObj->get("paramID"),
+            ( $paramObj->isParameterActive( $this->data->ID ) ) ? " checked" : "",
+            $paramObj->get("paramName")) );
+      }
+      return( join(", ",$html) );
    }
 
    // ---------------------------------------------------------------
@@ -260,6 +300,13 @@ class wetterturnier_stationObject {
          printf("<br>Content of cityObject->data is<br>\n");
          foreach ( $this->data as $key=>$val ) {
             print "- ".$key." (".gettype($val)."):  ".$val."<br>\n";
+         }
+         // Active parameters
+         if ( is_null($this->showActiveParams()) ) {
+            printf("- Active parameters: NULL<br>\n");
+         } else {
+            printf("- Active parameters %s<br>\n",$this->showActiveParams());
+            printf("- Inactive parameters %s<br>\n",$this->showInactiveParams());
          }
       }
    }
@@ -405,5 +452,109 @@ class wetterturnier_groupsObject {
 
 }
 
+// ------------------------------------------------------------------
+/// @details A class to handle parameter information.
+/// @param $init. Initial value, numeric, required. Depending on
+///   input parameter $by this is either the parameter ID or parameter
+///   shortname.
+/// @param $by. String, default is 'ID'. Allowed are 'ID' or 'paramName'.
+/// @param $tdate. Tournament date (days since 1970-01-01), default is NULL.
+///   if NULL the current date/time is used. If given the system is checking
+///   whether the parameter was active for $tdate or not. This changes
+///   the outcome of the isParameterActive method of this class.
+///
+/// @see wetterturnier_stationObject
+// ------------------------------------------------------------------
+class wetterturnier_paramObject {
+
+   /// Attribute to store the station information. Similar to 
+   /// the @ref wetterturnier_cityObject class. Initial value is NULL.
+   private $data = NULL;
+
+   // ---------------------------------------------------------------
+   /// @details On initialization: load all  groups from the group table.
+   // ---------------------------------------------------------------
+   function __construct( $init, $by = "ID", $tdate = NULL ) {
+      global $wpdb; $this->wpdb = $wpdb;
+
+      if ( ! in_array( $by, array("ID","paramName") ) ) {
+         die("Wrong input to wetterturnier_paramObject. \$by has to be \"ID\" or \"pramName\".");
+      }
+      if ( $by == "ID" & ! is_numeric($init) ) {
+         die("Wrong input to wetterturnier_paramObject. \$init has to be numeric if used with \$by=\"ID\".");
+      }
+
+      // Loading all parameters
+      $sql = sprintf("SELECT * FROM %swetterturnier_param WHERE %s", $this->wpdb->prefix,
+             ( $by == "ID" ) ? sprintf("paramID = %d",$init) : sprintf("paramName = '%s'",$init) );
+             
+      $this->data = $wpdb->get_row($sql);
+
+      // Check for which stations the parameter is active for the current
+      // time stamp anf for which it isnt.
+      $until = ( is_null($tdate) ) ? date("Y-m-d H:i:s") :
+               strftime("%Y-%m-%d %H:%M:%S",(int)($tdate+1)*86400);
+      $sql = sprintf("SELECT stationID, CASE WHEN "
+             ." ( until = 0 OR until >= '%s' ) THEN 1 ELSE 0 END AS active"
+             ." FROM %swetterturnier_stationparams WHERE paramID=%s",
+             $until, $wpdb->prefix, $this->data->paramID);
+      $this->is_active = $wpdb->get_results($sql);
+   }
+
+   // ---------------------------------------------------------------
+   /// @details Checks if the parameter is active for a specific station.
+   /// @param $stationID. Numeric, station identifier ID.
+   /// @return Returns boolean True if parameter is active for station
+   ///   $stationID and false else.
+   // ---------------------------------------------------------------
+   function isParameterActive( $stationID ) {
+      foreach ( $this->is_active as $rec ) {
+         if ( $rec->stationID == $stationID ) { return (bool)$rec->active; }
+      }
+      return false;
+   }
+
+   // ---------------------------------------------------------------
+   /// @details Allows to overrule the 'active' flag in the object.
+   // ---------------------------------------------------------------
+   function setActive( $to ) {
+      $this->data->active = $to;
+   }
+
+   // ---------------------------------------------------------------
+   /// @details This is the main method to extract information from
+   ///   the class. Information should be stored on $this->data which
+   ///   is a private stdClass object or NULL if there was a problem
+   ///   initializing this object (default). The method checks 
+   ///   whether a property on $this->data exists and returns the
+   ///   content. If not found, boolean `false` will be returned.
+   ///
+   /// @param $key. String, name of the property you would like to get,
+   ///   e.g., `ID` or `name`.
+   /// @return Returns `false` or the value of the element with the
+   ///   corresponding key.
+   /// @see wetterturnier_cityObject
+   // ---------------------------------------------------------------
+   function get( $key ) {
+      if ( is_null($this->data) ) { print("wetterturnier_paramObject data=NULL!"); }
+      if ( property_exists($this->data,$key) ) {
+         return $this->data->$key;
+      } else { return(false); }
+   }
+
+   // ---------------------------------------------------------------
+   /// @details Helper class for development. Shows loaded key/value.
+   // ---------------------------------------------------------------
+   function show() {
+      if ( is_null($this->data) ) {
+         printf("This paramObject does not contain valid information<br>\n");
+      } else {
+         printf("<br>Content of paramObject->data is<br>\n");
+         foreach ( $this->data as $key=>$val ) {
+            print "- ".$key." (".gettype($val)."):  ".$val."<br>\n";
+         }
+      }
+   }
+}
 
 ?>

@@ -9,7 +9,7 @@ if(!class_exists('WP_List_Table')){
 }
 // Import personal list class
 require_once( sprintf("%s/../classes/cities_list.php",dirname(__FILE__)) );
-require_once( sprintf("%s/../classes/stations_list.php",dirname(__FILE__)) );
+##require_once( sprintf("%s/../classes/stations_list.php",dirname(__FILE__)) );
 
 // actionlink needed to send a few of the forms on this page
 $actionlink =  sprintf('?page=%s',$_REQUEST['page']);

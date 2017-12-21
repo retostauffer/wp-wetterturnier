@@ -1367,6 +1367,38 @@ class wetterturnier_generalclass
 
 
     // --------------------------------------------------------------
+    /// @details Loading information of all active stations. An array
+    /// will be returned containing a stationObject for each station.
+    /// If cityID is given the stations of a specific city will be 
+    /// returned. If not given (NULL, default) all active stations
+    /// will be returned.
+    ///
+    /// @param $cityID. Integer city ID, default is NULL.
+    /// @return Returns NULL if no stations are found in the database.
+    ///     Else an array of stationObjects will be returned.
+    /// @see wetterturnier_stationObject
+    // --------------------------------------------------------------
+    public function get_all_stationObj( $cityID = NULL ) {
+        global $wpdb;
+        $sql = array();
+        array_push($sql,sprintf("SELECT ID FROM %swetterturnier_stations ",$wpdb->prefix));
+        if ( ! is_null($cityID) & is_numeric($cityID) ) {
+           array_push($sql,sprintf("WHERE cityID = %d",$cityID));
+        }
+        // Fetching data from database
+        $res = $wpdb->get_results( join(" ",$sql) );
+        // No data found? Return NULL
+        if ( ! $res ) { return( NULL ); }
+        // Loop trough all station ID's and load the stationObject.
+        // Append one object to the $stationObj array for each of the stations.
+        $stationObj = array();
+        foreach ( $res as $rec ) {
+           array_push( $stationObj, new wetterturnier_stationObject( $rec->ID, "ID" ) );
+        }
+        return( $stationObj );
+    }
+
+    // --------------------------------------------------------------
     /// @details Returns the station numbers of the stations which 
     ///    are attached to this city.
     ///
@@ -1775,8 +1807,6 @@ class wetterturnier_generalclass
                     $res->data->$wmohash->$phash->modified = $rec->placed;
                 } 
 
-                // Adding nullconfig as array
-                $res->data->$wmohash->nullconfig = json_decode( $station->nullconfig );
             }
         }
         $res->what ='obs';
@@ -1828,27 +1858,6 @@ class wetterturnier_generalclass
 
         return( $res );
     }
-
-
-    // --------------------------------------------------------------
-    // The function is checking if a paramID is in the nullconfig
-    // array. If nullconfig is "NULL" or "EMPTY", or the ID is 
-    // not in the array, the function returns False, else True.
-    // --------------------------------------------------------------
-    function is_paramid_in_config($paramID,$nullconfig) {
-       // If nullconfig is still a string, convert to array!
-       if ( is_string($nullconfig) ) { $nullconfig = json_decode($nullconfig); }
-       if ( count($nullconfig) == 0 ) {
-          return( False );
-       } else if ( is_null($nullconfig) ) {
-          return( False );
-       } else if ( ! in_array($paramID,$nullconfig) ) {
-          return( False );
-       }
-       return( True );
-    }
-
-
 
     // --------------------------------------------------------------
     // Datepicker code for the widget

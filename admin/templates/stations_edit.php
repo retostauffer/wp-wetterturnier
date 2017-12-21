@@ -37,7 +37,7 @@ $CURRENT = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
    <div class='wetterturnier-info'> 
    Here you can change some of the station properties.
-   the "<?php _e('Parameter NOT observed','wpwt'); ?>" list 
+   the "<?php _e('Parameter observed','wpwt'); ?>" list 
    defines which parameters are not observed at the station.
    For example: Innsbruck University will never ever offer
    observed "current weather" Wv/Wn. If you check the 
@@ -58,10 +58,9 @@ $CURRENT = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
       <?php $cityname = (is_null($cityObj) ? _e("Not attached to a city","wpwt") : $cityObj->get('name')); ?>
       <input type='text' name='sort' value='<?php print $cityname; ?>' disabled /><br>
 
-      <fd><?php _e('Parameter NOT observed','wpwt'); ?>:</fd>
+      <fd><?php _e('Parameter observed','wpwt'); ?>:</fd>
       <div style='display: block;'>
-
-      <?php $WTadmin->show_parameter_checkboxes($stnObj->get("nullconfig")); ?>
+      <?php print $stnObj->showParamCheckboxes(); ?>
       </div><br>
      
       <fd>&nbsp;</fd>

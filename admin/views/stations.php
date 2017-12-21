@@ -15,6 +15,10 @@
    to this station number. Parameters which are not observed at all (e.g.,
    total cloud cover, as there is no observer and no instrument) can be labeled
    here as well.
+
+   <b>Inactive Parameters:</b> Inactive parameters will get inactive
+   next midnight. Parameters can be activated and deactivated for specific
+   time periods, the system keeps track of it.
 </help>
 
 <?php
@@ -35,51 +39,55 @@ function include_action_file( $filename ) {
 // - If submit button was pressed, then update the station first.
 // ------------------------------------------------------------------
 if ( ! empty($_REQUEST['submit']) ) {
-   $nullconfig = array();
-   // Searching for:
+
+   // Loading station object first
+   $stnObj = new wetterturnier_stationObject( (int)$_REQUEST["station"] );
+
+   // Extracting all "active or activated" paramID's to update
+   // the database if required.
    $check = 'config_';
-
-   // Array with key/value which should be updated in the
-   // database. The 'key' here is the database column name.
-   $to_update = array('nullconfig'=>NULL);
-
-   // Extract the ID of all elements named config_[0-9}{1,}
-   // to append them to the nullconfig array (evaluating the
-   // checkboxes from the edit submission form).
-   // Furthermore: keep some station settings. These are the ones
-   // the user is allowed to change.
+   $active_params = array();
    foreach ( $_REQUEST as $key=>$value ) {
-      // Extract nullconfig elements
+      // Extract parameter elements
       if ( preg_match("/^config_([0-9]{1,})$/",$key,$paramID) ) {
-         array_push($nullconfig,(int)$paramID[1]);
-         continue;
-      }
-      // Allowed to change this?
-      if ( in_array($key,array("name","wmo"),true) ) {
+         $paramID = (int)$paramID[1];
+         array_push($active_params,$paramID);
+         // Check if param is active, else we have to activate it
+         foreach ( $stnObj->getParams() as $paramObj ) {
+            if ( $paramObj->get("paramID") == $paramID &
+                 ! $paramObj->isParameterActive( $stnObj->get("ID") ) ) {
+               // Update database (insert new row)
+               $tmp = array("stationID"=>$stnObj->get("ID"),
+                                       "paramID"=>$paramObj->get("paramID"),
+                                       "since"=>date("Y-m-d H:i:s"));
+               $wpdb->insert(sprintf("%swetterturnier_stationparams",$wpdb->prefix),$tmp);
+               if ( ! $wpdb->last_query ) { die("Problems updating the database!"); }
+            }
+         }
+      // Other parameters which are allowed to change
+      } else if ( in_array($key,array("name","wmo"),true) ) {
          $to_update[$key] = $value;
       }
    }
 
-   // If nullconfig is necessary return string,
-   // else boolean false.
-   if ( count($nullconfig) > 0 ) { $to_update['nullconfig'] = json_encode($nullconfig); }
+   // Now check if we have to disable parameters
+   foreach ( $stnObj->getParams() as $paramObj ) {
+      // If parameter is set as 'active' in the database but was not
+      // checked anymore (not in $active_params) we have to deactivate this one.
+      if ( $paramObj->isParameterActive( $stnObj->get("ID") ) &
+           ! in_array((int)$paramObj->get("paramID"), $active_params) ) {
+         // Update database
+         $wpdb->update( sprintf("%swetterturnier_stationparams",$wpdb->prefix),
+               array( "until" => date("Y-m-d H:i:s") ),
+               array( "stationID" => $stnObj->get("ID"), "paramID" => $paramObj->get("paramID") ) );
+         if ( ! $wpdb->last_query ) { die("Problems updating the database, sorry!"); }
+      }
+   }
 
    // Update database
    $update = $wpdb->update(sprintf('%swetterturnier_stations',$wpdb->prefix),
-                           ///array('nullconfig'=>$nullconfig),
-                           $to_update,
-                           array('ID'=>$_REQUEST['station']));
+                           $to_update, array('ID'=>$_REQUEST['station']));
 
-   // Message for end user
-   ////if ( ! $update ) { PHP END TAG MISSING HERE
-   ////   <div class='wetterturnier-info error'>
-   ////   Problems while updating the database! Why? :)
-   ////   </div>
-   ////<?php } else { PHP END TAG MISSING HERE
-   ////   <div class='wetterturnier-info ok'>
-   ////   Station successfully update in the database.
-   ////   </div>
-   ////<?php }
 
 }
 
