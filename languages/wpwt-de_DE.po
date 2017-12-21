@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wpwt\n"
-"POT-Creation-Date: 2017-12-21 19:51+0100\n"
-"PO-Revision-Date: 2017-12-21 19:52+0100\n"
+"POT-Creation-Date: 2017-12-21 21:10+0100\n"
+"PO-Revision-Date: 2017-12-21 21:12+0100\n"
 "Last-Translator: Reto Stauffer <reto.stauffer@uibk.ac.at>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -1189,7 +1189,7 @@ msgstr ""
 "einsehbar. Bitte logge dich ein um den gewünschten Inhalt angezeigt zu "
 "bekommen. Besten Dank für dein Verständnis."
 
-#: user/userclass.php:1861 user/views/bet.php:15
+#: user/userclass.php:1861 user/views/bet.php:27
 msgid "Login form"
 msgstr "Login-Formular"
 
@@ -1292,9 +1292,33 @@ msgstr "Werte anzeigen"
 msgid "Show Points"
 msgstr "Punkte anzeigen"
 
-#: user/views/bet.php:11
+#: user/views/bet.php:13
 msgid "You have to be registered and logged in to place your bet."
 msgstr "Um zu tippen musst du registriert und eingeloggt sein."
+
+#: user/views/bet.php:14
+msgid "To register please"
+msgstr "Um einen neuen Benutzer anzumelden klicke auf"
+
+#: user/views/bet.php:16
+msgid "register"
+msgstr "registrieren"
+
+#: user/views/bet.php:18
+msgid "a new account"
+msgstr "um einen neuen Account anzulegen"
+
+#: user/views/bet.php:19
+msgid "If you already have an account just"
+msgstr "Wenn du bereits einen Benutzer angelegt hast"
+
+#: user/views/bet.php:21
+msgid "login"
+msgstr "logg dich ein"
+
+#: user/views/bet.php:23
+msgid "and enyoy the gambling!"
+msgstr "und geniess das Tippen!"
 
 #: user/views/current.php:65
 msgid "Current point status:"
