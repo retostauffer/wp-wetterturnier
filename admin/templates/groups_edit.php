@@ -9,14 +9,11 @@
 
 
 // Change content of a group entry
-global $wpdb;
+global $wpdb, $WTadmin;
 $group = $wpdb->get_row(sprintf('SELECT * FROM %swetterturnier_groups WHERE groupID = %s',$wpdb->prefix,$_GET['group']));
 
-$tmp = explode('?', $_SERVER['REQUEST_URI'], 2);
-
-$CURRENT = sprintf("%s://%s?page=%s",
-           (! empty($_SERVER["HTTPS"]) ? "https" : "http"),
-           $_SERVER['HTTP_HOST'], $tmp[0], $_GET['page']); 
+// actionlink needed to send a few of the forms on this page
+$actionlink =  sprintf("%s?page=%s",$WTadmin->curPageURL( true ),$_REQUEST["page"]);
 ?>
 
 
@@ -30,7 +27,7 @@ $CURRENT = sprintf("%s://%s?page=%s",
         _e('Editing inactive groups is not allowed! Are you doing nasty things?');
     } else { ?>
 
-    <form method="post" action="<?php print $CURRENT; ?>">
+    <form method="post" action="<?php print $actionlink; ?>">
 
         <fd><?php _e('Group name','wpwt'); ?>:</fd>
         <input type='text' name='groupName' value='<?php print $group->groupName; ?>' /><br>
