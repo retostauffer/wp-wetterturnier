@@ -494,10 +494,12 @@ class wetterturnier_paramObject {
       // time stamp anf for which it isnt.
       $until = ( is_null($tdate) ) ? date("Y-m-d H:i:s") :
                strftime("%Y-%m-%d %H:%M:%S",(int)($tdate+1)*86400);
+      $since = ( is_null($tdate) ) ? date("Y-m-d H:i:s") :
+               strftime("%Y-%m-%d %H:%M:%S",(int)($tdate)*86400);
       $sql = sprintf("SELECT stationID, CASE WHEN "
-             ." ( until = 0 OR until >= '%s' ) THEN 1 ELSE 0 END AS active"
+             ." ( since <= '%s' AND (until = 0 OR until >= '%s') ) THEN 1 ELSE 0 END AS active"
              ." FROM %swetterturnier_stationparams WHERE paramID=%s",
-             $until, $wpdb->prefix, $this->data->paramID);
+             $since, $until, $wpdb->prefix, $this->data->paramID);
       $this->is_active = $wpdb->get_results($sql);
    }
 
