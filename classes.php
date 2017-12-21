@@ -353,8 +353,13 @@ class wetterturnier_groupsObject {
          // Else create new table 
          ?>
          <h2><?php print $grp->groupName; ?></h2>
-         <desc><?php printf("%s: %s",__('Description','wpwt'),$grp->groupDesc); ?></desc>
+         <desc><?php printf("%s: %s<br>\n",__('Description','wpwt'),$grp->groupDesc); ?></desc>
          <?php
+         // If the group itself is inactive: show message
+         if ( $grp->active == 0 ) {
+            printf("<desc class=\"orange\"><b>%s:</b>&nbsp;%s</desc><br>\n",
+                   __("Inactive","wpwt"),__("This group is inactive at the moment and will not be considered in the tournament.","wpwt"));
+         }
          // Show button to show/hide inactive users.
          if ( $num_inactive ) { ?>
             <input type="button" class="groups-show-inactive" groupID="<?php print $grp->groupID; ?>"

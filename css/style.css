@@ -35,6 +35,8 @@ desc {
     font-style: italic;
     font-size: 1em;
 }
+desc.blue b   { color: #6592cf; }
+desc.orange b { color: #FF6600; }
 
 /* Header image logo */
 #site-header {
