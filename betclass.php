@@ -823,9 +823,9 @@ class wetterturnier_betclass
          if ( ! $admin_mode && ! $isstation ) {
 
             //$city = $WTuser->get_current_city();
-            $is_submitted = $WTuser->check_bet_is_submitted($userID,$cityObj,$tournament->tdate);
+            $check = $WTuser->check_bet_is_submitted($userID,$cityObj,$tournament->tdate);
 
-            if ( $is_submitted )         { $div_class = 'ok'; }
+            if ( $check->submitted )     { $div_class = 'ok'; }
             else                         { $div_class = 'warning'; }
 
             // Info closing time
@@ -839,13 +839,19 @@ class wetterturnier_betclass
             #   .__("Please be sure that this is correct before inserting/sending the data.","wpwt")."<br>\n" 
             #   .__("Form to submit your bet for","wpwt").": "
             #   .$tournament->weekday.", ".$tournament->readable.".<br>\n";
-            printf("<div class='wetterturnier-info %s'>%s %s: %s, %s", $div_class,
+            printf("<div class='wetterturnier-info %s'>%s %s: %s, %s.<br>\n", $div_class,
                __("Please be sure that this is correct before inserting/sending the data.","wpwt"),
                __("Form to submit your bet for","wpwt"), $tournament->weekday, $tournament->readable);
 
             // submitted or not?
-            if ( $is_submitted ) {
-               printf("<b>%s</b>",__("YOUR BET HAS BEEN SUBMITTED, EVERYTHING FINE.","wpwt"));
+            if ( $check->submitted ) {
+               printf("<b>%s</b> %s <b>%s</b>",
+                      __("YOUR BET HAS BEEN SUBMITTED, EVERYTHING FINE.","wpwt"),
+                      __("Submission","wpwt"),$check->placed);
+            } else if ( $check->placed ) {
+               printf("<b>%s</b> %s %s",
+                    __("YOUR BET HAS NOT BEEN SUBMITTED YET.","wpwt"),
+                    __("Last changes received","wpwt"),$check->placed);
             } else {
                printf("<b>%s</b><br>\n%s %s",
                     __("YOUR BET HAS NOT BEEN SUBMITTED YET.","wpwt"),

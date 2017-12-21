@@ -661,13 +661,27 @@ class wetterturnier_generalclass
     public function check_bet_is_submitted($userID,$cityObj,$tdate) {
 
         global $wpdb;
+        $return = new stdClass();
+        $return->submitted = NULL;
+        $return->placed    = NULL;
+        // Check if we have received full bet (all fine)
         $res = $wpdb->get_row( sprintf("SELECT submitted FROM %swetterturnier_betstat "
-                ." WHERE userID = %d AND cityID = %d AND tdate = %d",
-                $wpdb->prefix, $userID, $cityObj->get('ID'), $tdate));
-        if ( ! $res )                                 { return false; }
-        else if ( ! $res->submitted )                 { return false; }
-        else if ( strtotime( $res->submitted ) < 0 )  { return false; }
-        return true;
+               ." WHERE userID = %d AND cityID = %d AND tdate = %d",
+               $wpdb->prefix, $userID, $cityObj->get('ID'), $tdate));
+        if ( ! $res )                                 { $return->submitted = false; }
+        else if ( ! $res->submitted )                 { $return->submitted = false; }
+        else if ( strtotime( $res->submitted ) < 0 )  { $return->submitted = false; }
+        else                                          { $return->submitted = $res->submitted; }
+
+        // Else check when the last submission was (bets table)
+        $res = $wpdb->get_row( sprintf("SELECT max(placed) AS placed FROM %swetterturnier_bets "
+                   ." WHERE userID = %d AND cityID = %d AND tdate = %d",
+                   $wpdb->prefix, $userID, $cityObj->get('ID'), $tdate));
+        if ( ! $res )                                 { $return->placed = false; }
+        else if ( strtotime( $res->placed ) < 0 )     { $return->placed = false; }
+        else                                          { $return->placed = $res->placed; }
+        return( $return );
+
     }
 
 
