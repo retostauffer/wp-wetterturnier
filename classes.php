@@ -353,7 +353,7 @@ class wetterturnier_groupsObject {
          // Else create new table 
          ?>
          <h2><?php print $grp->groupName; ?></h2>
-         <desc><?php printf(__('Description','wpwt'),$grp->groupDesc); ?></desc>
+         <desc><?php printf("%s: %s",__('Description','wpwt'),$grp->groupDesc); ?></desc>
          <?php
          // Show button to show/hide inactive users.
          if ( $num_inactive ) { ?>
