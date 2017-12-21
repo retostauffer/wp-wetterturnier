@@ -859,12 +859,13 @@ class wetterturnier_betclass
                   __("Form closes","wpwt"),$WTuser->date_format($tournament->tdate,"%A"),
                   $WTuser->date_format($ct/86400),
                   $WTuser->datetime_format($ct,"%H:%M %Z"));
-            printf("<div class='wetterturnier-info warning'>%s <span class='big'>%s</span> %s, "
-                  ."<span class='big'>%s</span>.<br><span class='big' id='live-closingstring'></span> "
+            printf("<div class='wetterturnier-info warning'>%s <span class='big'>%s</span> %s,&nbsp;"
+                  ."<span class='big'>%s</span>.<br><span class='big' id='live-closingstring'></span><br>\n "
+                  ."<span>%s:</span>&nbsp;<span class='big' id='live-servertime'></span><br>\n "
                   ."</div>",
                   __("Form closes","wpwt"),$WTuser->date_format($tournament->tdate,"%A"),
                   $WTuser->date_format($ct/86400),
-                  $WTuser->datetime_format($ct,"%H:%M %Z"));
+                  $WTuser->datetime_format($ct,"%H:%M %Z"),__("Server time","wpwt"));
 
             printf("<div class='wetterturnier-info ok large'>%s <span class='big'>%s</span></div>",
                    __("Your active city is","wpwt"),$cityObj->get('name'));
@@ -896,11 +897,16 @@ class wetterturnier_betclass
             // Function to show closing time on user frontend.
             <?php // Only if not admin and not station 
             if ( ! $admin_mode && ! $isstation ) { ?>
-               closingstring( <?php print $ct; ?> );
-               ///////////function getServerTime() {
-               ///////////   return $.ajax({async: false}).getResponseHeader( 'Date' );
-               ///////////}
-               function show_closingstring( timestamp ) {
+               function getServerTime() {
+                  return parseInt(new Date($.ajax({async: false}).getResponseHeader( 'Date' )).getTime()/1000.);
+               }
+               function showServerTime( timestamp ) {
+                  var x = new Date( timestamp*1000. );
+                  x = x.toUTCString().split(" ")[4]
+                  $("#live-servertime").html( x+" UTC" )
+                  return timestamp + 1
+               }
+               function showClosingString( timestamp ) {
                   var now  = parseInt( $.now() / 1000 )
                   var diff = timestamp - now
                   // Default is: Form closed
@@ -928,13 +934,18 @@ class wetterturnier_betclass
                   }
                   // User output
                   $("#live-closingstring").html( val )
+                  return timestamp + 1
                }
+               var timestamp = <?php print $ct; ?>;
+               var server_timestamp = getServerTime();
                // Sever time
-               function closingstring( timestamp ) {
-                  show_closingstring(timestamp)
-                  var intv = self.setInterval( function() { show_closingtime(timestamp) }, 1000 ) 
+               function closing_looper( timestamp, server_timestamp ) {
+                  showClosingString(timestamp)
+                  showServerTime( server_timestamp )
+                  var intv1 = self.setInterval( function() { timestamp        = showClosingString(timestamp) }, 1000 ) 
+                  var intv2 = self.setInterval( function() { server_timestamp = showServerTime(server_timestamp) }, 1000 ) 
                }
-               closingstring( timestamp );
+               closing_looper( timestamp, server_timestamp );
                //function closingtime( timestamp ) {
                //   $("#live-closingtime").html( getServerTime() )
                //   var intv2 = self.setInterval( function() { g
