@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wpwt\n"
-"POT-Creation-Date: 2017-12-22 13:16+0100\n"
-"PO-Revision-Date: 2017-12-22 13:17+0100\n"
+"POT-Creation-Date: 2017-12-22 17:39+0100\n"
+"PO-Revision-Date: 2017-12-22 17:39+0100\n"
 "Last-Translator: Reto Stauffer <reto.stauffer@uibk.ac.at>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -56,8 +56,8 @@ msgstr "Städte"
 msgid "Stations"
 msgstr "Stationen"
 
-#: admin/adminclass.php:224 admin/classes/cities_list.php:33 betclass.php:1075
-#: betclass.php:1151 user/userclass.php:1701
+#: admin/adminclass.php:224 admin/classes/cities_list.php:33 betclass.php:1099
+#: betclass.php:1175 user/userclass.php:1703
 msgid "Parameter"
 msgstr "Parameter"
 
@@ -146,7 +146,7 @@ msgid "userID"
 msgstr "BenutzerID"
 
 #: admin/classes/bets_list.php:51 user/userclass.php:1212
-#: user/userclass.php:1932
+#: user/userclass.php:1934
 msgid "User"
 msgstr "Benutzername"
 
@@ -649,90 +649,91 @@ msgstr "Bitte fülle zuerst alle Werte im korrekten Format ein."
 msgid "Hint: you can always save your bets even if only partially completed."
 msgstr "Hinweis: du kannst jederzeit deine Tipps zwischenspeichern."
 
-#: betclass.php:912
+#: betclass.php:911
 msgid "Form closed! Submissions won't be stored anymore."
 msgstr ""
 "Abgabeformular geschlossen! Änderungen an den Tipps werden nicht mehr "
 "gespeichert."
 
-#: betclass.php:915 betclass.php:920
+#: betclass.php:914 betclass.php:919
 msgid "Form closes in more than"
 msgstr "Abgabeformular schliesst in etwas mehr als"
 
-#: betclass.php:915
+#: betclass.php:914
 msgid "days"
 msgstr "Tagen"
 
-#: betclass.php:915
+#: betclass.php:914
 msgid "No hurry!"
 msgstr "Kein Stress!"
 
-#: betclass.php:917
+#: betclass.php:916
 msgid "More than one day left to submit the bet."
 msgstr "Noch mehr als ein Tag bis das Abgabeformular schliesst."
 
-#: betclass.php:920 generalclass.php:931
+#: betclass.php:919 generalclass.php:936
 msgid "hours"
 msgstr "Stunden"
 
-#: betclass.php:920
+#: betclass.php:919
 msgid "Keep cool!"
 msgstr "Cool bleiben!"
 
-#: betclass.php:922
+#: betclass.php:921
 msgid "Still a bit more than one hour until the form closes."
 msgstr "Immer noch etwas mehr als eine Stunde bis Abgabeschluss."
 
-#: betclass.php:925
+#: betclass.php:924 betclass.php:935
 msgid "The form closes in about"
 msgstr "Das Abgabeformular schliesst in etwa"
 
-#: betclass.php:925 betclass.php:928 generalclass.php:927 generalclass.php:932
+#: betclass.php:924 betclass.php:927 betclass.php:935 generalclass.php:932
+#: generalclass.php:937
 msgid "minutes"
 msgstr "Minuten"
 
-#: betclass.php:928
+#: betclass.php:927
 msgid "The form closes in a bit more than"
 msgstr "Das Abgabeformular schliesst in etwas mehr als"
 
-#: betclass.php:928
+#: betclass.php:927
 msgid "Time to hurry up a bit, my friend!"
 msgstr "Zeit sich etwas zu beeilen, mein Freund!"
 
-#: betclass.php:930
+#: betclass.php:929
 msgid "Only a bit more than one minute left to submit your bet!"
 msgstr "Nur noch etwas mehr als eine Minute bis das Abgabeformular schliesst!"
 
-#: betclass.php:932
+#: betclass.php:931
 msgid "Form closes in"
 msgstr "Abgabeformular schliesst in"
 
-#: betclass.php:932
+#: betclass.php:931
 msgid "seconds"
 msgstr "Sekunden"
 
-#: betclass.php:932
+#: betclass.php:931
 msgid "Hurry, hurry!"
 msgstr "Los jetzt!"
 
-#: betclass.php:1025 betclass.php:1069 betclass.php:1145
+#: betclass.php:1049 betclass.php:1093 betclass.php:1169
 msgid "Switch orientation"
 msgstr "Darstellung ändern"
 
-#: betclass.php:1113
+#: betclass.php:1137
 msgid "Validate & Save"
 msgstr "Überprüfen & Senden"
 
-#: betclass.php:1114 user/views/ranking.php:185
+#: betclass.php:1138 user/views/ranking.php:185
 #: user/widgets/tournaments.php:203
 msgid "for"
 msgstr "für"
 
-#: betclass.php:1191
+#: betclass.php:1215
 msgid "Save Observations"
 msgstr "Beobachtungen speichern"
 
-#: betclass.php:1218
+#: betclass.php:1242
 msgid ""
 "Unexpected input to the method which has to store the forecast value. This "
 "is a problem in update_bet_database, missing submit. Please inform one of "
@@ -742,7 +743,7 @@ msgstr ""
 "ein Problem in der Methode update_bet_database, fehlende Elemente. Bitte den "
 "Administrator informieren."
 
-#: betclass.php:1225
+#: betclass.php:1249
 msgid ""
 "Unexpected input to the method which has to store the forecast value. This "
 "is a problem in update_bet_database, submit value was wrong. Please inform "
@@ -752,15 +753,15 @@ msgstr ""
 "ein Problem in der Methode update_bet_database, fehlende Elemente. Bitte den "
 "Administrator informieren."
 
-#: betclass.php:1253
+#: betclass.php:1279
 msgid "Sorry, tournament CLOSED. We cannot store your changes anymore."
 msgstr ""
 "Sorry, das Turnier ist bereits GESCHLOSSEN. Wir können deine Änderungen "
 "leider nicht mehr annehmen."
 
-#: chartclass.php:132 user/userclass.php:949 user/userclass.php:1666
-#: user/userclass.php:1669 user/userclass.php:1706 user/userclass.php:1933
-#: user/views/current.php:73 user/views/current.php:82
+#: chartclass.php:132 user/userclass.php:949 user/userclass.php:1668
+#: user/userclass.php:1671 user/userclass.php:1708 user/userclass.php:1935
+#: user/views/current.php:74 user/views/current.php:83
 #: user/views/ranking.php:333
 msgid "Points"
 msgstr "Punkte"
@@ -820,85 +821,85 @@ msgstr "Zum Profil"
 msgid "[group]"
 msgstr "[Gruppe]"
 
-#: generalclass.php:845
+#: generalclass.php:846
 msgid "There is an ongoing tournament right now."
 msgstr "Keine Hilfe verfügbar"
 
-#: generalclass.php:846
+#: generalclass.php:847
 msgid "Current values can be found here:"
 msgstr "Die aktuellen Werte findest du hier:"
 
-#: generalclass.php:847
+#: generalclass.php:848
 msgid "Link ... "
 msgstr "Link ..."
 
-#: generalclass.php:854
+#: generalclass.php:855
 msgid "Sorry, no access to these bet form"
 msgstr "Sorry, im Moment kein Zugriff auf das Abgabeformular"
 
-#: generalclass.php:855
+#: generalclass.php:856
 #, php-format
 msgid "The form to submit tips always opens %d days in advance."
 msgstr "Das Abgabeformular öffnet jeweils %d Tage vor dem Turnier"
 
-#: generalclass.php:857
+#: generalclass.php:858
 #, php-format
 msgid "Next tournament will take place on %s"
 msgstr "Das nexte Turnier findet am %s statt"
 
-#: generalclass.php:859
+#: generalclass.php:860
 #, php-format
 msgid "The bet form opens %s"
 msgstr "Das Abgabeformular dafür öffnet am/um %s"
 
-#: generalclass.php:869
+#: generalclass.php:870
 msgid "Sorry, no access to these bet form."
 msgstr "Sorry, kein Zugriff auf das Tippspiel."
 
-#: generalclass.php:870
+#: generalclass.php:871
 msgid "The form to submit tips for todays tournament is allready closed."
 msgstr "Tas Abgabeformular für das heutige Tippspiel ist bereits geschlossen."
 
-#: generalclass.php:871
+#: generalclass.php:872
 #, php-format
 msgid "The next tournament will take place on %s"
 msgstr "Das nächste Turnier findet statt am %s"
 
-#: generalclass.php:900
+#: generalclass.php:904
 msgid "The requested tournament date is in the future."
 msgstr "Das angefragte Turnier-Datum liegt in der Zukunft."
 
-#: generalclass.php:901
+#: generalclass.php:905
 msgid "Do you try to cheat, bro?"
 msgstr "Was probierst du da?"
 
-#: generalclass.php:923
+#: generalclass.php:928
 msgid "Sorry, no access to these data."
 msgstr "Sorry, kein Zugriff auf diese Daten."
 
-#: generalclass.php:924
+#: generalclass.php:929
 msgid "We will show the current bets as soon as the bet-form has been closed."
 msgstr ""
 "Die aktuellen Tipps und abgegebenen Werte werden angezeigt, sobald das "
 "Abgabeformular geschlossen ist."
 
-#: generalclass.php:927 generalclass.php:933
+#: generalclass.php:932 generalclass.php:938
 msgid "You can see the newest tips in "
 msgstr "Einsehen kannst du die neuesten Tipps in"
 
-#: generalclass.php:931
+#: generalclass.php:936
 msgid "hour"
 msgstr "Stunde"
 
-#: generalclass.php:932
+#: generalclass.php:937
 msgid "minute"
 msgstr "Minute"
 
-#: generalclass.php:933 user/views/userprofile.php:68
+#: generalclass.php:938 user/views/userprofile.php:68
 msgid "and"
 msgstr "und"
 
-#: generalclass.php:941
+#: generalclass.php:946
 msgid ""
 "If you would like to submitt a bet please go to the \"SUBMISSION-FORM\" in "
 "the navigation."
@@ -1087,7 +1088,7 @@ msgstr "neuer"
 msgid "Weekend ranking for"
 msgstr "Wochenendwertung f&uum;r"
 
-#: user/userclass.php:1119 user/userclass.php:1674 user/views/ranking.php:325
+#: user/userclass.php:1119 user/userclass.php:1676 user/views/ranking.php:325
 msgid "Rank"
 msgstr "Rang"
 
@@ -1095,11 +1096,11 @@ msgstr "Rang"
 msgid "Player"
 msgstr "Teilnehmer"
 
-#: user/userclass.php:1121 user/userclass.php:1666 user/views/ranking.php:329
+#: user/userclass.php:1121 user/userclass.php:1668 user/views/ranking.php:329
 msgid "Saturday"
 msgstr "Samstag"
 
-#: user/userclass.php:1122 user/userclass.php:1669 user/views/ranking.php:330
+#: user/userclass.php:1122 user/userclass.php:1671 user/views/ranking.php:330
 msgid "Sunday"
 msgstr "Sonntag"
 
@@ -1157,23 +1158,23 @@ msgstr "Summe"
 msgid "Modified by"
 msgstr "Modifiziert durch"
 
-#: user/userclass.php:1672
+#: user/userclass.php:1674
 msgid "Points total"
 msgstr "Gesamtpunkte"
 
-#: user/userclass.php:1701
+#: user/userclass.php:1703
 msgid "Forecast"
 msgstr "Vorhersage"
 
-#: user/userclass.php:1706
+#: user/userclass.php:1708
 msgid "Deviation"
 msgstr "Abweichung"
 
-#: user/userclass.php:1853
+#: user/userclass.php:1855
 msgid "Access denied"
 msgstr "Zugriff verweigert"
 
-#: user/userclass.php:1855
+#: user/userclass.php:1857
 msgid ""
 "The access for some pages is restricted to registered and logged in users "
 "only. You are not logged in at the moment. To see the content of this "
@@ -1183,11 +1184,11 @@ msgstr ""
 "einsehbar. Bitte logge dich ein um den gewünschten Inhalt angezeigt zu "
 "bekommen. Besten Dank für dein Verständnis."
 
-#: user/userclass.php:1861 user/views/bet.php:27
+#: user/userclass.php:1863 user/views/bet.php:27
 msgid "Login form"
 msgstr "Login-Formular"
 
-#: user/userclass.php:1903
+#: user/userclass.php:1905
 msgid ""
 "Sorry currently no information about the leading users.Possible reason: no "
 "observations (and therefore no points) at all.However, good luck in the "
@@ -1198,23 +1199,23 @@ msgstr ""
 "somit noch keine vergebenen Punkte). Wir wünschen dir viel Erfolg beim "
 "aktuellen Turnier!"
 
-#: user/userclass.php:1977
+#: user/userclass.php:1979
 msgid "Leaderboard"
 msgstr "Bestenliste"
 
-#: user/userclass.php:2000
+#: user/userclass.php:2002
 msgid "nd"
 msgstr "er"
 
-#: user/userclass.php:2000 user/userclass.php:2002
+#: user/userclass.php:2002 user/userclass.php:2004
 msgid "place"
 msgstr "Platz"
 
-#: user/userclass.php:2002
+#: user/userclass.php:2004
 msgid "th"
 msgstr "er"
 
-#: user/userclass.php:2032
+#: user/userclass.php:2034
 msgid "points"
 msgstr "Punkte"
 
@@ -1274,15 +1275,15 @@ msgstr ""
 "Sorry, du bist nicht eingeloggt. Nur als eingeloggtes Mitglied kannst du "
 "Gruppen-Mitgliedschaften managen."
 
-#: user/views/archive.php:53 user/views/current.php:57
+#: user/views/archive.php:53 user/views/current.php:58
 msgid "Current tournament"
 msgstr "Aktuelles Turnier"
 
-#: user/views/archive.php:64 user/views/current.php:61
+#: user/views/archive.php:64 user/views/current.php:62
 msgid "Show Values"
 msgstr "Werte anzeigen"
 
-#: user/views/archive.php:65 user/views/current.php:62
+#: user/views/archive.php:65 user/views/current.php:63
 msgid "Show Points"
 msgstr "Punkte anzeigen"
 
@@ -1314,15 +1315,15 @@ msgstr "logg dich ein"
 msgid "and enyoy the gambling!"
 msgstr "und geniess das Tippen!"
 
-#: user/views/current.php:65
+#: user/views/current.php:66
 msgid "Current point status:"
 msgstr "Aktueller Punkte-Status:"
 
-#: user/views/current.php:69
+#: user/views/current.php:70
 msgid "Average points this weekend:"
 msgstr "Die durchschnittliche Punktzahl beträgt:"
 
-#: user/views/current.php:78
+#: user/views/current.php:79
 msgid "Judging for people without attendance:"
 msgstr "Wertung für nicht teilnehmende Mitspieler:"
 
@@ -1741,8 +1742,9 @@ msgid "Registered bets"
 msgstr "Eingetragene Tipps"
 
 #: user/widgets/tournaments.php:202
-msgid "Saved/Sent/Group"
-msgstr "Gespeichert/Versant/Gruppe"
+msgid "Numbers: partially saved bets, valid bets, group bets"
+msgstr ""
+"Zahlen: teilweise abgegebene Tipps, vollständige Tipps, und Gruppentipps"
 
 #: user/widgets/tournaments.php:217
 msgid ""
@@ -1761,3 +1763,6 @@ msgstr "Wetterturnier Webcams"
 #: wp-wetterturnier.php:112
 msgid "Wetterturnier Admin"
 msgstr "Wetterturnier Admin"
+
+#~ msgid "Saved/Sent/Group"
+#~ msgstr "Gespeichert/Versant/Gruppe"

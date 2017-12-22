@@ -1251,6 +1251,8 @@ class wetterturnier_betclass
                  ."Please inform one of our administrators!","wpwt"));
          return;
       }
+
+print_r( $input );
        
       // Save current page url, load tournament  
       global $WTuser;
