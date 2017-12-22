@@ -42,12 +42,26 @@ jQuery(document).on('ready',function() {
    width: 300px;
    font-weight: bold;
 }
+#wt-mosdata-data table {
+   margin-top: 20px;
+}
+#wt-mosdata-data table tr:hover,
 #wt-mosdata-data table tr:hover td {
    background-color: #d4e0ec;
 }
+
 #wt-mosdata-data table tr:hover td.shaded {
    background-color: #c2d5e7;
 }
+#wt-mosdata-data table tr th.mosname,
+#wt-mosdata-data table tr td.column-right {
+   border-right: 3px solid black;
+}
+#wt-mosdata-data table tr th.mosname:last-child,
+#wt-mosdata-data table tr td.column-right:last-child {
+   border-right: none;
+}
+
 #wt-mosdata-data table td.param {
    font-weight: bold;
    text-align: left;
