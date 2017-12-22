@@ -916,12 +916,12 @@ class wetterturnier_betclass
                   } else if ( diff > 86400 ) {
                      val = "<?php _e("More than one day left to submit the bet.","wpwt"); ?>"
                   } else if ( diff > (2*3600) ) {
-                     var d = parseInt( diff / 3600 )
+                     var d = parseInt( Math.floor(diff / 3600) )
                      val = "<?php _e("Form closes in more than","wpwt"); ?> "+d+" <?php _e("hours","wpwt"); ?>. <?php _e("Keep cool!","wpwt"); ?>"
                   } else if ( diff > 3600 ) {
                      val = "<?php _e("Still a bit more than one hour until the form closes.","wpwt"); ?>"
                   } else if ( diff > (10*60) ) {
-                     var d = parseInt( diff / 60 )
+                     var d = parseInt( Math.floor( diff / 60 ) )
                      val = "<?php _e("The form closes in about","wpwt"); ?> "+d+" <?php _e("minutes","wpwt"); ?>."
                   } else if ( diff > (2*60) ) {
                      var d = parseInt( diff / 60 )
@@ -933,18 +933,19 @@ class wetterturnier_betclass
                   }
                   // User output
                   $("#live-closingstring").html( val )
-                  return timestamp + 1
+                     val = "<?php _e("The form closes in about","wpwt"); ?> "+d+" <?php _e("minutes","wpwt"); ?>."
+                  return false;
                }
-               var timestamp = <?php print $ct; ?>;
+               var closing_timestamp = <?php print $ct; ?>;
                var server_timestamp = getServerTime();
                // Sever time
-               function closing_looper( timestamp, server_timestamp ) {
-                  showClosingString(timestamp)
-                  showServerTime( server_timestamp )
-                  var intv1 = self.setInterval( function() { timestamp        = showClosingString(timestamp) }, 1000 ) 
+               showClosingString(closing_timestamp)
+               showServerTime( server_timestamp )
+               function closing_looper( closing_timestamp, server_timestamp ) {
+                  var intv1 = self.setInterval( function() { showClosingString(closing_timestamp) }, 1000 ) 
                   var intv2 = self.setInterval( function() { server_timestamp = showServerTime(server_timestamp) }, 1000 ) 
                }
-               closing_looper( timestamp, server_timestamp );
+               closing_looper( closing_timestamp, server_timestamp );
                //function closingtime( timestamp ) {
                //   $("#live-closingtime").html( getServerTime() )
                //   var intv2 = self.setInterval( function() { g
