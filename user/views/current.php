@@ -44,10 +44,11 @@ if ( ! $inputs->daybyday ) {
 // Current values ("for the current weekend") are
 // locked until all bets have to been placed.
 // --------------------------------------------------------------yy
+$show_locked_info = true;
 foreach ( $showdays as $showday ) {
 
    $current = $WTuser->current_tournament(0,false,0,true);
-   if ( $WTuser->check_allowed_to_display_betdata($current->tdate) )
+   if ( $WTuser->check_allowed_to_display_betdata($current->tdate,$show_locked_info) )
    {
       // First day shows header, the rest doesn't
       if ( $showday == 1 || is_bool($showday) ) { ?>
@@ -98,7 +99,7 @@ foreach ( $showdays as $showday ) {
       // Using the same method for obs and bets.
       $WTuser->archive_show( 'obs',  $current->tdate, false,   $showday );
       $WTuser->archive_show( 'bets', $current->tdate, $points, $showday );
-   }
+   } else { $show_locked_info = false; } // Set flag to false
 
 }
 

@@ -819,6 +819,9 @@ class wetterturnier_generalclass
     ///   If user is allowed to see the data, function returns true.
     ///   Else return value is false and the function places some notes.
     /// @param $tdate. Integer date value of a certain tournament.
+    /// @param $showinfo. Boolean, default true. If set to false the
+    ///   user-messages "sorry not access" are suppressed. This is used
+    ///   to not show the messages twice for two consecutive days.
     /// @return Prints a message and returns `true` if the view is closed
     ///   and we do not allow the user to retreive the data at the moment
     ///   (maybe locked because the tournament has not been started yet).
@@ -826,7 +829,8 @@ class wetterturnier_generalclass
     ///
     /// @see check_allowed_to_display_betdata
     // ------------------------------------------------------------------
-    function check_view_is_closed($tdate) {
+    function check_view_is_closed($tdate,$showinfo=true) {
+
     
         // STOP if user should not see these data!
         $today = (int)floor(gmdate('U')/86400.);
@@ -849,7 +853,7 @@ class wetterturnier_generalclass
         }
         // If user is too early (bet form opens X days before, see 
         // plugin settings) return false.
-        if ( $today < ( $tdate - $this->options->wetterturnier_bet_open_days) ) {
+        if ( $today < ( $tdate - $this->options->wetterturnier_bet_open_days) & $showinfo ) {
             echo "<div class=\"wetterturnier-info error\">\n";
             printf("%s.<br>\n",__("Sorry, no access to these bet form","wpwt"));
             printf("%s.<br>\n",sprintf(__("The form to submit tips always opens %d days in advance.","wpwt"),
@@ -863,7 +867,7 @@ class wetterturnier_generalclass
             return( true ); # closed true 
         }
         // Locked again
-        if ( (int)gmdate('U') > $this->options->wetterturnier_bet_closing_timestamp ) {
+        if ( (int)gmdate('U') > $this->options->wetterturnier_bet_closing_timestamp & $showinfo ) {
             $nextnext = $this->next_tournament($row_offset=1);
             echo "<div class=\"wetterturnier-info error\">\n";
             printf("%s<br>\n",__("Sorry, no access to these bet form.","wpwt"));
@@ -884,6 +888,9 @@ class wetterturnier_generalclass
     ///   If user is allowed to see the data, function returns true.
     ///   Else return value is false and the function places some notes.
     /// @param $tdate. Integer date value of a certain tournament.
+    /// @param $showinfo. Boolean, default true. If set to false the
+    ///   user-messages "sorry not access" are suppressed. This is used
+    ///   to not show the messages twice for two consecutive days.
     /// @return Prints a message and returns `true` if the view is closed
     ///   and we do not allow the user to retreive the data at the moment
     ///   (maybe locked because the tournament has not been started yet).
@@ -891,7 +898,7 @@ class wetterturnier_generalclass
     ///
     /// @see check_view_is_closed
     // ------------------------------------------------------------------
-    function check_allowed_to_display_betdata($tdate) {
+    function check_allowed_to_display_betdata($tdate,$showinfo=true) {
     
         // STOP if user should not see these data!
         $today = floor(gmdate('U')/86400.);
@@ -919,28 +926,30 @@ class wetterturnier_generalclass
             // If lock is smaller than now show message and stop.
             // ----------------------------------------------------------
             if ( (int)$now < (int)$lock ) {
-                echo "<div class=\"wetterturnier-info error\">\n";
-                echo __("Sorry, no access to these data.","wpwt")."<br>\n";
-                echo __("We will show the current bets as soon as the bet-form has been closed.","wpwt")."<br>\n";
-                if ( $diff < 600 ) {
-                    if ( $diff <= 60 ) {
-                        echo __("You can see the newest tips in ","wpwt")." ".$diff." ".__("minutes","wpwt").".<br>\n";
-                    } else {
-                        $diff_hour = floor( $diff / 60 );
-                        $diff_min  = $diff - $diff_hour*60;
-                        if ( (int)$diff_hour == 1 ) { $str_hour = sprintf(" %s ",__("hour"));   } else { $str_hour = sprintf(" %s ",__("hours","wpwt")); }
-                        if ( (int)$diff_min  == 1 ) { $str_min  = sprintf(" %s ",__("minute")); } else { $str_min  = sprintf(" %s ",__("minutes","wpwt")); }
-                        echo __("You can see the newest tips in ","wpwt")." ".(int)$diff_hour.$str_hour.__("and","wpwt")." "
-                                .$diff_min.$str_min.".<br>\n";
-                    }
-                }
-                echo "</div>\n";
+               if ( $showinfo ) {
+                  echo "<div class=\"wetterturnier-info error\">\n";
+                  echo __("Sorry, no access to these data.","wpwt")."<br>\n";
+                  echo __("We will show the current bets as soon as the bet-form has been closed.","wpwt")."<br>\n";
+                  if ( $diff < 600 ) {
+                      if ( $diff <= 60 ) {
+                          echo __("You can see the newest tips in ","wpwt")." ".$diff." ".__("minutes","wpwt").".<br>\n";
+                      } else {
+                          $diff_hour = floor( $diff / 60 );
+                          $diff_min  = $diff - $diff_hour*60;
+                          if ( (int)$diff_hour == 1 ) { $str_hour = sprintf(" %s ",__("hour"));   } else { $str_hour = sprintf(" %s ",__("hours","wpwt")); }
+                          if ( (int)$diff_min  == 1 ) { $str_min  = sprintf(" %s ",__("minute")); } else { $str_min  = sprintf(" %s ",__("minutes","wpwt")); }
+                          echo __("You can see the newest tips in ","wpwt")." ".(int)$diff_hour.$str_hour.__("and","wpwt")." "
+                                  .$diff_min.$str_min.".<br>\n";
+                      }
+                  }
+                  echo "</div>\n";
 
-                # - Give a hint where to find the tournament bet form
-                echo "<div class=\"wetterturnier-info ok\">\n";
-                echo __("If you would like to submitt a bet please go to the \"SUBMISSION-FORM\" in the navigation.","wpwt")."<br>\n";
-                echo "</div>\n";
-                return false;
+                  # - Give a hint where to find the tournament bet form
+                  echo "<div class=\"wetterturnier-info ok\">\n";
+                  echo __("If you would like to submitt a bet please go to the \"SUBMISSION-FORM\" in the navigation.","wpwt")."<br>\n";
+                  echo "</div>\n";
+               }
+               return false;
             }
         }
         return true;
