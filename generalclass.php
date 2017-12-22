@@ -897,8 +897,8 @@ class wetterturnier_generalclass
         $today = floor(gmdate('U')/86400.);
         if ( $today < $tdate ) {
             echo "<div class=\"wetterturnier-info error\">\n";
-            echo __("The requested tournament date is in the future.")."<br>\n";
-            echo __("Do you try to cheat, bro?")."<br>\n";
+            echo __("The requested tournament date is in the future.","wpwt")."<br>\n";
+            echo __("Do you try to cheat, bro?","wpwt")."<br>\n";
             echo "</div>\n";
             return false;
         }
@@ -920,17 +920,17 @@ class wetterturnier_generalclass
             // ----------------------------------------------------------
             if ( (int)$now < (int)$lock ) {
                 echo "<div class=\"wetterturnier-info error\">\n";
-                echo __("Sorry, no access to these data.")."<br>\n";
-                echo __("We will show the current bets as soon as the bet-form has been closed.")."<br>\n";
+                echo __("Sorry, no access to these data.","wpwt")."<br>\n";
+                echo __("We will show the current bets as soon as the bet-form has been closed.","wpwt")."<br>\n";
                 if ( $diff < 600 ) {
                     if ( $diff <= 60 ) {
-                        echo __("You can see the newest tips in ")." ".$diff." ".__("minutes").".<br>\n";
+                        echo __("You can see the newest tips in ","wpwt")." ".$diff." ".__("minutes","wpwt").".<br>\n";
                     } else {
                         $diff_hour = floor( $diff / 60 );
                         $diff_min  = $diff - $diff_hour*60;
-                        if ( (int)$diff_hour == 1 ) { $str_hour = sprintf(" %s ",__("hour"));   } else { $str_hour = sprintf(" %s ",__("hours")); }
-                        if ( (int)$diff_min  == 1 ) { $str_min  = sprintf(" %s ",__("minute")); } else { $str_min  = sprintf(" %s ",__("minutes")); }
-                        echo __("You can see the newest tips in ")." ".(int)$diff_hour.$str_hour.__("and")." "
+                        if ( (int)$diff_hour == 1 ) { $str_hour = sprintf(" %s ",__("hour"));   } else { $str_hour = sprintf(" %s ",__("hours","wpwt")); }
+                        if ( (int)$diff_min  == 1 ) { $str_min  = sprintf(" %s ",__("minute")); } else { $str_min  = sprintf(" %s ",__("minutes","wpwt")); }
+                        echo __("You can see the newest tips in ","wpwt")." ".(int)$diff_hour.$str_hour.__("and","wpwt")." "
                                 .$diff_min.$str_min.".<br>\n";
                     }
                 }
@@ -938,7 +938,7 @@ class wetterturnier_generalclass
 
                 # - Give a hint where to find the tournament bet form
                 echo "<div class=\"wetterturnier-info ok\">\n";
-                echo __("If you would like to submitt a bet please go to \"TOURNAMENT\" in the navigation.")."<br>\n";
+                echo __("If you would like to submitt a bet please go to the \"SUBMISSION-FORM\" in the navigation.","wpwt")."<br>\n";
                 echo "</div>\n";
                 return false;
             }
