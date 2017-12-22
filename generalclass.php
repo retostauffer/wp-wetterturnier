@@ -819,9 +819,6 @@ class wetterturnier_generalclass
     ///   If user is allowed to see the data, function returns true.
     ///   Else return value is false and the function places some notes.
     /// @param $tdate. Integer date value of a certain tournament.
-    /// @param $showinfo. Boolean, default true. If set to false the
-    ///   user-messages "sorry not access" are suppressed. This is used
-    ///   to not show the messages twice for two consecutive days.
     /// @return Prints a message and returns `true` if the view is closed
     ///   and we do not allow the user to retreive the data at the moment
     ///   (maybe locked because the tournament has not been started yet).
@@ -829,7 +826,7 @@ class wetterturnier_generalclass
     ///
     /// @see check_allowed_to_display_betdata
     // ------------------------------------------------------------------
-    function check_view_is_closed($tdate,$showinfo=true) {
+    function check_view_is_closed($tdate) {
 
     
         // STOP if user should not see these data!
@@ -853,7 +850,7 @@ class wetterturnier_generalclass
         }
         // If user is too early (bet form opens X days before, see 
         // plugin settings) return false.
-        if ( $today < ( $tdate - $this->options->wetterturnier_bet_open_days) & $showinfo ) {
+        if ( $today < ( $tdate - $this->options->wetterturnier_bet_open_days) ) {
             echo "<div class=\"wetterturnier-info error\">\n";
             printf("%s.<br>\n",__("Sorry, no access to these bet form","wpwt"));
             printf("%s.<br>\n",sprintf(__("The form to submit tips always opens %d days in advance.","wpwt"),
@@ -867,7 +864,7 @@ class wetterturnier_generalclass
             return( true ); # closed true 
         }
         // Locked again
-        if ( (int)gmdate('U') > $this->options->wetterturnier_bet_closing_timestamp & $showinfo ) {
+        if ( (int)gmdate('U') > $this->options->wetterturnier_bet_closing_timestamp ) {
             $nextnext = $this->next_tournament($row_offset=1);
             echo "<div class=\"wetterturnier-info error\">\n";
             printf("%s<br>\n",__("Sorry, no access to these bet form.","wpwt"));
