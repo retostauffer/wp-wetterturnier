@@ -23,9 +23,6 @@ header("Content-Disposition: attachment; filename=wetterturnier_export.txt");
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 
-print("Currently disabled");
-die();
-
 // ------------------------------------------------------------------
 // Title. Note that there is no line break after the second
 // print. Problem: the require_once somehow creates a linebreak
