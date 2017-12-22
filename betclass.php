@@ -825,42 +825,18 @@ class wetterturnier_betclass
             //$city = $WTuser->get_current_city();
             $check = $WTuser->check_bet_is_submitted($userID,$cityObj,$tournament->tdate);
 
-            if ( $check->submitted )     { $div_class = 'ok'; }
-            else if ( $check->placed )   { $div_class = 'warning'; }
-            else                         { $div_class = 'ok'; }
-
             // Info closing time
             $ct = strptime(sprintf("%s %04d UTC",$WTuser->date_format($tournament->tdate,"%Y-%m-%d"),
                            (int)$WTuser->options->wetterturnier_bet_closingtime),"%Y-%m-%d %H%M %Z");
             $ct = (int)mktime($ct['tm_hour'], $ct['tm_min'], $ct['tm_sec'], $ct['tm_mon']+1,
                               $ct['tm_mday'], $ct['tm_year']+1900);
 
-            // Info for which weekend the form is valid
-            printf("<div class='wetterturnier-info %s'>%s<br>\n", $div_class,
-               __("Please be sure that this is correct before inserting/sending the data.","wpwt"));
-
-            // submitted or not?
-            if ( $check->submitted ) {
-               printf("<b>%s</b> %s <b>%s</b>",
-                      __("YOUR BET HAS BEEN SUBMITTED, EVERYTHING FINE.","wpwt"),
-                      __("Submission","wpwt"),$check->placed);
-            } else if ( $check->placed ) {
-               printf("<b>%s</b> %s %s",
-                    __("YOUR BET HAS NOT BEEN SUBMITTED YET.","wpwt"),
-                    __("Last changes received","wpwt"),$check->placed);
-            } else {
-               printf("<b>%s</b><br>\n%s",
-                    __("Please fill in all values in the propper format.","wpwt"),
-                    __("Afterwards submit your bet by clicking the submit button.","wpwt"));
-            }
-            echo "</div>";
-
             // Generate output
             $form_closes = sprintf("<span class='big'>%s %s, %s %s</span><br>",
                   __("Form closes","wpwt"),$WTuser->date_format($tournament->tdate,"%A"),
                   $WTuser->date_format($ct/86400),
                   $WTuser->datetime_format($ct,"%H:%M %Z"));
-            printf("<div class='wetterturnier-info warning'>%s <span class='big'>%s</span> %s,&nbsp;"
+            printf("<div class='wetterturnier-info'>%s <span class='big'>%s</span> %s,&nbsp;"
                   ."<span class='big'>%s</span>.<br><span class='big' id='live-closingstring'></span><br>\n "
                   ."<span>%s:</span>&nbsp;<span class='big' id='live-servertime'></span><br>\n "
                   ."</div>",
@@ -868,8 +844,30 @@ class wetterturnier_betclass
                   $WTuser->date_format($ct/86400),
                   $WTuser->datetime_format($ct,"%H:%M %Z"),__("Server time","wpwt"));
 
-            printf("<div class='wetterturnier-info ok large'>%s <span class='big'>%s</span></div>",
-                   __("Your active city is","wpwt"),$cityObj->get('name'));
+            // submitted or not?
+            if ( $check->submitted ) {
+               printf("<div class=\"wetterturnier-info ok\">"
+                     ."<span class=\"big black\">%s</span>&nbsp;<span class=\"big\">%s</span><br>\n"
+                     ."<b>%s</b><br>\n%s <b>%s</b>\n</div>\n",
+                    __("Your active city is","wpwt"),$cityObj->get('name'),
+                    __("YOUR BET HAS BEEN SUBMITTED, EVERYTHING FINE.","wpwt"),
+                    __("Valid submission received:","wpwt"),$check->placed);
+            } else if ( $check->placed ) {
+               printf("<div class=\"wetterturnier-info error\">"
+                     ."<span class=\"big black\">%s</span>&nbsp;<span class=\"big\">%s</span><br>\n"
+                     ."<b>%s</b><br>\n%s<br>\n%s: <b>%s</b>\n</div>\n",
+                    __("Your active city is","wpwt"),$cityObj->get('name'),
+                    __("PLEASE NOTE THAT SOME VALUES ARE STILL MISSING.","wpwt"),
+                    __("You do have to fill in all fields to take part in the upcoming tournament.","wpwt"),
+                    __("Last values received","wpwt"),$check->placed);
+            } else {
+               printf("<div class=\"wetterturnier-info ok\">"
+                     ."<span class=\"big black\">%s</span>&nbsp;<span class=\"big\">%s</span><br>\n"
+                     ."<b>%s</b><br>\n%s\n</div>\n",
+                    __("Your active city is","wpwt"),$cityObj->get('name'),
+                    __("Please fill in all values in the propper format.","wpwt"),
+                    __("Hint: you can always save your bets even if only partially completed.","wpwt"));
+            }
          }
    
    
@@ -1015,11 +1013,19 @@ class wetterturnier_betclass
             #wetterturnier-bet-form.portrait  div ul li short  { display: none;   }
             #wetterturnier-bet-form           div ul li input {
                max-width: 90%;
-               border: 1px solid blue;
+               border: 1px solid black;
                text-align: right;
                padding: .2em;
                margin: 0px;
             }
+            <?php
+            // If bets placed or (or submitted but this should never happen)
+            // and there are missing values, add color border.
+            if ( $check->placed | $check->submitted ) { ?>
+            #wetterturnier-bet-form div ul li input.missing {
+               border-color: red;
+            }
+            <?php } ?>
 
          </style>
          <!--
@@ -1096,10 +1102,10 @@ class wetterturnier_betclass
          // Adding one list element per parameter
          foreach ( $obj->parameter as $param ) {
             $input_name  = sprintf("%s_%d",$param->paramName,$day);
-            if ( property_exists($data,$input_name) ) { $input_value = $WTuser->number_format($data->$input_name,$param->decimals); }
-            else                                      { $input_value = "";                  }
-            printf("   <li><input type=\"text\" name=\"%s\" value=\"%s\"maxlengt=\"6\"></input></li>",
-                         $input_name,$input_value); 
+            if ( property_exists($data,$input_name) ) { $input_value = $WTuser->number_format($data->$input_name,$param->decimals); $class=""; }
+            else                                      { $input_value = ""; $class = "class=\"missing\""; }
+            printf("   <li><input %s type=\"text\" name=\"%s\" value=\"%s\"maxlengt=\"6\"></input></li>",
+                         $class, $input_name,$input_value); 
          }
          print "</ul>\n" // End ul element
               ."</div>\n"; // End wrapper

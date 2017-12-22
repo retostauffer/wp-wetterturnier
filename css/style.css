@@ -497,14 +497,23 @@ div.wetterturnier-info {
    width: -webkit-calc(100% - 48px);
    width:    -moz-calc(100% - 48px);
    width:         calc(100% - 48px);
+   border-left: 8px solid #6592cf;
 }
 div.wetterturnier-info.error   { border-left: 8px solid red; }
 div.wetterturnier-info.warning { border-left: 8px solid #FE9A2E; } 
-div.wetterturnier-info.ok      { border-left: 8px solid #41a62a; }
-div.wetterturnier-info.large   { font-size: 1.6em; }
-div.wetterturnier-info.large.ok span.big { font-size: 1.1em; font-weight: bold; color: #41a62a; }
+div.wetterturnier-info.ok      { border-left: 8px solid #41a62a; } 
+/*div.wetterturnier-info.large   { font-size: 1.6em; }
+div.wetterturnier-info.large.ok span.big { font-size: 1.1em; font-weight: bold; color: #41a62a; }*/
 
+div.wetterturnier-info span.big         { font-size: 1.5em; color: #6592cf; }
+div.wetterturnier-info.error span.big   { font-size: 1.5em; color: red;     }
 div.wetterturnier-info.warning span.big { font-size: 1.5em; color: #FF6600; }
+div.wetterturnier-info.ok span.big      { font-size: 1.5em; color: #41a62a; }
+div.wetterturnier-info span.big.black,
+div.wetterturnier-info.warning span.big.black,
+div.wetterturnier-info.ok span.big.black {
+   color: black;
+}
 
 /* Image rotator widget images are too big for firefox. Scale */
 ul.irw-slider img { width: 100%; }

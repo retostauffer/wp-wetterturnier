@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wpwt\n"
-"POT-Creation-Date: 2017-12-22 11:28+0100\n"
-"PO-Revision-Date: 2017-12-22 11:28+0100\n"
+"POT-Creation-Date: 2017-12-22 13:16+0100\n"
+"PO-Revision-Date: 2017-12-22 13:17+0100\n"
 "Last-Translator: Reto Stauffer <reto.stauffer@uibk.ac.at>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -56,8 +56,8 @@ msgstr "Städte"
 msgid "Stations"
 msgstr "Stationen"
 
-#: admin/adminclass.php:224 admin/classes/cities_list.php:33 betclass.php:1077
-#: betclass.php:1153 user/userclass.php:1701
+#: admin/adminclass.php:224 admin/classes/cities_list.php:33 betclass.php:1075
+#: betclass.php:1151 user/userclass.php:1701
 msgid "Parameter"
 msgstr "Parameter"
 
@@ -608,133 +608,131 @@ msgstr ""
 "Webcam nicht hinzugefügt. Es scheint, als ob du vergessen hast, eine Stadt "
 "auszuwählen."
 
-#: betclass.php:840
-msgid "Please be sure that this is correct before inserting/sending the data."
-msgstr ""
-"Bitte überprüfe, dass die Werte korrekt sind, bevor du diese speicherst."
-
-#: betclass.php:845
-msgid "YOUR BET HAS BEEN SUBMITTED, EVERYTHING FINE."
-msgstr "DEIN TIPP WURDE ABGEGEBEN, ALLES IN ORDNUNG."
-
-#: betclass.php:846
-msgid "Submission"
-msgstr "Abgabe um"
-
-#: betclass.php:849
-msgid "YOUR BET HAS NOT BEEN SUBMITTED YET."
-msgstr "ACHTUNG: DEIN TIPP WURDE GESPEICHERT ABER NOCH NICHT VERSCHICKT!"
-
-#: betclass.php:850
-msgid "Last changes received"
-msgstr "Letzte Änderungen gespeichert"
-
-#: betclass.php:853
-msgid "Please fill in all values in the propper format."
-msgstr "Bitte fülle zuerst alle Werte im korrekten Format ein."
-
-#: betclass.php:854
-msgid "Afterwards submit your bet by clicking the submit button."
-msgstr ""
-"Du kannst deinen Tipp jederzeit zwischenspeichern. Beachte, dass alle Werte "
-"korrekt ausgefüllt sein müssen um am Turnier teilzunehmen."
-
-#: betclass.php:860 betclass.php:867
+#: betclass.php:836 betclass.php:843
 msgid "Form closes"
 msgstr "Abgabeschluss ist"
 
-#: betclass.php:869
+#: betclass.php:845
 msgid "Server time"
 msgstr "Serverzeit"
 
-#: betclass.php:872
+#: betclass.php:852 betclass.php:859 betclass.php:867
 msgid "Your active city is"
 msgstr "Deine aktive Stadt ist"
 
-#: betclass.php:914
+#: betclass.php:853
+msgid "YOUR BET HAS BEEN SUBMITTED, EVERYTHING FINE."
+msgstr "DEIN TIPP WURDE ABGEGEBEN, ALLES IN ORDNUNG."
+
+#: betclass.php:854
+msgid "Valid submission received:"
+msgstr "Gültiger und vollständiger Tipp erhalten:"
+
+#: betclass.php:860
+msgid "PLEASE NOTE THAT SOME VALUES ARE STILL MISSING."
+msgstr "BEACHTE, DASS IM MOMENT NOCH EINIGE WERTE FEHLEN."
+
+#: betclass.php:861
+msgid ""
+"You do have to fill in all fields to take part in the upcoming tournament."
+msgstr "Du musst alle Werte ausfüllen um am Turnier teilzunehmen."
+
+#: betclass.php:862
+msgid "Last values received"
+msgstr "Letzte Werte erhalten"
+
+#: betclass.php:868
+msgid "Please fill in all values in the propper format."
+msgstr "Bitte fülle zuerst alle Werte im korrekten Format ein."
+
+#: betclass.php:869
+msgid "Hint: you can always save your bets even if only partially completed."
+msgstr "Hinweis: du kannst jederzeit deine Tipps zwischenspeichern."
+
+#: betclass.php:912
 msgid "Form closed! Submissions won't be stored anymore."
 msgstr ""
 "Abgabeformular geschlossen! Änderungen an den Tipps werden nicht mehr "
 "gespeichert."
 
-#: betclass.php:917 betclass.php:922
+#: betclass.php:915 betclass.php:920
 msgid "Form closes in more than"
 msgstr "Abgabeformular schliesst in etwas mehr als"
 
-#: betclass.php:917
+#: betclass.php:915
 msgid "days"
 msgstr "Tagen"
 
-#: betclass.php:917
+#: betclass.php:915
 msgid "No hurry!"
 msgstr "Kein Stress!"
 
-#: betclass.php:919
+#: betclass.php:917
 msgid "More than one day left to submit the bet."
 msgstr "Noch mehr als ein Tag bis das Abgabeformular schliesst."
 
-#: betclass.php:922 generalclass.php:931
+#: betclass.php:920 generalclass.php:931
 msgid "hours"
 msgstr "Stunden"
 
-#: betclass.php:922
+#: betclass.php:920
 msgid "Keep cool!"
 msgstr "Cool bleiben!"
 
-#: betclass.php:924
+#: betclass.php:922
 msgid "Still a bit more than one hour until the form closes."
 msgstr "Immer noch etwas mehr als eine Stunde bis Abgabeschluss."
 
-#: betclass.php:927
+#: betclass.php:925
 msgid "The form closes in about"
 msgstr "Das Abgabeformular schliesst in etwa"
 
-#: betclass.php:927 betclass.php:930 generalclass.php:927 generalclass.php:932
+#: betclass.php:925 betclass.php:928 generalclass.php:927 generalclass.php:932
 msgid "minutes"
 msgstr "Minuten"
 
-#: betclass.php:930
+#: betclass.php:928
 msgid "The form closes in a bit more than"
 msgstr "Das Abgabeformular schliesst in etwas mehr als"
 
-#: betclass.php:930
+#: betclass.php:928
 msgid "Time to hurry up a bit, my friend!"
 msgstr "Zeit sich etwas zu beeilen, mein Freund!"
 
-#: betclass.php:932
+#: betclass.php:930
 msgid "Only a bit more than one minute left to submit your bet!"
 msgstr "Nur noch etwas mehr als eine Minute bis das Abgabeformular schliesst!"
 
-#: betclass.php:934
+#: betclass.php:932
 msgid "Form closes in"
 msgstr "Abgabeformular schliesst in"
 
-#: betclass.php:934
+#: betclass.php:932
 msgid "seconds"
 msgstr "Sekunden"
 
-#: betclass.php:934
+#: betclass.php:932
 msgid "Hurry, hurry!"
 msgstr "Los jetzt!"
 
-#: betclass.php:1027 betclass.php:1071 betclass.php:1147
+#: betclass.php:1025 betclass.php:1069 betclass.php:1145
 msgid "Switch orientation"
 msgstr "Darstellung ändern"
 
-#: betclass.php:1115
+#: betclass.php:1113
 msgid "Validate & Save"
 msgstr "Überprüfen & Senden"
 
-#: betclass.php:1116 user/views/ranking.php:185
+#: betclass.php:1114 user/views/ranking.php:185
 #: user/widgets/tournaments.php:203
 msgid "for"
 msgstr "für"
 
-#: betclass.php:1193
+#: betclass.php:1191
 msgid "Save Observations"
 msgstr "Beobachtungen speichern"
 
-#: betclass.php:1220
+#: betclass.php:1218
 msgid ""
 "Unexpected input to the method which has to store the forecast value. This "
 "is a problem in update_bet_database, missing submit. Please inform one of "
@@ -744,7 +742,7 @@ msgstr ""
 "ein Problem in der Methode update_bet_database, fehlende Elemente. Bitte den "
 "Administrator informieren."
 
-#: betclass.php:1227
+#: betclass.php:1225
 msgid ""
 "Unexpected input to the method which has to store the forecast value. This "
 "is a problem in update_bet_database, submit value was wrong. Please inform "
@@ -754,7 +752,7 @@ msgstr ""
 "ein Problem in der Methode update_bet_database, fehlende Elemente. Bitte den "
 "Administrator informieren."
 
-#: betclass.php:1255
+#: betclass.php:1253
 msgid "Sorry, tournament CLOSED. We cannot store your changes anymore."
 msgstr ""
 "Sorry, das Turnier ist bereits GESCHLOSSEN. Wir können deine Änderungen "
@@ -1763,34 +1761,3 @@ msgstr "Wetterturnier Webcams"
 #: wp-wetterturnier.php:112
 msgid "Wetterturnier Admin"
 msgstr "Wetterturnier Admin"
-
-#~ msgid "Form to submit your bet for"
-#~ msgstr "Formular um deinen Tipp abzugeben für"
-
-#~ msgid ""
-#~ "If you would like to submitt a bet please go to \"TOURNAMENT\" in the "
-#~ "navigation."
-#~ msgstr ""
-#~ "Falls du gerne einen Tipp abgeben möchtest gehe bitte auf \"TURNIER\" in "
-#~ "der Navigation."
-
-#~ msgid "Parameter NOT observed"
-#~ msgstr "Parameter NICHT beobachtet"
-
-#~ msgid "Real-life name"
-#~ msgstr "Tatsächlicher Name"
-
-#~ msgid "Display name"
-#~ msgstr "Anzeigename"
-
-#~ msgid "The next tournament will take place on"
-#~ msgstr "Das nächste Turnier findet statt am"
-
-#~ msgid "Sorry, no user data available."
-#~ msgstr "Sorry, keine Mitspieler-Daten vorhanden."
-
-#~ msgid "Sorry, currently no observations available."
-#~ msgstr "Sorry, im Moment keine Beobachtungen vorhanden."
-
-#~ msgid "They will be displayed as soon as they are available."
-#~ msgstr "Diese werden dargestellt, sobald sie verf&uuml;gbar sind."
