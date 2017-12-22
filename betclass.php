@@ -928,7 +928,7 @@ class wetterturnier_betclass
                   } else if ( diff > 60 ) {
                      val = "<?php _e("Only a bit more than one minute left to submit your bet!","wpwt"); ?>"
                   } else if ( diff > 0 ) {
-                     val = "<?php _e("Form closes in","wpwt"); ?> "+diff+" <?php _e("seconds","wpwt"); ?>! <?php _e("Hurry, hurry!","wpwt"); ?>"
+                     val = "<?php _e("Form closes in","wpwt"); ?> "+Math.round(diff)+" <?php _e("seconds","wpwt"); ?>! <?php _e("Hurry, hurry!","wpwt"); ?>"
                   }
                   // User output
                   $("#live-closingstring").html( val )
