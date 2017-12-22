@@ -826,7 +826,8 @@ class wetterturnier_betclass
             $check = $WTuser->check_bet_is_submitted($userID,$cityObj,$tournament->tdate);
 
             if ( $check->submitted )     { $div_class = 'ok'; }
-            else                         { $div_class = 'warning'; }
+            else if ( $check->placed )   { $div_class = 'warning'; }
+            else                         { $div_class = 'ok'; }
 
             // Info closing time
             $ct = strptime(sprintf("%s %04d UTC",$WTuser->date_format($tournament->tdate,"%Y-%m-%d"),
@@ -835,13 +836,8 @@ class wetterturnier_betclass
                               $ct['tm_mday'], $ct['tm_year']+1900);
 
             // Info for which weekend the form is valid
-            #echo "<div class='wetterturnier-info ".$div_class."'>"
-            #   .__("Please be sure that this is correct before inserting/sending the data.","wpwt")."<br>\n" 
-            #   .__("Form to submit your bet for","wpwt").": "
-            #   .$tournament->weekday.", ".$tournament->readable.".<br>\n";
-            printf("<div class='wetterturnier-info %s'>%s %s: %s, %s.<br>\n", $div_class,
-               __("Please be sure that this is correct before inserting/sending the data.","wpwt"),
-               __("Form to submit your bet for","wpwt"), $tournament->weekday, $tournament->readable);
+            printf("<div class='wetterturnier-info %s'>%s<br>\n", $div_class,
+               __("Please be sure that this is correct before inserting/sending the data.","wpwt"));
 
             // submitted or not?
             if ( $check->submitted ) {
@@ -853,8 +849,7 @@ class wetterturnier_betclass
                     __("YOUR BET HAS NOT BEEN SUBMITTED YET.","wpwt"),
                     __("Last changes received","wpwt"),$check->placed);
             } else {
-               printf("<b>%s</b><br>\n%s %s",
-                    __("YOUR BET HAS NOT BEEN SUBMITTED YET.","wpwt"),
+               printf("<b>%s</b><br>\n%s",
                     __("Please fill in all values in the propper format.","wpwt"),
                     __("Afterwards submit your bet by clicking the submit button.","wpwt"));
             }
