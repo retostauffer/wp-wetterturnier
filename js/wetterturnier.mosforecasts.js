@@ -65,7 +65,7 @@ jQuery(document).on('ready',function() {
       $(target).append("<desc>Forecast location:</desc>")
                .append("<select id=\"wt-mosdata-location\"></select><br>");
       $.each( locations, function(key,value)  {
-         $("#wt-mosdata-location").append("<option value='"+value+"'>"+value+"</option>");
+         $("#wt-mosdata-location").append("<option value='"+value+"'>"+value.toUpperCase()+"</option>");
       });
       $("#wt-mosdata-location").val( $("#wt-mosdata-location option:first").val() )
 
