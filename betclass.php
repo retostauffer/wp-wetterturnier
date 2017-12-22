@@ -905,9 +905,8 @@ class wetterturnier_betclass
                   $("#live-servertime").html( x+" UTC" )
                   return timestamp + 1
                }
-               function showClosingString( timestamp ) {
-                  var now  = parseInt( $.now() / 1000 )
-                  var diff = timestamp - now
+               function showClosingString( closing_timestamp, server_timestamp ) {
+                  var diff = closing_timestamp - server_timestamp
                   // Default is: Form closed
                   var val = "<?php _e("Form closed! Submissions won't be stored anymore.","wpwt"); ?>"
                   if ( diff > (2*86400) ) {
@@ -942,7 +941,7 @@ class wetterturnier_betclass
                showClosingString(closing_timestamp)
                showServerTime( server_timestamp )
                function closing_looper( closing_timestamp, server_timestamp ) {
-                  var intv1 = self.setInterval( function() { showClosingString(closing_timestamp) }, 1000 ) 
+                  var intv1 = self.setInterval( function() { showClosingString(closing_timestamp,server_timestamp) }, 1000 ) 
                   var intv2 = self.setInterval( function() { server_timestamp = showServerTime(server_timestamp) }, 1000 ) 
                }
                closing_looper( closing_timestamp, server_timestamp );
