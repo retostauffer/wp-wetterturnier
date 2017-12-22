@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2017-12-22 18:24 on prognose2
+# - L@ST MODIFIED: 2017-12-22 21:19 on prognose2
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -226,6 +226,7 @@ switch ( $args->type ) {
 }
 
 // Currently disabled (Reto, 2017-12-22)
+$dostop = false;
 if ( $dostop ) { ?>
 
 <div class="wetterturnier-info error">

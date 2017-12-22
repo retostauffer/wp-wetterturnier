@@ -94,15 +94,15 @@ jQuery(document).on('ready',function() {
       // Create table: Models in columns, parameters in rows
       $(target).empty().append("<table><thead><tr><th></th></tr></thead><tbody></tbody></table>")
       $.each( data, function(key,val) {
-         $(target+" > table > thead > tr").append( "<th colspan=\"2\">"+key+"</th>")
+         $(target+" > table > thead > tr").append( "<th class=\"mosname\" colspan=\"2\">"+key+"</th>")
       });
       $.each( parameters, function(k,param) {
          $(target+" > table > tbody").append("<tr class=\"param\"><td>"+param+"</td></tr>")
          $.each( data, function(key,val) {
             // Colorizing columns if required
             $(target+" > table > tbody > tr:last")
-                  .append("<td class=\"data shaded\">"+val[param][0]+"</td>")
-                  .append("<td class=\"data\">"+val[param][1]+"</td>")
+                  .append("<td class=\"data shaded column-left\">"+val[param][0]+"</td>")
+                  .append("<td class=\"data column-right\">"+val[param][1]+"</td>")
          });
       });
 
