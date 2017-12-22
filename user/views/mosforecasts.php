@@ -45,6 +45,9 @@ jQuery(document).on('ready',function() {
 #wt-mosdata-data table {
    margin-top: 20px;
 }
+#wt-mosdata-data table tr th {
+   text-align: center;
+}
 #wt-mosdata-data table tr:hover,
 #wt-mosdata-data table tr:hover td {
    background-color: #d4e0ec;
