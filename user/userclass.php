@@ -1514,7 +1514,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                     ."AND cityID=%d AND userID = %d",$wpdb->prefix,
                      $tdate,$cityID,$sleepy->ID);
       $res = $wpdb->get_row( $sql );
-      return $this->number_format($res->points,1);
+      if ( ! $res ) { return( "N/A" ); } else {
+         return $this->number_format($res->points,1);
+      }
    }
 
    // ---------------------------------------------------------------
