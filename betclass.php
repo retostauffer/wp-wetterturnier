@@ -949,6 +949,16 @@ class wetterturnier_betclass
                //   $("#live-closingtime").html( getServerTime() )
                //   var intv2 = self.setInterval( function() { g
                //}
+
+               // Crate base64 svg on the fly
+               var bgsvg = "<svg xmlns='http://www.w3.org/2000/svg' width='15' height='31'>"
+                          +"<text id='wtinputbg' x='14' y='30' style='text-align: center; "
+                          +"font-family: sans-serif; font-size: 13px; fill: #b2b2b2;' "
+                          +"transform='rotate(-90 14,30)'>"
+                          +"<?php print $cityObj->get("hash"); ?></text></svg>";
+               var bgsvg64 = window.btoa(bgsvg)
+               $("div.wt-betform input[type='text']")
+                  .css("background-image","url('data:image/svg+xml;base64," + bgsvg64 + "')");
             <?php } ?>
          });
          </script>
@@ -1017,6 +1027,12 @@ class wetterturnier_betclass
                text-align: right;
                padding: .2em;
                margin: 0px;
+               background-position: bottom left;
+               background-size: auto 100%;
+               background-repeat: no-repeat;
+
+/*background-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"50\" height=\"25\"><text id=\"wtinputbg\" x=\"3\" y=\"23\" style=\"text-align: left; font-family: sans-serif; font-size: 20px; fill: #b2b2b2;\">FOO</text></svg>");*/
+/*background-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"50\" height=\"25\"><text id=\"wtinputbg\" x=\"3\" y=\"23\" style=\"text-align: left; font-family: sans-serif; font-size: 20px; fill: #b2b2b2;\">FOO</text></svg>");*/
             }
             <?php
             // If bets placed or (or submitted but this should never happen)
