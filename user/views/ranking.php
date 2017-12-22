@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2017-12-20 18:22 on thinkreto
+# - L@ST MODIFIED: 2017-12-22 18:24 on prognose2
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -50,6 +50,7 @@ else                                  { $tdate = (int)$_REQUEST['tdate']; }
 // Depending on the type of ranking which should be shown to the end
 // user, we have to prepare a few things.
 // ------------------------------------------------------------------
+$dostop = false; # Takes too much memory, killed for the moment
 switch ( $args->type ) {
 
    // ---------------------------------------------------------------
@@ -188,6 +189,7 @@ switch ( $args->type ) {
       $older = $WTuser->older_tournament($dates[0]);
       $newer = $WTuser->newer_tournament($dates[1]);
 
+      $dostop = true;
       break;
 
    // ---------------------------------------------------------------
@@ -212,6 +214,7 @@ switch ( $args->type ) {
       $older = $WTuser->older_tournament($tdate);
       $newer = $WTuser->newer_tournament($tdate);
 
+      $dostop = true;
       break;
 
    // ---------------------------------------------------------------
@@ -222,211 +225,220 @@ switch ( $args->type ) {
       return;
 }
 
+// Currently disabled (Reto, 2017-12-22)
+if ( $dostop ) { ?>
 
+<div class="wetterturnier-info error">
+Sorry chaps and gals, but I (Reto) have disabled this feature at the moment.
+These tables are computed live on the database, however, seems that they are
+a bit inefficient and can easily use more memory than available which idles
+the whole server :). I have to think of a more economic solution!
+</div>
 
-
-// -------------------------------------------------------------------
-// Navigation 
-// If the newer tournament is newer than the current date
-// kill the $newer stdObject. This hides the 'next' button. 
-if ( $newer->tdate > (int)floor(gmdate('U')/86400) ) {
-   $newer = false;
-}
-$aurl = explode('?', $_SERVER['REQUEST_URI'], 2);
-$aurl = 'http://'.$_SERVER['HTTP_HOST'].$aurl[0];
-if ( ! $args->hidebuttons & $args->header ) { ?>
-   <div class="wt-twocolumn wrapper">
-      <div class="wt-twocolumn column-left" style="width: 65%;">
-         <?php
-         // Show title
-         if ( $args->header )
-         { printf("<h3>%s</h3><br>\n",$title); }
-         else if ( ($args->type === "weekend" | $args->type === "cities") & is_numeric($args->limit) )
-         { printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title); }
-         ?>
-         <div style="min-height: 30px;">
-            <?php if ( is_object($older) ) { ?>
-            <form style='float: left; padding-right: 3px;' method='post' action='<?php echo $aurl.'?tdate='.$older->tdate; ?>'>
-                <input class="button" type="submit" value="<< <?php _e("older","wpwt"); ?>" />
-            </form>
-            <?php } ?>
-            <?php if ( is_object($newer) ) { ?>
-            <form style='float: left; padding-left: 3px;' method='post' action='<?php echo $aurl.'?tdate='.$newer->tdate; ?>'>
-                <input class="button" type="submit" value="<?php _e("newer","wpwt"); ?> >>" />
-            </form>
-            <?php } ?>
-         </div>
-      </div>
-      <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
-         <?php $WTuser->archive_show_colorlegend(); ?>
-      </div>
-      <div style="clear: both;" class="wt-twocolumn footer"></div>
-   </div>
-   <br>
 <?php } else {
-   // Show title
-   if ( $args->header )
-   { printf("<h3>%s</h3><br>\n",$title); }
-   else if ( ($args->type === "weekend" | $args->type === "cities") & is_numeric($args->limit) )
-   { printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title); }
-}
-// -------------------------------------------------------------------
-
-// Print dates in a ugly way
-$today = (int)(time()/86400);
-if ( empty($ranking->data) && ($today-$tdate) <= 1 ) {
-    echo "<br><div class='wetterturnier-info ok'>"
-        .__("Ranking can't be shown yet. The reason: "
-           ."this is the weekend ranking of the ongoing "
-           ."tournament and as we don't have any observed " 
-           ."parameters, we can't compute points, or ranks, "
-           ."at the moment. As soon as we can judge the "
-           ."parameter you can access the live-ranking here. "
-           ."Thank you for your understanding.","wpwt")
-        ."</div>";    
-} else if ( empty($ranking->data) ) {
-    echo "<br><div class='wetterturnier-info warning'>"
-        .__('Sorry, but we do have a problem computing the ' 
-           .' ranking you\'ll have. If the problem exists '
-           .' for a longer time period please inform '
-           .' one of our administrators. Please note that '
-           .' the message also shows up if this is the '
-           .' ongoing tournament. Thank you.','wpwt')
-        ."</div>";    
-} else {
-
-   ?>
-   <script type="text/javascript">
-   jQuery(document).on("ready",function(){
-      (function($) {
-         // Admin url for ajax requests
-         $.ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
-      })(jQuery);
-   });
-   </script>
-
-   <?php
-   if ( $args->header ) {
-      printf("%s <b>%s</b>.",__("The maximum score (total) for the ranking is","wpwt"),
-                    $this->number_format($ranking->maxpoints,0));
+   // -------------------------------------------------------------------
+   // Navigation 
+   // If the newer tournament is newer than the current date
+   // kill the $newer stdObject. This hides the 'next' button. 
+   if ( $newer->tdate > (int)floor(gmdate('U')/86400) ) {
+      $newer = false;
    }
-
-   // Get custom table styling
-   $wttable_style = get_user_option("wt_wttable_style");
-   $wttable_style = (is_bool($wttable_style) ? "" : $wttable_style);
-
-
-   // Create a table to show the data
-   $max_width = 200;
-   $thwidth = sprintf(" style=\"width: %dpx\"",(int)($max_width+10));
-   $align = " style=\"text-align: right;\"";
-   echo "<table class=\"wttable-show-ranking wttable-show small ranking-".$args->type." ".$wttable_style."\" width=\"100%\">\n"
-       ."  <tr>\n"
-       ."    <th class=\"rank\">".__('Rank','wpwt')."</th>\n"
-       ."    <th class=\"played\">T</th>\n"
-       ."    <th class=\"user\">".__('Player','wpwt')."</th>\n";
-   if ( ! $args->slim ) {
-      echo "    <th class=\"points\">".__('Saturday','wpwt')."</th>\n"
-          ."    <th class=\"points\">".__('Sunday','wpwt')."</th>\n"
-          ."    <th class=\"points\">".__('Total','wpwt')."</th>\n";
+   $aurl = explode('?', $_SERVER['REQUEST_URI'], 2);
+   $aurl = 'http://'.$_SERVER['HTTP_HOST'].$aurl[0];
+   if ( ! $args->hidebuttons & $args->header ) { ?>
+      <div class="wt-twocolumn wrapper">
+         <div class="wt-twocolumn column-left" style="width: 65%;">
+            <?php
+            // Show title
+            if ( $args->header )
+            { printf("<h3>%s</h3><br>\n",$title); }
+            else if ( ($args->type === "weekend" | $args->type === "cities") & is_numeric($args->limit) )
+            { printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title); }
+            ?>
+            <div style="min-height: 30px;">
+               <?php if ( is_object($older) ) { ?>
+               <form style='float: left; padding-right: 3px;' method='post' action='<?php echo $aurl.'?tdate='.$older->tdate; ?>'>
+                   <input class="button" type="submit" value="<< <?php _e("older","wpwt"); ?>" />
+               </form>
+               <?php } ?>
+               <?php if ( is_object($newer) ) { ?>
+               <form style='float: left; padding-left: 3px;' method='post' action='<?php echo $aurl.'?tdate='.$newer->tdate; ?>'>
+                   <input class="button" type="submit" value="<?php _e("newer","wpwt"); ?> >>" />
+               </form>
+               <?php } ?>
+            </div>
+         </div>
+         <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
+            <?php $WTuser->archive_show_colorlegend(); ?>
+         </div>
+         <div style="clear: both;" class="wt-twocolumn footer"></div>
+      </div>
+      <br>
+   <?php } else {
+      // Show title
+      if ( $args->header )
+      { printf("<h3>%s</h3><br>\n",$title); }
+      else if ( ($args->type === "weekend" | $args->type === "cities") & is_numeric($args->limit) )
+      { printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title); }
+   }
+   // -------------------------------------------------------------------
+   
+   // Print dates in a ugly way
+   $today = (int)(time()/86400);
+   if ( empty($ranking->data) && ($today-$tdate) <= 1 ) {
+       echo "<br><div class='wetterturnier-info ok'>"
+           .__("Ranking can't be shown yet. The reason: "
+              ."this is the weekend ranking of the ongoing "
+              ."tournament and as we don't have any observed " 
+              ."parameters, we can't compute points, or ranks, "
+              ."at the moment. As soon as we can judge the "
+              ."parameter you can access the live-ranking here. "
+              ."Thank you for your understanding.","wpwt")
+           ."</div>";    
+   } else if ( empty($ranking->data) ) {
+       echo "<br><div class='wetterturnier-info warning'>"
+           .__('Sorry, but we do have a problem computing the ' 
+              .' ranking you\'ll have. If the problem exists '
+              .' for a longer time period please inform '
+              .' one of our administrators. Please note that '
+              .' the message also shows up if this is the '
+              .' ongoing tournament. Thank you.','wpwt')
+           ."</div>";    
    } else {
-      echo "    <th class=\"points\">".__('Points','wpwt')."</th>\n";
-   }
-   // Extra columns if not slim
-   if ( ! $args->slim ) {
-       echo "    <th class=\"points difference\">".__('Difference','wpwt')."</th>\n"
-           ."    <th class=\"\"".$thwidth.">".__('Status','wpwt')."</th>\n"
-           ."  </tr>\n";
-   }
-
-   // Width of the points status bar
-   $show_sleepy_note = False;
-   $points_hold = 99999; $rank = 0; $hidden_rank = 0;
-   $points_leader = $ranking->data[0]->points;
-   foreach ( $ranking->data as $rec ) {
-
-      // Increase Rank if necessary
-      if ( $rec->points < $points_hold ) {
-          $points_hold = $rec->points; $hidden_rank++; $rank = $hidden_rank;
-      } else { $hidden_rank++; }
-
-      // Computes the difference
-      $rec->difference = $rec->points - $points_leader;
-       
-      // Total number of points reachable in the ranking 
-      // of a weekend (200) times number of weeks and
-      // number of cities in the ranking. As an example:
-      // If you compute the 'total ranking' for '3 towns'
-      // total number to reach is 200*15*3 or in code
-      // Create the status bar
-      $pc = $this->number_format( (float)$rec->points / $ranking->maxpoints * 100., 1 )."%";
-      if ( $pc > 50. ) { $pc1 = $pc.'&nbsp;'; $pc2 = ''; }
-      else             { $pc2 = $pc; $pc1 = ''; }
-      $w1 = max(0,(int)floor((float)$rec->points / $ranking->maxpoints * (float)$max_width)); # last number is max width 
-      $sbar  = "<span class='ranking-statusbar' style='width: ".$max_width."px;'>\n"
-              ."  <span style='width: ".$w1."px;'>".$pc1."</span>".$pc2."\n"
-              ."</span>\n";
-
-      // Returns class for the user and also
-      // manipulates the username (wp_users.display_name) if necessary.
-      $rec_tmp = $WTuser->get_user_display_class_and_name($rec->userID, $rec);
-
-      // Generate link to show user details
-      if ( $args->type === "weekend" ) {
-         $user_details = sprintf("<span class='button small detail' userID='%d' cityID='%s' tdate='%d'>"
-                                ."</span>",(int)$rec->userID,$cityObj->get('ID'),(int)$tdate);
-      } else { $user_details = ""; }
-
-      // Show edit button if logged in
-      if ( $args->type === "weekend" ) {
-         $edit_button = $WTuser->create_edit_button( $rec_tmp->userclass, $cityObj, (int)$rec->userID, $tdate );
-      } else { $edit_button = ""; }
-
-      // Show profile link (if not mitteltip/Gruppe)
-      if ( $rec_tmp->userclass == "mitteltip" ) {
-         $user_name = $rec->display_name;
-         $user_name = $WTuser->get_user_display_class_and_name( $rec->userID, $rec )->display_name;
+   
+      ?>
+      <script type="text/javascript">
+      jQuery(document).on("ready",function(){
+         (function($) {
+            // Admin url for ajax requests
+            $.ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+         })(jQuery);
+      });
+      </script>
+   
+      <?php
+      if ( $args->header ) {
+         printf("%s <b>%s</b>.",__("The maximum score (total) for the ranking is","wpwt"),
+                       $this->number_format($ranking->maxpoints,0));
+      }
+   
+      // Get custom table styling
+      $wttable_style = get_user_option("wt_wttable_style");
+      $wttable_style = (is_bool($wttable_style) ? "" : $wttable_style);
+   
+   
+      // Create a table to show the data
+      $max_width = 200;
+      $thwidth = sprintf(" style=\"width: %dpx\"",(int)($max_width+10));
+      $align = " style=\"text-align: right;\"";
+      echo "<table class=\"wttable-show-ranking wttable-show small ranking-".$args->type." ".$wttable_style."\" width=\"100%\">\n"
+          ."  <tr>\n"
+          ."    <th class=\"rank\">".__('Rank','wpwt')."</th>\n"
+          ."    <th class=\"played\">T</th>\n"
+          ."    <th class=\"user\">".__('Player','wpwt')."</th>\n";
+      if ( ! $args->slim ) {
+         echo "    <th class=\"points\">".__('Saturday','wpwt')."</th>\n"
+             ."    <th class=\"points\">".__('Sunday','wpwt')."</th>\n"
+             ."    <th class=\"points\">".__('Total','wpwt')."</th>\n";
       } else {
-         $user_name = $WTuser->get_user_profile_link( $rec ); //->user_login );
+         echo "    <th class=\"points\">".__('Points','wpwt')."</th>\n";
       }
-
-      // Show an asteriks if not played all tournaments to indicate
-      // that Saturdau and Sunday Points do NOT SUM UP to total points
-      // as sleepy is used to fillup!
-      if ( $rec->played < $ranking->tdate_count ) {
-         $show_sleepy_note = True;
-         $sleepy_marker    = "<span class='wttable-show-sleepymarker'>*</span>";
-      } else { $sleepy_marker = ""; } 
-      // Show the data
-      echo "  <tr class='".$rec_tmp->userclass."' userid='".$rec->userID."'>\n"
-          ."    <td class=\"rank ".$rec_tmp->userclass."\">".$rank."</td>\n"
-          ."    <td class=\"played\">".$rec->played."/".$ranking->tdate_count."</td>\n"
-          ."    <td class=\"user\">".$edit_button.$user_details.$user_name."</td>\n";
+      // Extra columns if not slim
       if ( ! $args->slim ) {
-         if ( $rec->userID == 1130 ) {
-            echo "    <td class=\"points\">---</td>\n"
-                ."    <td class=\"points\">---</td>\n";
+          echo "    <th class=\"points difference\">".__('Difference','wpwt')."</th>\n"
+              ."    <th class=\"\"".$thwidth.">".__('Status','wpwt')."</th>\n"
+              ."  </tr>\n";
+      }
+   
+      // Width of the points status bar
+      $show_sleepy_note = False;
+      $points_hold = 99999; $rank = 0; $hidden_rank = 0;
+      $points_leader = $ranking->data[0]->points;
+      foreach ( $ranking->data as $rec ) {
+   
+         // Increase Rank if necessary
+         if ( $rec->points < $points_hold ) {
+             $points_hold = $rec->points; $hidden_rank++; $rank = $hidden_rank;
+         } else { $hidden_rank++; }
+   
+         // Computes the difference
+         $rec->difference = $rec->points - $points_leader;
+          
+         // Total number of points reachable in the ranking 
+         // of a weekend (200) times number of weeks and
+         // number of cities in the ranking. As an example:
+         // If you compute the 'total ranking' for '3 towns'
+         // total number to reach is 200*15*3 or in code
+         // Create the status bar
+         $pc = $this->number_format( (float)$rec->points / $ranking->maxpoints * 100., 1 )."%";
+         if ( $pc > 50. ) { $pc1 = $pc.'&nbsp;'; $pc2 = ''; }
+         else             { $pc2 = $pc; $pc1 = ''; }
+         $w1 = max(0,(int)floor((float)$rec->points / $ranking->maxpoints * (float)$max_width)); # last number is max width 
+         $sbar  = "<span class='ranking-statusbar' style='width: ".$max_width."px;'>\n"
+                 ."  <span style='width: ".$w1."px;'>".$pc1."</span>".$pc2."\n"
+                 ."</span>\n";
+   
+         // Returns class for the user and also
+         // manipulates the username (wp_users.display_name) if necessary.
+         $rec_tmp = $WTuser->get_user_display_class_and_name($rec->userID, $rec);
+   
+         // Generate link to show user details
+         if ( $args->type === "weekend" ) {
+            $user_details = sprintf("<span class='button small detail' userID='%d' cityID='%s' tdate='%d'>"
+                                   ."</span>",(int)$rec->userID,$cityObj->get('ID'),(int)$tdate);
+         } else { $user_details = ""; }
+   
+         // Show edit button if logged in
+         if ( $args->type === "weekend" ) {
+            $edit_button = $WTuser->create_edit_button( $rec_tmp->userclass, $cityObj, (int)$rec->userID, $tdate );
+         } else { $edit_button = ""; }
+   
+         // Show profile link (if not mitteltip/Gruppe)
+         if ( $rec_tmp->userclass == "mitteltip" ) {
+            $user_name = $rec->display_name;
+            $user_name = $WTuser->get_user_display_class_and_name( $rec->userID, $rec )->display_name;
          } else {
-            echo "    <td class=\"points\">".$sleepy_marker.$this->number_format($rec->points_d1,1)."</td>\n"
-                ."    <td class=\"points\">".$sleepy_marker.$this->number_format($rec->points_d2,1)."</td>\n";
+            $user_name = $WTuser->get_user_profile_link( $rec ); //->user_login );
          }
+   
+         // Show an asteriks if not played all tournaments to indicate
+         // that Saturdau and Sunday Points do NOT SUM UP to total points
+         // as sleepy is used to fillup!
+         if ( $rec->played < $ranking->tdate_count ) {
+            $show_sleepy_note = True;
+            $sleepy_marker    = "<span class='wttable-show-sleepymarker'>*</span>";
+         } else { $sleepy_marker = ""; } 
+         // Show the data
+         echo "  <tr class='".$rec_tmp->userclass."' userid='".$rec->userID."'>\n"
+             ."    <td class=\"rank ".$rec_tmp->userclass."\">".$rank."</td>\n"
+             ."    <td class=\"played\">".$rec->played."/".$ranking->tdate_count."</td>\n"
+             ."    <td class=\"user\">".$edit_button.$user_details.$user_name."</td>\n";
+         if ( ! $args->slim ) {
+            if ( $rec->userID == 1130 ) {
+               echo "    <td class=\"points\">---</td>\n"
+                   ."    <td class=\"points\">---</td>\n";
+            } else {
+               echo "    <td class=\"points\">".$sleepy_marker.$this->number_format($rec->points_d1,1)."</td>\n"
+                   ."    <td class=\"points\">".$sleepy_marker.$this->number_format($rec->points_d2,1)."</td>\n";
+            }
+         }
+         echo "    <td class=\"points\">".$this->number_format($rec->points,1)."</td>\n";
+         if ( ! $args->slim ) {
+             echo "    <td class=\"points difference\">".$this->number_format($rec->difference,1)."</td>\n"
+                 ."    <td>".$sbar."</td>\n  </tr>\n";
+         }
+      
       }
-      echo "    <td class=\"points\">".$this->number_format($rec->points,1)."</td>\n";
-      if ( ! $args->slim ) {
-          echo "    <td class=\"points difference\">".$this->number_format($rec->difference,1)."</td>\n"
-              ."    <td>".$sbar."</td>\n  </tr>\n";
+      // End table
+      echo "</table>\n";
+   
+      // Show sleepy note
+      if ( $show_sleepy_note ) {
+         printf("<span class='wttable-show-sleepymarker'>*</span> %s",
+                __("Points marked with a blue asterisk indicate are the points the players got but they do not sum up to the total points. Reason: they have not played all tournaments. For all tournaments they did not participate they get the \"Sleepy\" points, but these points do only exist for the whole weekend but not for the individual days. Therefore the \"total points\" are comparable across all playres, the individual points only for those having the same number of participations.","wpwt"));
       }
    
    }
-   // End table
-   echo "</table>\n";
-
-   // Show sleepy note
-   if ( $show_sleepy_note ) {
-      printf("<span class='wttable-show-sleepymarker'>*</span> %s",
-             __("Points marked with a blue asterisk indicate are the points the players got but they do not sum up to the total points. Reason: they have not played all tournaments. For all tournaments they did not participate they get the \"Sleepy\" points, but these points do only exist for the whole weekend but not for the individual days. Therefore the \"total points\" are comparable across all playres, the individual points only for those having the same number of participations.","wpwt"));
-   }
-
-}
+} // if not dostop
 
 ?>
