@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wpwt\n"
-"POT-Creation-Date: 2017-12-22 17:39+0100\n"
-"PO-Revision-Date: 2017-12-22 17:39+0100\n"
+"POT-Creation-Date: 2018-01-04 23:10+0100\n"
+"PO-Revision-Date: 2018-01-04 23:10+0100\n"
 "Last-Translator: Reto Stauffer <reto.stauffer@uibk.ac.at>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -724,7 +724,7 @@ msgstr "Darstellung ändern"
 msgid "Validate & Save"
 msgstr "Überprüfen & Senden"
 
-#: betclass.php:1138 user/views/ranking.php:185
+#: betclass.php:1138 user/views/ranking.php:186
 #: user/widgets/tournaments.php:203
 msgid "for"
 msgstr "für"
@@ -858,7 +858,7 @@ msgstr "Sorry, kein Zugriff auf das Tippspiel."
 
 #: generalclass.php:871
 msgid "The form to submit tips for todays tournament is allready closed."
-msgstr "Tas Abgabeformular für das heutige Tippspiel ist bereits geschlossen."
+msgstr "Das Abgabeformular für das heutige Tippspiel ist bereits geschlossen."
 
 #: generalclass.php:872
 #, php-format
@@ -910,6 +910,34 @@ msgstr ""
 #: settings.php:117
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Keine Berechtigung zum Zugriff auf diese Seite."
+
+#: test3.php:57 user/views/export.php:57
+msgid "Sorry, APIKEY or the corresponding config is invalid. Stop."
+msgstr ""
+"Sorry, der API Schlüssel oder die hinterlegte Konfiguration sind nicht "
+"gültig. Stop."
+
+#: test3.php:73 user/views/export.php:73
+msgid ""
+"You are not logged in! We are very sorry, but we only allow data downloads "
+"for logged in users."
+msgstr ""
+"Du bist leider nicht eingeloggt! Daten-Downloads sind leider nur für "
+"eingeloggte User möglich."
+
+#: test3.php:77 user/views/export.php:77
+msgid "Sorry, could not understand your request."
+msgstr ""
+"Sorry, deine Anfrage konnte leider nicht interpretiert werden. Probleme mit "
+"den Inputs."
+
+#: test3.php:83 user/views/export.php:83
+msgid ""
+"No 'action' or 'statnr' input received. Cannot do the data export without "
+"them."
+msgstr ""
+"Fehlende inputs. Entweder 'action' oder 'statnr' fehlten. Ohne diese Angaben "
+"kann leider nichts exportiert werden."
 
 #: user/userclass.php:190
 msgid "Bet-form orientation"
@@ -1369,34 +1397,6 @@ msgstr "Preset exportieren"
 msgid "Checked: export (useful) preset. Else everything."
 msgstr "Wenn selektiert: exportiere ein Subset aller Daten. Sonst alles."
 
-#: user/views/export.php:57
-msgid "Sorry, APIKEY or the corresponding config is invalid. Stop."
-msgstr ""
-"Sorry, der API Schlüssel oder die hinterlegte Konfiguration sind nicht "
-"gültig. Stop."
-
-#: user/views/export.php:73
-msgid ""
-"You are not logged in! We are very sorry, but we only allow data downloads "
-"for logged in users."
-msgstr ""
-"Du bist leider nicht eingeloggt! Daten-Downloads sind leider nur für "
-"eingeloggte User möglich."
-
-#: user/views/export.php:77
-msgid "Sorry, could not understand your request."
-msgstr ""
-"Sorry, deine Anfrage konnte leider nicht interpretiert werden. Probleme mit "
-"den Inputs."
-
-#: user/views/export.php:83
-msgid ""
-"No 'action' or 'statnr' input received. Cannot do the data export without "
-"them."
-msgstr ""
-"Fehlende inputs. Entweder 'action' oder 'statnr' fehlten. Ohne diese Angaben "
-"kann leider nichts exportiert werden."
-
 #: user/views/googlecharts.php:188
 msgid "No user selected"
 msgstr "Keinen Benutzer ausgewählt"
@@ -1429,84 +1429,84 @@ msgstr "Sorry, im Moment sind keine Links verfügbar."
 msgid "Sorry, currently no links in this category ..."
 msgstr "Sorry, im Moment keine Links in dieser Kategorie ..."
 
-#: user/views/ranking.php:60
+#: user/views/ranking.php:61
 msgid "This is the weekend ranking for the weekend around"
 msgstr "Dies ist die Wochenendwertung für das Wochenende vom"
 
-#: user/views/ranking.php:69
+#: user/views/ranking.php:70
 msgid "/ranking/weekend-rankings/"
 msgstr "/rangliste/wochenendwertungen/"
 
-#: user/views/ranking.php:94
+#: user/views/ranking.php:95
 msgid "Sorry, no proper city definition for"
 msgstr "Sorry, keine Definition für Stadt"
 
-#: user/views/ranking.php:98
+#: user/views/ranking.php:99
 msgid "City-ranking for the cities "
 msgstr "Städte-Rangliste für die Städte"
 
-#: user/views/ranking.php:99 user/views/ranking.php:104
+#: user/views/ranking.php:100 user/views/ranking.php:105
 msgid " and "
 msgstr "und"
 
-#: user/views/ranking.php:101
+#: user/views/ranking.php:102
 msgid "for the weekend around"
 msgstr "für das Wochenende vom"
 
-#: user/views/ranking.php:111
+#: user/views/ranking.php:112
 msgid "/ranking/3-city-ranking/"
 msgstr "/rangliste/3-staedte-wertung/"
 
-#: user/views/ranking.php:113
+#: user/views/ranking.php:114
 msgid "/ranking/5-city-ranking/"
 msgstr "/rangliste/5-staedte-wertung/"
 
-#: user/views/ranking.php:138 user/views/ranking.php:154
+#: user/views/ranking.php:139 user/views/ranking.php:155
 msgid "Winter"
 msgstr "Winter"
 
-#: user/views/ranking.php:142
+#: user/views/ranking.php:143
 msgid "Spring"
 msgstr "Frühling"
 
-#: user/views/ranking.php:146
+#: user/views/ranking.php:147
 msgid "Summer"
 msgstr "Sommer"
 
-#: user/views/ranking.php:150
+#: user/views/ranking.php:151
 msgid "Fall"
 msgstr "Herbst"
 
-#: user/views/ranking.php:162
+#: user/views/ranking.php:163
 msgid "season ranking for"
 msgstr "Jahreszeitenwertung für"
 
-#: user/views/ranking.php:163 user/views/ranking.php:186
-#: user/views/ranking.php:208
+#: user/views/ranking.php:164 user/views/ranking.php:187
+#: user/views/ranking.php:210
 msgid "including"
 msgstr "beinhaltet"
 
-#: user/views/ranking.php:163 user/views/ranking.php:208
+#: user/views/ranking.php:164 user/views/ranking.php:210
 msgid "tournaments from"
 msgstr "Turniere vom"
 
-#: user/views/ranking.php:164 user/views/ranking.php:209
+#: user/views/ranking.php:165 user/views/ranking.php:211
 msgid "to"
 msgstr "bis zum"
 
-#: user/views/ranking.php:184
+#: user/views/ranking.php:185
 msgid "Ranking for"
 msgstr "Wertung für"
 
-#: user/views/ranking.php:186
+#: user/views/ranking.php:187
 msgid "tournaments"
 msgstr "Turniere"
 
-#: user/views/ranking.php:207
+#: user/views/ranking.php:209
 msgid "Total ranking for"
 msgstr "Gesamtwertung für"
 
-#: user/views/ranking.php:221
+#: user/views/ranking.php:224
 msgid "Sorry, cannot understand input 'type' for"
 msgstr "Sorry, Input 'type' nicht erkannt"
 
@@ -1615,13 +1615,13 @@ msgstr "Wetterturnier bbPM Mitteilungen"
 
 #: user/widgets/bbpmessages.php:47 user/widgets/blitzortung.php:46
 #: user/widgets/latestobs.php:44 user/widgets/leading.php:46
-#: user/widgets/tournaments.php:59 user/widgets/webcams.php:47
+#: user/widgets/tournaments.php:59 user/widgets/webcams.php:44
 msgid "Widget Title"
 msgstr "Widget Titel"
 
 #: user/widgets/bbpmessages.php:52 user/widgets/blitzortung.php:51
 #: user/widgets/latestobs.php:51 user/widgets/leading.php:51
-#: user/widgets/tournaments.php:64 user/widgets/webcams.php:52
+#: user/widgets/tournaments.php:64 user/widgets/webcams.php:49
 msgid "Textarea:"
 msgstr "Textarea:"
 
@@ -1756,9 +1756,13 @@ msgstr ""
 "vorhanden. Die Information wird angezeigt, sobald die ersten Tipps abgegeben "
 "wurden."
 
-#: user/widgets/webcams.php:23 user/widgets/webcams.php:26
+#: user/widgets/webcams.php:20 user/widgets/webcams.php:23
 msgid "Wetterturnier Webcams"
 msgstr "Wetterturnier Webcams"
+
+#: user/widgets/webcams.php:107
+msgid "No webcams defined for"
+msgstr "Keine Webcam definiert für"
 
 #: wp-wetterturnier.php:112
 msgid "Wetterturnier Admin"
