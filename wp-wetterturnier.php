@@ -280,6 +280,7 @@ if( class_exists('WP_wetterturnier') )
     // INCLUDE WIDGETS ----------------------------------------------
     require_once(sprintf("%s/user/widgets/tournaments.php", dirname(__FILE__)));
     require_once(sprintf("%s/user/widgets/blitzortung.php", dirname(__FILE__)));
+    require_once(sprintf("%s/user/widgets/webcams.php", dirname(__FILE__)));
     require_once(sprintf("%s/user/widgets/leading.php",     dirname(__FILE__)));
     require_once(sprintf("%s/user/widgets/latestobs.php",   dirname(__FILE__)));
     require_once(sprintf("%s/user/widgets/bbpmessages.php", dirname(__FILE__)));
