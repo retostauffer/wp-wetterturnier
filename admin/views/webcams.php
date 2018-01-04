@@ -1,7 +1,7 @@
 <h1>Wetterturnier Webcams</h1>
 
 <help>
-   Not coded yet as we have to ask for permission first .. somehow.
+   Allows to define webcams. Each webcam has to be mapped to a city.
 </help>
 
 <?php

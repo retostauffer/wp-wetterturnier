@@ -559,4 +559,71 @@ class wetterturnier_paramObject {
    }
 }
 
+
+// ------------------------------------------------------------------
+/// @details A class to handle webcam information. Loads and stores
+///    information from the *_wetterturnier_webcams database table.
+///    Whenever possible objects of this type will be called $webcamObj
+///    within the php code.
+/// @see wetterturnier_webcamObject
+// ------------------------------------------------------------------
+class wetterturnier_webcamObject {
+
+   /// Attribute to store the webcam information. Similar to 
+   /// the @ref wetterturnier_webcamObject class. Initial value is NULL.
+   private $data = NULL;
+
+   function __construct( $ID ) {
+      global $wpdb;
+      $this->data = $wpdb->get_row(sprintf("SELECT * FROM %swetterturnier_webcams WHERE ID=%d;",
+               $wpdb->prefix, $ID));
+   }
+
+   // ---------------------------------------------------------------
+   /// @details This is the main method to extract information from
+   ///   the class. Information should be stored on $this->data which
+   ///   is a private stdClass object or NULL if there was a problem
+   ///   initializing this object (default). The method checks 
+   ///   whether a property on $this->data exists and returns the
+   ///   content. If not found, boolean `false` will be returned.
+   ///
+   /// @param $key. String, name of the property you would like to get,
+   ///   e.g., `ID` or `uri`.
+   /// @return Returns `false` or the value of the element with the
+   ///   corresponding key.
+   // ---------------------------------------------------------------
+   function get( $key ) {
+      if ( is_null($this->data) ) { print("wetterturnier_webcamObject data=NULL!"); }
+      if ( property_exists($this->data,$key) ) {
+         return $this->data->$key;
+      } else { return(false); }
+   }
+
+   // ---------------------------------------------------------------
+   /// @details Prints html to display the webcam image.
+   // ---------------------------------------------------------------
+   function display_webcam() {
+      print "<div class='wtwebcam'>\n"
+           .sprintf("   <img src=\"%s\" alt=\"%s\" />\n",$this->get("uri"),$this->get("source"))
+           ."   <span class=\"wtwebcam-source\">"
+           .sprintf("<a href=\"%s\" target=\"_new\">%s</a>",$this->get("source"),$this->get("desc"))
+           ."</span>\n"
+           ."</div>\n";
+   }
+
+   // ---------------------------------------------------------------
+   /// @details Helper class for development purposes.
+   // ---------------------------------------------------------------
+   function show() {
+      if ( is_null($this->data) ) {
+         printf("This webcamObject does not contain valid information<br>\n");
+      } else {
+         printf("<br>Content of webcamObject->data is<br>\n");
+         foreach ( $this->data as $key=>$val ) {
+            print "- ".$key." (".gettype($val)."):  ".$val."<br>\n";
+         }
+      }
+   }
+}
+
 ?>

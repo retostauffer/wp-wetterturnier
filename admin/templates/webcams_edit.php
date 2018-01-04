@@ -12,10 +12,52 @@
 global $wpdb;
 global $WTadmin;
 
-die('Not yet implemented. Have to script webcam_edit.php first if needed.');
-///$CURRENT = 'http://' . $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]
-///          .'?page='.$_GET['page']; 
+// Update if needed
+if ( ! empty($_REQUEST["action"]) ) {
+   if ( is_numeric($_REQUEST["cam"]) & ! empty($_REQUEST["update"]) ) {
+      $data = array( "uri"    => (string)$_REQUEST["uri"],
+                     "desc"   => (string)$_REQUEST["desc"],
+                     "source" => (string)$_REQUEST["source"] );
+      $wpdb->update( sprintf("%swetterturnier_webcams",$wpdb->prefix),
+                     $data, array( "ID" => (int)$_REQUEST["cam"] ) );
+   }
+}
 
+$webcamObj = new wetterturnier_webcamObject( (int)$_REQUEST["cam"] );
+$cityObj   = new wetterturnier_cityObject( (int)$webcamObj->get("cityID") );
 
+$CURRENT = $WTadmin->curPageURL();
 ?>
+
+<style type="text/css">
+form.webcamedit input[type='text'] {
+   min-width: 400px;
+   width: 50%;
+}
+</style>
+
+<div class="wrap">
+
+    <h2>Edit Parameter Entry</h2>
+
+    <form class="webcamedit" method="post" action="<?php print $CURRENT; ?>">
+
+        <fd>Linked to:</fd>
+        <input type='text' name='cityID' value='<?php print $cityObj->get("name"); ?>' disabled /><br>
+
+        <fd>Image URI:</fd>
+        <input type='text' name='uri' value='<?php print $webcamObj->get("uri"); ?>' /><br>
+
+        <fd>Source:</fd>
+        <input type='text' name='source' value='<?php print $webcamObj->get("source"); ?>' /><br>
+
+        <fd>Description:</fd>
+        <input type='text' name='desc' value='<?php print $webcamObj->get("desc"); ?>' /><br>
+
+        <input type="hidden" name="update" value="true" />
+        <?php @submit_button(); ?>
+    </form>
+
+</div>
+
 
