@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpwt\n"
 "POT-Creation-Date: 2017-12-22 17:39+0100\n"
-"PO-Revision-Date: 2017-12-22 17:39+0100\n"
-"Last-Translator: Reto Stauffer <reto.stauffer@uibk.ac.at>\n"
-"Language-Team: \n"
-"Language: de\n"
+"PO-Revision-Date: 2017-12-30 23:22+0000\n"
+"Last-Translator: Nikosik <nikosik@internetwetter.de>\n"
+"Language-Team: German\n"
+"Language: de-DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Loco - https://localise.biz/\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -23,6 +23,18 @@ msgstr ""
 "X-Poedit-SearchPath-8: admin/views\n"
 "X-Poedit-SearchPath-9: admin/templates\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+"Report-Msgid-Bugs-To: \n"
+"Plural-Forms: nplurals=2; plural=n != 1"
+
+#: admin/views/deactivateusers.php:112
+msgid ""
+"Search options: you can either search for username or for the number of days "
+"since the user last time participated in the tournament. If the search "
+"string matches '< XXX' or  '> XXX' (where 'XXX' is the number of days, e.g., "
+"'> 100') the table below will be filtered  and only shows the users which "
+"have not played within the last XXX days ('> XXX') or  which have played "
+"within the last XXX days ('< XXX')."
+msgstr ""
 
 #: admin/adminclass.php:208
 msgid "Settings"
@@ -392,7 +404,7 @@ msgstr "Parameter"
 #: admin/templates/groups_edit.php:27
 msgid "Editing inactive groups is not allowed! Are you doing nasty things?"
 msgstr ""
-"Das editieren von inaktiven Gruppen ist nicht erlaubt. Was probierst du da?"
+"Das Editieren von inaktiven Gruppen ist nicht erlaubt. Was probierst du da?"
 
 #: admin/templates/groups_edit.php:32
 msgid "Group name"
@@ -506,7 +518,7 @@ msgstr "WMO-Stationsnummer bereits definiert. Stop."
 
 #: admin/views/application.php:47 admin/views/application.php:76
 msgid "Problems updating entry in database."
-msgstr "Probleme beim editieren der Datenbank."
+msgstr "Probleme beim Editieren der Datenbank."
 
 #: admin/views/application.php:51
 msgid "User successfully added to the group."
@@ -514,7 +526,7 @@ msgstr "Gruppeneintrag erfolgreich editiert."
 
 #: admin/views/application.php:60 admin/views/application.php:90
 msgid "Problems deleting entry from database."
-msgstr "Probleme beim löschen des Eintrages in der Datenbank."
+msgstr "Probleme beim Löschen des Eintrages in der Datenbank."
 
 #: admin/views/application.php:64
 msgid "Application rejected, user not added to the group."
@@ -536,16 +548,6 @@ msgstr "Aktion undefiniert!"
 #: admin/views/deactivateusers.php:111
 msgid "Search/Filter Options"
 msgstr "Such- und Filteroptionen"
-
-#: admin/views/deactivateusers.php:112
-msgid ""
-"Search options: you can either search for username or for the number of days "
-"since the user last time participated in the tournament. If the search "
-"string matches '< XXX' or  '> XXX' (where 'XXX' is the number of days, e.g., "
-"'> 100') the table below will be filtered  and only shows the users which "
-"have not played within the last XXX days ('> XXX') or  which have played "
-"within the last XXX days ('< XXX')."
-msgstr ""
 
 #: admin/views/groups.php:63
 msgid ""
@@ -845,7 +847,7 @@ msgstr "Das Abgabeformular öffnet jeweils %d Tage vor dem Turnier"
 #: generalclass.php:858
 #, php-format
 msgid "Next tournament will take place on %s"
-msgstr "Das nexte Turnier findet am %s statt"
+msgstr "Das nächste Turnier findet am %s statt"
 
 #: generalclass.php:860
 #, php-format
@@ -858,7 +860,7 @@ msgstr "Sorry, kein Zugriff auf das Tippspiel."
 
 #: generalclass.php:871
 msgid "The form to submit tips for todays tournament is allready closed."
-msgstr "Tas Abgabeformular für das heutige Tippspiel ist bereits geschlossen."
+msgstr "Das Abgabeformular für das heutige Tippspiel ist bereits geschlossen."
 
 #: generalclass.php:872
 #, php-format
@@ -1008,8 +1010,8 @@ msgstr ""
 "Sorry, im Moment sind keine Turniere im unserem Archiv gelistet zu dieser "
 "Stadt. Bitte schau doch später wieder rein. Wenn du dir sicher bist, dass "
 "hier eigentlich Daten im Archiv sein sollten, dann gibt es ein Problem. In "
-"diesem Fall wende dich doch bitte an einen der Wetterturnier-"
-"Administratoren. Besten Dank."
+"diesem Fall wende dich doch bitte an einen der Wetterturnier-Administratoren."
+" Besten Dank."
 
 #: user/userclass.php:925 user/userclass.php:929 user/userclass.php:933
 msgid "Show"
@@ -1041,7 +1043,7 @@ msgid ""
 "buttons to show/hide a certain type in the tables below!"
 msgstr ""
 "Diese Legende zeigt die Farbkodierung der verschiedenen Teilnehmer-Typen. "
-"Durch anklicken der Buttons kannst du einzelne Typen aus- und wieder "
+"Durch Anklicken der Buttons kannst du einzelne Typen aus- und wieder "
 "einblenden!"
 
 #: user/userclass.php:1019
@@ -1074,13 +1076,11 @@ msgstr ""
 "nicht anzeigen. Möglicher Grund: wir haben noch keine Punkte berechnet, da "
 "noch keine Beobachtungen verfügbar sind."
 
-#: user/userclass.php:1104 user/views/archive.php:60
-#: user/views/ranking.php:250
+#: user/userclass.php:1104 user/views/archive.php:60 user/views/ranking.php:250
 msgid "older"
 msgstr "älter"
 
-#: user/userclass.php:1107 user/views/archive.php:69
-#: user/views/ranking.php:255
+#: user/userclass.php:1107 user/views/archive.php:69 user/views/ranking.php:255
 msgid "newer"
 msgstr "neuer"
 
@@ -1180,9 +1180,9 @@ msgid ""
 "only. You are not logged in at the moment. To see the content of this "
 "specific page, please login first. Thank you four your understanding."
 msgstr ""
-"Gewisse Inhalte sind nur für registrierte und eingeloggte Benutzer "
-"einsehbar. Bitte logge dich ein um den gewünschten Inhalt angezeigt zu "
-"bekommen. Besten Dank für dein Verständnis."
+"Gewisse Inhalte sind nur für registrierte und eingeloggte Benutzer einsehbar."
+" Bitte logge dich ein um den gewünschten Inhalt angezeigt zu bekommen. "
+"Besten Dank für dein Verständnis."
 
 #: user/userclass.php:1863 user/views/bet.php:27
 msgid "Login form"
@@ -1330,8 +1330,8 @@ msgstr "Wertung für nicht teilnehmende Mitspieler:"
 #: user/views/export-functions.php:118
 msgid "Cannot reach database obs.stations. Ignore station description."
 msgstr ""
-"Datenbank obs.stations nicht erreichbar. Stations-Information wird ignoriert/"
-"nicht dargestellt."
+"Datenbank obs.stations nicht erreichbar. Stations-Information wird "
+"ignoriert/nicht dargestellt."
 
 #: user/views/export-functions.php:152
 msgid "Cannot reach database obs.bufrdesc, exit."
@@ -1763,6 +1763,3 @@ msgstr "Wetterturnier Webcams"
 #: wp-wetterturnier.php:112
 msgid "Wetterturnier Admin"
 msgstr "Wetterturnier Admin"
-
-#~ msgid "Saved/Sent/Group"
-#~ msgstr "Gespeichert/Versant/Gruppe"

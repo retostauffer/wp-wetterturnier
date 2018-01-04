@@ -1252,7 +1252,7 @@ class wetterturnier_betclass
          return;
       }
 
-print_r( $input );
+      ##print_r( $input );
        
       // Save current page url, load tournament  
       global $WTuser;
