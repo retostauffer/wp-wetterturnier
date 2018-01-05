@@ -22,7 +22,7 @@ class WP_wetterturnier_widget_leading extends WP_Widget
                             'description'=>__('Wetterturnier Leading Users') );
         // those are completely default at the moment TODO remove or use
         $control_ops = array('width'=>300, 'height'=>300, 'id_base'=>'wp_wetterturnier_leading' );
-        $this->WP_Widget('wtwidget_leading', __('Wetterturnier Leading Users'),"widget",
+        parent::__construct('wtwidget_leading', __('Wetterturnier Leading Users'),"widget",
                          $widget_ops, $control_ops );
 
     }

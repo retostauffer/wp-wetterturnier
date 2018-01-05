@@ -62,7 +62,7 @@ jQuery(document).on('ready',function() {
 
    // Creates location dropdown menu
    function showLocations( target, locations ) {
-      $(target).append("<desc>Forecast location:</desc>")
+      $(target).append("<desc>City selection:</desc>")
                .append("<select id=\"wt-mosdata-location\"></select><br>");
       $.each( locations, function(key,value)  {
          $("#wt-mosdata-location").append("<option value='"+value+"'>"+value.toUpperCase()+"</option>");

@@ -22,7 +22,7 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
                             'description'=>__('Wetterturnier latest obs') );
         // those are completely default at the moment TODO remove or use
         $control_ops = array('width'=>300, 'height'=>300, 'id_base'=>'wp_wetterturnier_latestobs' );
-        $this->WP_Widget('wtwidget_latestobs', __('Wetterturnier latest obs'),"widget",
+        parent::__construct('wtwidget_latestobs', __('Wetterturnier latest obs'),"widget",
                          $widget_ops, $control_ops );
 
     }
@@ -112,7 +112,7 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
         $tablename = "obs.live";
 
         // Check if we can reach the table or not.
-        $query = @mysql_query(sprintf("SELECT 1 FROM %s LIMIT 1",$tablename));
+        $query = $wpdb->get_row(sprintf("SELECT 1 FROM %s LIMIT 1",$tablename));
         if ( ! $query ) {
             $msg = sprintf(__("Cannot reach table <b>%s</b>! Sorry.","wpwt"),$tablename);
             printf("<div class=\"wetterturnier-info error\">%s</div>",$msg);
@@ -131,6 +131,7 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
             <style type="text/css">
             div.wpwt-synopsymbol {
                float:left; border: 1px solid black; margin: 2px 2px 10px 0px; padding: 2px; text-align: center;
+               max-width: 80px;
             }
             div.wpwt-synopsymbol:hover { border-color: #6592cf; }
             </style>

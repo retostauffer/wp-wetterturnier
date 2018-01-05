@@ -550,11 +550,13 @@ class wetterturnier_generalclass
         $next->weekday  = $this->date_format( $next->tdate, "%A" );
 
         // if row_offset == 0, check if open or allready closed.
-        // if row_offset > 1, the form is allways closed! Do NOT
+        // if row_offset >= 1, the form is allways closed! Do NOT
         // call check_view_is_closed because this will
         // crash (loop inside the class)
         if ( $row_offset == 0 & $check_access ) {
             $next->closed = $this->check_view_is_closed( $row->tdate, $next );
+        } else if ( $row_offset > 0 ) {
+            $next->closed = true;
         } else {
             $next->closed = false;
         }
@@ -1850,6 +1852,8 @@ class wetterturnier_generalclass
     // --------------------------------------------------------------
     function get_raw_obs_values($tablename,$maxage,$stnObj,$col,$scale=10.) {
 
+        global $wpdb;
+
         // Crate propper sql statement
         $sql = array();
         array_push($sql,sprintf("SELECT datumsec, %s FROM %s",$col,$tablename));
@@ -1857,22 +1861,15 @@ class wetterturnier_generalclass
         array_push($sql,sprintf("AND statnr = %d",$stnObj->get('wmo')));
         array_push($sql,sprintf("AND datumsec >= %d",$maxage));
         array_push($sql,sprintf("ORDER BY datumsec DESC LIMIT 1"));
-        $sql = join("\n",$sql);
 
         // Calling database
-        $query  = @mysql_query($sql);
-        if ( ! $query ) { return(false); } # problems with query
+        $res = $wpdb->get_row( join("\n",$sql) );
+        if ( ! $res ) { return(false); } # problems with query
         // No data? Return False
-        $numrow = mysql_num_rows($query);
-        if ( $numrow == 0 ) { return(false); }
+        if ( count($res) == 0 ) { return(false); }
 
-        // Else evaluate and return stdObject
-        // $row: fetching result
-        $row = mysql_fetch_object( $query );
-        // $res: result object
-        $res = new stdClass();
-        $res->value = $this->number_format($row->$col / (float)$scale,1);
-        $res->datumsec = $row->datumsec;
+        // Append some more properties on this object
+        $res->value = $this->number_format($res->$col / (float)$scale,1);
         $res->readable = date("Y-m-d H:i",$res->datumsec);
         $res->stdmin   = date("H:i",$res->datumsec);
 
