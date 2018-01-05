@@ -246,7 +246,7 @@ class wetterturnier_generalclass
     /// @see load_datetime_format
     // --------------------------------------------------------------
     function load_float_format() {
-        $default = new stdClass(); $default->dsep = ","; $default->tsep = ".";
+        $default = new stdClass(); $default->dsep = ","; $default->tsep = "";
         global $polylang;
         if ( function_exists("pll_current_language") ) {
            $fmt = new stdClass();
