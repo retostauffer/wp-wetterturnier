@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2017-12-22 21:24 on prognose2
+# - L@ST MODIFIED: 2018-01-05 13:05 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -41,10 +41,8 @@ if ( ! $sleepy ) { echo('Could not find userID for Sleepy! Stop! Error!'); retur
 // ------------------------------------------------------------------
 if ( ! is_null($args->tdate) )        { $tdate = (int)$args->tdate; }
 else if ( empty($_REQUEST['tdate']) ) {
-   //$tdate = (int)$WTuser->latest_tournament(floor(date('U')/86400))->tdate;
    $tdate = (int)$this->current_tournament(0,false,0,true)->tdate;
-}
-else                                  { $tdate = (int)$_REQUEST['tdate']; }
+} else { $tdate = (int)$_REQUEST['tdate']; }
 
 // ------------------------------------------------------------------
 // Depending on the type of ranking which should be shown to the end
@@ -271,6 +269,7 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
    { printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title); }
 }
 // -------------------------------------------------------------------
+
 
 // Print dates in a ugly way
 $today = (int)(time()/86400);

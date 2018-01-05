@@ -22,7 +22,7 @@ class WP_wetterturnier_widget_blitzortung extends WP_Widget
                             'description'=>__('Wetterturnier Blitzortung') );
         // those are completely default at the moment TODO remove or use
         $control_ops = array('width'=>300, 'height'=>300, 'id_base'=>'wp_wetterturnier_blitzortung' );
-        $this->WP_Widget('wtwidget_blitzortung', __('Wetterturnier Blitzortung'),"widget",
+        parent::__construct('wtwidget_blitzortung', __('Wetterturnier Blitzortung'),"widget",
                          $widget_ops, $control_ops );
 
     }

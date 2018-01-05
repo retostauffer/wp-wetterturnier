@@ -715,7 +715,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       array_push($sql,"SELECT stat.*, c.name, c.hash FROM");
       array_push($sql,"(SELECT count(*) AS count, cityID");
       array_push($sql,sprintf("FROM %swetterturnier_betstat",$wpdb->prefix));
-      array_push($sql,sprintf("WHERE tdate=%d GROUP BY cityID) AS stat",$tdate));
+      array_push($sql,sprintf("WHERE tdate=%d AND NOT points IS NULL GROUP BY cityID) AS stat",$tdate));
       array_push($sql,sprintf("LEFT OUTER JOIN %swetterturnier_cities AS c",$wpdb->prefix));
       array_push($sql,"ON stat.cityID=c.ID ORDER BY c.sort ASC");
 

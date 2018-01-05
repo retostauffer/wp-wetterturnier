@@ -23,7 +23,7 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
                             'description'=>__('Wetterturnier bbPM messages') );
         // those are completely default at the moment TODO remove or use
         $control_ops = array('width'=>300, 'height'=>300, 'id_base'=>'wp_wetterturnier_bbpmessages' );
-        $this->WP_Widget('wtwidget_bbpmessages', __('Wetterturnier bbPM messages'),"widget",
+        parent::__construct('wtwidget_bbpmessages', __('Wetterturnier bbPM messages'),"widget",
                          $widget_ops, $control_ops );
 
     }

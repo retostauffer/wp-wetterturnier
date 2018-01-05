@@ -23,7 +23,7 @@ class WP_wetterturnier_widget_tournaments extends WP_Widget
                             'description'=>__('Wetterturnier Tournament Dates') );
         // those are completely default at the moment TODO remove or use
         $control_ops = array('width'=>300, 'height'=>350, 'id_base'=>'wp_wetterturnier_tournaments' );
-        $this->WP_Widget('wtwidget_tournaments', __('Wetterturnier Dates'),"widget",
+        parent::__construct('wtwidget_tournaments', __('Wetterturnier Dates'),"widget",
                          $widget_ops, $control_ops );
 
         // Enqueue the ui datepicker

@@ -20,7 +20,7 @@ class WP_wetterturnier_widget_webcams extends WP_Widget
                           'description'=>__('Wetterturnier Webcams') );
       // those are completely default at the moment TODO remove or use
       $control_ops = array('width'=>300, 'height'=>300, 'id_base'=>'wp_wetterturnier_webcams' );
-      $this->WP_Widget('wtwidget_webcams', __('Wetterturnier Webcams'),"widget",
+      parent::__construct('wtwidget_webcams', __('Wetterturnier Webcams'),"widget",
                        $widget_ops, $control_ops );
 
    }
