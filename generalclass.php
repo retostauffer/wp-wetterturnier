@@ -2037,11 +2037,10 @@ class wetterturnier_generalclass
        $statnr = (int)$_POST['statnr'];
 
        // - Connecting obs database.
-       $con = mysql_connect('localhost','rouser','readonly');
-       if ( ! $con ) {
-          print json_encode(array('error'=>'Got no station ID.')); die();
+       $obsdb = new mysqli('localhost','rouser','readonly',"obs");
+       if ( $obsdb->connect_errno ) {
+          print json_encode(array('error'=>'Could not connect to database.')); die();
        }
-       mysql_select_db('obs',$con);
 
        // ------------------------------------------------------------------ 
        // - Converts multidimensional array to stdClass object
@@ -2059,11 +2058,11 @@ class wetterturnier_generalclass
                       'rrr1','rrr3','rrr6','rrr12','rrr24','rr3','rr24');
        $sql   = sprintf('SELECT %s FROM live WHERE msgtyp = "bufr" AND statnr = %d AND datumsec >= %d ORDER BY datumsec DESC',
                 join(",",$cols),$statnr,$ts);
-       $query = mysql_query($sql,$con);
+       $dbres = $obsdb->query($sql);
        
-       $query = mysql_query($sql);
+       #$query = $obsdb->query($sql);
        $res   = Array();
-       while ( $row = mysql_fetch_object($query) ) { array_push($res,$row); }
+       while ( $row = $dbres->fetch_object() ) { array_push($res,$row); }
        $res   = arrayToObject($res);
 
        print json_encode($res);
