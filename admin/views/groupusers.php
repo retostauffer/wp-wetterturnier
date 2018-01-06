@@ -50,7 +50,6 @@ if ( ! empty($_GET['action']) ) {
    // Now depending on action we have to do some stuff
    if ( $_GET['action'] == "edit" && ! empty($_GET['group']) ) {
       include_action_file('groupusers_edit.php');
-      break;
    } else if ( $_GET['action'] == "delete" && ! empty($_GET["groupuserID"]) ) {
 
       if ( ! is_numeric($_GET["groupuserID"]) ) {
