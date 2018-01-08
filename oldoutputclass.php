@@ -37,6 +37,13 @@ class wetterturnier_oldoutputObject {
 		$this->cityObj = $cityObj;
 		$this->days    = $days;
 
+      # Check if access is granted
+      global $WTuser;
+      ob_start();
+      $closed = $WTuser->check_view_is_closed( $this->tdate );
+      ob_end_clean();
+      if ( $closed ) { die("No access! Go away, please! :)"); }
+
    }
 
 	// ---------------------------------------------------------------
