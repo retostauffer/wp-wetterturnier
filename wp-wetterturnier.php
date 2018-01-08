@@ -274,6 +274,7 @@ if( class_exists('WP_wetterturnier') )
     // Has to be called BEFORE loading the widgets.
     require_once(sprintf("%s/classes.php",   dirname(__FILE__)));
     require_once(sprintf("%s/chartclass.php",   dirname(__FILE__)));
+    require_once(sprintf("%s/oldoutputclass.php",   dirname(__FILE__)));
 
     // INCLUDE WIDGETS ----------------------------------------------
     // include the widgets for this plugin 

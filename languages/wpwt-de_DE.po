@@ -1,17 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wpwt\n"
-"POT-Creation-Date: 2018-01-04 23:10+0100\n"
-"PO-Revision-Date: 2018-01-04 23:10+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-06 14:17+0100\n"
+"PO-Revision-Date: 2018-01-06 14:18+0100\n"
 "Last-Translator: Reto Stauffer <reto.stauffer@uibk.ac.at>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco - https://localise.biz/\n"
+"X-Generator: Poedit 2.0.1\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: user\n"
 "X-Poedit-SearchPath-2: user/autosubmit\n"
@@ -23,18 +25,6 @@ msgstr ""
 "X-Poedit-SearchPath-8: admin/views\n"
 "X-Poedit-SearchPath-9: admin/templates\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
-"Report-Msgid-Bugs-To: \n"
-"Plural-Forms: nplurals=2; plural=n != 1"
-
-#: admin/views/deactivateusers.php:112
-msgid ""
-"Search options: you can either search for username or for the number of days "
-"since the user last time participated in the tournament. If the search "
-"string matches '< XXX' or  '> XXX' (where 'XXX' is the number of days, e.g., "
-"'> 100') the table below will be filtered  and only shows the users which "
-"have not played within the last XXX days ('> XXX') or  which have played "
-"within the last XXX days ('< XXX')."
-msgstr ""
 
 #: admin/adminclass.php:208
 msgid "Settings"
@@ -251,7 +241,7 @@ msgid "groupID"
 msgstr "GruppenID"
 
 #: admin/classes/groupusers_list.php:74 user/userclass.php:1124
-#: user/views/ranking.php:338
+#: user/views/ranking.php:337
 msgid "Status"
 msgstr "Status"
 
@@ -549,6 +539,16 @@ msgstr "Aktion undefiniert!"
 msgid "Search/Filter Options"
 msgstr "Such- und Filteroptionen"
 
+#: admin/views/deactivateusers.php:112
+msgid ""
+"Search options: you can either search for username or for the number of days "
+"since the user last time participated in the tournament. If the search "
+"string matches '< XXX' or  '> XXX' (where 'XXX' is the number of days, e.g., "
+"'> 100') the table below will be filtered  and only shows the users which "
+"have not played within the last XXX days ('> XXX') or  which have played "
+"within the last XXX days ('< XXX')."
+msgstr ""
+
 #: admin/views/groups.php:63
 msgid ""
 "Group not added. Reason: special characters and blanks not allowed for group "
@@ -673,7 +673,7 @@ msgstr "Kein Stress!"
 msgid "More than one day left to submit the bet."
 msgstr "Noch mehr als ein Tag bis das Abgabeformular schliesst."
 
-#: betclass.php:919 generalclass.php:936
+#: betclass.php:919 generalclass.php:938
 msgid "hours"
 msgstr "Stunden"
 
@@ -689,8 +689,8 @@ msgstr "Immer noch etwas mehr als eine Stunde bis Abgabeschluss."
 msgid "The form closes in about"
 msgstr "Das Abgabeformular schliesst in etwa"
 
-#: betclass.php:924 betclass.php:927 betclass.php:935 generalclass.php:932
-#: generalclass.php:937
+#: betclass.php:924 betclass.php:927 betclass.php:935 generalclass.php:934
+#: generalclass.php:939
 msgid "minutes"
 msgstr "Minuten"
 
@@ -726,7 +726,7 @@ msgstr "Darstellung ändern"
 msgid "Validate & Save"
 msgstr "Überprüfen & Senden"
 
-#: betclass.php:1138 user/views/ranking.php:186
+#: betclass.php:1138 user/views/ranking.php:184
 #: user/widgets/tournaments.php:203
 msgid "for"
 msgstr "für"
@@ -764,7 +764,7 @@ msgstr ""
 #: chartclass.php:132 user/userclass.php:949 user/userclass.php:1668
 #: user/userclass.php:1671 user/userclass.php:1708 user/userclass.php:1935
 #: user/views/current.php:74 user/views/current.php:83
-#: user/views/ranking.php:333
+#: user/views/ranking.php:332
 msgid "Points"
 msgstr "Punkte"
 
@@ -819,89 +819,89 @@ msgstr "Nicht verfügbar"
 msgid "Show profile"
 msgstr "Zum Profil"
 
-#: generalclass.php:788
+#: generalclass.php:790
 msgid "[group]"
 msgstr "[Gruppe]"
 
-#: generalclass.php:846
+#: generalclass.php:848
 msgid "There is an ongoing tournament right now."
 msgstr "Keine Hilfe verfügbar"
 
-#: generalclass.php:847
+#: generalclass.php:849
 msgid "Current values can be found here:"
 msgstr "Die aktuellen Werte findest du hier:"
 
-#: generalclass.php:848
+#: generalclass.php:850
 msgid "Link ... "
 msgstr "Link ..."
 
-#: generalclass.php:855
+#: generalclass.php:857
 msgid "Sorry, no access to these bet form"
 msgstr "Sorry, im Moment kein Zugriff auf das Abgabeformular"
 
-#: generalclass.php:856
+#: generalclass.php:858
 #, php-format
 msgid "The form to submit tips always opens %d days in advance."
 msgstr "Das Abgabeformular öffnet jeweils %d Tage vor dem Turnier"
 
-#: generalclass.php:858
+#: generalclass.php:860
 #, php-format
 msgid "Next tournament will take place on %s"
 msgstr "Das nächste Turnier findet am %s statt"
 
-#: generalclass.php:860
+#: generalclass.php:862
 #, php-format
 msgid "The bet form opens %s"
 msgstr "Das Abgabeformular dafür öffnet am/um %s"
 
-#: generalclass.php:870
+#: generalclass.php:872
 msgid "Sorry, no access to these bet form."
 msgstr "Sorry, kein Zugriff auf das Tippspiel."
 
-#: generalclass.php:871
+#: generalclass.php:873
 msgid "The form to submit tips for todays tournament is allready closed."
 msgstr "Das Abgabeformular für das heutige Tippspiel ist bereits geschlossen."
 
-#: generalclass.php:872
+#: generalclass.php:874
 #, php-format
 msgid "The next tournament will take place on %s"
 msgstr "Das nächste Turnier findet statt am %s"
 
-#: generalclass.php:904
+#: generalclass.php:906
 msgid "The requested tournament date is in the future."
 msgstr "Das angefragte Turnier-Datum liegt in der Zukunft."
 
-#: generalclass.php:905
+#: generalclass.php:907
 msgid "Do you try to cheat, bro?"
 msgstr "Was probierst du da?"
 
-#: generalclass.php:928
+#: generalclass.php:930
 msgid "Sorry, no access to these data."
 msgstr "Sorry, kein Zugriff auf diese Daten."
 
-#: generalclass.php:929
+#: generalclass.php:931
 msgid "We will show the current bets as soon as the bet-form has been closed."
 msgstr ""
 "Die aktuellen Tipps und abgegebenen Werte werden angezeigt, sobald das "
 "Abgabeformular geschlossen ist."
 
-#: generalclass.php:932 generalclass.php:938
+#: generalclass.php:934 generalclass.php:940
 msgid "You can see the newest tips in "
 msgstr "Einsehen kannst du die neuesten Tipps in"
 
-#: generalclass.php:936
+#: generalclass.php:938
 msgid "hour"
 msgstr "Stunde"
 
-#: generalclass.php:937
+#: generalclass.php:939
 msgid "minute"
 msgstr "Minute"
 
-#: generalclass.php:938 user/views/userprofile.php:68
+#: generalclass.php:940 user/views/userprofile.php:68
 msgid "and"
 msgstr "und"
 
-#: generalclass.php:946
+#: generalclass.php:948
 msgid ""
 "If you would like to submitt a bet please go to the \"SUBMISSION-FORM\" in "
 "the navigation."
@@ -912,34 +912,6 @@ msgstr ""
 #: settings.php:117
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Keine Berechtigung zum Zugriff auf diese Seite."
-
-#: test3.php:57 user/views/export.php:57
-msgid "Sorry, APIKEY or the corresponding config is invalid. Stop."
-msgstr ""
-"Sorry, der API Schlüssel oder die hinterlegte Konfiguration sind nicht "
-"gültig. Stop."
-
-#: test3.php:73 user/views/export.php:73
-msgid ""
-"You are not logged in! We are very sorry, but we only allow data downloads "
-"for logged in users."
-msgstr ""
-"Du bist leider nicht eingeloggt! Daten-Downloads sind leider nur für "
-"eingeloggte User möglich."
-
-#: test3.php:77 user/views/export.php:77
-msgid "Sorry, could not understand your request."
-msgstr ""
-"Sorry, deine Anfrage konnte leider nicht interpretiert werden. Probleme mit "
-"den Inputs."
-
-#: test3.php:83 user/views/export.php:83
-msgid ""
-"No 'action' or 'statnr' input received. Cannot do the data export without "
-"them."
-msgstr ""
-"Fehlende inputs. Entweder 'action' oder 'statnr' fehlten. Ohne diese Angaben "
-"kann leider nichts exportiert werden."
 
 #: user/userclass.php:190
 msgid "Bet-form orientation"
@@ -1038,8 +1010,8 @@ msgstr ""
 "Sorry, im Moment sind keine Turniere im unserem Archiv gelistet zu dieser "
 "Stadt. Bitte schau doch später wieder rein. Wenn du dir sicher bist, dass "
 "hier eigentlich Daten im Archiv sein sollten, dann gibt es ein Problem. In "
-"diesem Fall wende dich doch bitte an einen der Wetterturnier-Administratoren."
-" Besten Dank."
+"diesem Fall wende dich doch bitte an einen der Wetterturnier-"
+"Administratoren. Besten Dank."
 
 #: user/userclass.php:925 user/userclass.php:929 user/userclass.php:933
 msgid "Show"
@@ -1104,11 +1076,11 @@ msgstr ""
 "nicht anzeigen. Möglicher Grund: wir haben noch keine Punkte berechnet, da "
 "noch keine Beobachtungen verfügbar sind."
 
-#: user/userclass.php:1104 user/views/archive.php:60 user/views/ranking.php:250
+#: user/userclass.php:1104 user/views/archive.php:60 user/views/ranking.php:248
 msgid "older"
 msgstr "älter"
 
-#: user/userclass.php:1107 user/views/archive.php:69 user/views/ranking.php:255
+#: user/userclass.php:1107 user/views/archive.php:69 user/views/ranking.php:253
 msgid "newer"
 msgstr "neuer"
 
@@ -1116,23 +1088,23 @@ msgstr "neuer"
 msgid "Weekend ranking for"
 msgstr "Wochenendwertung f&uum;r"
 
-#: user/userclass.php:1119 user/userclass.php:1676 user/views/ranking.php:325
+#: user/userclass.php:1119 user/userclass.php:1676 user/views/ranking.php:324
 msgid "Rank"
 msgstr "Rang"
 
-#: user/userclass.php:1120 user/views/ranking.php:327
+#: user/userclass.php:1120 user/views/ranking.php:326
 msgid "Player"
 msgstr "Teilnehmer"
 
-#: user/userclass.php:1121 user/userclass.php:1668 user/views/ranking.php:329
+#: user/userclass.php:1121 user/userclass.php:1668 user/views/ranking.php:328
 msgid "Saturday"
 msgstr "Samstag"
 
-#: user/userclass.php:1122 user/userclass.php:1671 user/views/ranking.php:330
+#: user/userclass.php:1122 user/userclass.php:1671 user/views/ranking.php:329
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: user/userclass.php:1123 user/views/ranking.php:331
+#: user/userclass.php:1123 user/views/ranking.php:330
 msgid "Total"
 msgstr "Total"
 
@@ -1208,9 +1180,9 @@ msgid ""
 "only. You are not logged in at the moment. To see the content of this "
 "specific page, please login first. Thank you four your understanding."
 msgstr ""
-"Gewisse Inhalte sind nur für registrierte und eingeloggte Benutzer einsehbar."
-" Bitte logge dich ein um den gewünschten Inhalt angezeigt zu bekommen. "
-"Besten Dank für dein Verständnis."
+"Gewisse Inhalte sind nur für registrierte und eingeloggte Benutzer "
+"einsehbar. Bitte logge dich ein um den gewünschten Inhalt angezeigt zu "
+"bekommen. Besten Dank für dein Verständnis."
 
 #: user/userclass.php:1863 user/views/bet.php:27
 msgid "Login form"
@@ -1358,8 +1330,8 @@ msgstr "Wertung für nicht teilnehmende Mitspieler:"
 #: user/views/export-functions.php:118
 msgid "Cannot reach database obs.stations. Ignore station description."
 msgstr ""
-"Datenbank obs.stations nicht erreichbar. Stations-Information wird "
-"ignoriert/nicht dargestellt."
+"Datenbank obs.stations nicht erreichbar. Stations-Information wird ignoriert/"
+"nicht dargestellt."
 
 #: user/views/export-functions.php:152
 msgid "Cannot reach database obs.bufrdesc, exit."
@@ -1397,6 +1369,34 @@ msgstr "Preset exportieren"
 msgid "Checked: export (useful) preset. Else everything."
 msgstr "Wenn selektiert: exportiere ein Subset aller Daten. Sonst alles."
 
+#: user/views/export.php:57
+msgid "Sorry, APIKEY or the corresponding config is invalid. Stop."
+msgstr ""
+"Sorry, der API Schlüssel oder die hinterlegte Konfiguration sind nicht "
+"gültig. Stop."
+
+#: user/views/export.php:73
+msgid ""
+"You are not logged in! We are very sorry, but we only allow data downloads "
+"for logged in users."
+msgstr ""
+"Du bist leider nicht eingeloggt! Daten-Downloads sind leider nur für "
+"eingeloggte User möglich."
+
+#: user/views/export.php:77
+msgid "Sorry, could not understand your request."
+msgstr ""
+"Sorry, deine Anfrage konnte leider nicht interpretiert werden. Probleme mit "
+"den Inputs."
+
+#: user/views/export.php:83
+msgid ""
+"No 'action' or 'statnr' input received. Cannot do the data export without "
+"them."
+msgstr ""
+"Fehlende inputs. Entweder 'action' oder 'statnr' fehlten. Ohne diese Angaben "
+"kann leider nichts exportiert werden."
+
 #: user/views/googlecharts.php:188
 msgid "No user selected"
 msgstr "Keinen Benutzer ausgewählt"
@@ -1429,88 +1429,88 @@ msgstr "Sorry, im Moment sind keine Links verfügbar."
 msgid "Sorry, currently no links in this category ..."
 msgstr "Sorry, im Moment keine Links in dieser Kategorie ..."
 
-#: user/views/ranking.php:61
+#: user/views/ranking.php:59
 msgid "This is the weekend ranking for the weekend around"
 msgstr "Dies ist die Wochenendwertung für das Wochenende vom"
 
-#: user/views/ranking.php:70
+#: user/views/ranking.php:68
 msgid "/ranking/weekend-rankings/"
 msgstr "/rangliste/wochenendwertungen/"
 
-#: user/views/ranking.php:95
+#: user/views/ranking.php:93
 msgid "Sorry, no proper city definition for"
 msgstr "Sorry, keine Definition für Stadt"
 
-#: user/views/ranking.php:99
+#: user/views/ranking.php:97
 msgid "City-ranking for the cities "
 msgstr "Städte-Rangliste für die Städte"
 
-#: user/views/ranking.php:100 user/views/ranking.php:105
+#: user/views/ranking.php:98 user/views/ranking.php:103
 msgid " and "
 msgstr "und"
 
-#: user/views/ranking.php:102
+#: user/views/ranking.php:100
 msgid "for the weekend around"
 msgstr "für das Wochenende vom"
 
-#: user/views/ranking.php:112
+#: user/views/ranking.php:110
 msgid "/ranking/3-city-ranking/"
 msgstr "/rangliste/3-staedte-wertung/"
 
-#: user/views/ranking.php:114
+#: user/views/ranking.php:112
 msgid "/ranking/5-city-ranking/"
 msgstr "/rangliste/5-staedte-wertung/"
 
-#: user/views/ranking.php:139 user/views/ranking.php:155
+#: user/views/ranking.php:137 user/views/ranking.php:153
 msgid "Winter"
 msgstr "Winter"
 
-#: user/views/ranking.php:143
+#: user/views/ranking.php:141
 msgid "Spring"
 msgstr "Frühling"
 
-#: user/views/ranking.php:147
+#: user/views/ranking.php:145
 msgid "Summer"
 msgstr "Sommer"
 
-#: user/views/ranking.php:151
+#: user/views/ranking.php:149
 msgid "Fall"
 msgstr "Herbst"
 
-#: user/views/ranking.php:163
+#: user/views/ranking.php:161
 msgid "season ranking for"
 msgstr "Jahreszeitenwertung für"
 
-#: user/views/ranking.php:164 user/views/ranking.php:187
-#: user/views/ranking.php:210
+#: user/views/ranking.php:162 user/views/ranking.php:185
+#: user/views/ranking.php:208
 msgid "including"
 msgstr "beinhaltet"
 
-#: user/views/ranking.php:164 user/views/ranking.php:210
+#: user/views/ranking.php:162 user/views/ranking.php:208
 msgid "tournaments from"
 msgstr "Turniere vom"
 
-#: user/views/ranking.php:165 user/views/ranking.php:211
+#: user/views/ranking.php:163 user/views/ranking.php:209
 msgid "to"
 msgstr "bis zum"
 
-#: user/views/ranking.php:185
+#: user/views/ranking.php:183
 msgid "Ranking for"
 msgstr "Wertung für"
 
-#: user/views/ranking.php:187
+#: user/views/ranking.php:185
 msgid "tournaments"
 msgstr "Turniere"
 
-#: user/views/ranking.php:209
+#: user/views/ranking.php:207
 msgid "Total ranking for"
 msgstr "Gesamtwertung für"
 
-#: user/views/ranking.php:224
+#: user/views/ranking.php:222
 msgid "Sorry, cannot understand input 'type' for"
 msgstr "Sorry, Input 'type' nicht erkannt"
 
-#: user/views/ranking.php:279
+#: user/views/ranking.php:278
 msgid ""
 "Ranking can't be shown yet. The reason: this is the weekend ranking of the "
 "ongoing tournament and as we don't have any observed parameters, we can't "
@@ -1524,7 +1524,7 @@ msgstr ""
 "den ersten Parameter bewerten können, kannst du die Live-Rangliste hier "
 "verfolgen. Danke für dein Verständnis."
 
-#: user/views/ranking.php:289
+#: user/views/ranking.php:288
 msgid ""
 "Sorry, but we do have a problem computing the  ranking you'll have. If the "
 "problem exists  for a longer time period please inform  one of our "
@@ -1536,15 +1536,15 @@ msgstr ""
 "informiere bitte einen unserer Administratoren. Bitte beachte, dass diese "
 "Meldung auch für das laufende Turnier angezeigt wird. Vielen Dank."
 
-#: user/views/ranking.php:310
+#: user/views/ranking.php:309
 msgid "The maximum score (total) for the ranking is"
 msgstr "Die maximal zu erreichende Punktzahl ist"
 
-#: user/views/ranking.php:337
+#: user/views/ranking.php:336
 msgid "Difference"
 msgstr "Unterschied"
 
-#: user/views/ranking.php:427
+#: user/views/ranking.php:426
 msgid ""
 "Points marked with a blue asterisk indicate are the points the players got "
 "but they do not sum up to the total points. Reason: they have not played all "
@@ -1679,36 +1679,36 @@ msgstr "Neueste Beobachtungen"
 msgid "Cannot reach table <b>%s</b>! Sorry."
 msgstr "Kann Datenbanktabelle <b>%s</b> nicht erreichen! Sorry."
 
-#: user/widgets/latestobs.php:174
+#: user/widgets/latestobs.php:175
 msgid "Temperature"
 msgstr "Temperatur"
 
-#: user/widgets/latestobs.php:178
+#: user/widgets/latestobs.php:179
 msgid "Dew point temp"
 msgstr "Taupunkt"
 
-#: user/widgets/latestobs.php:189
+#: user/widgets/latestobs.php:190
 msgid "Cloud cover"
 msgstr "Bedeckungsgrad"
 
-#: user/widgets/latestobs.php:194
+#: user/widgets/latestobs.php:195
 msgid "Wind speed"
 msgstr "Windgeschwindigkeit"
 
-#: user/widgets/latestobs.php:198
+#: user/widgets/latestobs.php:199
 msgid "Wind direction"
 msgstr "Windrichtung"
 
-#: user/widgets/latestobs.php:202
+#: user/widgets/latestobs.php:203
 msgid "Pressure [msl]"
 msgstr "Reduzierter Luftdruck"
 
-#: user/widgets/latestobs.php:207
+#: user/widgets/latestobs.php:208
 #, php-format
 msgid "Sorry, no valid observations available for station %s within "
 msgstr "Sorry, keine gültigen Beobachtungen für die Station %s innerhalb"
 
-#: user/widgets/latestobs.php:208
+#: user/widgets/latestobs.php:209
 #, php-format
 msgid "the last %d hours"
 msgstr "den letzten %d Stunden"

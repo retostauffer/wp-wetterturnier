@@ -1030,9 +1030,7 @@ class wetterturnier_betclass
                background-position: bottom left;
                background-size: auto 100%;
                background-repeat: no-repeat;
-
-/*background-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"50\" height=\"25\"><text id=\"wtinputbg\" x=\"3\" y=\"23\" style=\"text-align: left; font-family: sans-serif; font-size: 20px; fill: #b2b2b2;\">FOO</text></svg>");*/
-/*background-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"50\" height=\"25\"><text id=\"wtinputbg\" x=\"3\" y=\"23\" style=\"text-align: left; font-family: sans-serif; font-size: 20px; fill: #b2b2b2;\">FOO</text></svg>");*/
+					font-weight: bold;
             }
             <?php
             // If bets placed or (or submitted but this should never happen)
