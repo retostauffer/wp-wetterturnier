@@ -22,18 +22,12 @@ class wetterturnier_oldoutputObject {
 	/// Attribute to store the number of bet days.
 	private $days;
 
-   function __construct( $cityObj, $date = NULL, $days = 2 ) {
+   function __construct( $cityObj, $tdate, $days = 2 ) {
 
       global $wpdb; $this->wpdb = $wpdb;
 
-		# Convert date if possible
-		try {
-			$date = DateTime::createFromFormat('ymd', $date)->format("U");
-		} catch ( Expection $e ) {
-			die("Problems converting the input date to oldoutputObject. Stop.");
-		}
 		# Convert to tdate, days since 1970-01-01
-		$this->tdate   = floor((int)$date / 86400);
+		$this->tdate   = $tdate;
 		$this->cityObj = $cityObj;
 		$this->days    = $days;
 

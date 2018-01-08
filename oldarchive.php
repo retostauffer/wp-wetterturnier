@@ -31,8 +31,23 @@ if ( ! preg_match("/^[0-9]{6}$/",$args->date) ) {
 	die("Sorry, could not understande date input.");
 }
 
+# Convert date if possible
+try {
+   $tdate = DateTime::createFromFormat('ymd', $args->date)->format("U");
+   $tdate = (int)floor($tdate / 86400);
+} catch ( Expection $e ) {
+   die("Problems converting the input date to oldoutputObject. Stop.");
+}
+
+
+// Check if tdate was a tournament
+$res = $wpdb->get_row(sprintf("SELECT status FROM %swetterturnier_dates WHERE tdate = %d",
+							 $wpdb->prefix,$tdate));
+if ( $wpdb->num_rows == 0 ) { exit("Sorry, no official tournament date."); }
+if ( ! $res->status == 1 )  { exit("Sorry, no tournament date."); }
+
 // Create new object
-$obj = new wetterturnier_oldoutputObject( $cityObj, $args->date );
+$obj = new wetterturnier_oldoutputObject( $cityObj, $tdate );
 // Show archive table
 $obj->show();
 
