@@ -62,7 +62,7 @@ class wetterturnier_oldoutputObject {
 		else if ( in_array( $paramName, array( "dd" ) ) )
 		{ $fmt = " %4s"; }	
 		else if ( in_array( $paramName, array( "PPP" ) ) )
-		{ $fmt = " %8s"; }	
+		{ $fmt = " %7s"; }	
 		else { $fmt = " %10s"; }
 		return( $fmt );
 	}
@@ -92,7 +92,7 @@ class wetterturnier_oldoutputObject {
 		// ------------------------------------------------------------------
 		// File header dingsda
 		// ------------------------------------------------------------------
-      printf("Innsbrucker Wetterprognoseturnier %s\n"
+      printf("Innsbrucker Wetterprognoseturnier %s\n\n\n"
 			   ."Eingetroffene Werte und abgegebene Prognosen:\n\n",
 				date("d.m.Y",$this->tdate*86400));
 
@@ -162,7 +162,7 @@ class wetterturnier_oldoutputObject {
 
 		// ----------------------------------------------------------------
 		// ----------------------------------------------------------------
-		printf("Wertung der Prognose vom %s\n",date("d.m.Y",$this->tdate*86400));
+		printf("Wertung der Prognose vom %s:\n",date("d.m.Y",$this->tdate*86400));
 
 		printf("%2s. %-25s %6s %5s %5s\n","Pl","Name","Punkte","Tag1","Tag2");
 		printf("%s\n",str_repeat("_",49));

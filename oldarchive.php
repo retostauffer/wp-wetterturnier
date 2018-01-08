@@ -1,7 +1,8 @@
 <?php
 
 // Output as text/plain
-header('Content-Type: text/plain');
+header('HTTP/1.1 200 OK');
+header('Content-Type: text/plain; charset=utf-8');
 
 require_once("../../../wp-config.php");
 
