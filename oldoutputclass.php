@@ -120,6 +120,7 @@ class wetterturnier_oldoutputObject {
 
 				// Getting data from $obs stdClass object
 				$hash = sprintf("wmo_%d",(int)$stnObj->get("wmo"));
+				if ( ! property_exists($obs->data,$hash) ) { continue; }
 				$data = $obs->data->$hash;
 
 				foreach ( $stnObj->getParams() as $paramObj ) {
@@ -190,9 +191,11 @@ class wetterturnier_oldoutputObject {
 
 		// Mean points
 		
-      printf("Die durchschnittliche Punktzahl beträgt:    %5.1f Punkte.\n"
-            ."Wertung für nicht teilnehmende Mitspieler:  %5.1f Punkte.\n\n",
-            $stats["points"]/$stats["N"], $stats["Sleepy"]);
+		if ( $stats["N"] > 0 ) {
+      	printf("Die durchschnittliche Punktzahl beträgt:    %5.1f Punkte.\n"
+      	      ."Wertung für nicht teilnehmende Mitspieler:  %5.1f Punkte.\n\n",
+      	      $stats["points"]/$stats["N"], $stats["Sleepy"]);
+		}
 
 	}
 
