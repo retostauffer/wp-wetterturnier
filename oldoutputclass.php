@@ -79,6 +79,18 @@ class wetterturnier_oldoutputObject {
 		return( substr( $str, 0, $len ) );
 	}
 
+   // -----------------------------------------------------------------
+   /// @details Heper function to always show float point numbers
+   ///   in the same format, with a ".".
+   /// @param $value. Float value.
+   /// @param $decimals. Integer, deault 1, number of digits after comma.
+   /// @return Returns string using number_format with fixed format
+   ///   internally.
+   // -----------------------------------------------------------------
+   private function show_number( $value, $decimals = 1 ) {
+      return number_format( $value, $decimals, ".", "" );
+   }
+
 
 	// -----------------------------------------------------------------
 	/// @details This is the main function which proces the output.
@@ -130,7 +142,7 @@ class wetterturnier_oldoutputObject {
 						if ( ! property_exists($data,$hash) ) {
 							$val = "n";
 						} else {
-							$val = number_format( $data->$hash->value, (int)$paramObj->get("decimals"), ".", "" );
+							$val = $this->show_number( $data->$hash->value, (int)$paramObj->get("decimals") );
 						}
 					} else {	$val = "n"; }
 					printf( $this->_get_param_format_($paramObj->get("paramName")), $val );
@@ -144,14 +156,15 @@ class wetterturnier_oldoutputObject {
 							$this->tdate, $day, false );
 
 			foreach ( $bets->data as $rec ) {
-				printf( $this->_get_param_format_("name"), $this->_str_cut_($rec->user_login,25) );
+				printf( $this->_get_param_format_("name"),
+               $this->_str_cut_( preg_replace("/^GRP_/","",$rec->user_login),25 ) );
 				foreach ( $stnObj->getParams() as $paramObj ) {
 					if ( $paramObj->isParameterActive( (int)$this->cityObj->get("ID") ) ) {
 						$hash = sprintf("pid_%d",(int)$paramObj->get("paramID"));
 						if ( ! property_exists($rec,$hash) ) {
 							$val = "n";
 						} else {
-							$val = number_format( $rec->$hash->value, (int)$paramObj->get("decimals"), ".", "" );
+							$val = $this->show_number( $rec->$hash->value, (int)$paramObj->get("decimals") );
 						}
 					} else {	$val = "n"; }
 					printf( $this->_get_param_format_($paramObj->get("paramName")), $val );
@@ -178,9 +191,11 @@ class wetterturnier_oldoutputObject {
 				$rank +=1; $keep_points = round($rec->points,2);
 			}
 			// Show output
-			printf("%2d. %-25s %5.1f (%5.1f/%5.1f)\n", $rank,
+			printf("%2d. %-25s %5s (%5s/%5s)\n", $rank,
 				$this->_str_cut_( preg_replace("/^GRP_/","",$rec->user_login), 25),
-				$rec->points, $rec->points_d1, $rec->points_d2);
+				$this->show_number($rec->points,1),
+            $this->show_number($rec->points_d1,1),
+            $this->show_number($rec->points_d2));
 
 			// Stats
 			if ( strcmp($rec->user_login,"Sleepy") === 0 ) {
@@ -193,9 +208,10 @@ class wetterturnier_oldoutputObject {
 		// Mean points
 		
 		if ( $stats["N"] > 0 ) {
-      	printf("Die durchschnittliche Punktzahl beträgt:    %5.1f Punkte.\n"
-      	      ."Wertung für nicht teilnehmende Mitspieler:  %5.1f Punkte.\n\n",
-      	      $stats["points"]/$stats["N"], $stats["Sleepy"]);
+      	printf("Die durchschnittliche Punktzahl beträgt:    %5s Punkte.\n"
+      	      ."Wertung für nicht teilnehmende Mitspieler:  %5s Punkte.\n\n",
+      	      $this->show_number($stats["points"]/$stats["N"]),
+               $this->show_number($stats["Sleepy"]));
 		}
 
 	}
