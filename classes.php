@@ -605,7 +605,7 @@ class wetterturnier_webcamObject {
    function display_webcam() {
       print "<div class='wtwebcam'>\n"
            .sprintf("<a href=\"%s\" target=\"_new\">",$this->get("source"))
-           .sprintf("   <img src=\"%s\" alt=\"%s\" />\n",$this->get("uri"),$this->get("source"))
+           .sprintf("   <img src=\"%s\" alt=\"%s\" /><br>\n",$this->get("uri"),$this->get("source"))
            ."   <span class=\"wtwebcam-source\">"
            .sprintf("%s</span></a>",$this->get("desc"))
            ."</span></a>\n"
