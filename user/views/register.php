@@ -1,9 +1,7 @@
 
 
 <form name="registerform" id="registerform" action="<?php echo esc_url( wp_registration_url() ); ?>" method="post" novalidate="novalidate">
-</form>
 <!-- submission form is crated via jquery to prevent spam! -->
-<div name="registerform" id="registerform" action="<?php echo esc_url( wp_registration_url() ); ?>">
    <p>
       <label for="user_login"><?php _e('Username') ?><br />
       <input type="text" name="user_login" id="user_login" class="input" value="" size="20" /></label>
@@ -25,7 +23,7 @@
    <input type="hidden" name="redirect_to" value="<?php echo
         esc_attr( (isset($redirect_to)) ? $redirect_to : $_SERVER["REQUEST_URI"] ); ?>" />
    <p class="submit"><input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e('Register'); ?>" /></p>
-</div>
+</form>
 
 <p id="nav">
 <a href="<?php echo esc_url( wp_login_url() ); ?>"><?php _e( 'Log in' ); ?></a> |
