@@ -859,7 +859,8 @@ class wetterturnier_betclass
                     __("Your active city is","wpwt"),$cityObj->get('name'),
                     __("PLEASE NOTE THAT SOME VALUES ARE STILL MISSING.","wpwt"),
                     __("You do have to fill in all fields to take part in the upcoming tournament.","wpwt"),
-                    __("Last values received","wpwt"),$check->placed);
+                    __("Last values received","wpwt"),
+                        $WTuser->datetime_format(strtotime($check->placed)));
             } else {
                printf("<div class=\"wetterturnier-info ok\">"
                      ."<span class=\"big black\">%s</span>&nbsp;<span class=\"big\">%s</span><br>\n"
