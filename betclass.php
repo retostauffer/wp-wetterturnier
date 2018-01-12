@@ -851,7 +851,8 @@ class wetterturnier_betclass
                      ."<b>%s</b><br>\n%s <b>%s</b>\n</div>\n",
                     __("Your active city is","wpwt"),$cityObj->get('name'),
                     __("YOUR BET HAS BEEN SUBMITTED, EVERYTHING FINE.","wpwt"),
-                    __("Valid submission received:","wpwt"),$check->placed);
+                    __("Valid submission received:","wpwt"),
+                        $WTuser->datetime_format(strtotime($check->placed)));
             } else if ( $check->placed ) {
                printf("<div class=\"wetterturnier-info error\">"
                      ."<span class=\"big black\">%s</span>&nbsp;<span class=\"big\">%s</span><br>\n"
