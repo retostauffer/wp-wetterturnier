@@ -154,7 +154,7 @@ class Wetterturnier_Rerunrequest_List_Table extends WP_List_Table {
                   if ( is_null($rec->done) ) {
                      echo "<td ".$attributes.">[not yet done]</td>\n"; break;
                   } else {
-                     echo "<td ".$attributes.">".$rec->placed."</td>\n"; break;
+                     echo "<td ".$attributes.">".$rec->done."</td>\n"; break;
                   }
             }
          }
