@@ -1839,44 +1839,6 @@ class wetterturnier_generalclass
 
 
     // --------------------------------------------------------------
-    /// @details Loading observations from the RAW 'obs.live' observation table.
-    ///
-    /// @param $tablename. String, name of the database table where the observations
-    ///  are stored.
-    /// @param $maxage. Integer timestamp in seconds since 1970-01-01. Observations
-    ///  older than this time stamp will be neglected in the request.
-    /// @param $stnObj. Station object of type @ref wetterturnier_stationObject.
-    /// @param $col. String, name of the column in the database $tablename.
-    /// @param $scale. Float, default is `10.0`. If set the observations will be
-    ///  scaled before returned at the end of this function.
-    // --------------------------------------------------------------
-    function get_raw_obs_values($tablename,$maxage,$stnObj,$col,$scale=10.) {
-
-        global $wpdb;
-
-        // Crate propper sql statement
-        $sql = array();
-        array_push($sql,sprintf("SELECT datumsec, %s FROM %s",$col,$tablename));
-        array_push($sql,sprintf("WHERE NOT %s IS NULL",$col));
-        array_push($sql,sprintf("AND statnr = %d",$stnObj->get('wmo')));
-        array_push($sql,sprintf("AND datumsec >= %d",$maxage));
-        array_push($sql,sprintf("ORDER BY datumsec DESC LIMIT 1"));
-
-        // Calling database
-        $res = $wpdb->get_row( join("\n",$sql) );
-        if ( ! $res ) { return(false); } # problems with query
-        // No data? Return False
-        if ( count($res) == 0 ) { return(false); }
-
-        // Append some more properties on this object
-        $res->value = $this->number_format($res->$col / (float)$scale,1);
-        $res->readable = date("Y-m-d H:i",$res->datumsec);
-        $res->stdmin   = date("H:i",$res->datumsec);
-
-        return( $res );
-    }
-
-    // --------------------------------------------------------------
     // Datepicker code for the widget
     // --------------------------------------------------------------
     public function tournament_datepicker_widget() {

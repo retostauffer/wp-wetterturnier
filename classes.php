@@ -28,6 +28,8 @@ class wetterturnier_cityObject {
    /// Attribute to store station objects if required. See
    /// @ref _load_stations_ function.
    private $stations = NULL;
+   /// Used to store number of observations.
+   private $number_of_observations = Null;
 
    function __construct( $init = NULL ) {
 
@@ -646,14 +648,32 @@ class wetterturnier_latestobsObject {
     /// @ref _load_stations_ function.
     private $station = NULL;
 
-    function __construct( $stnObj, $from = Null, $to = Null ) {
+    // --------------------------------------------------------------
+    /// @details Loading data and description from the obs database
+    ///     table. Requires read access on the obs.* tables!
+    /// @param $stnObj. See @see wetterturnier_stationObject. An object
+    ///     containing the station information for which the observation
+    ///     data should be loaded.
+    /// @param $from. Either Null (default) or a unix time stamp. Has
+    ///     to be numeric! Details see @see _load_latest_obs_from_db_.
+    /// @param $to. Either Null (default) or a unix time stamp. If
+    ///     set in combination with $from has to be larger than $from!
+    ///     Details @see _load_latest_obs_from_db_.
+    /// @param $limit. Either Null or a positiv numeric integer value.
+    ///     If set $limit rows will be loaded.
+    /// @return No return, initializes a new object of class
+    ///     @see wetterturnier_latestobsObject.
+    // --------------------------------------------------------------
+    function __construct( $stnObj, $from = Null, $to = Null, $limit = Null ) {
 
         global $wpdb; $this->wpdb = $wpdb;
         $this->station = $stnObj;
 
+        // Loading parameter description
         $this->_load_description_from_db_();
         if ( is_null($this->desc) ) { die("Problems loading param description from database!"); }
-        $this->_load_latest_data_from_db_( $from, $to );
+        // Loading data
+        $this->_load_latest_data_from_db_( $from, $to, $limit );
     }
 
     // --------------------------------------------------------------
@@ -669,6 +689,7 @@ class wetterturnier_latestobsObject {
             $res->$param = $rec;
         }; $this->desc = $res;
     }
+
     // --------------------------------------------------------------
     /// @details Returns parameter description for a given parameter
     ///     $param. If parameter cannot be found or value is not available
@@ -688,6 +709,43 @@ class wetterturnier_latestobsObject {
         // Else check if $value exists and return.
         if ( ! property_exists($this->desc->$param,$value) ) { return(Null); }
         return( $this->desc->$param->$value );
+    }
+
+    // --------------------------------------------------------------
+    /// @details Returns a value from the data set loaded. If offset
+    ///     is not given the first (newest) value will be returned.
+    /// @param $param. String, name of the observed parameter.
+    /// @param $offset. Either Null or a positive integer. If e.g., set
+    ///     to $offset=1 the second last value will be returned if available.
+    /// @param $format. Default Null, if set the value will be converted
+    ///     and returned as string.
+    /// @return Returns observed value or Null if not available.
+    // --------------------------------------------------------------
+    public function get_value( $param, $offset = Null, $format = Null ) {
+        if ( ! is_null($offset) ) {
+            if ( ! is_numeric($offset) ) { die("\$offset for get_value has to be numeric!"); }
+            if ( (int)$offset < 0 | (int)$offset > ($this->nobs()-1) ) { die("\$offset out of range!"); }
+        } else { $offset = 0; }
+        if ( ! property_exists($this->data,$param) ) { return(Null); }
+        // If $value = Null
+        return( is_null($format) ? $this->data->$param[$offset] :
+                  sprintf($format,$this->data->$param[$offset]) );
+    }
+
+    // --------------------------------------------------------------
+    /// @details Helper function, returns true if the object contains
+    ///     data and false if not. 
+    /// @return Boolean true or fals whether the object contains data
+    ///     or not.
+    // --------------------------------------------------------------
+    public function has_data( ) { return ( is_null($this->data) ? false : true ); }
+
+    // --------------------------------------------------------------
+    /// @details Helper function, returns number of loaded data sets.
+    /// @return Returns number of loaded observations.
+    // --------------------------------------------------------------
+    public function nobs( ) {
+        return $this->number_of_observations;
     }
 
     // --------------------------------------------------------------
@@ -720,9 +778,12 @@ class wetterturnier_latestobsObject {
     /// @param $to. Unix time stamp (integer) to specify end of the
     ///     time series. If Null all will be returned (from $from to
     ///     newest ones).
+    /// @param $limit. Either Null (default) or a positive integer.
+    ///     Return $limit newest rows from the database given the
+    ///     request options.
     /// @return No return, stores the data internally on 
     // --------------------------------------------------------------
-    private function _load_latest_data_from_db_( $from = Null, $to = Null ) {
+    private function _load_latest_data_from_db_( $from = Null, $to = Null, $limit = Null ) {
 
         // Specify columns to ignore. Columns already set in $cols can
         // be pre-specified to keep the order.
@@ -738,20 +799,23 @@ class wetterturnier_latestobsObject {
         // Both given
         if ( is_numeric($from) & is_numeric($to) ) {
             if ( $from > $to ) { die("Input \"from\" has to be lower than \"to\"."); }
-            $where = sprintf("AND (datumsec >= %d and datumsec <= %d)",$from,$to); $limit = "";
+            $where = sprintf("AND (datumsec >= %d and datumsec <= %d)",$from,$to); $limit = Null; 
         } else if ( is_numeric($from) ) {
-            $where = sprintf("AND datumsec >= %d",$from); $limit = "";
+            $where = sprintf("AND datumsec >= %d",$from); $limit = Null;
         } else if ( is_numeric($to) ) {
-            $where = sprintf("AND datumsec <= %d",$to); $limit = "LIMIT 10";
+            $where = sprintf("AND datumsec <= %d",$to);   $limit = 10;
         } else {
-            $limit = "LIMIT 10";
+            $limit = 10;
         } 
 
         // Fetching data from database
-        $sql   = sprintf("SELECT %s FROM obs.live WHERE statnr=%d %s ORDER BY datum DESC, stdmin DESC %s;",
-                         join( ",", $cols ), (int)$this->station->get("wmo"), $where, $limit );
+        $sql   = sprintf("SELECT %s FROM obs.live WHERE statnr=%d %s "
+                        ."ORDER BY datum DESC, stdmin DESC %s;",
+                        join( ",", $cols ), (int)$this->station->get("wmo"), $where,
+                        ( is_null($limit) ? "" : sprintf(" LIMIT %d",$limit) ) );
 
         $dbres = $this->wpdb->get_results( $sql );
+        $this->number_of_observations = $this->wpdb->num_rows;
 
         // Reshape the data set.
         if ( $dbres ) {

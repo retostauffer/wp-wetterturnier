@@ -158,10 +158,10 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
             echo "<div style='clear:both;' />\n";
 
             // $show_data is just a helper function called within the loop below.
-            function show_data( $data, $title, $unit ) {
+            function show_data( $time, $value, $title, $unit ) {
                 printf("<b><darkblue>%s</darkblue></b>&nbsp;&nbsp;"
                       ."%s:&nbsp;&nbsp;<b><darkblue>%s</darkblue></b>&nbsp;[%s]<br>\n",
-                      $data->stdmin,$title,$data->value,$unit);
+                      $time,$title,$value,$unit);
             }
 
             // Looping over all stations, print value/date/title
@@ -170,44 +170,44 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
                 printf("<h3>%s [%d]</h3>",$stnObj->get('name'),$stnObj->get('wmo'));
                 $count = 0;
 
+                // Loading data from database
+                $latestobsObj = new wetterturnier_latestobsObject( $stnObj, $maxage, Null, 1 );
+
+                // No data in the object (no data loaded from database)
+                if ( ! $latestobsObj->has_data() ) {
+                    printf(__("Sorry, no valid observations available for station %s within ","wpwt"),
+                              $stnObj->get("wmo"));
+                    printf(__("the last %d hours","wpwt"),$nhours);
+                    continue;
+                }
+
+                $time = sprintf("%04d",$latestobsObj->get_value("stdmin"));
+                $time = sprintf("%02d:%02d",substr($time,0,2),substr($time,3,2));
+
                 // Dry air temperature
-                $data = $WTuser->get_raw_obs_values($tablename,$maxage,$stnObj,'t');
-                if ( $data ) { $count++; show_data($data,__("Temperature","wpwt"),"C"); }
+                $value = $latestobsObj->get_value( "t", Null, "%.1f" );
+                if ( $value ) { show_data($time,$value,__("Temperature","wpwt"),"C"); }
 
                 // Dew point temperature 
-                $data = $WTuser->get_raw_obs_values($tablename,$maxage,$stnObj,'td');
-                if ( $data ) { $count++; show_data($data,__("Dew point temp","wpwt"),"C"); }
+                $value = $latestobsObj->get_value( "td", Null, "%.1f" );
+                if ( $value ) { show_data($time,$value,__("Dew point temp","wpwt"),"C"); }
 
                 // Cloud cover 
-                $data = $WTuser->get_raw_obs_values($tablename,$maxage,$stnObj,'cc',1.);
-                if ( $data ) {
-                    if ( $data->value > 0 ) {
-                       //$data->value = (int)round((float)$data->value/100*80);
-                       $data->value = (int)floor((float)$data->value/100*8) + 1;
-                       if ( $data->value == 9 ) { $data->value = 8; }
-                    }
-                    $count++;
-                    show_data($data,__("Cloud cover","wpwt"),"octa");
-                }
+                $value = $latestobsObj->get_value( "cc", Null, "%d" );
+                if ( $value ) { show_data($time,$value,__("Cloud cover","wpwt"),"%"); }
 
                 // Wind direction 
-                $data = $WTuser->get_raw_obs_values($tablename,$maxage,$stnObj,'ff');
-                if ( $data ) { $count++. show_data($data,__("Wind speed","wpwt"),"m/s"); }
+                $value = $latestobsObj->get_value( "ff", Null, "%.1f" );
+                if ( $value ) { show_data($time,$value,__("Wind speed","wpwt"),"m/s"); }
 
                 // Wind speed 
-                $data = $WTuser->get_raw_obs_values($tablename,$maxage,$stnObj,'dd',1.);
-                if ( $data ) { $count++; show_data($data,__("Wind direction","wpwt"),"deg"); }
+                $value = $latestobsObj->get_value( "dd", Null, "%d" );
+                if ( $value ) { show_data($time,$value,__("Wind direction","wpwt"),"deg"); }
 
                 // Pressure 
-                $data = $WTuser->get_raw_obs_values($tablename,$maxage,$stnObj,'pmsl',100);
-                if ( $data ) { $count++; show_data($data,__("Pressure [msl]","wpwt"),"hPa"); }
+                $value = $latestobsObj->get_value( "pmsl", Null );
+                if ( $value ) { show_data($time,sprintf("%.2f",$value/100.),__("Pressure [msl]","wpwt"),"hPa"); }
 
-                // Nothing shown?
-                if ( $count == 0 ) {
-                    printf( "%s %s",
-                            sprintf(__("Sorry, no valid observations available for station %s within ","wpwt"),$stnObj->get("wmo")),
-                            sprintf(__("the last %d hours","wpwt"),$nhours) );
-                }
             }
         }
         
