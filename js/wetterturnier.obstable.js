@@ -31,7 +31,6 @@ jQuery(document).on('ready',function() {
          data: {action:'getobservations_ajax',statnr:input.statnr,days:input.days},
          success: function(results) {
             data = results 
-            if ( data[0] == undefined ) { data = false; }
          },
          error: function(e) {
             //$error = e; console.log('errorlog'); console.log(e);
@@ -50,28 +49,29 @@ jQuery(document).on('ready',function() {
          var id = "#" + $(elem).attr('id')
 
          // Header from first entry in the data object
-         $.each( data[0], function(k,v) {
-            $(id+' table thead').append("<th>" + k + "</th>");
+         //$.each( data.data, function(k,v) {
+         $.each( $.map(data.data,function(elem,index) { return index; }), function(i,param) {
+            $(id+' table thead').append("<th>" + param + "</th>");
          });
          // Setting 'add tr class' true
-         if ( 'datum' in data[0] && 'stdmin' in data[0] ) {
+         if ( 'datum' in data.data && 'stdmin' in data.data ) {
             addrowname = true
          } else {
             addrowname = false
          }
          // Appending data 
          rowname = ""
-         $.each( data, function(k,rec) {
-            // Create clas name
+         for ( var i=0; i<data.data.datum.length; i++ ) {
             if ( addrowname ) { 
-               rowname = " row='tr-"+rec['datum'].toString()+rec['stdmin'].toString()+"'"
+               rowname = " row='tr-"+data.data['datum'][i].toString()+data.data['stdmin'][i].toString()+"'";
             }
             $(id+' table tbody').append("<tr"+rowname+"></tr>");
-            $.each( rec, function(k,v) {
-               if ( v == null ) { v = ''; } 
-               $(id+' table tbody tr:last').append("<td>" + v + "</td>");
+            $.each( $.map(data.data,function(elem,index) { return index; }), function(pi,param) {
+               var tdclass = ( data.data[param][i] === null ) ? " class=\"null\" " : "";
+               $(id+' table tbody tr:last')
+                    .append("<td " + tdclass + ">" + data.data[param][i] + "</td>");
             });
-         });
+         }
 
 
       } else {

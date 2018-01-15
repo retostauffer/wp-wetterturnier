@@ -79,6 +79,8 @@ console.log( statnr+'  '+title+'  '+days )
 
 <style type="text/css">
 table.wetterturnier-obstable tr.highlighted { background-color: #CCFFCC; }
+table.wetterturnier-obstable tr td.null { color: #B2B2B2; }
+table.wetterturnier-obstable tr td { white-space: nowrap; }
 input[type='button'].obs-table-station { margin-right: 10px; }
 input[type='button'].obs-table-days    { margin-right: 10px; }
 input[type='button'].active { background-color: #41a62a;     }
@@ -94,10 +96,6 @@ for ( $i=2; $i<=9; $i++ ) {
    printf("<input type=\"button\" class=\"obs-table-days\" days=\"%d\" value=\"%d d\"></input>",
             $i,$i);
 }
-//foreach( $cityObj->stations() as $stnObj ) {
-//   printf("<h1>%s [%d]</h1>\n",$stnObj->get('name'),$stnObj->get('wmo'));
-//   printf("<div id='obs-table-%d'></div>\n",$stnObj->get('wmo'));
-//}
 ?>
 <div id='obs-table'></div>
 

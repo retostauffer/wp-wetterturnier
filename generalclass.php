@@ -2023,49 +2023,26 @@ class wetterturnier_generalclass
     // Returns the latest observations for a given station. Called
     // by wordpress ajax.
     // ---------------------------------------------------------------
-    public function getobservations_ajax() {
+    public function getobservations_ajax( $statnr = Null ) {
 
        global $wpdb;
        if ( empty($_POST) ) {
-          print json_encode(array('error'=>'Got no station ID.')); die();
+          print json_encode(array('error'=>'Got no station number.')); die();
        } else if ( empty($_POST['statnr']) ) {
-          print json_encode(array('error'=>'Got no station ID.')); die();
+          print json_encode(array('error'=>'Got no station number.')); die();
        }
-       // - Number of das
+       $statnr = (int)$_POST["statnr"];
+       // Create new stationObject
+       $stnObj = new wetterturnier_stationObject( $statnr, "wmo" );
+
        if ( empty($_POST['days']) ) { $days = 1; } else { $days = (int)$_POST['days']; }
-       // - Station number
-       $statnr = (int)$_POST['statnr'];
+       // Timestamp to fetch data from (latestobsObject requires from/to unix time stamps)
+       $from = (int)date("U") - $days*86400;
 
-       // - Connecting obs database.
-       $obsdb = new mysqli('localhost','rouser','readonly',"obs");
-       if ( $obsdb->connect_errno ) {
-          print json_encode(array('error'=>'Could not connect to database.')); die();
-       }
-
-       // ------------------------------------------------------------------ 
-       // - Converts multidimensional array to stdClass object
-       function arrayToObject($x) {
-          if ( is_array($x) ) { return(object) array_map(__FUNCTION__,$x); }
-          else { return($x); }
-       }
-       // ------------------------------------------------------------------ 
-
-       // Timestamp
-       $ts = date('U') - $days * 2*86400;
-       $cols  = array('stint','datum','stdmin','ucount','solglo1','solglo24','cc','sun','sun6','sunday','dd','ff','ffx','ffx1','ffx3','ffx6','ww','w1','w2',
-                      'psta','pmsl','tmin12','tmin15','tmin24',
-                      'tmax12','tmax24','t','td',
-                      'rrr1','rrr3','rrr6','rrr12','rrr24','rr3','rr24');
-       $sql   = sprintf('SELECT %s FROM live WHERE msgtyp = "bufr" AND statnr = %d AND datumsec >= %d ORDER BY datumsec DESC',
-                join(",",$cols),$statnr,$ts);
-       $dbres = $obsdb->query($sql);
-       
-       #$query = $obsdb->query($sql);
-       $res   = Array();
-       while ( $row = $dbres->fetch_object() ) { array_push($res,$row); }
-       $res   = arrayToObject($res);
-
-       print json_encode($res);
+       // Create new latestobsObject which loads and prepares the data.
+       $latestobsObj = new wetterturnier_latestobsObject( $stnObj, $from );
+       // Return data
+       print $latestobsObj->get_json();
        die();
 
     }

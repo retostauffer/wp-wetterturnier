@@ -627,4 +627,193 @@ class wetterturnier_webcamObject {
    }
 }
 
+/// @details A small class to load latest observations from the
+///     obs database.
+class wetterturnier_latestobsObject {
+
+    /// Will contain a copy of the global $wpdb instance. Used as
+    /// class-internal reference for database requests.
+    private $wpdb;
+    /// Attribute to store the information from the database.
+    /// Will be NULL if no information loaded (init) and replaced
+    /// by a php stdClass object with the key/value pairs from the
+    /// database.
+    private $data = NULL;
+    /// Attribute to store the description information from the
+    /// database.
+    private $desc = NULL;
+    /// Attribute to store station objects if required. See
+    /// @ref _load_stations_ function.
+    private $station = NULL;
+
+    function __construct( $stnObj, $from = Null, $to = Null ) {
+
+        global $wpdb; $this->wpdb = $wpdb;
+        $this->station = $stnObj;
+
+        $this->_load_description_from_db_();
+        if ( is_null($this->desc) ) { die("Problems loading param description from database!"); }
+        $this->_load_latest_data_from_db_( $from, $to );
+    }
+
+    // --------------------------------------------------------------
+    /// @details Loading the bufrdescription information from the
+    ///     database. This contains the parameter description and it's
+    ///     scaling/descaling values.
+    // --------------------------------------------------------------
+    function _load_description_from_db_( ) {
+        $dbres = $this->wpdb->get_results( "SELECT * FROM obs.bufrdesc;" );
+        $res   = new stdClass();
+        foreach ( $dbres as $rec ) {
+            $param = $rec->param;
+            $res->$param = $rec;
+        }; $this->desc = $res;
+    }
+    // --------------------------------------------------------------
+    /// @details Returns parameter description for a given parameter
+    ///     $param. If parameter cannot be found or value is not available
+    ///     a None will be returned.
+    /// @param $param. String, name of the observed parameter.
+    /// @param $value. Default Null, if Null the whole object for the
+    ///     $param will be returned. If set only this specific value
+    ///     will be returned if existing. 
+    /// @return Returns parameter $value for $parmater if both inputs
+    ///     are set or the object for $param if $value = Null. If not
+    ///     existing a Null will be returned.
+    // --------------------------------------------------------------
+    public function get_desc( $param, $value = Null ) {
+        if ( ! property_exists($this->desc,$param) ) { return(Null); }
+        // If $value = Null
+        if ( is_null($value) ) { return($this->desc->$param); }
+        // Else check if $value exists and return.
+        if ( ! property_exists($this->desc->$param,$value) ) { return(Null); }
+        return( $this->desc->$param->$value );
+    }
+
+    // --------------------------------------------------------------
+    /// @details Helper function. Prepares the values (converts them
+    ///     into integer or float if not Null) and divedes the
+    ///     values by a factor of $factor if $factor is numeric.
+    /// @param $values. Array with values.
+    /// @param $factor. Non-numeric or numeric vactor value.
+    /// @return Returns array of the same length as $values with
+    ///     prepared/descaled values.
+    // --------------------------------------------------------------
+    private function _descale_values_( $values, $factor ) {
+        // If $factor is not numeric we are done.
+        if ( ! is_numeric($factor) ) { return($values); }
+        $factor = (float)$factor;
+        // If factor is 0 we are done as well.
+        if ( $factor == 0. ) { return($values); }
+        // Else descale.
+        for ( $i=0; $i<count($values); $i++ ) { $values[$i] = (double)$values[$i]/$factor; } 
+        return( $values );
+    }
+
+    // --------------------------------------------------------------
+    /// @details Loading latest observations (values) from database given
+    ///     the selected station on $this->station. Selects the data
+    ///     backwards in time if nothing else is given (descending).
+    /// @param $from. Unix time stamp (integer) to specify beginning
+    ///     of time series. If Null the 10 newest will be returned
+    ///     (either newest or newest before $to (including $to).
+    /// @param $to. Unix time stamp (integer) to specify end of the
+    ///     time series. If Null all will be returned (from $from to
+    ///     newest ones).
+    /// @return No return, stores the data internally on 
+    // --------------------------------------------------------------
+    private function _load_latest_data_from_db_( $from = Null, $to = Null ) {
+
+        // Specify columns to ignore. Columns already set in $cols can
+        // be pre-specified to keep the order.
+        $ignore_columns = array("datumsec","statnr","msgtyp","utime","ucount");
+        $cols = array("stint","datum","stdmin");
+        // Prepare columns to load
+        foreach ( $this->wpdb->get_results("SHOW COLUMNS FROM obs.live;") as $rec )
+        {
+            if ( in_array($rec->Field,$cols) ) { continue; }
+            if ( ! in_array($rec->Field,$ignore_columns) ) { array_push($cols,$rec->Field); }
+        }
+
+        // Both given
+        if ( is_numeric($from) & is_numeric($to) ) {
+            if ( $from > $to ) { die("Input \"from\" has to be lower than \"to\"."); }
+            $where = sprintf("AND (datumsec >= %d and datumsec <= %d)",$from,$to); $limit = "";
+        } else if ( is_numeric($from) ) {
+            $where = sprintf("AND datumsec >= %d",$from); $limit = "";
+        } else if ( is_numeric($to) ) {
+            $where = sprintf("AND datumsec <= %d",$to); $limit = "LIMIT 10";
+        } else {
+            $limit = "LIMIT 10";
+        } 
+
+        // Fetching data from database
+        $sql   = sprintf("SELECT %s FROM obs.live WHERE statnr=%d %s ORDER BY datum DESC, stdmin DESC %s;",
+                         join( ",", $cols ), (int)$this->station->get("wmo"), $where, $limit );
+
+        $dbres = $this->wpdb->get_results( $sql );
+
+        // Reshape the data set.
+        if ( $dbres ) {
+            // Prepare data in a different format: object with arrays
+            // of length N
+            $data = new stdClass();
+            foreach ( $dbres[0] as $key=>$value ) { $data->$key = array(); }
+            foreach ( $dbres as $rec ) {
+                foreach ( $rec as $key=>$value ) {
+                    array_push( $data->$key, (is_numeric($value)) ? (int)$value : $value );
+                }
+            }
+            // Scaling values
+            foreach ( $data as $param=>$values ) {
+                $factor = $this->get_desc( $param, "factor" );
+                $data->$param = $this->_descale_values_( $values, $factor );
+                $notnull = 0;
+                // Count not-null values
+                foreach ( $values as $v ) { if ( !is_null($v) ) { $notnull +=1; } }
+                // If all values are Null: drop from object.
+                if ( $notnull === 0 ) { unset($data->$param); }
+            }
+            // Save attribute to object
+            $this->data = $data;
+        }
+    }
+
+    // --------------------------------------------------------------
+    /// @details Create and return json array.
+    /// @param $encode. Default true, can be set to false, only for
+    ///     development purposes, du not use it in your code.
+    /// @return If $encode is set to false
+    ///     the array will be returned which will be converted to a 
+    ///     json array with the default input $encode = true.
+    // --------------------------------------------------------------
+    public function get_json( $encode = true ) {
+
+        $json = new stdClass();
+        $json->station = array( "wmo"  => (int)$this->station->get("wmo"),
+                                "name" => $this->station->get("name"),
+                                "ID"   => (int)$this->station->get("ID") );
+        $json->data = $this->data;
+        if ( ! $encode ) { return( $json ); }
+        return( json_encode($json) );
+
+    }
+
+    // --------------------------------------------------------------
+    /// @details Helper function to show/print the content of this
+    ///     object. Mainly designed for development purposes.
+    // --------------------------------------------------------------
+    public function show( ) {
+
+        $this->station->show();
+        // Data
+        printf("This object contains the following data:\n");
+        printf("- Length of data:  %d\n",count($this->data->datumsec));
+        foreach ( $this->data as $param=>$values ) {
+            printf("- %-16s %s\n",$param,$this->get_desc($param,"desc"));
+        }
+
+    }
+}
+
 ?>

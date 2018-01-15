@@ -38,7 +38,6 @@ if ( ! $inputs->daybyday ) {
    });
 </script>
 <?php
-
 // --------------------------------------------------------------yy
 // Only show tables if allowed.
 // Current values ("for the current weekend") are
