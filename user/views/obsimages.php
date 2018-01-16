@@ -100,7 +100,7 @@ jQuery(document).on('ready',function() {
       // Adding the plots
       var args =  {
           ajaxurl: '<?php echo admin_url('admin-ajax.php'); ?>',
-          statnr:11120,
+          statnr: <?php print $cityObj->stations()[0]->get("wmo"); ?>,
           width: 800, height: 250,
           setup: [
               {main:"Temperature",parameter:["t","td"],
