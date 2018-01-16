@@ -2004,7 +2004,12 @@ class wetterturnier_generalclass
        // Create new latestobsObject which loads and prepares the data.
        $latestobsObj = new wetterturnier_latestobsObject( $stnObj, $from );
        // Return data
-       print $latestobsObj->get_json();
+       if ( empty($_POST["d3mode"]) ) { $_POST["d3mode"] = false; }
+       if ( $_POST["d3mode"] ) {
+           print $latestobsObj->get_json_d3();
+       } else {
+           print $latestobsObj->get_json();
+       }
        die();
 
     }

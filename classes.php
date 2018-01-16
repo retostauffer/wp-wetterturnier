@@ -641,6 +641,8 @@ class wetterturnier_latestobsObject {
     /// by a php stdClass object with the key/value pairs from the
     /// database.
     private $data = NULL;
+    /// Attribute to store the data as they come from the database.
+    private $data_objects = NULL;
     /// Attribute to store the description information from the
     /// database.
     private $desc = NULL;
@@ -787,7 +789,7 @@ class wetterturnier_latestobsObject {
 
         // Specify columns to ignore. Columns already set in $cols can
         // be pre-specified to keep the order.
-        $ignore_columns = array("datumsec","statnr","msgtyp","utime","ucount");
+        $ignore_columns = array("statnr","msgtyp","utime","ucount");
         $cols = array("stint","datum","stdmin");
         // Prepare columns to load
         foreach ( $this->wpdb->get_results("SHOW COLUMNS FROM obs.live;") as $rec )
@@ -804,14 +806,18 @@ class wetterturnier_latestobsObject {
             $where = sprintf("AND datumsec >= %d",$from); $limit = Null;
         } else if ( is_numeric($to) ) {
             $where = sprintf("AND datumsec <= %d",$to);   $limit = 10;
+        } else if ( is_numeric($limit) ) {
+            $where = Null;
         } else {
+            $where = Null;
             $limit = 10;
         } 
 
         // Fetching data from database
         $sql   = sprintf("SELECT %s FROM obs.live WHERE statnr=%d %s "
                         ."ORDER BY datum DESC, stdmin DESC %s;",
-                        join( ",", $cols ), (int)$this->station->get("wmo"), $where,
+                        join( ",", $cols ), (int)$this->station->get("wmo"), 
+                        ( is_null($where) ? "" : $where ),
                         ( is_null($limit) ? "" : sprintf(" LIMIT %d",$limit) ) );
 
         $dbres = $this->wpdb->get_results( $sql );
@@ -840,6 +846,20 @@ class wetterturnier_latestobsObject {
             }
             // Save attribute to object
             $this->data = $data;
+
+            // Scaling the object thing
+            foreach ( $dbres[0] as $param=>$deadend ) {
+                $factor = $this->get_desc( $param, "factor" );
+                if      ( ! is_numeric($factor) ) { $factor = 1.; }
+                else if ( (real)$factor == 0. )   { $factor = 1.; }
+                for ( $i=0; $i < $this->nobs(); $i++ ) {
+                    if ( is_numeric($dbres[$i]->$param) ) {
+                        $dbres[$i]->$param = (float)$dbres[$i]->$param / $factor;
+                    }
+                }
+            }
+            $this->data_objects = $dbres;
+
         }
     }
 
@@ -860,6 +880,21 @@ class wetterturnier_latestobsObject {
         $json->data = $this->data;
         if ( ! $encode ) { return( $json ); }
         return( json_encode($json) );
+
+    }
+
+    // --------------------------------------------------------------
+    /// @details Create and return json array.
+    /// @param $encode. Default true, can be set to false, only for
+    ///     development purposes, du not use it in your code.
+    /// @return If $encode is set to false
+    ///     the array will be returned which will be converted to a 
+    ///     json array with the default input $encode = true.
+    // --------------------------------------------------------------
+    public function get_json_d3( $encode = true ) {
+
+        if ( ! $encode ) { return( $this->data_objects ); }
+        return( json_encode($this->data_objects) );
 
     }
 
