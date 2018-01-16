@@ -132,7 +132,8 @@ class wetterturnier_betclass
             $res->$key          = $val;
          // Translate with lookup
          } else {
-            $res->$lookup[$key] = $val;
+            $tmp = $lookup[$key];
+            $res->$tmp = $val;
          }
       }
 
