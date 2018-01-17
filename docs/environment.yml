@@ -1,1 +1,4 @@
 name: wp-wetterturnier
+dependencies:
+    - sphinxcontrib-phpdomain==0.1.4
+    - tk.phpautodoc==1.2.1
