@@ -63,9 +63,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Wetterturnier'
+project = u'Wetterturnier Wordpress Plugin'
 copyright = u'2018, Reto Stauffer, Wetterturnier.de'
-author = u'Reto'
+author = u'`Reto Stauffer <Reto.Stauffer@uibk.ac.at>`_'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -152,7 +152,7 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-#html_logo = None
+html_logo = "images/wetterturnier-logo.svg"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32

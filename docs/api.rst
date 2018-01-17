@@ -2,8 +2,15 @@
 API
 ===
 
+misc classes
+------------
+
+.. note:: tbc
+
 generalclass
 -------------
+
+.. _api-generalclass:
 
 This is **the main wordpress plugin class** and contains a range of
 important/necessary methods for the data handling, website content,
@@ -18,6 +25,8 @@ and so far and so on. This class will be extended by both, the
 adminclass
 ----------
 
+.. _api-adminclass:
+
 The adminclass builds on :php:class:`generalclass` (extends the
 :php:class:`generalclass`) and provides a set of admin-specific
 functions and attributes.
@@ -30,6 +39,8 @@ These are only for the wordpress admin-interface.
 
 userclass
 ---------
+
+.. _api-userclass:
 
 The userclass builds on :php:class:`generalclass` (extends the
 :php:class:`generalclass`) and provides a set of frontend-specific
@@ -45,6 +56,8 @@ on the frontend.
 cityObject
 -----------
 
+.. _api-cityObject:
+
 Handling the different cities defined in the wetterturnier.
 
 .. phpautoclass:: wetterturnier_cityObject
@@ -55,6 +68,8 @@ Handling the different cities defined in the wetterturnier.
 stationObject
 -------------
 
+.. _api-stationObject:
+
 Handling single weather stations.
 
 .. phpautoclass:: wetterturnier_stationObject
@@ -64,6 +79,8 @@ Handling single weather stations.
 
 paramObject
 -----------
+
+.. _api-paramObject:
 
 Handling the different parameters (e.g., minimum temperature, or
 pressure at 12 UTC).
@@ -76,6 +93,8 @@ pressure at 12 UTC).
 webcamObject
 -------------
 
+.. _api-webcamObject:
+
 Small object to handle the webcams for the different cities
 (webcam image implementation).
 
@@ -86,6 +105,8 @@ Small object to handle the webcams for the different cities
 
 groupsObject
 ------------
+
+.. _api-groupsObject:
 
 Handling of groups. A group consists of several members/users
 and is used to generate the `Mitteltipps` (mean group bets).
