@@ -109,7 +109,7 @@ groupsObject
 .. _api-groupsObject:
 
 Handling of groups. A group consists of several members/users
-and is used to generate the `Mitteltipps` (mean group bets).
+and is used to generate the **Mitteltipps** (mean group bets).
 
 .. phpautoclass:: wetterturnier_groupsObject
     :filename: ../classes.php
@@ -119,9 +119,9 @@ and is used to generate the `Mitteltipps` (mean group bets).
 latestobsObject
 ---------------
 
-Class to read observation data from the `obs` database table.
+Class to read observation data from the ``obs`` database table.
 Please note that database is hardcoded in the php code (database
-table called `obs`). The wordpress mysql user requires read
+table called ``obs``). The wordpress mysql user requires read
 permissions to be able to get these data. The objects can be returned
 as JSON arrays and are used for some wetterturnier jQuery plugins
 (observation tables and plots).
@@ -129,10 +129,10 @@ as JSON arrays and are used for some wetterturnier jQuery plugins
 To grant the correct privileges to the wordpress user simply login
 to your database and give the correct user the following permissions:
 
-```
-GRANT PRIVILEGES SELECT ON obs.* TO 'wpwt'@'localhost';
-FLUSH PRIVILEGES;
-```
+.. code-block:: bash
+
+    GRANT SELECT ON obs.* TO 'wpwt'@'localhost';
+    FLUSH PRIVILEGES;
 
 .. phpautoclass:: wetterturnier_latestobsObject
     :filename: ../classes.php
@@ -145,7 +145,7 @@ oldoutputformat
 
 .. _api-oldoutputObject:
 
-.. note:: This was a `quick fix` which not yet works (Jan 2018)
+.. note:: This was a *quick fix* which not yet works (Jan 2018)
     we have the method Moses which relies of the forecasts of the
     latest few weeks. After moving our server the files are no more
     available in the same format. This class (in combination with
@@ -157,7 +157,7 @@ oldoutputformat
 
 Called and only called from
 `oldarchive.php <https://github.com/retostauffer/wp-wetterturnier/blob/master/oldarchive.php>`_.
-The server uses a `.htaccess` rewrite rule provide this mimiked
+The server uses a ``.htaccess`` rewrite rule provide this mimiked
 files under the same old url. The rewrite condition is as follows:
 
 .. code-block:: bash

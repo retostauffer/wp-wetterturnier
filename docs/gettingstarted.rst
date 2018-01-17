@@ -17,7 +17,7 @@ one for the fronend.
 
 .. todo:: Here I would like to tell a bit about how to set up
         the frontend and which plugins we are currently using
-        side by side with the `wp-wetterturnier` plugin 
+        side by side with the ``wp-wetterturnier`` plugin 
         to the the full functionality. However, at the moment
         the setup routine for the wordpress plugin is not in 
         its final and tested stage, so this is something for 
@@ -44,7 +44,7 @@ Wetterturnier Backend
 As reference Wetterturnier uses different methods. While some are
 pretty specific one of them is the persistency (observations from
 two days before the day where the first forecasts have to be delivered)
-called (this user is called `Persistenz`). Another is `Sleepy` to judge
+called (this user is called **Persistenz**). Another is **Sleepy** to judge
 users not having participated (as a punishment). Furthermore mean group
 bets are computed if two or more players from a specific group have submitted
 forecasts for a certain city.

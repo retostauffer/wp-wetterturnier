@@ -20,7 +20,7 @@ extens the wordpress `WP_Widget` class. The widget is loading the webcams from t
 for the current :ref:`cityObject <api-cityObject>` using the corresponding
 :ref:`webcamObject <api-webcamObject>` objects.
 
-Each webcam is attached to one specific city via it's `cityID` and is
+Each webcam is attached to one specific city via it's ``cityID`` and is
 defined via three attributes: url to the webcam image (has to be a static url),
 a source url, and a short description. The latter two will be used to set the
 source link below the live image.
@@ -41,7 +41,7 @@ Leaderboard Widget
 .. _widgets-leading:
 
 `leading.php <https://github.com/retostauffer/wp-wetterturnier/blob/master/user/widgets/leading.php>`_
-extens the wordpress `WP_Widget` class. The widget is loading the players with the highest
+extens the wordpress ``WP_Widget`` class. The widget is loading the players with the highest
 points given a certain time and active city. Uses the data from the
 :ref:`*wetterturnier_betstat <mysql-table-betstat>` database table.
 
@@ -68,7 +68,7 @@ Lightning Activity
 .. _widgets-blitzortung:
 
 `blitzortung.php <https://github.com/retostauffer/wp-wetterturnier/blob/master/user/widgets/blitzortung.php>`_
-also extends the wordpress `WP_Widget` class. 
+also extends the wordpress ``WP_Widget`` class. 
 The widget does two things: see if new data are available (data-stream not dead)
 and if data are available check wether there was is lightning activity in the surrounding
 of the city. If so, a small image will be displayed.
@@ -96,7 +96,7 @@ Latest Observations
 .. _widgets-latestobs:
 
 `latestobs.php <https://github.com/retostauffer/wp-wetterturnier/blob/master/user/widgets/latestobs.php>`_
-also extends the wordpress `WP_Widget` class. 
+also extends the wordpress ``WP_Widget`` class. 
 The widget does two things: see if new data are available (data-stream not dead)
 and if data are available check wether there was is lightning activity in the surrounding
 of the city. If so, a small image will be displayed.
@@ -125,7 +125,7 @@ Tournament Calendar
 .. _widgets-tournaments:
 
 `tournaments.php <https://github.com/retostauffer/wp-wetterturnier/blob/master/user/widgets/tournaments.php>`_
-also extends the wordpress `WP_Widget` class. 
+also extends the wordpress ``WP_Widget`` class. 
 Displays the tournament calendar with the upcoming tourmanet dates.
 In addition, the bet-counts (submitted partial/full forecasts for the upcoming
 tournament) are shown.
@@ -146,8 +146,8 @@ Private Messages
 .. _widgets-bbpmessages:
 
 `bbpmessages.php <https://github.com/retostauffer/wp-wetterturnier/blob/master/user/widgets/bbpmessages.php>`_
-also extends the wordpress `WP_Widget` class. 
-Requires an active installation of the `bbpmessages` plugin. If the plugin is
+also extends the wordpress ``WP_Widget`` class. 
+Requires an active installation of the ``bbpmessages`` plugin. If the plugin is
 not installed or at least ont active this widget will print out a message telling
 you that you might not have installed the dpeendency. Else the plugin is checking
 if there are new unread privat messages in the in-box and displays either a number

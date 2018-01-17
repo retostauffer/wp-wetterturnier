@@ -10,7 +10,8 @@ has to be tested and fixed), :ref:`the known issues <index-known-issues>` sectio
 has some more details.
 
 
-.. include:: wetterturnier-intro.inc
+
+.. include:: ../README.rst
 
 
 Software Dependencies
@@ -37,9 +38,10 @@ Important blocks
 .. toctree::
     :maxdepth: 1
     :hidden:
-    :caption: Introduction
 
     gettingstarted.rst
+    theplugin.rst
+    thewidgets.rst
 
 Known Issues
 ------------
@@ -56,7 +58,7 @@ might be adressed over the next months, or might not.
 
 .. note::
     * Sphinx phpautodoc (v 1.2.1 by `Takeshi Komiya <https://pypi.python.org/pypi/tk.phpautodoc>`_
-      does not yet extract `@param`, `@return` and other settings from the docs.
+      does not yet extract ``@param``, `@return` and other settings from the docs.
     * Plugin installation procedure is prepared, but outdated and not yet tested!
       Plugin updating procedure/uninstall not yet considered.
       **This makes an installation hard or even impossible, has to be adressed a.s.a.p.**.
@@ -80,8 +82,7 @@ Classes and Libraries
     :hidden:
     :caption: Documentation
 
-    theplugin.rst
-    thewidgets.rst
+    files.rst
     databases.rst
     classes.rst 
     api.rst
