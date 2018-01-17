@@ -23,7 +23,7 @@ build:
 # such that we can install our requirements.
 python:
     version: 2.7
-    setup_py_install: true
+    setup_py_install: false
 
 
 
