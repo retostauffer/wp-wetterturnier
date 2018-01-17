@@ -40,10 +40,10 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinxcontrib.phpdomain',
+    'sphinxcontrib_phpautodoc',
 ]
-
-extlinks = {'issue': ('https://github.com/OGGM/oggm/issues/%s', 'GH'),
-            'pull': ('https://github.com/OGGM/oggm/pull/%s', 'PR'),
+extlinks = {'issue': ('https://github.com/retostauffer/wp-wetterturnier/issues/%s', 'GH'),
+            'pull':  ('https://github.com/retostauffer/wp-wetterturnier/pull/%s', 'PR'),
             }
 
 autosummary_generate = True

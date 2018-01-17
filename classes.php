@@ -1,41 +1,45 @@
 <?php
-// ------------------------------------------------------------------
-/// @file classes.php
-/// @author Reto Stauffer
-/// @date 19 June 2017
-/// @brief This file contains a set of helper functions with a set
-///     of relatively standardized methods. Contains the classes
-///     @ref wetterturnier_cityObject to handle cities,
-///     @ref wetterturnier_stationObject to handle stations,
-///     @ref wetterturnier_groupsObject to handle groups of users
-///     @ref wetterturnier_webcamObject for handling webcams, 
-///     @ref wetterturnier_latestobsObject handling latest observations.
-// ------------------------------------------------------------------
+/**
+ *  @file classes.php
+ *  @author Reto Stauffer
+ *  @date 19 June 2017
+ *  @brief This file contains a set of helper functions with a set
+ *      of relatively standardized methods. Contains the classes
+ *      @ref wetterturnier_cityObject to handle cities,
+ *      @ref wetterturnier_stationObject to handle stations,
+ *      @ref wetterturnier_groupsObject to handle groups of users
+ *      @ref wetterturnier_webcamObject for handling webcams, 
+ *      @ref wetterturnier_latestobsObject handling latest observations.
+ */
 
 
-// ------------------------------------------------------------------
-/// @details A class to handle city information. Loads and stores
-///    information from the *_wetterturnier_cities database table.
-///    Whenever possible objects of this type will be called $cityObj
-///    within the php code.
-/// @see wetterturnier_stationObject
-// ------------------------------------------------------------------
+/** A class to handle city information. Loads and stores
+ * information from the *_wetterturnier_cities database table.
+ * Whenever possible objects of this type will be called $cityObj
+ * within the php code.
+ *
+ * @see wetterturnier_stationObject
+ */
 class wetterturnier_cityObject {
 
-   /// Will contain a copy of the global $wpdb instance. Used as
-   /// class-internal reference for database requests.
+   /** Will contain a copy of the global $wpdb instance. Used as
+    * class-internal reference for database requests. */
    private $wpdb;
-   /// Attribute to store the information from the database.
-   /// Will be NULL if no information loaded (init) and replaced
-   /// by a php stdClass object with the key/value pairs from the
-   /// database.
+   /** Attribute to store the information from the database.
+    * Will be NULL if no information loaded (init) and replaced
+    * by a php stdClass object with the key/value pairs from the
+    * database. */
    private $data = NULL;
-   /// Attribute to store station objects if required. See
-   /// @ref _load_stations_ function.
+   /** Attribute to store station objects if required. See
+    *  @ref _load_stations_ function. */
    private $stations = NULL;
-   /// Used to store number of observations.
+   /** Used to store number of observations. */
    private $number_of_observations = Null;
 
+   /** Construction function for wetterturnier_cityObject.
+    *
+    * @param mixed $init. If numeric it will be interpreted as station ID,
+    * if string HASH and city name will be checked. */
    function __construct( $init = NULL ) {
 
       global $wpdb; $this->wpdb = $wpdb;
@@ -71,51 +75,48 @@ class wetterturnier_cityObject {
 
    }
 
-   // ---------------------------------------------------------------
-   /// @details There is a json array stored in the database containing
-   ///   the parameter configuration (basically an array of parameter ID's).
-   ///   this function converts the string into an array and stores
-   ///   the result on $this->data->paramconfig.
+   /** There is a json array stored in the database containing
+    * the parameter configuration (basically an array of parameter ID's).
+    * this function converts the string into an array and stores
+    * the result on $this->data->paramconfig.
+    */
    function _decode_paramconfig_() {
       $this->data->paramconfig = json_decode( $this->get('paramconfig') );
    }
 
-   // ---------------------------------------------------------------
-   /// @details Loading city information from database given the
-   ///   input $cityHash (e.g., BER). Not case sensitive.
-   /// @param $cityHash String. City which should be returned from database.
-   // ---------------------------------------------------------------
+   /** Loading city information from database given the
+    * input $cityHash (e.g., BER). Not case sensitive.
+    *
+    * @param string $cityHash City which should be returned from database. */
    function _get_city_by_string_( $needle, $col = "hash" ) {
       $sql = sprintf("SELECT * FROM %swetterturnier_cities WHERE UCASE(%s) = \"%s\"",
                      $this->wpdb->prefix,$col,strtoupper($needle));
       return $this->wpdb->get_row( $sql );
    }
 
-   // ---------------------------------------------------------------
-   /// @details Loading city information from database given the
-   ///   input $cityID (numeric ID).
-   /// @param $cityHash String. City which should be returned from database.
-   // ---------------------------------------------------------------
+   /** Loading city information from database given the input $cityID (numeric ID).
+    *
+    * @param $cityHash String. City which should be returned from database.
+    */
    function _get_city_by_ID_( $cityID ) {
       $sql = sprintf("SELECT * FROM %swetterturnier_cities WHERE ID = %d",
                      $this->wpdb->prefix,$cityID);
       return $this->wpdb->get_row( $sql );
    }
 
-   // ---------------------------------------------------------------
-   /// @details This is the main method to extract information from
-   ///   the class. Information should be stored on $this->data which
-   ///   is a private stdClass object or NULL if there was a problem
-   ///   initializing this object (default). The method checks 
-   ///   whether a property on $this->data exists and returns the
-   ///   content. If not found, boolean `false` will be returned.
-   ///
-   /// @param $key. String, name of the property you would like to get,
-   ///   e.g., `ID` or `name`.
-   /// @return Returns `false` or the value of the element with the
-   ///   corresponding key.
-   /// @see wetterturnier_cityObject
-   // ---------------------------------------------------------------
+   /** This is the main method to extract information from
+    * the class. Information should be stored on $this->data which
+    * is a private stdClass object or NULL if there was a problem
+    * initializing this object (default). The method checks 
+    * whether a property on $this->data exists and returns the
+    * content. If not found, boolean `false` will be returned.
+    *
+    * @param $key. String, name of the property you would like to get, e.g., `ID` or `name`.
+    *
+    * @return Returns `false` or the value of the element with the corresponding key.
+    *
+    * @see wetterturnier_cityObject
+    */
    function get( $key ) {
       if ( is_null($this->data) ) { print("wetterturnier_cityObject data=NULL!"); }
       if ( property_exists($this->data,$key) ) {
@@ -123,9 +124,7 @@ class wetterturnier_cityObject {
       } else { return(false); }
    }
 
-   // ---------------------------------------------------------------
-   /// @details Helper class for development. Shows loaded key/value.
-   // ---------------------------------------------------------------
+   /** Helper class for development. Print on standard out. */
    function show() {
       if ( is_null($this->data) ) {
          printf("This cityObject does not contain valid information<br>\n");
@@ -137,13 +136,12 @@ class wetterturnier_cityObject {
       }
    }
 
-   // ---------------------------------------------------------------
-   /// @details Each city can have one or more stations attached to it.
-   ///   these stations are used to compute the points and stuff. This
-   ///   method loads the stations and stores them into the array
-   ///   $this->stations. Executed everytime a @ref wetterturnier_cityObject
-   ///   object is initialized.
-   // ---------------------------------------------------------------
+   /** Each city can have one or more stations attached to it.
+    * these stations are used to compute the points and stuff. This
+    * method loads the stations and stores them into the array
+    * $this->stations. Executed everytime a @ref wetterturnier_cityObject
+    * object is initialized.
+    */
    function _load_stations_() {
 
       $sql = sprintf("SELECT ID FROM %swetterturnier_stations WHERE cityID = %d;",
@@ -157,22 +155,22 @@ class wetterturnier_cityObject {
       }
    }
 
-   // ---------------------------------------------------------------
-   /// @details Returns the station information of this cityObject.
-   ///   Information loaded by @ref _load_stations_ during the 
-   ///   initialization of this object.
-   /// @return An array of @ref wetterturnier_stationObject objects.
-   // ---------------------------------------------------------------
+   /** Returns the station information of this cityObject.
+    * Information loaded by @ref _load_stations_ during the 
+    * initialization of this object.
+    *
+    * @return An array of @ref wetterturnier_stationObject objects.
+    */
    function stations() {
       return( $this->stations );
    }
 
-   // ---------------------------------------------------------------
-   /// @details Return parameter object array from first station, they are
-   /// the same (except the 'active' flag which is killed in here)
-   /// for all stations.
-   /// @return Returns an array with paramObjects.
-   // ---------------------------------------------------------------
+   /** Return parameter object array from first station, they are
+    * the same (except the 'active' flag which is killed in here)
+    * for all stations.
+    *
+    * @return Returns an array with paramObjects.
+    */
    function getParams() {
       $params = $this->stations[0]->getParams();
       for ( $i=0; $i<count($params); $i++ ) {
@@ -183,18 +181,19 @@ class wetterturnier_cityObject {
 
 }
 
-// ------------------------------------------------------------------
-/// @details A class to handle station information. Each city (see
-///   @ref wetterturnier_cityObject) can have one or more stations
-///   attached to it. Should be called $stnObj whenever possible in
-///   the php code!
-/// @param $init. Initial value, numeric, required. Depending on
-///   input parameter $by this is either the station ID or station
-///   wmo identification number.
-/// @param $by. String, default is 'ID'. Allowed are 'ID' or 'wmo'.
-///
-/// @see wetterturnier_cityObject
-// ------------------------------------------------------------------
+/** A class to handle station information. Each city (see
+ * @ref wetterturnier_cityObject) can have one or more stations
+ * attached to it. Should be called $stnObj whenever possible in
+ * the php code!
+ *
+ * @param $init. Initial value, numeric, required. Depending on
+ *   input parameter $by this is either the station ID or station
+ *   wmo identification number.
+ *
+ * @param $by. String, default is 'ID'. Allowed are 'ID' or 'wmo'.
+ *
+ * @see wetterturnier_cityObject
+ */
 class wetterturnier_stationObject {
 
    /// Attribute to store the station information. Similar to 
@@ -202,6 +201,14 @@ class wetterturnier_stationObject {
    private $data = NULL;
    private $params = NULL;
 
+   /** Construction function for wetterturnier_stationObject class.
+    * Input $by can take 'ID' or 'wmo'. Station with either ID=$init
+    * or wmo=$init will be loaded.
+    *
+    * @param integer $init Station ID or wmo station number.
+    *
+    * @param string $by Either 'ID' or 'wmo'.
+    */
    function __construct( $init, $by='ID' ) {
       global $wpdb; $this->wpdb = $wpdb;
 
@@ -228,14 +235,14 @@ class wetterturnier_stationObject {
       }
    }
 
-   // ---------------------------------------------------------------
-   /// @details Helper function, returns a string with all active
-   ///   parameters. 
-   /// @param $active. Boolean, default true for showActiveParams.
-   ///   showInactiveParams (which is only a wrapper) uses $active=false
-   ///   to return inactive parameters, @see showInactiveParams.
-   /// @return Character string with active parameters.
-   // ---------------------------------------------------------------
+   /** Helper function, returns a string with all active parameters. 
+    *
+    * @param $active. Boolean, default true for showActiveParams.
+    * showInactiveParams (which is only a wrapper) uses $active=false
+    * to return inactive parameters, @see showInactiveParams.
+    *
+    * @return Character string with active parameters.
+    */
    function showActiveParams( $active = true ) {
       $param = array();
       foreach ( $this->getParams() as $paramObj ) {
@@ -245,26 +252,27 @@ class wetterturnier_stationObject {
       }
       return ( count($param) == 0 ) ? NULL : join(",",$param);
    }
-   // ---------------------------------------------------------------
-   /// @details Helper function, returns a string with all inactive
-   ///   parameters. See also @see showActiveParams.
-   /// @return Character string with inactive parameters.
-   // ---------------------------------------------------------------
+
+   /** Helper function, returns a string with all inactive
+    * parameters. See also @see showActiveParams.
+    *
+    * @return Character string with inactive parameters.
+    */
    function showInactiveParams() { return $this->showActiveParams( false ); }
       
 
-   // ---------------------------------------------------------------
-   /// @details Returns the parameter array containing paramObjects.
-   /// @return Array of @see wetterturnier_paramObjects.
-   // ---------------------------------------------------------------
+   /** Returns the parameter array containing paramObjects.
+    *
+    * @return Array of @see wetterturnier_paramObjects.
+    */
    function getParams() { return( $this->params ); }
 
-   // ---------------------------------------------------------------
-   /// @details Helper function for the admin interface. Showas checkboxes
-   ///   for the parameters.
-   /// @return Html code for the checkboxes. Each parameter gets a box which
-   ///   is either checked if active or not checked if inactive.
-   // ---------------------------------------------------------------
+   /** Helper function for the admin interface. Showas checkboxes
+    * for the parameters.
+    *
+    * @return Html code for the checkboxes. Each parameter gets a box which
+    *   is either checked if active or not checked if inactive.
+    */
    function showParamCheckboxes() {
       $html = array();
       foreach ( $this->getParams() as $paramObj ) {
@@ -276,20 +284,19 @@ class wetterturnier_stationObject {
       return( join(", ",$html) );
    }
 
-   // ---------------------------------------------------------------
-   /// @details This is the main method to extract information from
-   ///   the class. Information should be stored on $this->data which
-   ///   is a private stdClass object or NULL if there was a problem
-   ///   initializing this object (default). The method checks 
-   ///   whether a property on $this->data exists and returns the
-   ///   content. If not found, boolean `false` will be returned.
-   ///
-   /// @param $key. String, name of the property you would like to get,
-   ///   e.g., `ID` or `name`.
-   /// @return Returns `false` or the value of the element with the
-   ///   corresponding key.
-   /// @see wetterturnier_stationObject
-   // ---------------------------------------------------------------
+   /** This is the main method to extract information from
+    * the class. Information should be stored on $this->data which
+    * is a private stdClass object or NULL if there was a problem
+    * initializing this object (default). The method checks 
+    * whether a property on $this->data exists and returns the
+    * content. If not found, boolean `false` will be returned.
+    *
+    * @param $key. String, name of the property you would like to get, e.g., `ID` or `name`.
+    *
+    * @return Returns `false` or the value of the element with the corresponding key.
+    *
+    * @see wetterturnier_stationObject
+    */
    function get( $key ) {
       if ( is_null($this->data) ) { print("wetterturnier_cityObject data=NULL!"); }
       if ( property_exists($this->data,$key) ) {
@@ -297,9 +304,7 @@ class wetterturnier_stationObject {
       } else { return(false); }
    }
 
-   // ---------------------------------------------------------------
-   /// @details Helper class for development. Shows loaded key/value.
-   // ---------------------------------------------------------------
+   /** Helper class for development. Shows loaded key/value. Prints on stdout. */
    function show() {
       if ( is_null($this->data) ) {
          printf("This stationObject does not contain valid information<br>\n");
@@ -320,12 +325,11 @@ class wetterturnier_stationObject {
 
 }
 
-// ------------------------------------------------------------------
-/// @details This is a small class for group handling.
-///   During initialization all groups will be loaded. The class contains
-///   some methods to load users (active/inactive) among the groups
-///   which is used to display e.g., the group tables.
-// ------------------------------------------------------------------
+/** @details This is a small class for group handling.
+ *   During initialization all groups will be loaded. The class contains
+ *   some methods to load users (active/inactive) among the groups
+ *   which is used to display e.g., the group tables.
+ */
 class wetterturnier_groupsObject {
 
    private $wpdb;
@@ -333,9 +337,7 @@ class wetterturnier_groupsObject {
    private $groups;
    private $groupIDs = array();
 
-   // ---------------------------------------------------------------
-   /// @details On initialization: load all  groups from the group table.
-   // ---------------------------------------------------------------
+   /** On initialization: load all  groups from the group table. */
    function __construct() {
       global $wpdb; $this->wpdb = $wpdb;
 
@@ -352,13 +354,14 @@ class wetterturnier_groupsObject {
       return($this->groups);
    }
 
-   // ---------------------------------------------------------------
-   /// @details For a given groupID the members will be returned.
-   /// @param $groupID. Integer, ID of the group.
-   /// @return Returns boolean False if the group cannot be found.
-   ///   Else a list of stdClass objects will be returned containing
-   ///   the required information about the user/users in the group.
-   // ---------------------------------------------------------------
+   /** For a given groupID the members will be returned.
+    *
+    * @param $groupID. Integer, ID of the group.
+    * 
+    * @return Returns boolean False if the group cannot be found.
+    *   Else a list of stdClass objects will be returned containing
+    *   the required information about the user/users in the group.
+    */
    function get_members( $groupID ) {
 
       // Check which group matches
@@ -378,14 +381,13 @@ class wetterturnier_groupsObject {
 
    }
 
-   // ---------------------------------------------------------------
-   /// @details Shows the frontend tables. No inputs, uses the object
-   ///   information loaded in the __construct method.
-   ///   Information on active/inactive status:
-   ///   active = 0: is inactive; active = 1: is active;
-   ///   active = 8: is active, but the user has an open 'remove me from group' request;
-   ///   active = 9: not yet in the group but a 'add me to the group' request open.
-   // ---------------------------------------------------------------
+   /** Shows the frontend tables. No inputs, uses the object
+    * information loaded in the __construct method.
+    * Information on active/inactive status:
+    * active = 0: is inactive; active = 1: is active;
+    * active = 8: is active, but the user has an open 'remove me from group' request;
+    * active = 9: not yet in the group but a 'add me to the group' request open.
+    */
    function show_frontend_tables() {
 
       global $WTuser;
@@ -459,28 +461,27 @@ class wetterturnier_groupsObject {
 
 }
 
-// ------------------------------------------------------------------
-/// @details A class to handle parameter information.
-/// @param $init. Initial value, numeric, required. Depending on
-///   input parameter $by this is either the parameter ID or parameter
-///   shortname.
-/// @param $by. String, default is 'ID'. Allowed are 'ID' or 'paramName'.
-/// @param $tdate. Tournament date (days since 1970-01-01), default is NULL.
-///   if NULL the current date/time is used. If given the system is checking
-///   whether the parameter was active for $tdate or not. This changes
-///   the outcome of the isParameterActive method of this class.
-///
-/// @see wetterturnier_stationObject
-// ------------------------------------------------------------------
+/** A class to handle parameter information.
+ *
+ * @param $init. Initial value, numeric, required. Depending on
+ *   input parameter $by this is either the parameter ID or parameter shortname.
+ *
+ * @param $by. String, default is 'ID'. Allowed are 'ID' or 'paramName'.
+ *
+ * @param $tdate. Tournament date (days since 1970-01-01), default is NULL.
+ *   if NULL the current date/time is used. If given the system is checking
+ *   whether the parameter was active for $tdate or not. This changes
+ *   the outcome of the isParameterActive method of this class.
+ *
+ * @see wetterturnier_stationObject
+ */
 class wetterturnier_paramObject {
 
    /// Attribute to store the station information. Similar to 
    /// the @ref wetterturnier_cityObject class. Initial value is NULL.
    private $data = NULL;
 
-   // ---------------------------------------------------------------
-   /// @details On initialization: load all  groups from the group table.
-   // ---------------------------------------------------------------
+   /** On initialization: load all  groups from the group table. */
    function __construct( $init, $by = "ID", $tdate = NULL ) {
       global $wpdb; $this->wpdb = $wpdb;
 
@@ -510,12 +511,13 @@ class wetterturnier_paramObject {
       $this->is_active = $wpdb->get_results($sql);
    }
 
-   // ---------------------------------------------------------------
-   /// @details Checks if the parameter is active for a specific station.
-   /// @param $stationID. Numeric, station identifier ID.
-   /// @return Returns boolean True if parameter is active for station
-   ///   $stationID and false else.
-   // ---------------------------------------------------------------
+   /** Checks if the parameter is active for a specific station.
+    *
+    * @param $stationID. Numeric, station identifier ID.
+    *
+    * @return Returns boolean True if parameter is active for station
+    *   $stationID and false else.
+    */
    function isParameterActive( $stationID ) {
       foreach ( $this->is_active as $rec ) {
          if ( $rec->stationID == $stationID ) { return (bool)$rec->active; }
@@ -523,27 +525,24 @@ class wetterturnier_paramObject {
       return false;
    }
 
-   // ---------------------------------------------------------------
-   /// @details Allows to overrule the 'active' flag in the object.
-   // ---------------------------------------------------------------
+   /** @details Allows to overrule the 'active' flag in the object. */
    function setActive( $to ) {
       $this->data->active = $to;
    }
 
-   // ---------------------------------------------------------------
-   /// @details This is the main method to extract information from
-   ///   the class. Information should be stored on $this->data which
-   ///   is a private stdClass object or NULL if there was a problem
-   ///   initializing this object (default). The method checks 
-   ///   whether a property on $this->data exists and returns the
-   ///   content. If not found, boolean `false` will be returned.
-   ///
-   /// @param $key. String, name of the property you would like to get,
-   ///   e.g., `ID` or `name`.
-   /// @return Returns `false` or the value of the element with the
-   ///   corresponding key.
-   /// @see wetterturnier_cityObject
-   // ---------------------------------------------------------------
+   /** This is the main method to extract information from
+    * the class. Information should be stored on $this->data which
+    * is a private stdClass object or NULL if there was a problem
+    * initializing this object (default). The method checks 
+    * whether a property on $this->data exists and returns the
+    * content. If not found, boolean `false` will be returned.
+    *
+    * @param $key. String, name of the property you would like to get, e.g., `ID` or `name`.
+    *
+    * @return Returns `false` or the value of the element with the corresponding key.
+    *
+    * @see wetterturnier_cityObject
+    */
    function get( $key ) {
       if ( is_null($this->data) ) { print("wetterturnier_paramObject data=NULL!"); }
       if ( property_exists($this->data,$key) ) {
@@ -551,9 +550,7 @@ class wetterturnier_paramObject {
       } else { return(false); }
    }
 
-   // ---------------------------------------------------------------
-   /// @details Helper class for development. Shows loaded key/value.
-   // ---------------------------------------------------------------
+   /** Helper class for development. Shows loaded key/value. Print on stdout. */
    function show() {
       if ( is_null($this->data) ) {
          printf("This paramObject does not contain valid information<br>\n");
@@ -567,13 +564,13 @@ class wetterturnier_paramObject {
 }
 
 
-// ------------------------------------------------------------------
-/// @details A class to handle webcam information. Loads and stores
-///    information from the *_wetterturnier_webcams database table.
-///    Whenever possible objects of this type will be called $webcamObj
-///    within the php code.
-/// @see wetterturnier_webcamObject
-// ------------------------------------------------------------------
+/** A class to handle webcam information. Loads and stores
+ * information from the *_wetterturnier_webcams database table.
+ * Whenever possible objects of this type will be called $webcamObj
+ * within the php code.
+ *
+ * @see wetterturnier_webcamObject
+ */
 class wetterturnier_webcamObject {
 
    /// Attribute to store the webcam information. Similar to 
@@ -587,18 +584,17 @@ class wetterturnier_webcamObject {
    }
 
    // ---------------------------------------------------------------
-   /// @details This is the main method to extract information from
-   ///   the class. Information should be stored on $this->data which
-   ///   is a private stdClass object or NULL if there was a problem
-   ///   initializing this object (default). The method checks 
-   ///   whether a property on $this->data exists and returns the
-   ///   content. If not found, boolean `false` will be returned.
-   ///
-   /// @param $key. String, name of the property you would like to get,
-   ///   e.g., `ID` or `uri`.
-   /// @return Returns `false` or the value of the element with the
-   ///   corresponding key.
-   // ---------------------------------------------------------------
+   /** This is the main method to extract information from
+    * the class. Information should be stored on $this->data which
+    * is a private stdClass object or NULL if there was a problem
+    * initializing this object (default). The method checks 
+    * whether a property on $this->data exists and returns the
+    * content. If not found, boolean `false` will be returned.
+    *
+    * @param $key. String, name of the property you would like to get, e.g., `ID` or `uri`.
+    *
+    * @return Returns `false` or the value of the element with the corresponding key.
+    */
    function get( $key ) {
       if ( is_null($this->data) ) { print("wetterturnier_webcamObject data=NULL!"); }
       if ( property_exists($this->data,$key) ) {
@@ -606,9 +602,7 @@ class wetterturnier_webcamObject {
       } else { return(false); }
    }
 
-   // ---------------------------------------------------------------
-   /// @details Prints html to display the webcam image.
-   // ---------------------------------------------------------------
+   /** @details Prints html to display the webcam image. */
    function display_webcam() {
       print "<div class='wtwebcam'>\n"
            .sprintf("<a href=\"%s\" target=\"_new\">",$this->get("source"))
@@ -619,9 +613,7 @@ class wetterturnier_webcamObject {
            ."</div>\n";
    }
 
-   // ---------------------------------------------------------------
-   /// @details Helper class for development purposes.
-   // ---------------------------------------------------------------
+   /** @details Helper class for development purposes. Print on stdout. */
    function show() {
       if ( is_null($this->data) ) {
          printf("This webcamObject does not contain valid information<br>\n");
@@ -634,8 +626,7 @@ class wetterturnier_webcamObject {
    }
 }
 
-/// @details A small class to load latest observations from the
-///     obs database.
+/** A small class to load latest observations from the obs database. */
 class wetterturnier_latestobsObject {
 
     /// Will contain a copy of the global $wpdb instance. Used as
@@ -655,22 +646,26 @@ class wetterturnier_latestobsObject {
     /// @ref _load_stations_ function.
     private $station = NULL;
 
-    // --------------------------------------------------------------
-    /// @details Loading data and description from the obs database
-    ///     table. Requires read access on the obs.* tables!
-    /// @param $stnObj. See @see wetterturnier_stationObject. An object
-    ///     containing the station information for which the observation
-    ///     data should be loaded.
-    /// @param $from. Either Null (default) or a unix time stamp. Has
-    ///     to be numeric! Details see @see _load_latest_obs_from_db_.
-    /// @param $to. Either Null (default) or a unix time stamp. If
-    ///     set in combination with $from has to be larger than $from!
-    ///     Details @see _load_latest_obs_from_db_.
-    /// @param $limit. Either Null or a positiv numeric integer value.
-    ///     If set $limit rows will be loaded.
-    /// @return No return, initializes a new object of class
-    ///     @see wetterturnier_latestobsObject.
-    // --------------------------------------------------------------
+    /** Loading data and description from the obs database
+     * table. Requires read access on the obs.* tables!
+     *
+     * @param $stnObj. See @see wetterturnier_stationObject. An object
+     * containing the station information for which the observation
+     * data should be loaded.
+     *
+     * @param $from. Either Null (default) or a unix time stamp. Has
+     * to be numeric! Details see @see _load_latest_obs_from_db_.
+     *
+     * @param $to. Either Null (default) or a unix time stamp. If
+     * set in combination with $from has to be larger than $from!
+     * Details @see _load_latest_obs_from_db_.
+     *
+     * @param $limit. Either Null or a positiv numeric integer value.
+     * If set $limit rows will be loaded.
+     *
+     * @return No return, initializes a new object of class
+     * @see wetterturnier_latestobsObject.
+     */
     function __construct( $stnObj, $from = Null, $to = Null, $limit = Null ) {
 
         global $wpdb; $this->wpdb = $wpdb;
@@ -683,11 +678,10 @@ class wetterturnier_latestobsObject {
         $this->_load_latest_data_from_db_( $from, $to, $limit );
     }
 
-    // --------------------------------------------------------------
-    /// @details Loading the bufrdescription information from the
-    ///     database. This contains the parameter description and it's
-    ///     scaling/descaling values.
-    // --------------------------------------------------------------
+    /** Loading the bufrdescription information from the
+     * database. This contains the parameter description and it's
+     * scaling/descaling values.
+     */
     function _load_description_from_db_( ) {
         $dbres = $this->wpdb->get_results( "SELECT * FROM obs.bufrdesc;" );
         $res   = new stdClass();
@@ -697,18 +691,20 @@ class wetterturnier_latestobsObject {
         }; $this->desc = $res;
     }
 
-    // --------------------------------------------------------------
-    /// @details Returns parameter description for a given parameter
-    ///     $param. If parameter cannot be found or value is not available
-    ///     a None will be returned.
-    /// @param $param. String, name of the observed parameter.
-    /// @param $value. Default Null, if Null the whole object for the
-    ///     $param will be returned. If set only this specific value
-    ///     will be returned if existing. 
-    /// @return Returns parameter $value for $parmater if both inputs
-    ///     are set or the object for $param if $value = Null. If not
-    ///     existing a Null will be returned.
-    // --------------------------------------------------------------
+    /** Returns parameter description for a given parameter
+     * $param. If parameter cannot be found or value is not available
+     * a None will be returned.
+     *
+     * @param $param. String, name of the observed parameter.
+     *
+     * @param $value. Default Null, if Null the whole object for the
+     * $param will be returned. If set only this specific value
+     * will be returned if existing. 
+     *
+     * @return Returns parameter $value for $parmater if both inputs
+     * are set or the object for $param if $value = Null. If not
+     * existing a Null will be returned.
+     */
     public function get_desc( $param, $value = Null ) {
         if ( ! property_exists($this->desc,$param) ) { return(Null); }
         // If $value = Null
@@ -718,16 +714,19 @@ class wetterturnier_latestobsObject {
         return( $this->desc->$param->$value );
     }
 
-    // --------------------------------------------------------------
-    /// @details Returns a value from the data set loaded. If offset
-    ///     is not given the first (newest) value will be returned.
-    /// @param $param. String, name of the observed parameter.
-    /// @param $offset. Either Null or a positive integer. If e.g., set
-    ///     to $offset=1 the second last value will be returned if available.
-    /// @param $format. Default Null, if set the value will be converted
-    ///     and returned as string.
-    /// @return Returns observed value or Null if not available.
-    // --------------------------------------------------------------
+    /** @details Returns a value from the data set loaded. If offset
+     * is not given the first (newest) value will be returned.
+     *
+     * @param $param. String, name of the observed parameter.
+     *
+     * @param $offset. Either Null or a positive integer. If e.g., set
+     * to $offset=1 the second last value will be returned if available.
+     *
+     * @param $format. Default Null, if set the value will be converted
+     * and returned as string.
+     *
+     * @return Returns observed value or Null if not available.
+     */
     public function get_value( $param, $offset = Null, $format = Null ) {
         if ( ! is_null($offset) ) {
             if ( ! is_numeric($offset) ) { die("\$offset for get_value has to be numeric!"); }
@@ -739,31 +738,32 @@ class wetterturnier_latestobsObject {
                   sprintf($format,$this->data->$param[$offset]) );
     }
 
-    // --------------------------------------------------------------
-    /// @details Helper function, returns true if the object contains
-    ///     data and false if not. 
-    /// @return Boolean true or fals whether the object contains data
-    ///     or not.
-    // --------------------------------------------------------------
+    /** Helper function, returns true if the object contains
+     * data and false if not. 
+     *
+     * @return Boolean true or fals whether the object contains data or not.
+     */
     public function has_data( ) { return ( is_null($this->data) ? false : true ); }
 
-    // --------------------------------------------------------------
-    /// @details Helper function, returns number of loaded data sets.
-    /// @return Returns number of loaded observations.
-    // --------------------------------------------------------------
+    /** Helper function, returns number of loaded data sets.
+     *
+     * @return Returns number of loaded observations.
+     */
     public function nobs( ) {
         return $this->number_of_observations;
     }
 
-    // --------------------------------------------------------------
-    /// @details Helper function. Prepares the values (converts them
-    ///     into integer or float if not Null) and divedes the
-    ///     values by a factor of $factor if $factor is numeric.
-    /// @param $values. Array with values.
-    /// @param $factor. Non-numeric or numeric vactor value.
-    /// @return Returns array of the same length as $values with
-    ///     prepared/descaled values.
-    // --------------------------------------------------------------
+    /** Helper function. Prepares the values (converts them
+     * into integer or float if not Null) and divedes the
+     * values by a factor of $factor if $factor is numeric.
+     *
+     * @param $values. Array with values.
+     *
+     * @param $factor. Non-numeric or numeric vactor value.
+     *
+     * @return Returns array of the same length as $values with
+     *     prepared/descaled values.
+     */
     private function _descale_values_( $values, $factor ) {
         // If $factor is not numeric we are done.
         if ( ! is_numeric($factor) ) { return($values); }
@@ -775,21 +775,24 @@ class wetterturnier_latestobsObject {
         return( $values );
     }
 
-    // --------------------------------------------------------------
-    /// @details Loading latest observations (values) from database given
-    ///     the selected station on $this->station. Selects the data
-    ///     backwards in time if nothing else is given (descending).
-    /// @param $from. Unix time stamp (integer) to specify beginning
-    ///     of time series. If Null the 10 newest will be returned
-    ///     (either newest or newest before $to (including $to).
-    /// @param $to. Unix time stamp (integer) to specify end of the
-    ///     time series. If Null all will be returned (from $from to
-    ///     newest ones).
-    /// @param $limit. Either Null (default) or a positive integer.
-    ///     Return $limit newest rows from the database given the
-    ///     request options.
-    /// @return No return, stores the data internally on 
-    // --------------------------------------------------------------
+    /** Loading latest observations (values) from database given
+     * the selected station on $this->station. Selects the data
+     * backwards in time if nothing else is given (descending).
+     *
+     * @param $from. Unix time stamp (integer) to specify beginning
+     * of time series. If Null the 10 newest will be returned
+     * (either newest or newest before $to (including $to).
+     *
+     * @param $to. Unix time stamp (integer) to specify end of the
+     * time series. If Null all will be returned (from $from to
+     * newest ones).
+     *
+     * @param $limit. Either Null (default) or a positive integer.
+     * Return $limit newest rows from the database given the
+     * request options.
+     *
+     * @return No return, stores the data internally on 
+     */
     private function _load_latest_data_from_db_( $from = Null, $to = Null, $limit = Null ) {
 
         // Specify columns to ignore. Columns already set in $cols can
@@ -868,14 +871,15 @@ class wetterturnier_latestobsObject {
         }
     }
 
-    // --------------------------------------------------------------
-    /// @details Create and return json array.
-    /// @param $encode. Default true, can be set to false, only for
-    ///     development purposes, du not use it in your code.
-    /// @return If $encode is set to false
-    ///     the array will be returned which will be converted to a 
-    ///     json array with the default input $encode = true.
-    // --------------------------------------------------------------
+    /** Create and return json array.
+     *
+     * @param $encode. Default true, can be set to false, only for
+     * development purposes, du not use it in your code.
+     *
+     * @return If $encode is set to false
+     * the array will be returned which will be converted to a 
+     * json array with the default input $encode = true.
+     */
     public function get_json( $encode = true ) {
 
         $json = new stdClass();
@@ -888,14 +892,15 @@ class wetterturnier_latestobsObject {
 
     }
 
-    // --------------------------------------------------------------
-    /// @details Create and return json array.
-    /// @param $encode. Default true, can be set to false, only for
-    ///     development purposes, du not use it in your code.
-    /// @return If $encode is set to false
-    ///     the array will be returned which will be converted to a 
-    ///     json array with the default input $encode = true.
-    // --------------------------------------------------------------
+    /** Create and return json array.
+     *
+     * @param $encode. Default true, can be set to false, only for
+     * development purposes, du not use it in your code.
+     *
+     * @return If $encode is set to false
+     * the array will be returned which will be converted to a 
+     * json array with the default input $encode = true.
+     */
     public function get_json_d3( $encode = true ) {
 
         if ( ! $encode ) { return( $this->data_objects ); }
@@ -903,10 +908,10 @@ class wetterturnier_latestobsObject {
 
     }
 
-    // --------------------------------------------------------------
-    /// @details Helper function to show/print the content of this
-    ///     object. Mainly designed for development purposes.
-    // --------------------------------------------------------------
+    /** Helper function to show/print the content of this
+     * object. Mainly designed for development purposes.
+     * Prints output on stdout.
+     */
     public function show( ) {
 
         $this->station->show();

@@ -7,6 +7,7 @@ This is the main README file.
 * :doc:`adminclass`
 * :doc:`userclass`
 * :doc:`classes`
+* :doc:`api`
 
 .. toctree::
     :maxdepth: 2
@@ -18,14 +19,12 @@ This is the main README file.
     adminclass.rst
     userclass.rst
     classes.rst 
+    api.rst
 
+Todo's
+======
 
-.. php:class:: wetterturnier_cityClass
+Full list of all (often duplicated) todos found in the whole documentation.
 
-    This is the low-level class that handles communications with CouchDB.
-
-    .. php:method:: get()
-
-        :returns: The dsn of the current Couch instance
-
+.. todolist::
 

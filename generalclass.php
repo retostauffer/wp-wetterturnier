@@ -1,20 +1,19 @@
 <?php
-// ------------------------------------------------------------------
-/// @file generalclass.php
-/// @author Reto Stauffer
-/// @date 16 June 2017
-/// @brief This is the `core class` of the wp-wetterturnier plugin.
-///   This class will be extended by both, the @ref wp_wetterturnier_userclass
-///   and the @ref wp_wetterturnier_adminclass.
-///   @ref wetterturnier_generalclass contains a set of functions and
-///   methods used in the wordpress frontend and backend (admin interface).
-// ------------------------------------------------------------------
+/**
+ * @file generalclass.php
+ * @author Reto Stauffer
+ * @date 16 June 2017
+ * @brief This is the `core class` of the wp-wetterturnier plugin.
+ * This class will be extended by both, the @ref wp_wetterturnier_userclass
+ * and the @ref wp_wetterturnier_adminclass.
+ * @ref wetterturnier_generalclass contains a set of functions and
+ * methods used in the wordpress frontend and backend (admin interface).
+ */
 
-// ------------------------------------------------------------------
-/// @details General-class which is used by the main class, the
-///   adminclass and the userclass. Contains a wide range of 
-///   functions.
-// ------------------------------------------------------------------
+/** General-class which is used by the main class, the
+ * adminclass and the userclass. Contains a wide range of 
+ * functions.
+ */
 class wetterturnier_generalclass
 {
 
@@ -41,17 +40,16 @@ class wetterturnier_generalclass
     /// Attribute to store the 'next tournament' once.
     public $current_tournament = false;
 
-    // -------------------------------------------------------------- 
-    /// @details The current city is used in varous scripts and methods. Not to
-    ///  load the same information multiple times I am using this method to 
-    ///  load the current city once from the database. The information
-    ///  (a @ref wetterturnier_cityObject object) will be stored on 
-    ///  the private attribute current_cityObj. If the attribute is `NULL`
-    ///  load the information once. If not `NULL` return the object.
-    ///
-    /// @return Returns a @ref wetterturnier_cityObject object with the
-    ///  active city.
-    // -------------------------------------------------------------- 
+    /** The current city is used in varous scripts and methods. Not to
+     * load the same information multiple times I am using this method to 
+     * load the current city once from the database. The information
+     * (a @ref wetterturnier_cityObject object) will be stored on 
+     * the private attribute current_cityObj. If the attribute is `NULL`
+     * load the information once. If not `NULL` return the object.
+     *
+     * @return Returns a @ref wetterturnier_cityObject object with the
+     * active city.
+     */
     function get_current_cityObj() {
         if ( is_null($this->current_cityObj) ) {
            $this->current_cityObj = new wetterturnier_cityObject();
@@ -59,14 +57,14 @@ class wetterturnier_generalclass
         return( $this->current_cityObj );
     }
 
-    // --------------------------------------------------------------
-    /// @details Initialize wordpress options. Loads a set of 
-    ///  wetterturnier related options from the wordpress options
-    ///  database table and returns a stdClass object containing
-    ///  these options.
-    /// @return stdClass object containing all options as specified
-    ///  in the array $names inside this method.
-    // --------------------------------------------------------------
+    /** @details Initialize wordpress options. Loads a set of 
+     * wetterturnier related options from the wordpress options
+     * database table and returns a stdClass object containing
+     * these options.
+     *
+     * @return stdClass object containing all options as specified
+     * in the array $names inside this method.
+     */
     function init_options() { 
         // Initialize some wordpress wetterturnier options.
         // Will be loaded from the database whenever init_options
@@ -104,47 +102,44 @@ class wetterturnier_generalclass
         return( $options );
     }
 
-    // --------------------------------------------------------------
-    /// @details Quick-access to the plugins url for the wp-wetterturnier
-    ///  plugin (returns the path to the plugin). Wrapper around the
-    ///  wordpress-function plugins_url.
-    ///
-    /// @param $pluginname. String, default is `wp-wetterturnier` (name
-    ///  of the plugin).
-    /// @return Returns (string) the path to the plugin.
-    // --------------------------------------------------------------
+    /** Quick-access to the plugins url for the wp-wetterturnier
+     * plugin (returns the path to the plugin). Wrapper around the
+     * wordpress-function plugins_url.
+     *
+     * @param $pluginname. String, default is `wp-wetterturnier` (name
+     * of the plugin).
+     * @return Returns (string) the path to the plugin.
+     */
     function plugins_url( $pluginname = "wp-wetterturnier" ) {
         return( plugins_url($pluginname) );
     }
 
-    // --------------------------------------------------------------
-    /// @details Save 'next tournament' once. Used in various 
-    ///  positions, e.g., the widgets.
+    /** Save 'next tournament' once. Used in various 
+     * positions, e.g., the widgets.
+     */
     function load_current_tournament_once() {
        $this->current_tournament = $this->current_tournament(0,false,0,true);
     }
 
-    // --------------------------------------------------------------
-    /// @details An own number_format function to print well formatted
-    ///  numbers (integers and floating point numbers). The
-    ///  wetterturnier plugin offers some user defined options (See
-    ///  wetterturnier plugin backend settings) where the thousand
-    ///  separator and decimal separator can be specified. These
-    ///  specifications are stored.
-    ///
-    /// @param $value. Numeric value which has to be formatted.
-    /// @param $decimals. Integer, default is `2`. Number of decimal
-    ///  values. Can also be 0.
-    /// @return Returns a string containing the formatted number.
-    // --------------------------------------------------------------
+    /** An own number_format function to print well formatted
+     * numbers (integers and floating point numbers). The
+     * wetterturnier plugin offers some user defined options (See
+     * wetterturnier plugin backend settings) where the thousand
+     * separator and decimal separator can be specified. These
+     * specifications are stored.
+     *
+     * @param $value. Numeric value which has to be formatted.
+     *
+     * @param $decimals. Integer, default is `2`. Number of decimal
+     *  values. Can also be 0.
+     *
+     * @return Returns a string containing the formatted number.
+     */
     function number_format($value,$decimals=2) {
         return number_format((float)$value,$decimals,$this->float_format->dsep,$this->float_format->tsep);
     }
 
-    // --------------------------------------------------------------
-    /// @details Adding css files (array) to the head of the wordpress
-    ///  theme.
-    // --------------------------------------------------------------
+    /** Adding css files (array) to the head of the wordpress theme. */
     function register_css_files() {
         if ( ! empty( $this->options->wetterturnier_style_deps ) & ! is_admin() )
         { $arr = array($this->options->wetterturnier_style_deps); }
@@ -161,9 +156,7 @@ class wetterturnier_generalclass
         }
     }
 
-    // --------------------------------------------------------------
-    /// @details Adding js files (array) to the head of the wordpress.
-    // --------------------------------------------------------------
+    /** Adding js files (array) to the head of the wordpress. */
     function register_js_files() {
         foreach ( $this->js_files as $file ) {
             wp_register_script(  'wetterturnier_'.$file,
@@ -172,45 +165,43 @@ class wetterturnier_generalclass
         }
     }
 
-    // --------------------------------------------------------------
-    /// @detials Adding js files to the head of the wordpress.
-    ///  
-    /// @param $file. Name of the javascript file without postfix!
-    // --------------------------------------------------------------
+    /** Adding js files to the head of the wordpress.
+     *
+     * @param $file. Name of the javascript file without postfix!
+     */
     function register_js_file( $file ) {
         wp_register_script(  'wetterturnier_'.$file,
                 sprintf('%s/js/%s.js',plugins_url('wp-wetterturnier'),$file));
         wp_enqueue_script( 'wetterturnier_'.$file );
     }
 
-    // --------------------------------------------------------------
-    /// @details Including a js script file outside the wordpress header.
-    ///  Wont call wp_register_script, but includes the js file whereever
-    ///  you need. Using this for special jquery functions only needed
-    ///  for some special purposes, as e.g., the synopsymbols page. 
-    ///  Benefit: the synopsymbols-jQuery code is not loaded globally
-    ///  whenever a wordpress page will be opened which reduces the
-    ///  response time. Drawback: only available where included. Therefore
-    ///  some js scripts (e.g., used for the navigation) will be registered
-    ///  in wordpress to make them available everywhere.
-    ///
-    /// @param $file. Name of the javascript file without postfix!
-    // --------------------------------------------------------------
+    /** Including a js script file outside the wordpress header.
+     * Wont call wp_register_script, but includes the js file whereever
+     * you need. Using this for special jquery functions only needed
+     * for some special purposes, as e.g., the synopsymbols page. 
+     * Benefit: the synopsymbols-jQuery code is not loaded globally
+     * whenever a wordpress page will be opened which reduces the
+     * response time. Drawback: only available where included. Therefore
+     * some js scripts (e.g., used for the navigation) will be registered
+     * in wordpress to make them available everywhere.
+     *
+     * @param $file. Name of the javascript file without postfix!
+     */
     function include_js_script( $name ) {
       printf("<script type='text/javascript' src='%s/js/%s.js'></script>",
              $this->plugins_url(),$name);
     }
 
-    // ----------------------------------------------------------
-    /// @details Returns current language if pll (polylang plugin)
-    ///   is active. Else use `en_US` as default language.
-    /// @param $value. String, default is `slug`. If set to `slug`
-    ///   the language slug will be returned (e.g., `en` or `de`).
-    ///   Can also be set to `name`. If set to `name` the
-    ///   language name will be returned (e.g., `en_US`, `de_DE`).
-    ///
-    /// @todo Reto: if $vlaue is not slug or name: problem?
-    // ----------------------------------------------------------
+    /** Returns current language if pll (polylang plugin)
+     * is active. Else use `en_US` as default language.
+     *
+     * @param $value. String, default is `slug`. If set to `slug`
+     *   the language slug will be returned (e.g., `en` or `de`).
+     *   Can also be set to `name`. If set to `name` the
+     *   language name will be returned (e.g., `en_US`, `de_DE`).
+     *
+     * @todo Reto: if $vlaue is not slug or name: problem?
+     */
     function get_user_language( $value = 'slug' ) {
         // Getting language
         if ( is_callable("pll_current_language") ) {
@@ -227,25 +218,24 @@ class wetterturnier_generalclass
         return( $user_language );
     }
 
-    // --------------------------------------------------------------
-    /// Setting locale based on the active polylang slug
-    // --------------------------------------------------------------
+    /** Setting locale based on the active polylang slug */
     function set_locale( $locale = false ) {
         $locale = $this->get_user_language( 'locale' );
         setlocale(LC_ALL,$locale);
     }
 
-    // --------------------------------------------------------------
-    /// @details Depending on the current language configuration (based
-    ///   on the polylang plugin if active) the floating point number
-    ///   format is specified here. Saves a stdClass object into the
-    ///   parent class called `float_format`. This is mainly used by
-    ///   the @ref number_format method.
-    ///
-    /// @see number_format
-    /// @see load_date_format
-    /// @see load_datetime_format
-    // --------------------------------------------------------------
+    /** Depending on the current language configuration (based
+     * on the polylang plugin if active) the floating point number
+     * format is specified here. Saves a stdClass object into the
+     * parent class called `float_format`. This is mainly used by
+     * the @ref number_format method.
+     *
+     * @see number_format
+     *
+     * @see load_date_format
+     *
+     * @see load_datetime_format
+     */
     function load_float_format() {
         $default = new stdClass(); $default->dsep = ","; $default->tsep = "";
         global $polylang;
@@ -260,19 +250,19 @@ class wetterturnier_generalclass
         return true;
     }
 
-    // --------------------------------------------------------------
-    /// @details The wetterturnier plugins also allows to define
-    ///   language specific date formats. Based on the polylang
-    ///   plugin (if active) the date format will be loaded as set
-    ///   in the wetterturnier admin backend. If not found or
-    ///   polylang is inactive, the default format `%Y-%m-%d` will be
-    ///   used. Saves the `date_format` into the parent class and
-    ///   is used to create user-friendly date format output on the
-    ///   frontend. 
-    ///
-    /// @see load_float_format
-    /// @see load_datetime_format
-    // --------------------------------------------------------------
+    /** The wetterturnier plugins also allows to define
+     * language specific date formats. Based on the polylang
+     * plugin (if active) the date format will be loaded as set
+     * in the wetterturnier admin backend. If not found or
+     * polylang is inactive, the default format `%Y-%m-%d` will be
+     * used. Saves the `date_format` into the parent class and
+     * is used to create user-friendly date format output on the
+     * frontend. 
+     *
+     * @see load_float_format
+     *
+     * @see load_datetime_format
+     */
     function load_date_format() {
         $default = "%Y-%m-%d";
         global $polylang;
@@ -285,19 +275,19 @@ class wetterturnier_generalclass
         return true;
     }
 
-    // --------------------------------------------------------------
-    /// @details The wetterturnier plugins also allows to define
-    ///   language specific datetime formats. Based on the polylang
-    ///   plugin (if active) the date format will be loaded as set
-    ///   in the wetterturnier admin backend. If not found or
-    ///   polylang is inactive, the default format `%Y-%m-%d %H:%M:%S` will be
-    ///   used. Saves the `datetime_format` into the parent class and
-    ///   is used to create user-friendly datetime format output on the
-    ///   frontend. 
-    ///
-    /// @see load_float_format
-    /// @see load_date_format
-    // --------------------------------------------------------------
+    /** The wetterturnier plugins also allows to define
+     * language specific datetime formats. Based on the polylang
+     * plugin (if active) the date format will be loaded as set
+     * in the wetterturnier admin backend. If not found or
+     * polylang is inactive, the default format `%Y-%m-%d %H:%M:%S` will be
+     * used. Saves the `datetime_format` into the parent class and
+     * is used to create user-friendly datetime format output on the
+     * frontend. 
+     *
+     * @see load_float_format
+     *
+     * @see load_date_format
+     */
     function load_datetime_format() {
         $default="%Y-%m-%d %H:%M:%S";
         global $polylang;
@@ -311,56 +301,60 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    /// @details Converting $tdate (dates sincd  1970-01-01) to the format
-    ///    specified. Can be used for specific date conversion like e.g.,
-    ///    to print the day of the week or something.
-    /// @param $tdate. Integer representation of the date.
-    /// @param $fmt. String, format (see php date() manual). Default
-    ///    Return format is `%Y-%m-%d %H:%M:%S`
-    /// @return Returns string with the date in the format specified.
-    // --------------------------------------------------------------
+    /** Converting $tdate (days sincd  1970-01-01) to the format
+     * specified. Can be used for specific date conversion like e.g.,
+     * to print the day of the week or something.
+     *
+     * @param $tdate. Integer representation of the date.
+     *
+     * @param $fmt. String, format (see php date() manual). Default
+     * Return format is `%Y-%m-%d %H:%M:%S`
+     *
+     * @return Returns string with the date in the format specified.
+     */
     public function convert_tdate( $tdate, $fmt = "%Y-%m-%d %H:%M:%S" ) {
         return( date( $fmt, (int)$tdate*86400 ) );
     }
 
-    // --------------------------------------------------------------
-    /// @details Small helper class to convert a tournament date
-    /// into a string given a certain format.
-    ///
-    /// @param $tdate. Integer, days since 1970-01-01.
-    /// @param $fmt. Format. Either a string (see php date manual page for
-    ///   more details) or `NULL`. If `NULL` the `date_format` will
-    ///   be used (@ref load_date_format).
-    /// @see datetime_format
-    /// @see number_format
-    // --------------------------------------------------------------
+    /** Small helper class to convert a tournament date
+     * into a string given a certain format.
+     *
+     * @param $tdate. Integer, days since 1970-01-01.
+     *
+     * @param $fmt. Format. Either a string (see php date manual page for
+     * more details) or `NULL`. If `NULL` the `date_format` will
+     * be used (@ref load_date_format).
+     *
+     * @see datetime_format
+     *
+     * @see number_format
+     */
     function date_format( $tdate, $fmt = NULL ) {
        if ( is_null($fmt) ) { $fmt = $this->date_format; }
        return( strftime( $fmt, (int)$tdate * 86400 ) );
     }
 
-    // --------------------------------------------------------------
-    /// @details Small helper class to convert a timestamp
-    /// into a string given a certain format.
-    ///
-    /// @param $tdate. Integer, seconds since 1970-01-01.
-    /// @param $fmt. Format. Either a string (see php date manual page for
-    ///   more details) or `NULL`. If `NULL` the `datetime_format` will
-    ///   be used (@ref load_datetime_format).
-    /// @see datetime_format
-    /// @see number_format
-    // --------------------------------------------------------------
+    /** Small helper class to convert a timestamp
+     * into a string given a certain format.
+     *
+     * @param $tdate. Integer, seconds since 1970-01-01.
+     *
+     * @param $fmt. Format. Either a string (see php date manual page for
+     * more details) or `NULL`. If `NULL` the `datetime_format` will
+     * be used (@ref load_datetime_format).
+     * @see datetime_format
+     *
+     * @see number_format
+     */
     function datetime_format( $tdate, $fmt = NULL ) {
        if ( is_null($fmt) ) { $fmt = $this->datetime_format; }
        return( strftime( $fmt, (int)$tdate ) );
     }
 
-    // --------------------------------------------------------------
-    /// @details Returns the web-link to the terms and conditions
-    ///   pages which can be defined via the wetterturnier plugin
-    ///   settings page in the admin backend.
-    // --------------------------------------------------------------
+    /** Returns the web-link to the terms and conditions
+     * pages which can be defined via the wetterturnier plugin
+     * settings page in the admin backend.
+     */
     function get_terms_link() {
         global $polylang;
         if ( function_exists("pll_current_language") ) {
@@ -370,16 +364,17 @@ class wetterturnier_generalclass
         return $link;
     }
 
-    // --------------------------------------------------------------
-    /// @details Small insert or update workaround for wordpress as
-    ///   a `insert on duplicate update` method is not yet implemented
-    ///   in the wordpress core.
-    /// @param $table. Name of the database table.
-    /// @param $data. Array which consists of `key`/`value` pairs
-    ///   where the `key` specifies the name of the column in the
-    ///   database while `value` defines the value which should be
-    ///   inserted.
-    // --------------------------------------------------------------
+    /** Small insert or update workaround for wordpress as
+     * a `insert on duplicate update` method is not yet implemented
+     * in the wordpress core.
+     *
+     * @param $table. Name of the database table.
+     *
+     * @param $data. Array which consists of `key`/`value` pairs
+     * where the `key` specifies the name of the column in the
+     * database while `value` defines the value which should be
+     * inserted.
+     */
     function insertonduplicate($table, $data, $updatecol = array(), $useprepare = True ) {
     
         global $wpdb;
@@ -466,36 +461,40 @@ class wetterturnier_generalclass
         }
     }
 
-    // --------------------------------------------------------------
-    /// @details Checks which one is the next tournament date
-    ///   dayoffset can be used to get 'todays tournament'
-    /// @param $row_offset. Default is `0`. Can be set to (any)
-    ///   if set to `1` the function won't return the next tournament
-    ///   but the one after. Please have a look to input $backwards.
-    ///   If `backwards=true` this $row_offset can be used to get the
-    ///   previous rather than the upcoming tournament.
-    /// @param $check_access. Boolean, default  is `true`. Checks
-    ///   whether the visitor has access to the data of this 
-    ///   tournament. This is important as we don't want the user
-    ///   to see the bets/forecasts of other competitors before the
-    ///   bet form is closed and the tournament has been started.
-    /// @param $dayoffset. Default `0`.
-    /// @param $backwards. Boolean, default `false`. If `false`
-    ///   we are looking forward in time if e.g., $row_offset is
-    ///   set. If `true` we are looking/searching backwards to e.g.,
-    ///   get the `last tournament date` rather than the `next`.
-    /// @return Returns a stdClass object containing the requrested
-    ///   tournament date and some more information (e.g., wheter
-    ///   the user has access to the data for the requested tournament
-    ///   date or the dates of the `bet days` where the forecasts will
-    ///   be placed and so far and so on.
-    ///
-    /// @see next_tournament
-    /// @see current_tournament
-    /// @see latest_tournament
-    /// @see older_tournament
-    /// @see newer_tournament
-    // --------------------------------------------------------------
+    /** @details Checks which one is the next tournament date
+     *   dayoffset can be used to get 'todays tournament'
+     *
+     * @param $row_offset. Default is `0`. Can be set to (any)
+     *   if set to `1` the function won't return the next tournament
+     *   but the one after. Please have a look to input $backwards.
+     *   If `backwards=true` this $row_offset can be used to get the
+     *   previous rather than the upcoming tournament.
+     *
+     * @param $check_access. Boolean, default  is `true`. Checks
+     *   whether the visitor has access to the data of this 
+     *   tournament. This is important as we don't want the user
+     *   to see the bets/forecasts of other competitors before the
+     *   bet form is closed and the tournament has been started.
+     *
+     * @param $dayoffset. Default `0`.
+     *
+     * @param $backwards. Boolean, default `false`. If `false`
+     *   we are looking forward in time if e.g., $row_offset is
+     *   set. If `true` we are looking/searching backwards to e.g.,
+     *   get the `last tournament date` rather than the `next`.
+     *
+     * @return Returns a stdClass object containing the requrested
+     *   tournament date and some more information (e.g., wheter
+     *   the user has access to the data for the requested tournament
+     *   date or the dates of the `bet days` where the forecasts will
+     *   be placed and so far and so on.
+     *
+     * @see next_tournament
+     * @see current_tournament
+     * @see latest_tournament
+     * @see older_tournament
+     * @see newer_tournament
+     */
     public function next_tournament($row_offset=0,$check_access=true,$dayoffset=0,$backwards=false) { 
 
         //printf("<br>Calling next_tournament with row_offset = %d,  check_access = %s,   dayoffset = %d,  and backwars = %s<br>\n",
@@ -574,93 +573,92 @@ class wetterturnier_generalclass
         return $next;
     }
 
-    // ------------------------------------------------------------------
-    /// @details This method is based on @ref next_tournament and returns
-    ///   the current/last turnament. This is used to show
-    ///   current bets/observations.
-    /// @param $row_offset. Positive integer, default `0` (no row offset)
-    /// @param $check_access. Boolean, default `true`.
-    /// @param $dayoffset. Integer, default `-2`. We are forecasting two
-    ///   days at the moment. `$dayoffset-2` uses 'today - 2 days' to
-    ///   find the current tournament.
-    ///
-    /// @see next_tournament
-    /// @see latest_tournament
-    /// @see older_tournament
-    /// @see newer_tournament
-    ///
-    /// @todo Reto should use the 'number of bet days' variable rather
-    ///   than this fixed number of -2.
-    // ------------------------------------------------------------------
+    /** @details This method is based on @ref next_tournament and returns
+     * the current/last turnament. This is used to show
+     * current bets/observations.
+     * @param $row_offset. Positive integer, default `0` (no row offset)
+     *
+     * @param $check_access. Boolean, default `true`.
+     *
+     * @param $dayoffset. Integer, default `-2`. We are forecasting two
+     * days at the moment. `$dayoffset-2` uses 'today - 2 days' to
+     * find the current tournament.
+     *
+     * @see next_tournament
+     * @see latest_tournament
+     * @see older_tournament
+     * @see newer_tournament
+     *
+     * @todo Reto should use the 'number of bet days' variable rather
+     * than this fixed number of -2.
+     */
     public function current_tournament($row_offset=0,$check_access=true,$dayoffset=-2,$backwards=false) { 
         return $this->next_tournament($row_offset,$check_access,$dayoffset,$backwards);
     }
 
-    // ------------------------------------------------------------------
-    /// @details This method is based on @ref next_tournament and returns
-    ///   the latest (last) tournament based on $tdate. Please check
-    ///   the next_tournament method to see what $tdate can be (either
-    ///   "day_offset" or explicit "tournament date"). 
-    /// @param Please check the @ref next_tournament method to see what $tdate
-    ///   can be (either "day_offset" or explicit "tournament date").
-    ///
-    /// @see next_tournament
-    /// @see current_tournament
-    /// @see older_tournament
-    /// @see newer_tournament
-    // --------------------------------------------------------------
+    /** This method is based on @ref next_tournament and returns
+     * the latest (last) tournament based on $tdate. Please check
+     * the next_tournament method to see what $tdate can be (either
+     * "day_offset" or explicit "tournament date"). 
+     * @param Please check the @ref next_tournament method to see what $tdate
+     *   can be (either "day_offset" or explicit "tournament date").
+     *
+     * @see next_tournament
+     * @see current_tournament
+     * @see older_tournament
+     * @see newer_tournament
+     */
     public function latest_tournament($tdate) {
         return( $this->next_tournament(0,false,$tdate,$backwards=true) );
     }
 
-    // ------------------------------------------------------------------
-    /// @details This method is based on @ref next_tournament and returns
-    ///   the tournament before the one specified by input $tdate.
-    /// @param Please check the @ref next_tournament method to see what $tdate
-    ///   can be (either "day_offset" or explicit "tournament date").
-    ///
-    /// @see next_tournament
-    /// @see current_tournament
-    /// @see latest_tournament
-    /// @see newer_tournament
-    // --------------------------------------------------------------
+    /** This method is based on @ref next_tournament and returns
+     * the tournament before the one specified by input $tdate.
+     *
+     * @param Please check the @ref next_tournament method to see what $tdate
+     * can be (either "day_offset" or explicit "tournament date").
+     *
+     * @see next_tournament
+     * @see current_tournament
+     * @see latest_tournament
+     * @see newer_tournament
+     */
     public function older_tournament($tdate) {
         return( $this->next_tournament(1,false,$tdate,$backwards=true) );
     }
 
-    // --------------------------------------------------------------
-    /// @details This method is based on @ref next_tournament and returns
-    ///   the tournament after thie current one (so the next upcoming one)
-    ///   depending on the input $tdate.
-    /// @param Please check the @ref next_tournament method to see what $tdate
-    ///   can be (either "day_offset" or explicit "tournament date").
-    ///
-    /// @see next_tournament
-    /// @see current_tournament
-    /// @see latest_tournament
-    /// @see older_tournament
-    // --------------------------------------------------------------
+    /** This method is based on @ref next_tournament and returns
+     * the tournament after thie current one (so the next upcoming one)
+     * depending on the input $tdate.
+     *
+     * @param Please check the @ref next_tournament method to see what $tdate
+     * can be (either "day_offset" or explicit "tournament date").
+     *
+     * @see next_tournament
+     * @see current_tournament
+     * @see latest_tournament
+     * @see older_tournament
+     */
     public function newer_tournament($tdate) {
         return( $this->next_tournament(1,false,$tdate,$backwards=false) );
     }
     
 
-    // ------------------------------------------------------------------
-    /// @details We allow the user to enter and save the forecasts
-    ///   partially. As soon as all required fields are provided (all
-    ///   forecasts filled in and submitted) the wetterturnier plugin
-    ///   appends a row in the betstat database table. Note that this
-    ///   line will be deleted if the user decides to delete one or more
-    ///   values and stores them as empty. This function checks wheter
-    ///   the row in the betstat table exists or not. If it exists the
-    ///   function will return `true`, else `false` (not submitted or only
-    ///   partially submitted).
-    /// @param $userID. Integer, numeric ID of the user.
-    /// @param $cityObj. Object of class @wetterturnier_cityObject.
-    /// @param $tdate. Integer, date of the tournament.
-    /// @return Returns `true` if the user successfully submitted the
-    ///   forecast (all values) and `false` else.
-    // ------------------------------------------------------------------
+    /** We allow the user to enter and save the forecasts
+     * partially. As soon as all required fields are provided (all
+     * forecasts filled in and submitted) the wetterturnier plugin
+     * appends a row in the betstat database table. Note that this
+     * line will be deleted if the user decides to delete one or more
+     * values and stores them as empty. This function checks wheter
+     * the row in the betstat table exists or not. If it exists the
+     * function will return `true`, else `false` (not submitted or only
+     * partially submitted).
+     * @param $userID. Integer, numeric ID of the user.
+     * @param $cityObj. Object of class @wetterturnier_cityObject.
+     * @param $tdate. Integer, date of the tournament.
+     * @return Returns `true` if the user successfully submitted the
+     * forecast (all values) and `false` else.
+     */
     public function check_bet_is_submitted($userID,$cityObj,$tdate) {
 
         global $wpdb;
@@ -688,14 +686,12 @@ class wetterturnier_generalclass
     }
 
 
-    // ------------------------------------------------------------------
-    /// @details Checks whether the current user is in a specific group
-    ///   or not (is group member).
-    /// @param $userID. Integer, numeric ID of the user.
-    /// @param $groupName. Name of the group to check.
-    /// @return Returns `true` if the user is a member of the group and
-    ///   `false` else. 
-    // ------------------------------------------------------------------
+    /** Checks whether the current user is in a specific group
+     * or not (is group member).
+     * @param $userID. Integer, numeric ID of the user.
+     * @param $groupName. Name of the group to check.
+     * @return Returns `true` if the user is a member of the group and false` else. 
+     */
     public function check_user_is_in_group( $userID, $groupName ) {
         global $wpdb;
         $res = $wpdb->get_row(
@@ -710,13 +706,14 @@ class wetterturnier_generalclass
         return true;
     }
 
-    // ------------------------------------------------------------------
-    /// @details Returns names of the groups the user is a member of.
-    /// @param $userID. Integer, numeric user ID.
-    /// @return Returns `false` if the user is not yet a member of
-    ///   at least one group and a stdClass object containing the group
-    ///   ID and group names for all groups where the user is a member of.
-    // ------------------------------------------------------------------
+    /** Returns names of the groups the user is a member of.
+     *
+     * @param $userID. Integer, numeric user ID.
+     *
+     * @return Returns `false` if the user is not yet a member of
+     *   at least one group and a stdClass object containing the group
+     *   ID and group names for all groups where the user is a member of.
+     */
     public function get_groups_for_user( $userID ) {
         global $wpdb;
         $res = $wpdb->get_results(
@@ -730,14 +727,15 @@ class wetterturnier_generalclass
         return $res; 
     }
 
-    // ------------------------------------------------------------------
-    /// @details Returns a stdClass object with all information about a
-    ///   certain user specified by it's numeric ID.
-    /// @param $userID. Integer, numeric user ID.
-    /// @return stdClass containing the detailed user information.
-    ///
-    /// @see get_user_by_username
-    // ------------------------------------------------------------------
+    /** @details Returns a stdClass object with all information about a
+     * certain user specified by it's numeric ID.
+     *
+     * @param $userID. Integer, numeric user ID.
+     *
+     * @return stdClass containing the detailed user information.
+     *
+     * @see get_user_by_username
+     */
     public function get_user_by_ID( $userID ) {
         global $wpdb;
         ///$res = $wpdb->get_results(sprintf('SELECT * FROM %susers '
@@ -748,13 +746,15 @@ class wetterturnier_generalclass
     }
 
     // ------------------------------------------------------------------
-    /// @details Returns user details based on user login name.
-    ///   Not case sensitive.
-    /// @param $username. String containing the user login name.
-    /// @return stdClass containing the detailed user information.
-    ///
-    /// @see get_user_by_ID
-    // ------------------------------------------------------------------
+    /** @details Returns user details based on user login name.
+     * Not case sensitive.
+     *
+     * @param $username. String containing the user login name.
+     *
+     * @return stdClass containing the detailed user information.
+     *
+     * @see get_user_by_ID
+     */
     public function get_user_by_username( $username ) {
         global $wpdb;
         $res = $wpdb->get_row(sprintf('SELECT * FROM %susers '
@@ -765,20 +765,22 @@ class wetterturnier_generalclass
     }
 
 
-    // ------------------------------------------------------------------
-    /// @details Sometimes I have to add a special userclass to some elements
-    ///   to display them as I want. Therefore there is a small method
-    ///   returning the userclass based on the uderID and the user_login
-    ///   name.
-    ///   The same yields for the username. We replace some special
-    ///   character strings with another string.
-    ///   e.g. GRP_ will be replaced but then we add [group] to the end.
-    /// @param $userID. Integer, numeric user ID.
-    /// @param $user_login. String containing the user_login name.
-    /// @return stdClass containing two strings. `userclass` contains
-    ///   the main class (automat, referenz, mitteltip, or Sleepy), 
-    ///   `username` the modified username.
-    // ------------------------------------------------------------------
+    /** Sometimes I have to add a special userclass to some elements
+     * to display them as I want. Therefore there is a small method
+     * returning the userclass based on the uderID and the user_login
+     * name.
+     * The same yields for the username. We replace some special
+     * character strings with another string.
+     * e.g. GRP_ will be replaced but then we add [group] to the end.
+     *
+     * @param $userID. Integer, numeric user ID.
+     *
+     * @param $user_login. String containing the user_login name.
+     *
+     * @return stdClass containing two strings. `userclass` contains
+     * the main class (automat, referenz, mitteltip, or Sleepy), 
+     * `username` the modified username.
+     */
     public function get_user_display_class_and_name($userID,$usr) {
        $username = $usr->user_login;
        // Check if user is Automat or mix or so
@@ -800,12 +802,11 @@ class wetterturnier_generalclass
        return( $res );
     }
 
-    // ------------------------------------------------------------------
-    /// @details Returns the link to the profile page of the player.
-    /// @param $username. String containing the user login name. Case sensitive!
-    /// @return Returns `<a href=...>...</a>` tag with the link to the
-    ///   user profile (currently to bbpress /forum/users/<username>).
-    // ------------------------------------------------------------------
+    /** Returns the link to the profile page of the player.
+     * @param $username. String containing the user login name. Case sensitive!
+     * @return Returns `<a href=...>...</a>` tag with the link to the
+     * user profile (currently to bbpress /forum/users/<username>).
+     */
     public function get_user_profile_link( $usr ) {
        if ( is_null($usr->display_name) ) {
           $link = sprintf("<a href=\"/forums/users/%s/\" target=\"_self\">%s</a>",
@@ -817,18 +818,19 @@ class wetterturnier_generalclass
        return( $link );
     }
 
-    // ------------------------------------------------------------------
-    /// @details Function which checks if we can show the bet-form or not. 
-    ///   If user is allowed to see the data, function returns true.
-    ///   Else return value is false and the function places some notes.
-    /// @param $tdate. Integer date value of a certain tournament.
-    /// @return Prints a message and returns `true` if the view is closed
-    ///   and we do not allow the user to retreive the data at the moment
-    ///   (maybe locked because the tournament has not been started yet).
-    ///   or `false` (not locked) if to grant access.
-    ///
-    /// @see check_allowed_to_display_betdata
-    // ------------------------------------------------------------------
+    /** Function which checks if we can show the bet-form or not. 
+     * If user is allowed to see the data, function returns true.
+     * Else return value is false and the function places some notes.
+     *
+     * @param $tdate. Integer date value of a certain tournament.
+     *
+     * @return Prints a message and returns `true` if the view is closed
+     * and we do not allow the user to retreive the data at the moment
+     * (maybe locked because the tournament has not been started yet).
+     * or `false` (not locked) if to grant access.
+     *
+     * @see check_allowed_to_display_betdata
+    */
     function check_view_is_closed($tdate) {
 
     
@@ -883,21 +885,23 @@ class wetterturnier_generalclass
     }
 
 
-    // ------------------------------------------------------------------
-    /// @details Function which checks if we can show the placed bets/archive data 
-    ///   If user is allowed to see the data, function returns true.
-    ///   Else return value is false and the function places some notes.
-    /// @param $tdate. Integer date value of a certain tournament.
-    /// @param $showinfo. Boolean, default true. If set to false the
-    ///   user-messages "sorry not access" are suppressed. This is used
-    ///   to not show the messages twice for two consecutive days.
-    /// @return Prints a message and returns `true` if the view is closed
-    ///   and we do not allow the user to retreive the data at the moment
-    ///   (maybe locked because the tournament has not been started yet).
-    ///   or `false` (not locked) if to grant access.
-    ///
-    /// @see check_view_is_closed
-    // ------------------------------------------------------------------
+    /** Function which checks if we can show the placed bets/archive data 
+     * If user is allowed to see the data, function returns true.
+     * Else return value is false and the function places some notes.
+     *
+     * @param $tdate. Integer date value of a certain tournament.
+     *
+     * @param $showinfo. Boolean, default true. If set to false the
+     * user-messages "sorry not access" are suppressed. This is used
+     * to not show the messages twice for two consecutive days.
+     *
+     * @return Prints a message and returns `true` if the view is closed
+     * and we do not allow the user to retreive the data at the moment
+     * (maybe locked because the tournament has not been started yet).
+     * or `false` (not locked) if to grant access.
+     *
+     * @see check_view_is_closed
+     */
     function check_allowed_to_display_betdata($tdate,$showinfo=true) {
     
         // STOP if user should not see these data!
@@ -957,28 +961,30 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    /// @details Creates the ultra freaky SQL query for the ranking
-    ///    and returns all the data and all necessary information.
-    ///    The ranking data will be stored on `data`. There are several
-    ///    additional properties such as `maxpoints` (max points to reach),
-    ///    `tdate_count` (the number of individual tournament dates the
-    ///    ranking is based on). 
-    ///    This is used in users/views/ranking.php.
-    ///
-    /// @param $cityObj. Object of class wetterturnier_cityObject.
-    ///    Can be either a single object containing
-    ///    city information, or an array of @ref wetterturnier_cityObject
-    ///    objects containing more than only one city. The array option is
-    ///    used to create the 3-city ranking (could also be used to do
-    ///    a 5-city-ranking or something similar). 
-    /// @param $tdate. Integer representation of the tournament date.
-    /// @param $limit. Either boolean (`false`) to set no limit (all
-    ///    entries will be shown, full ranking) or a positive integer.
-    ///    If positive integer only the best N players will be loaded.
-    /// @return Returns a (quite big) stdClass object containing all
-    ///    required information to show the ranking.
-    // --------------------------------------------------------------
+    /** Creates the ultra freaky SQL query for the ranking
+     * and returns all the data and all necessary information.
+     * The ranking data will be stored on `data`. There are several
+     * additional properties such as `maxpoints` (max points to reach),
+     * `tdate_count` (the number of individual tournament dates the
+     * ranking is based on). 
+     * This is used in users/views/ranking.php.
+     *
+     * @param $cityObj. Object of class wetterturnier_cityObject.
+     * Can be either a single object containing
+     * city information, or an array of @ref wetterturnier_cityObject
+     * objects containing more than only one city. The array option is
+     * used to create the 3-city ranking (could also be used to do
+     * a 5-city-ranking or something similar). 
+     *
+     * @param $tdate. Integer representation of the tournament date.
+     *
+     * @param $limit. Either boolean (`false`) to set no limit (all
+     * entries will be shown, full ranking) or a positive integer.
+     * If positive integer only the best N players will be loaded.
+     *
+     * @return Returns a (quite big) stdClass object containing all
+     * required information to show the ranking.
+     */
     public function get_ranking_data($cityObj,$tdate,$limit=false) {
 
         global $wpdb;
@@ -1146,43 +1152,43 @@ class wetterturnier_generalclass
 
     }
 
-    // --------------------------------------------------------------
-    /// @details Returns parameter details from the database given
-    ///   a parameter ID.
-    ///
-    /// @param $ID. Integer, numeric parameter ID.
-    /// @return Returns stdClass object with all the information
-    ///   in the corresponding row in the database or boolean `false`
-    ///   if the parameter cannot be found.
-    // --------------------------------------------------------------
+    /** Returns parameter details from the database given
+     * a parameter ID.
+     *
+     * @param $ID. Integer, numeric parameter ID.
+     * @return Returns stdClass object with all the information
+     *   in the corresponding row in the database or boolean `false`
+     *   if the parameter cannot be found.
+     */
     public function get_param_by_ID($ID) {
         global $wpdb;
         $res = $wpdb->get_row(sprintf("SELECT * FROM %swetterturnier_param WHERE paramID = %d",
                              $wpdb->prefix,(int)$ID));
         if ( ! $res ) { return(false); } else { return($res); }
     }
-    // --------------------------------------------------------------
-    /// @details Returns parameter details from the database given
-    ///   a parameter name (e.g., RR, Wn, Wv, ...).
-    ///
-    /// @return Returns stdClass object with all the information
-    ///   in the corresponding row in the database or boolean `false`
-    ///   if the parameter cannot be found.
-    // --------------------------------------------------------------
+
+    /** Returns parameter details from the database given
+     * a parameter name (e.g., RR, Wn, Wv, ...).
+     * 
+     * @return Returns stdClass object with all the information
+     * in the corresponding row in the database or boolean `false`
+     * if the parameter cannot be found.
+     */
     public function get_param_by_name($paramName) {
         global $wpdb;
         $res = $wpdb->get_row(sprintf("SELECT * FROM %swetterturnier_param WHERE UPPER(paramName) = \"%s\"",
                              $wpdb->prefix,strtoupper((string)$paramName)));
         if ( ! $res ) { return(false); } else { return($res); }
     }
-    // --------------------------------------------------------------
-    /// @details Returns the numeric parameter ID given the parameter
-    ///   name as specified in the database.
-    ///
-    /// @param $name. String, name of the parameter in the database.
-    /// @return Integer parameter ID or boolean `false` if the parameter
-    ///   cannot be found.
-    // --------------------------------------------------------------
+
+    /** Returns the numeric parameter ID given the parameter
+     * name as specified in the database.
+     *
+     * @param $name. String, name of the parameter in the database.
+     *
+     * @return Integer parameter ID or boolean `false` if the parameter
+     * cannot be found.
+     */
     public function get_param_ID($name) {
         global $wpdb;
         $res = $wpdb->get_row("SELECT paramID FROM ".$wpdb->prefix."wetterturnier_param "
@@ -1190,12 +1196,11 @@ class wetterturnier_generalclass
         if ( ! $res ) { return(false); } else { return($res->paramID); }
     }
 
-    // --------------------------------------------------------------
-    /// @details Returns an array of objects containing all pairs of
-    ///   `paramID` and `paramName` (numeric parameter ID and name)
-    ///   as specified in the database.
-    /// @return See description :).
-    // --------------------------------------------------------------
+    /** Returns an array of objects containing all pairs of
+     * `paramID` and `paramName` (numeric parameter ID and name)
+     * as specified in the database.
+     * @return See description :).
+     */
     public function get_param_names() {
         global $wpdb;
         $res = $wpdb->get_results(sprintf("SELECT paramID, paramName FROM "
@@ -1204,18 +1209,16 @@ class wetterturnier_generalclass
         return($res);
     }
 
-    
-    // --------------------------------------------------------------
-    /// @details Returns status of a scheduled wetterturnier date.
-    ///
-    /// @param $tdate. Integer representation of the tournament date.
-    /// @return Returns boolean `false` if the date is not registered
-    ///   in the database (no status; neither 'there will be a tournament'
-    ///   nor 'take care, there will be no tournament'). 
-    ///   Else an integer will be returned: 1 = upcoming tournament,
-    ///   2 = day without a tournament (or kind of a 'no, there is 
-    ///   defenitively no tournament!).
-    // --------------------------------------------------------------
+    /** Returns status of a scheduled wetterturnier date.
+     *
+     * @param $tdate. Integer representation of the tournament date.
+     * @return Returns boolean `false` if the date is not registered
+     * in the database (no status; neither 'there will be a tournament'
+     * nor 'take care, there will be no tournament'). 
+     * Else an integer will be returned: 1 = upcoming tournament,
+     * 2 = day without a tournament (or kind of a 'no, there is 
+     * defenitively no tournament!).
+     */
     public function tournament_date_status( $tdate ) {
         global $wpdb;
         $res = $wpdb->get_row(sprintf("SELECT status FROM "
@@ -1226,17 +1229,16 @@ class wetterturnier_generalclass
         return $res->status;
     }
 
-    // --------------------------------------------------------------
-    /// @details Loading all tournament dates from the database which
-    ///   have been specified explicitly. Status 1 means that there
-    ///   is or will be a tournament, 2 means that there will be no
-    ///   tournament (even if some would expect one). All others (not
-    ///   in database) are 'no tournament' as well, but not explicitly
-    ///   labeled as 'no tournament'.
-    ///
-    /// @return Array of stdClass objects containing `tdate` (numeric
-    ///   representation of the tournament date) and `status`.
-    // --------------------------------------------------------------
+    /** @details Loading all tournament dates from the database which
+     * have been specified explicitly. Status 1 means that there
+     * is or will be a tournament, 2 means that there will be no
+     * tournament (even if some would expect one). All others (not
+     * in database) are 'no tournament' as well, but not explicitly
+     * labeled as 'no tournament'.
+     *
+     * @return Array of stdClass objects containing `tdate` (numeric
+     * representation of the tournament date) and `status`.
+     */
     public function tournament_get_dates() {
         global $wpdb;
         $res = $wpdb->get_results(sprintf("SELECT tdate, status FROM "
@@ -1252,19 +1254,18 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    /// @details Returns the parameters and the parameter information 
-    ///    from the database. The description depends on the current
-    ///    language.
-    ///
-    /// @return Array of stdClass objects containing the necessary
-    ///    information including parameter ID, name, number format,
-    ///    description, and unit.
-    ///
-    /// @todo What happens if the user uses a language which is not
-    ///    defined? This is not a very general way of storing this
-    ///    information ...
-    // --------------------------------------------------------------
+    /** @details Returns the parameters and the parameter information 
+     * from the database. The description depends on the current
+     * language.
+     *
+     * @return Array of stdClass objects containing the necessary
+     *    information including parameter ID, name, number format,
+     *    description, and unit.
+     *
+     * @todo What happens if the user uses a language which is not
+     *    defined? This is not a very general way of storing this
+     *    information ...
+     */
     public function get_param_data() {
         global $wpdb;
         $lang = strtoupper( $this->get_user_language() );
@@ -1286,16 +1287,17 @@ class wetterturnier_generalclass
         // return($res);
     }
 
-    // --------------------------------------------------------------
-    /// @details Returns city ID based on the city hash from the $_SESSIONS
-    ///   variable (is forced to be registered when loading the
-    ///   wetterturnier plugin - should exist all the time) 
-    ///
-    /// @param Returns object from @ref get_city_info of the current city based on the
-    ///   user session.
-    /// @see get_city_info
-    /// @see get_current_city_id
-    // --------------------------------------------------------------
+    /** Returns city ID based on the city hash from the $_SESSIONS
+     * variable (is forced to be registered when loading the
+     * wetterturnier plugin - should exist all the time) 
+     *
+     * @param Returns object from @ref get_city_info of the current city based on the
+     * user session.
+     *
+     * @see get_city_info
+     *
+     * @see get_current_city_id
+     */
     public function get_current_city() {
 
         $cityObj = new wetterturnier_cityObject(NULL);
@@ -1315,31 +1317,33 @@ class wetterturnier_generalclass
         }
     }
 
-    // --------------------------------------------------------------
-    /// @details Returns numeric cityID from the current city.
-    ///   Please note that---in contrast to @ref get_current_city---this
-    ///   function only returns the cityID.
-    ///
-    /// @return Integer city ID of the active city.
-    /// @see get_city_info
-    /// @see get_current_city
-    // --------------------------------------------------------------
+    /** Returns numeric cityID from the current city.
+     * Please note that---in contrast to @ref get_current_city---this
+     * function only returns the cityID.
+     *
+     * @return Integer city ID of the active city.
+     *
+     * @see get_city_info
+     *
+     * @see get_current_city
+     */
     public function get_current_city_id() {
         $res = $this->get_current_city();
         if ( ! $res->ID ) { return( false ); } else { return( $res->ID ); }
     }
 
 
-    // --------------------------------------------------------------
-    /// @details Returns an array containing @ref wetterturnier_cityObject
-    ///  objects. The input controls whether only active cities should be
-    ///  returned (typically used for user-frontend pages) or all (used
-    ///  for admin pages).
-    /// @param $activeonly. Boolean, default `true`. If set to `true` only
-    ///  active cities will be considered. If `false` inactive will be returned
-    ///  as well.
-    /// @see get_current_cityObj
-    // --------------------------------------------------------------
+    /** Returns an array containing @ref wetterturnier_cityObject
+     * objects. The input controls whether only active cities should be
+     * returned (typically used for user-frontend pages) or all (used
+     * for admin pages).
+     *
+     * @param $activeonly. Boolean, default `true`. If set to `true` only
+     * active cities will be considered. If `false` inactive will be returned
+     * as well.
+     *
+     * @see get_current_cityObj
+     */
     public function get_all_cityObj( $activeonly = true ) {
 
         // Check if we already have loaded this data set
@@ -1367,15 +1371,14 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    /// @details Returns city info based on the city hash from the city 
-    ///   hash (e.g., IBK, BER, ...) OR the ID of the city.
-    ///   If input is integer, select for ID, else for hash.
-    ///
-    /// @param $input. Either numeric city ID or string. If string
-    ///   it has to be the city hash (e.g., IBK). Returns a stdClass
-    ///   object containing the city information.
-    // --------------------------------------------------------------
+    /** Returns city info based on the city hash from the city 
+     * hash (e.g., IBK, BER, ...) OR the ID of the city.
+     * If input is integer, select for ID, else for hash.
+     *
+     * @param $input. Either numeric city ID or string. If string
+     * it has to be the city hash (e.g., IBK). Returns a stdClass
+     * object containing the city information.
+     */
     public function get_city_info( $input ) {
         global $wpdb;
         if ( is_integer($input) ) {
@@ -1389,18 +1392,19 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    /// @details Loading information of all active stations. An array
-    /// will be returned containing a stationObject for each station.
-    /// If cityID is given the stations of a specific city will be 
-    /// returned. If not given (NULL, default) all active stations
-    /// will be returned.
-    ///
-    /// @param $cityID. Integer city ID, default is NULL.
-    /// @return Returns NULL if no stations are found in the database.
-    ///     Else an array of stationObjects will be returned.
-    /// @see wetterturnier_stationObject
-    // --------------------------------------------------------------
+    /** @details Loading information of all active stations. An array
+     * will be returned containing a stationObject for each station.
+     * If cityID is given the stations of a specific city will be 
+     * returned. If not given (NULL, default) all active stations
+     * will be returned.
+     *
+     * @param $cityID. Integer city ID, default is NULL.
+     *
+     * @return Returns NULL if no stations are found in the database.
+     *     Else an array of stationObjects will be returned.
+     *
+     * @see wetterturnier_stationObject
+     */
     public function get_all_stationObj( $cityID = NULL ) {
         global $wpdb;
         $sql = array();
@@ -1421,16 +1425,18 @@ class wetterturnier_generalclass
         return( $stationObj );
     }
 
-    // --------------------------------------------------------------
-    /// @details Returns the station numbers of the stations which 
-    ///    are attached to this city.
-    ///
-    /// @param $cityID. Integer city ID.
-    /// @return array of stdClass objects containing `wmo` only
-    ///   (the numeric WMO station number as specified in the database).
-    /// @see get_station_data_for_city
-    /// @see get_station_by_wmo
-    // --------------------------------------------------------------
+    /** Returns the station numbers of the stations which 
+     * are attached to this city.
+     *
+     * @param $cityID. Integer city ID.
+     *
+     * @return array of stdClass objects containing `wmo` only
+     * (the numeric WMO station number as specified in the database).
+     *
+     * @see get_station_data_for_city
+     *
+     * @see get_station_by_wmo
+     */
     function get_station_wmo_for_city( $cityID ) {
         global $wpdb;
         $res = $wpdb->get_results(sprintf("SELECT wmo FROM %swetterturnier_stations "
@@ -1438,15 +1444,16 @@ class wetterturnier_generalclass
         return( $res );
     }
 
-    // --------------------------------------------------------------
-    /// @details Loading observation data for a given cityID (both stations)
-    ///
-    /// @param $cityID. Integer city ID.
-    /// @return array of stdClass Objects containing the detailed station
-    ///   information of all stations mapped to the city ($cityID).
-    /// @see get_station_wmo_for_city
-    /// @see get_station_by_wmo
-    // --------------------------------------------------------------
+    /** Loading observation data for a given cityID (both stations)
+     *
+     * @param $cityID. Integer city ID.
+     *
+     * @return array of stdClass Objects containing the detailed station
+     *   information of all stations mapped to the city ($cityID).
+     *
+     * @see get_station_wmo_for_city
+     * @see get_station_by_wmo
+     */
     function get_station_data_for_city( $cityID ) {
         global $wpdb;
         $res = $wpdb->get_results(sprintf("SELECT * FROM %swetterturnier_stations "
@@ -1454,15 +1461,16 @@ class wetterturnier_generalclass
         return( $res );
     }
 
-    // --------------------------------------------------------------
-    /// @details Loading observation data for a given cityID (both stations)
-    ///
-    /// @param $mo. Integer station number (WMO identifier).
-    /// @return Returns stdClass object containing the details of this
-    ///   specific station.
-    /// @see get_station_wmo_for_city
-    /// @see get_station_data_for_city
-    // --------------------------------------------------------------
+    /** Loading observation data for a given cityID (both stations)
+     *
+     * @param $mo. Integer station number (WMO identifier).
+     *
+     * @return Returns stdClass object containing the details of this
+     *   specific station.
+     *
+     * @see get_station_wmo_for_city
+     * @see get_station_data_for_city
+     */
     function get_station_by_wmo( $wmo ) {
         global $wpdb;
         $res = $wpdb->get_row(sprintf("SELECT * FROM %swetterturnier_stations "
@@ -1471,12 +1479,13 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    /// @details Getting current page url in a propper way.
-    /// @param $cut. Boolean, default is `false`. If set to `true`
-    ///   the POST arguments will be removed from the url.
-    /// @return Returns the current URL with or without POST args.
-    // --------------------------------------------------------------
+    /** Getting current page url in a propper way.
+     *
+     * @param $cut. Boolean, default is `false`. If set to `true`
+     * the POST arguments will be removed from the url.
+     *
+     * @return Returns the current URL with or without POST args.
+     */
     function curPageURL( $cut = False ) {
         $pageURL = 'http';
         if ( isset($_SERVER["HTTPS"]) ) { $pageURL .= "s"; }
@@ -1495,23 +1504,26 @@ class wetterturnier_generalclass
     }
 
 
-    // ------------------------------------------------------------------
-    /// @details Loading allready stored data from the user from the
-    ///   database.
-    /// 
-    /// @param $cityObj. Object of class @ref wetterturnier_cityObject.
-    /// @param $userID. Numeric user ID.
-    /// @param $next. Object containing the tournament date information of the
-    ///    next (or upcoming) tournament.
-    /// @param $day. Integer which specifies for which day you want to load the
-    ///    forecast data. E.g., `$day=1` would be the 1-day-ahead forecast leading
-    ///    to a `bdate` or 'betdate' of `$next->tdate + 1`. 
-    /// @param $detailed. Boolean, default is `false`. If `true` additional
-    ///    elements will be returned such as parameter name and stuff.
-    /// @return A stdClass containing stdClassses identified by a combination
-    ///    of the parameter name and the forecast day. E.g.,
-    ///    `$result->RR_1` contians the information for RR day 1.
-    // ------------------------------------------------------------------
+    /** Loading allready stored data from the user from the database.
+     * 
+     * @param $cityObj. Object of class @ref wetterturnier_cityObject.
+     *
+     * @param $userID. Numeric user ID.
+     *
+     * @param $next. Object containing the tournament date information of the
+     * next (or upcoming) tournament.
+     *
+     * @param $day. Integer which specifies for which day you want to load the
+     * forecast data. E.g., `$day=1` would be the 1-day-ahead forecast leading
+     * to a `bdate` or 'betdate' of `$next->tdate + 1`. 
+     *
+     * @param $detailed. Boolean, default is `false`. If `true` additional
+     * elements will be returned such as parameter name and stuff.
+     *
+     * @return A stdClass containing stdClassses identified by a combination
+     * of the parameter name and the forecast day. E.g.,
+     * `$result->RR_1` contians the information for RR day 1.
+     */
     function get_user_bets_from_db($cityObj,$userID,$next,$day,$detailed=false) {
     
         // Wordpress database
@@ -1577,11 +1589,10 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    // Loading bets from the database based on:
-    // cityID, tdate and betdate (integer, +1/+2)
-    // If input $pionts is true, loading points from database.
-    // --------------------------------------------------------------
+    /** Loading bets from the database based on:
+     * cityID, tdate and betdate (integer, +1/+2)
+     * If input $pionts is true, loading points from database.
+     */
     function get_bet_values($city,$tdate,$betday,$points,$userID = NULL) {
 
         global $wpdb;
@@ -1672,10 +1683,10 @@ class wetterturnier_generalclass
 
     }
 
-    // ------------------------------------------------------------------
-    // Loading allready stored observation values 
-    /// @param $stnObj. Object of class @ref wetterturnier_stationObject.
-    // ------------------------------------------------------------------
+    /** Loading allready stored observation values 
+     *
+     * @param $stnObj. Object of class @ref wetterturnier_stationObject.
+     */
     function get_station_obs_from_db($stnObj,$next,$day,$detailed=false) {
     
         // Wordpress database
@@ -1733,12 +1744,11 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    // Returns the observations in the same format as 
-    // get_user_bets_from_db returns the bets. Need them for the
-    // edit forms when someone would like to change observation
-    // values.
-    // --------------------------------------------------------------
+    /** Returns the observations in the same format as 
+     * get_user_bets_from_db returns the bets. Need them for the
+     * edit forms when someone would like to change observation
+     * values.
+     */
     function get_obs_from_db($station,$tournament,$day) {
     
         // Wordpress database
@@ -1770,9 +1780,7 @@ class wetterturnier_generalclass
         return( $result );
     }
 
-    // --------------------------------------------------------------
-    // Loading observation data for a given cityID (both stations)
-    // --------------------------------------------------------------
+    /** Loading observation data for a given cityID (both stations). */
     function get_obs_values($city, $betdate, $raw = false) {
 
         global $wpdb;
@@ -1839,9 +1847,7 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    // Datepicker code for the widget
-    // --------------------------------------------------------------
+    /** Datepicker code for the widget */
     public function tournament_datepicker_widget() {
         ?>
 
@@ -1892,6 +1898,7 @@ class wetterturnier_generalclass
         <?php
     }
 
+    /* Tournament datepicker: ajax function to fetch the data. */
     public function tournament_datepicker_ajax() {
 
         global $wpdb;
@@ -1926,12 +1933,11 @@ class wetterturnier_generalclass
         die(); # important
     }
 
-    // ---------------------------------------------------------------
-    // There is an ajax function call to save users which try to apply for
-    // a group membership.
-    // Returns json array. If user is allready an active member of this group,
-    // return value 'got' is 'ismember'.
-    // ---------------------------------------------------------------
+    /** There is an ajax function call to save users which try to apply for
+     * a group membership.
+     * Returns json array. If user is allready an active member of this group,
+     * return value 'got' is 'ismember'.
+     */
     public function usersearch_ajax() {
 
        global $wpdb;
@@ -1956,9 +1962,7 @@ class wetterturnier_generalclass
 
     }
 
-    // --------------------------------------------------------------
-    // Getting avatar url instead of a full avatar imgi tag.
-    // --------------------------------------------------------------
+    /** Getting avatar url instead of a full avatar imgi tag. */
     function get_avatar_url($userID){
         $get_avatar = get_wp_user_avatar($userID, 96);
         preg_match("/src=\"(.*?)\"/i", $get_avatar, $matches);
@@ -1966,10 +1970,9 @@ class wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    // REQUEST_CHECK is checking if the requested variable is set
-    // or not. In case not, we will return 'false'. 
-    // --------------------------------------------------------------
+    /** REQUEST_CHECK is checking if the requested variable is set
+     * or not. In case not, we will return 'false'. 
+     */
     public function REQUEST_CHECK( $name ) {
         if ( empty($_REQUEST) ) {
             $val = false;;
@@ -1982,10 +1985,9 @@ class wetterturnier_generalclass
     }
 
 
-    // ---------------------------------------------------------------
-    // Returns the latest observations for a given station. Called
-    // by wordpress ajax.
-    // ---------------------------------------------------------------
+    /** Returns the latest observations for a given station. Called
+     * by wordpress ajax.
+     */
     public function getobservations_ajax( $statnr = Null ) {
 
        global $wpdb;

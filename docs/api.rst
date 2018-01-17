@@ -1,0 +1,120 @@
+
+API
+===
+
+generalclass
+-------------
+
+This is **the main wordpress plugin class** and contains a range of
+important/necessary methods for the data handling, website content,
+and so far and so on. This class will be extended by both, the 
+:php:class:`adminclass` and :php:class:`userclass` shown later.
+
+.. phpautoclass:: wetterturnier_generalclass
+    :filename: ../generalclass.php
+    :members:
+    :undoc-members:
+
+adminclass
+----------
+
+The adminclass builds on :php:class:`generalclass` (extends the
+:php:class:`generalclass`) and provides a set of admin-specific
+functions and attributes.
+These are only for the wordpress admin-interface.
+
+.. phpautoclass:: wetterturnier_adminclass
+    :filename: ../admin/adminclass.php
+    :members:
+    :undoc-members:
+
+userclass
+---------
+
+The userclass builds on :php:class:`generalclass` (extends the
+:php:class:`generalclass`) and provides a set of frontend-specific
+methods. This class is used for visitors (not logged in users),
+members (logged in users) and administrators as long as they browse
+on the frontend.
+
+.. phpautoclass:: wetterturnier_userclass
+    :filename: ../user/userclass.php
+    :members:
+    :undoc-members:
+
+cityObject
+-----------
+
+Handling the different cities defined in the wetterturnier.
+
+.. phpautoclass:: wetterturnier_cityObject
+    :filename: ../classes.php
+    :members:
+    :undoc-members:
+
+stationObject
+-------------
+
+Handling single weather stations.
+
+.. phpautoclass:: wetterturnier_stationObject
+    :filename: ../classes.php
+    :members:
+    :undoc-members:
+
+paramObject
+-----------
+
+Handling the different parameters (e.g., minimum temperature, or
+pressure at 12 UTC).
+
+.. phpautoclass:: wetterturnier_paramObject
+    :filename: ../classes.php
+    :members:
+    :undoc-members:
+
+webcamObject
+-------------
+
+Small object to handle the webcams for the different cities
+(webcam image implementation).
+
+.. phpautoclass:: wetterturnier_webcamObject
+    :filename: ../classes.php
+    :members:
+    :undoc-members:
+
+groupsObject
+------------
+
+Handling of groups. A group consists of several members/users
+and is used to generate the `Mitteltipps` (mean group bets).
+
+.. phpautoclass:: wetterturnier_groupsObject
+    :filename: ../classes.php
+    :members:
+    :undoc-members:
+
+latestobsObject
+---------------
+
+Class to read observation data from the `obs` database table.
+Please note that database is hardcoded in the php code (database
+table called `obs`). The wordpress mysql user requires read
+permissions to be able to get these data. The objects can be returned
+as JSON arrays and are used for some wetterturnier jQuery plugins
+(observation tables and plots).
+
+To grant the correct privileges to the wordpress user simply login
+to your database and give the correct user the following permissions:
+
+```
+GRANT PRIVILEGES SELECT ON obs.* TO 'wpwt'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+.. phpautoclass:: wetterturnier_latestobsObject
+    :filename: ../classes.php
+    :members:
+    :undoc-members:
+
