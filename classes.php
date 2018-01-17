@@ -3,8 +3,13 @@
 /// @file classes.php
 /// @author Reto Stauffer
 /// @date 19 June 2017
-/// @brief This file contains several helper classes used in the
-///    wetterturnier wordpress plugin.
+/// @brief This file contains a set of helper functions with a set
+///     of relatively standardized methods. Contains the classes
+///     @ref wetterturnier_cityObject to handle cities,
+///     @ref wetterturnier_stationObject to handle stations,
+///     @ref wetterturnier_groupsObject to handle groups of users
+///     @ref wetterturnier_webcamObject for handling webcams, 
+///     @ref wetterturnier_latestobsObject handling latest observations.
 // ------------------------------------------------------------------
 
 

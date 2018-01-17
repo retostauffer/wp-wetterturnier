@@ -3,10 +3,11 @@
 /// @file generalclass.php
 /// @author Reto Stauffer
 /// @date 16 June 2017
-/// @brief This is the `core class` of the wetterturnier plugin.
+/// @brief This is the `core class` of the wp-wetterturnier plugin.
 ///   This class will be extended by both, the @ref wp_wetterturnier_userclass
-///   and the @ref wp_wetterturnier_adminclass and contains methods
-///   used in the wordpress backend and frontend.
+///   and the @ref wp_wetterturnier_adminclass.
+///   @ref wetterturnier_generalclass contains a set of functions and
+///   methods used in the wordpress frontend and backend (admin interface).
 // ------------------------------------------------------------------
 
 // ------------------------------------------------------------------
