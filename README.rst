@@ -15,8 +15,12 @@ or temperature as good as possible for the consecutive two days.
 their forecasts/bets*. Furthermore this plugin provides live ranking tables, a leader-board,
 a data archive, and access to a set of important data sets such as observations and forecast maps.
 
-
-![Screenshot of the wetterturnier frontend/website using the Wordpress Wetterturnier Plugin.](docs/images/screenshot_frontend.png)
+.. image:: images/screenshot_frontend.png
+   :width: 800px
+   :height: 396px
+   :scale: 100 %
+   :alt: Screenshot Frontend
+   :align: center
 
 Please note that this is only one part of the system. To get the whole system running
 the `Wetterturnier backend <https://github.com/retostauffer/wetterturnier-backend>`_
