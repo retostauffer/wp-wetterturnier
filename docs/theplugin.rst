@@ -27,11 +27,9 @@ When loaded (on each wordpress request):
 
 * Include required class files (:ref:`api`).
 * Include all user widgets from `user/widgets/*.php`.
-* If user is admin: include :ref:`adminclass.php <api-adminclass>`,
+* If user is admin: include :ref:`adminclass.php <api-adminclass>` see
+  :ref:`wetterturnier_adminclass <api-adminclass>`.
+* else :ref:`adminclass.php <api-userclass>` is loaded,
+  :ref:`wetterturnier_adminclass <api-adminclass>` .
 
-    .. php:class:: wetterturnier_adminclass
-
-* else :ref:`adminclass.php <api-userclass>` is loaded.
-
-    .. php:class:: wetterturnier_userclass
 

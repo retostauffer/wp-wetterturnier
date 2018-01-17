@@ -10,7 +10,7 @@ has to be tested and fixed), :ref:`the known issues <index-known-issues>` sectio
 has some more details.
 
 
-.. include:: wetterturnier-intro.rst
+.. include:: wetterturnier-intro.inc
 
 
 Software Dependencies
@@ -37,12 +37,9 @@ Important blocks
 .. toctree::
     :maxdepth: 1
     :hidden:
-    :caption: Main Pieces
+    :caption: Introduction
 
     gettingstarted.rst
-    theplugin.rst
-    thewidgets.rst
-    databases.rst
 
 Known Issues
 ------------
@@ -81,8 +78,11 @@ Classes and Libraries
 .. toctree::
     :maxdepth: 2
     :hidden:
-    :caption: Classes Overview
+    :caption: Documentation
 
+    theplugin.rst
+    thewidgets.rst
+    databases.rst
     classes.rst 
     api.rst
 

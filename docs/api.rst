@@ -139,3 +139,42 @@ FLUSH PRIVILEGES;
     :members:
     :undoc-members:
 
+
+oldoutputformat
+----------------
+
+.. _api-oldoutputObject:
+
+.. note:: This was a `quick fix` which not yet works (Jan 2018)
+    we have the method Moses which relies of the forecasts of the
+    latest few weeks. After moving our server the files are no more
+    available in the same format. This class (in combination with
+    the file `oldarchive.php <https://github.com/retostauffer/wp-wetterturnier/blob/master/oldarchive.php>`_ 
+    is mimiking the old ASCII format for the upper part of the data.
+    Either Moses needs more, or he never downloads he new files
+    as he cannot find the file listing on which he relies?
+
+
+Called and only called from
+`oldarchive.php <https://github.com/retostauffer/wp-wetterturnier/blob/master/oldarchive.php>`_.
+The server uses a `.htaccess` rewrite rule provide this mimiked
+files under the same old url. The rewrite condition is as follows:
+
+.. code-block:: bash
+
+    RewriteBase /
+    RewriteRule ^archiv/wert_([a-z])/wert([0-9]{6})\.txt$ wp-content/plugins/wp-wetterturnier/oldarchive.php?city=$1&date=$2 [L,NC]
+
+.. phpautoclass:: wetterturnier_oldoutputObject
+    :filename: ../oldoutputclass.php
+    :members:
+    :undoc-members:
+
+
+
+
+
+
+
+
+
