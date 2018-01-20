@@ -1,0 +1,64 @@
+# -------------------------------------------------------------------
+# - NAME:        autodoc_dbtables.conf
+# - AUTHOR:      Reto Stauffer
+# - DATE:        2018-01-19
+# -------------------------------------------------------------------
+# - DESCRIPTION: Configuration for the autodoc_dbtables.py script.
+#                Access to databases has to be specified. Reads 
+#                table schemes and creates csv style tables for
+#                sphinx-doc.
+# -------------------------------------------------------------------
+# - EDITORIAL:   2018-01-19, RS: Created file on thinkreto.
+# -------------------------------------------------------------------
+# - L@ST MODIFIED: 2018-01-19 12:09 on marvin
+# -------------------------------------------------------------------
+
+# General config, define output directory. Directory will be created
+# if it does not exist. The two bool flags "deleteold" and "overwrite"
+# do the following:
+# "deleteold": output folder will be deleted and re-created (start empty)
+# "overwrite": allow the script to overwrite existing files in the output folder.
+[general]
+
+outdir     = dbtables
+deleteold  = false
+overwrite  = true
+
+
+# There are two databases we need to get access.
+# One is the `obs` (Observation) database containing
+# the raw incoming observations.
+[database obs]
+
+host       = localhost
+user       = *******
+passwd     = *******
+dbname     = obs
+
+# Table specification: archive table
+[table obs live]
+table      = live
+caption    = Rolling database for (raw) incoming observations.
+showonly   = statnr,datum,datumsec,stdmin,msgtyp,stint,utime,ucount
+
+[table obs archive]
+table      = archive
+caption    = Archive table, contains long-term observations (copy of the live table) for specified stations.
+showonly   = statnr,datum,datumsec,stdmin,msgtyp,stint,utime,ucount
+
+# Table specification: live table
+
+# The second database is the wordpress database containing
+# the wetterturnier wordpress plugin databases. 
+[database wp]
+
+host       = localhost
+user       = *******
+passwd     = *******
+dbname     = wpwt
+# The wordpress table prefix
+prefix     = wp_
+
+[table wp wetterturnier_obs]
+table      = %prefixwetterturnier_obs
+caption    = Wetterturnier Wordpress Plugin observation table which is used to compute the points.
