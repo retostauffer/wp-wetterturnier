@@ -26,3 +26,14 @@ Please note that this is only one part of the system. To get the whole system ru
 the `Wetterturnier backend <https://github.com/retostauffer/wetterturnier-backend>`_
 is needed which prepares the observations, computes mean bets for specific groups, and
 computes the points for the ranking system.
+
+
+License Information
+===================
+
+The software in this repository is free software: you can redistribute it
+and/or modify it under the terms of the GNU General Public License as published
+by the Free Software Foundation, either version 3 of the License, or (at your
+option) any later version. The full :download:`LICENSE` file is included in the repository
+and/or can be found on `gnu.org <https://www.gnu.org/licenses/gpl-3.0.txt>`_.
+

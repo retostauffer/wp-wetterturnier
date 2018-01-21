@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2018-01-19, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-01-21 13:27 on marvin
+# - L@ST MODIFIED: 2018-01-21 15:15 on marvin
 # -------------------------------------------------------------------
 
 import logging
@@ -182,7 +182,7 @@ class setup( object ):
         log.info(" - {0:20s} {1:s}".format("Delete old output:",str(self.deleteold)))
         log.info(" - {0:20s} {1:s}".format("Allow overwrite:",str(self.overwrite)))
         log.info("Database configuration:")
-        for db in ["obs","wp"]:
+        for db in self.dbconf.keys():
             log.info(" - {0:20s} {1:s}".format("Database:",self.dbconf[db]["dbname"]))
             log.info("   {0:20s} {1:s}".format("Hostname:",self.dbconf[db]["host"]))
             log.info("   {0:20s} {1:s}".format("Username:",self.dbconf[db]["user"]))
