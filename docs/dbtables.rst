@@ -47,6 +47,37 @@ and stores them in the ``wpwt`` database for operational use (compute the points
     * Table :ref:`archive <table-archive>`: Text ...
     * Table :ref:`live <table-live>`: Text ...
 
+Relationship
+============
+
+Not yet having a visual representation of the database structure but trying
+to explain the relationship in some words. All user data are linked to the
+:ref:`wordpress users table <table-wp_users>` usint the user ``ID``. The wetterturnier
+structure can be summarized as follows:
+
+* Several :ref:`cities <table-wp_wetterturnier_cities>` can be specified for which
+  forecasts can be submitted. Each :ref:`cities <table-wp_wetterturnier_cities>` has its
+  own unique *city ID*.
+* To each city one or more :ref:`weather stations <table-wp_wetterturnier_stations>`
+  can be linked to identified by a unique *station ID*.
+* A set of :ref:`parameters to forecast <table-wp_wetterturnier_param>` can be specified
+  which have to be forecasted. Note that for each individual city or station the parameters
+  can be disabled/enabled (e.g., when no observations for this parameter are available).
+  As cities and stations parameters have their unique *parameter ID*.
+* :ref:`Tournament dates <table-wp_wetterturnier_dates>` are specified via *tournament dates*
+  (``tdate``'s) using *days since 1970-01-01*. Tournaments can therefore be held on a daily
+  basis (but not sub-daily, not two rounds per day).
+* :ref:`User forecasts <table-wp_wetterturnier_bets>` are made for a specific
+  :ref:`city <table-wp_wetterturnier_cities>`, 
+  :ref:`day <table-wp_wetterturnier_dates>`, and
+  :ref:`parameter <table-wp_wetterturnier_param>` using the 
+  :ref:`wordpress user ID <table-wp_users>` to link the forecasts to the users.
+* Forecasts are summarized and stored in the :ref:`betstat table <tables-wp_wetterturnier_betstat>`
+  where the sum of the points will be added by the
+  `wetterturnier backend judging <https://github.com/retostauffer/wetterturnier-backend>`_.
+
+
+
 
 Wordpress Database 
 ===================

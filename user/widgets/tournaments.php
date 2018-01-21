@@ -1,19 +1,22 @@
 <?php
-// ------------------------------------------------------------------
-// - NAME:        widgets/tournaments.php 
-// - AUTHOR:      Reto Stauffer
-// - DATE:        2014-07-15
-// ------------------------------------------------------------------
-// - DESCRIPTION: Shows datepicker on frontend with dates where
-//                a tournament takes place or not. 
-// ------------------------------------------------------------------
-
+/**
+ * Widget to display the tournament calendar. The tournament calendar shows our
+ * users whether there will be a tournament or not, the data on which the calendar
+ * is based on is also used to open/start a tournament.
+ * In addition to the calendar the bet-counts are shown. They show the number of
+ * players which already have submitted a partial or full forecast for the upcoming
+ * tournament.
+ *
+ * @file tournaments.php
+ * @author Reto Stauffer
+ * @date 2014
+ */
 class WP_wetterturnier_widget_tournaments extends WP_Widget
 {
 
-    // --------------------------------------------------------------
-    // Constructor method: construct the plugin
-    // --------------------------------------------------------------
+    /**
+     * Setting up the widget name and the control options
+     */
     function __construct() {
 
         global $WTuser;
@@ -39,9 +42,11 @@ class WP_wetterturnier_widget_tournaments extends WP_Widget
     }
 
 
-    // --------------------------------------------------------------
-    // widget admin form creation
-    // --------------------------------------------------------------
+    /**
+     * Creates the admin-widget box (drag-and-drop widget with attributes/settings)
+     *
+     * @param array $instance The widget options
+     */
     function form($instance) {  
         // Check values
         if( $instance) {
@@ -72,9 +77,15 @@ class WP_wetterturnier_widget_tournaments extends WP_Widget
         <?php
     }
 
-    // --------------------------------------------------------------
-    // widget update
-    // --------------------------------------------------------------
+    /**
+     * Processing widget options on save
+     *
+     * @param array $new_instance The new options
+     *
+     * @param array $old_instance The previous options
+     *
+     * @return array $instance (updated)
+     */
     function update($new_instance, $old_instance) {
         $instance = $old_instance;
         // Fields
@@ -84,12 +95,15 @@ class WP_wetterturnier_widget_tournaments extends WP_Widget
         return $instance;
     }
 
-
-    // --------------------------------------------------------------
-    // widget display
-    // --------------------------------------------------------------
+    /**
+     * Outputs the content of the widget, shows calendar and triggers the
+     * @ref show_bet_counts function.
+     *
+     * @param array $args
+     *
+     * @param array $instance
+     */
     function widget( $args, $instance ) {
-
 
         extract( $args, EXTR_SKIP );
 
@@ -122,9 +136,12 @@ class WP_wetterturnier_widget_tournaments extends WP_Widget
         echo $after_widget;
     }
 
-    // --------------------------------------------------------------
-    // Show submitted/open bets
-    // --------------------------------------------------------------
+    /**
+     * One of the two core functions: displays the bet counts.
+     *
+     * @todo Freaky sql statement, maybe outsource and put a method into the new
+     * not yet coded rankingclass?
+     */
     function show_bet_counts() {
 
          global $wpdb;

@@ -1,16 +1,19 @@
 <?php
-// ------------------------------------------------------------------
-// - NAME:        widgets/widgets.php 
-// - AUTHOR:      Reto Stauffer
-// - DATE:        2018-01-03
-// ------------------------------------------------------------------
-/// @details Widget to display the webcams.
+/**
+ * This is the webcams plugin for wp-wetterturnier.
+ * Small widget which displays the latest webcam image - if there are
+ * any defined.
+ *
+ * @file webcams.php
+ * @author Reto Stauffer
+ * @date december 2017
+ */
 class WP_wetterturnier_widget_webcams extends WP_Widget
 {
 
-   // --------------------------------------------------------------
-   // Constructor method: construct the plugin
-   // --------------------------------------------------------------
+   /**
+    * Setting up the widget name and the control options
+    */
    function __construct() {
 
       global $WTuser;
@@ -26,9 +29,11 @@ class WP_wetterturnier_widget_webcams extends WP_Widget
    }
 
 
-   // --------------------------------------------------------------
-   // widget admin form creation
-   // --------------------------------------------------------------
+   /**
+    * Creates the admin-widget box (drag-and-drop widget with attributes/settings)
+    *
+    * @param array $instance The widget options
+    */
    function form($instance) {  
       // Check values
       if( $instance) {
@@ -53,9 +58,15 @@ class WP_wetterturnier_widget_webcams extends WP_Widget
       <?php
    }
 
-   // --------------------------------------------------------------
-   // widget update
-   // --------------------------------------------------------------
+   /**
+    * Processing widget options on save
+    *
+    * @param array $new_instance The new options
+    *
+    * @param array $old_instance The previous options
+    *
+    * @return array $instance (updated)
+    */
    function update($new_instance, $old_instance) {
       $instance             = $old_instance;
       $instance['title']    = strip_tags($new_instance['title']);
@@ -64,9 +75,14 @@ class WP_wetterturnier_widget_webcams extends WP_Widget
    }
 
 
-   // --------------------------------------------------------------
-   // widget display
-   // --------------------------------------------------------------
+
+	/**
+	 * Outputs the content of the widget
+	 *
+	 * @param array $args
+     *
+	 * @param array $instance
+	 */
    function widget( $args, $instance ) {
       extract( $args, EXTR_SKIP );
 
@@ -91,9 +107,11 @@ class WP_wetterturnier_widget_webcams extends WP_Widget
       echo $after_widget;
    }
 
-   // --------------------------------------------------------------
-   // Show the blitzortung 
-   // --------------------------------------------------------------
+   /**
+    * The 'core function' of this widget: loads the defined @ref wetterturnier_webcamObjects
+    * via current city (@ref wetterturnier_cityObject) and displays them if there
+    * are any. If there are no images a short string will be shown.
+    */
    function show_webcams() {
 
       global $wpdb;

@@ -513,14 +513,25 @@ class wetterturnier_userclass extends wetterturnier_generalclass
      * to change what will be shown). 
      */
     function shortcode_wetterturnier_ranking( $args ) {
-        $args = shortcode_atts( array('type'=>'weekend', // default type
-                                      'limit'=>false, // shows top X
-                                      'tdate'=>FALSE, // An explicit tournament date can be set
-                                      'city'=>false, // for single-city-rankings
-                                      'cities'=>'1,2,3', // for cities ranking
-                                      'slim'=>false, // Hide some columns
-                                      'weeks'=>15, // for total- and cities ranking
-                                      'header'=>true, // Hide header title and stuff
+        // The first array defined is the 'default settings array',
+        // the second ($args) the user options.
+        // type'=>'weekend',     default type
+        // limit'=>false,        shows top X
+        // tdate'=>FALSE,        An explicit tournament date can be set
+        // city'=>false,         for single-city-rankings
+        // cities'=>'1,2,3',     for cities ranking
+        // slim'=>false,         Hide some columns
+        // weeks'=>15,           for total- and cities ranking
+        // header'=>true,        Hide header title and stuff
+        // $args are the user-args, will be combined with de defaults.
+        $args = shortcode_atts( array('type'=>'weekend',
+                                      'limit'=>false,
+                                      'tdate'=>FALSE,
+                                      'city'=>false,
+                                      'cities'=>'1,2,3',
+                                      'slim'=>false,
+                                      'weeks'=>15,
+                                      'header'=>true,
                                       'hidebuttons'=>false), $args );
         if ( $args["slim"] === "true" )    { $args["slim"] = true; } else { $args["slim"] = false; }
         if ( $args["header"] === "false" ) { $args["header"] = false; } else { $args["header"] = true; }
@@ -603,7 +614,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
     /** List of cities/stations and the corresponding stations.
      * Used in frontend (rules/spielregeln).
-    */
+     */
     function shortcode_wetterturnier_stationinfo( ) {
        $res = array("<ul>");
        foreach ( $this->get_all_cityObj() as $cityObj ) {
@@ -1222,7 +1233,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             echo "<table id=\"".$tableid."\" class=\"wttable-show-".$type." wttable-show tablesorter ".$wttable_style."\">\n"
                 ."  <thead>\n"
                 ."    <tr>\n"
-                .$nameth // Player's name
+                .$nameth
                 ."      <th class=\"param-day filter-false\">".__("Day","wpwt")."</th>";
                 // Adding header (parameter names)
                 if ( ! $showday ) {                        $params = $data->day_1->params; }

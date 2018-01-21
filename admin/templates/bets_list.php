@@ -14,6 +14,13 @@ if(!class_exists('WP_List_Table')){
 }
 // Import personal list class
 require_once( sprintf("%s/../classes/bets_list.php",dirname(__FILE__)) );
+require_once( sprintf("%s/../../betclass.php",dirname(__FILE__)) );
+$WTbetclass = new wetterturnier_betclass();
+//
+//print property_exists( $WTbetclass, "print_form" );
+//$WTbetclass->print_form(4,584,false,17550);
+
+//die("die in bet_list");
 
 // Check if the admin user is already on his/her way to edit
 // some values. If $_REQUEST['action'] is empty - or not 'edit', setting
@@ -176,8 +183,6 @@ if ( $edit ) {
    // the admin-user submitted changes) we will just show the form. Else save changes 
    // and show the form with the new values.
    } else {
-
-      global $WTbetclass;
 
       // Save cityID and userID onto simple-access variables
       $cityID = (int)$_REQUEST['cityID'];

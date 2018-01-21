@@ -1,18 +1,18 @@
 <?php
-// ------------------------------------------------------------------
-// - NAME:        widgets/leading.php 
-// - AUTHOR:      Reto Stauffer
-// - DATE:        2014-12-30
-// ------------------------------------------------------------------
-// - DESCRIPTION: Shows leading minimap if there is an image. 
-// ------------------------------------------------------------------
-
+/**
+ * This is the leading widget for wp-wetterturnier. The leading
+ * widget shows the best players of the tournament given the active city.
+ *
+ * @file leading.php
+ * @author Reto Stauffer
+ * @date Somewhen back in 2015
+ */
 class WP_wetterturnier_widget_leading extends WP_Widget
 {
 
-    // --------------------------------------------------------------
-    // Constructor method: construct the plugin
-    // --------------------------------------------------------------
+    /**
+     * Setting up the widget name and the control options
+     */
     function __construct() {
 
         global $WTuser;
@@ -27,10 +27,11 @@ class WP_wetterturnier_widget_leading extends WP_Widget
 
     }
 
-
-    // --------------------------------------------------------------
-    // widget admin form creation
-    // --------------------------------------------------------------
+   /**
+    * Creates the admin-widget box (drag-and-drop widget with attributes/settings)
+    *
+    * @param array $instance The widget options
+    */
     function form($instance) {  
         // Check values
         if( $instance) {
@@ -55,9 +56,15 @@ class WP_wetterturnier_widget_leading extends WP_Widget
         <?php
     }
 
-    // --------------------------------------------------------------
-    // widget update
-    // --------------------------------------------------------------
+    /**
+     * Processing widget options on save
+     *
+     * @param array $new_instance The new options
+     *
+     * @param array $old_instance The previous options
+     *
+     * @return array $instance (updated)
+     */
     function update($new_instance, $old_instance) {
         $instance = $old_instance;
         // Fields
@@ -67,11 +74,14 @@ class WP_wetterturnier_widget_leading extends WP_Widget
     }
 
 
-    // --------------------------------------------------------------
-    // widget display
-    // --------------------------------------------------------------
+    /**
+     * Outputs the content of the widget
+     *
+     * @param array $args
+     *
+     * @param array $instance
+     */
     function widget( $args, $instance ) {
-
 
         extract( $args, EXTR_SKIP );
 
@@ -96,9 +106,16 @@ class WP_wetterturnier_widget_leading extends WP_Widget
         echo $after_widget;
     }
 
-    // --------------------------------------------------------------
-    // Show the leading 
-    // --------------------------------------------------------------
+    /**
+     * The 'core' function of the widget, creates the output.
+     * 
+     * @todo Should be based on a rankingclass object and procude
+     * it's own output rather than using a function from the userclass.
+     *
+     * @param array $args
+     *
+     * @param array $instance
+     */
     function show_leading() {
 
       global $WTuser;

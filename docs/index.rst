@@ -39,6 +39,7 @@ Important blocks
     :maxdepth: 1
     :hidden:
 
+    overview.rst
     gettingstarted.rst
     theplugin.rst
     thewidgets.rst
@@ -83,9 +84,21 @@ Classes and Libraries
     :caption: Documentation
 
     files.rst
-    databases.rst
     classes.rst 
     api.rst
+
+Databases and Tables
+---------------------
+
+* :doc:`dbtables`: Contains database table structure and information
+  on the use of the table.
+
+.. toctree::
+    :maxdepth: 0
+    :hidden:
+    :caption: Databases
+
+    dbtables.rst
 
 Full Todo List from The Whole Documentation
 ===========================================

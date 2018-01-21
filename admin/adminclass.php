@@ -1,9 +1,8 @@
 <?php
-// ------------------------------------------------------------------
-// The adminclass contains all the functions needed to offer the
-// wordpress admin backend. Or at leas it is planned to put
-// all the functions into this file :).
-// ------------------------------------------------------------------
+/** The adminclass contains all the functions needed to offer the
+ * wordpress admin backend. Or at leas it is planned to put
+ * all the functions into this file :).
+ */
 class wetterturnier_adminclass extends wetterturnier_generalclass
 {
 
@@ -17,9 +16,7 @@ class wetterturnier_adminclass extends wetterturnier_generalclass
    //public $js_files  = array('wetterturnier.adminfunctions');
    public $options = false;
 
-   // --------------------------------------------------------------
-   // constructor method, loading admin menu items
-   // --------------------------------------------------------------
+   /** constructor method, loading admin menu items */
    function __construct()
    {
       // registering menu 
@@ -58,11 +55,10 @@ class wetterturnier_adminclass extends wetterturnier_generalclass
 
    }
 
-   // --------------------------------------------------------------
-   /// @details Enables the datepicker ui core plugin for the admin
-   ///   interface (to set up forms with date fields and a visual
-   ///   date selector).
-   // --------------------------------------------------------------
+   /** Enables the datepicker ui core plugin for the admin
+    * interface (to set up forms with date fields and a visual
+    * date selector).
+    */
    function enqueue_date_picker() {
       wp_enqueue_script(
          'field-date-js', 
@@ -74,9 +70,7 @@ class wetterturnier_adminclass extends wetterturnier_generalclass
       wp_enqueue_style( 'jquery-ui-datepicker' );
    } 
 
-   // ---------------------------------------------------------------
-   /// @details hide display name in profiles
-   // ---------------------------------------------------------------
+   /** hide display name in profiles */
    function disable_display_name_settings() {
       if ( ! current_user_can('manage_options') ) { ?>
       <script>
@@ -92,28 +86,21 @@ class wetterturnier_adminclass extends wetterturnier_generalclass
    }
 
 
-
-
-   // --------------------------------------------------------------
-   // Adding capabilities to the administrator role
-   // --------------------------------------------------------------
+   /** Adding capabilities to the administrator role */
    function add_admin_cap() {
       $role = get_role( 'administrator' );
       $role->add_cap( 'wetterturnier_admin' );
    }
 
-   // --------------------------------------------------------------
-   // If an admin changes either a bet or observation we have to
-   // recompute the points if the tournament date is not the current
-   // tournament date. If it is the cronjob will do it aniways.
-   // --------------------------------------------------------------
+   /** If an admin changes either a bet or observation we have to
+    * recompute the points if the tournament date is not the current
+    * tournament date. If it is the cronjob will do it aniways.
+    */
    function set_rerun_request( ) {
       print "Setting rerun request now";
    }
 
-    // --------------------------------------------------------------
-    // Datepicker for the admin interface 
-    // --------------------------------------------------------------
+    /** Datepicker for the admin interface */
     function tournament_datepicker_admin() {
         ?>
 
@@ -151,7 +138,6 @@ class wetterturnier_adminclass extends wetterturnier_generalclass
                 var dateToday = new Date();
                 var dateTomorrow = new Date( dateToday.getTime() + 86400*1000 )
 
-console.log( dateTomorrow )
                 // Initialize datepicker
                 $('#wetterturnier_tournaments').datepicker({
                     firstDay: 1,
@@ -197,9 +183,7 @@ console.log( dateTomorrow )
         <?php
     }
 
-   // --------------------------------------------------------------
-   // adding the admin menus for the Wordpress Wetterturnier plugin
-   // --------------------------------------------------------------
+   /** adding the admin menus for the Wordpress Wetterturnier plugin */
    public function add_admin_menu() {
       // Adding admin menu pages. Level moderation, position 30 in menu.
       add_menu_page( 'Wetterturnier', 'Wetterturnier', 'wetterturnier_admin', 'wp_wetterturnier',
@@ -267,12 +251,11 @@ console.log( dateTomorrow )
    function admin_show_rerunrequests()
    { require_once(sprintf("%s/views/rerunrequests.php", dirname(__FILE__))); }
 
-   // --------------------------------------------------------------
-   // Add station select
-   // $sel is optional. If set it has to be a station ID means
-   // that this station is currently selected and should be
-   // shown as the selected option for this select box.
-   // --------------------------------------------------------------
+   /** Add station select
+    * $sel is optional. If set it has to be a station ID means
+    * that this station is currently selected and should be
+    * shown as the selected option for this select box.
+    */
    function show_station_select($cityID,$number=false,$sel=false) {
 
       global $wpdb;
@@ -335,8 +318,8 @@ console.log( dateTomorrow )
 
             // If not set $sel and station in use -> skip
             $used = $this->station_is_in_use($rec->wmo);
-            if ( !isset($sel) & $used ) { continue; }
             // If sel is set, in use but not current station (not sel) skip
+            if ( !isset($sel) & $used ) { continue; }
             else if ( $used & $rec->ID != $sel ) { continue; }
             // If $sel is set and this is the selected station, do not continue
             // and set the selected string for the output option below.
@@ -354,10 +337,9 @@ console.log( dateTomorrow )
 
    }
 
-   // --------------------------------------------------------------
-   // Returns true or fals if a wmo station is in use of a city
-   // or not.
-   // --------------------------------------------------------------
+   /** Returns true or fals if a wmo station is in use of a city
+    * or not.
+    */
    function station_is_in_use( $wmo ) {
 
       global $wpdb;

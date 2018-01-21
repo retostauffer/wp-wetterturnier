@@ -1559,7 +1559,6 @@ class wetterturnier_generalclass
                    ." bets.betdate-bets.tdate AS day, "
                    ." bets.placed AS placed, bets.placedby AS placedby, "
                    ." CASE WHEN stat.ID > 0 THEN 1 ELSE 0 END AS status, "
-                   //." CASE WHEN count(stat.ID) >0  THEN 1 ELSE 0 END AS status, "
                    ." par.paramName as paramName FROM "
                    .$wpdb->prefix."wetterturnier_bets AS bets "
                    ." LEFT OUTER JOIN "

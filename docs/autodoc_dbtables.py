@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2018-01-19, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-01-19 14:09 on marvin
+# - L@ST MODIFIED: 2018-01-21 13:27 on marvin
 # -------------------------------------------------------------------
 
 import logging
@@ -256,6 +256,16 @@ class setup( object ):
                 key_res.append("``({:s})``".format( ", ".join(on) ) )
 
                 res.append( " ".join(key_res) )
+
+        # Create partition information
+        import re
+        cur.execute("SHOW CREATE TABLE {:s};".format(table))
+        data = cur.fetchone()
+        partitions = re.findall(".*(PARTITION.*),.*", "".join(data))
+        if len(partitions) > 0:
+            res.append("Partitions on:\n\n")
+            for rec in partitions: res.append("* ``{:s}``\n".format(rec))
+
 
         res.append( "\n\n" )
                     

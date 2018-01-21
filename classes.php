@@ -187,8 +187,8 @@ class wetterturnier_cityObject {
  * the php code!
  *
  * @param $init. Initial value, numeric, required. Depending on
- *   input parameter $by this is either the station ID or station
- *   wmo identification number.
+ * input parameter $by this is either the station ID or station
+ * wmo identification number.
  *
  * @param $by. String, default is 'ID'. Allowed are 'ID' or 'wmo'.
  *
@@ -196,8 +196,8 @@ class wetterturnier_cityObject {
  */
 class wetterturnier_stationObject {
 
-   /// Attribute to store the station information. Similar to 
-   /// the @ref wetterturnier_cityObject class. Initial value is NULL.
+   // Attribute to store the station information. Similar to 
+   // the @ref wetterturnier_cityObject class. Initial value is NULL.
    private $data = NULL;
    private $params = NULL;
 
