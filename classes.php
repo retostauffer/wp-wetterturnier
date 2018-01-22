@@ -766,7 +766,9 @@ class wetterturnier_latestobsObject {
         // If factor is 0 we are done as well.
         if ( $factor == 0. ) { return($values); }
         // Else descale.
-        for ( $i=0; $i<count($values); $i++ ) { $values[$i] = (double)$values[$i]/$factor; } 
+        for ( $i=0; $i<count($values); $i++ ) {
+           $values[$i] = (is_null($values[$i])) ? null : (double)$values[$i]/$factor;
+        }
         return( $values );
     }
 
@@ -790,11 +792,12 @@ class wetterturnier_latestobsObject {
         // Specify columns to ignore. Columns already set in $cols can
         // be pre-specified to keep the order.
         $ignore_columns = array("statnr","msgtyp","utime","ucount");
-        $cols = array("stint","datum","stdmin");
+        $forced_cols = array("stint","datum","stdmin","datumsec");
+        $cols = array();
         // Prepare columns to load
         foreach ( $this->wpdb->get_results("SHOW COLUMNS FROM obs.live;") as $rec )
         {
-            if ( in_array($rec->Field,$cols) ) { continue; }
+            if ( in_array($rec->Field,$cols) || in_array($rec->Field,$forced_cols) ) { continue; }
             if ( ! in_array($rec->Field,$ignore_columns) ) { array_push($cols,$rec->Field); }
         }
 
@@ -814,9 +817,10 @@ class wetterturnier_latestobsObject {
         } 
 
         // Fetching data from database
-        $sql   = sprintf("SELECT %s FROM obs.live WHERE statnr=%d %s "
+        sort( $cols );
+        $sql   = sprintf("SELECT %s,%s FROM obs.live WHERE statnr=%d %s "
                         ."ORDER BY datum DESC, stdmin DESC %s;",
-                        join( ",", $cols ), (int)$this->station->get("wmo"), 
+                        join( ",", $forced_cols ), join( ",", $cols ), (int)$this->station->get("wmo"), 
                         ( is_null($where) ? "" : $where ),
                         ( is_null($limit) ? "" : sprintf(" LIMIT %d",$limit) ) );
 

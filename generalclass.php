@@ -1232,14 +1232,18 @@ class wetterturnier_generalclass
     ///   tournament (even if some would expect one). All others (not
     ///   in database) are 'no tournament' as well, but not explicitly
     ///   labeled as 'no tournament'.
+    ///   Note: returns next 50 tournaments (reduce amount of data
+    ///   fetched every time the widget is shown).
     ///
     /// @return Array of stdClass objects containing `tdate` (numeric
     ///   representation of the tournament date) and `status`.
     // --------------------------------------------------------------
     public function tournament_get_dates() {
         global $wpdb;
+        $today = (int)(time()/86400);
         $res = $wpdb->get_results(sprintf("SELECT tdate, status FROM "
-                             ." %swetterturnier_dates", $wpdb->prefix));
+                ." %swetterturnier_dates WHERE tdate >= %d ORDer BY tdate LIMIT 50",
+                $wpdb->prefix, $today));
         if ( ! $res ) { return false; }
         // Else return status
         $data = array();
