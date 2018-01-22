@@ -22,10 +22,25 @@ a data archive, and access to a set of important data sets such as observations 
    :alt: Screenshot Frontend
    :align: center
 
-Please note that this is only one part of the system. To get the whole system running
-the `Wetterturnier backend <https://github.com/retostauffer/wetterturnier-backend>`_
-is needed which prepares the observations, computes mean bets for specific groups, and
-computes the points for the ranking system.
+Please note that this is only one part of the system. To get the whole system
+running the `Wetterturnier backend
+<https://github.com/retostauffer/wetterturnier-backend>`_ is needed which
+prepares the observations, computes mean bets for specific groups, and computes
+the points for the ranking system.  For more information please visit the
+`documentation on readthedocs <http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/overview.html>_`.
+
+Documentation
+=============
+
+The `documentation <http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest>`_
+for this repository can be found on
+`readthedocs <http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest>`_. An
+overview of the full **wetterturnier system** (which this plugin is the frontend core)
+can be found under `documentation > overview <http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/overview.html>`_.
+
+If there are any questions please do not hesitate to contact one of our
+`contributers trough github <https://github.com/retostauffer/wp-wetterturnier/graphs/contributors>`_
+or via the `Wetterturnier.de Website <http://www.wetterturnier.de/the-team/>`_.
 
 
 License Information
@@ -36,4 +51,17 @@ and/or modify it under the terms of the GNU General Public License as published
 by the Free Software Foundation, either version 3 of the License, or (at your
 option) any later version. The full :download:`LICENSE` file is included in the repository
 and/or can be found on `gnu.org <https://www.gnu.org/licenses/gpl-3.0.txt>`_.
+
+Code of Conduct
+===============
+
+We care about oterhs, their attitude, and their ideology wherefore we follow the
+[Contributor Covenant][codhomepage] *code of conduct*. The full code of conduct
+is included in the repository. If you wanna share ideas and/or contribute to this
+repository please follow these rules.
+
+[cochomepage]: http://contributor-covenant.org
+[cocversion]: http://contributor-covenant.org/version/1/4/
+
+
 
