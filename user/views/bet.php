@@ -28,7 +28,11 @@ if ( ! is_user_logged_in() ) {
    wp_login_form( );
 } else {
 
-   global $WTbetclass;
+   // - Loading bet-class class
+   require_once( sprintf("%s/../../betclass.php",dirname(__FILE__)) );
+ 
+   // - Initialize betclass object.
+   $WTbetclass = new wetterturnier_betclass();
 
    // - If not empty _POST, update database
    if ( ! empty($_POST) ) {

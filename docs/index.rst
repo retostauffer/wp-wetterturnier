@@ -42,6 +42,8 @@ Important blocks
     overview.rst
     gettingstarted.rst
     theplugin.rst
+    admin.rst
+    shortcodes.rst
     thewidgets.rst
 
 Known Issues

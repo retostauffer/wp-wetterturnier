@@ -49,34 +49,20 @@ function end_form()   {
 <h1>Wetterturnier Settings</h1>
 
 <help>
-   The <b>settings</b> section allows you to control some of the
-   basic wetterturnier plugin settings. Please note that changes will
-   immediately affect the tournament. Settings you can change in here:
-   <ul>
-      <li><b>Closing time:</b> the time when the bet-form will be closed.</li>
-      <li><b>Tournament offset:</b> actually the bet-form closes <b>N</b> minutes
-         after the official closing time, however, can also be set to zero. Was
-         a requirement from the admins while the tool was developed.</li>
-      <li><b>Bet-form opening:</b> how many days before the official tournament-date
-         the bet-form should be opened. Only the next tournament will be shown, always.
-         If you have scheduled one tournament a day, and the opening starts 2 days before,
-         the bet-form will only be available for the next one, not for two, or even more
-         tournaments in the future.</li>
-      <li><b>Date format:</b> how dates should be displayed on the frontend (date only).</li>
-      <li><b>Datetime format:</b> how date and time should be displayed on the frontend.</li>
-      <li><b>Float number format:</b> there are two options. One character can be specified
-         which is used as the thousand separator (e.g., 1.035, english format), the other
-         one specifies the decimal separator.</li>
-      <li><b>Terms links:</b>: Depending on the language we have to show our users the
-         english or german version of the "Terms and Conditions" or "Nutzungsbedingungen".</li>
-      <li><b>Number of bet-days:</b> currently two (e.g., on a friday-tournament bets
-         have to be placed for Saturday, and Sunday). <strike>Could also be changed.</strike>
-         <i>Note: large parts of the code are ready to handle more than two days. However,
-         some core methods are not. The database design only allows two forecast bet 
-         days at the moment. Would require quite a bit of programming to change this
-         (Reto, June 2017).</i></li>
-      <li><b>Others:</b> see settings page.</li>
-   </ul>
+    Information about the different settings can be found in the documentation
+    of the Wordpress Wetterturnier Plugin.
+    <ul>
+        <li>
+            <a href="https://github.com/retostauffer/wp-wetterturnier" target="_new">
+                Github repository
+            </a>
+        </li>
+        <li>
+            <a href="http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/" target="_new">
+                Documentation on readthedocs
+            </a>
+        </li>
+    </ul>
 </help>
 
 

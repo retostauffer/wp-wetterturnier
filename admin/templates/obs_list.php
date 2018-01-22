@@ -15,6 +15,8 @@ if(!class_exists('WP_List_Table')){
 }
 // Import personal list class
 require_once( sprintf("%s/../classes/obs_list.php",dirname(__FILE__)) );
+require_once( sprintf("%s/../../betclass.php",dirname(__FILE__)) );
+$WTbetclass = new wetterturnier_betclass();
 
 // Check if the admin user is already on his/her way to edit
 // some values. If $_REQUEST['action'] is empty - or not 'edit', setting
@@ -159,7 +161,6 @@ if ( $edit ) {
    // and show the form with the new values.
    } else {
 
-      global $WTbetclass;
       $cityID  = (int)$_REQUEST['cityID'];
       $station = (int)$_REQUEST['station'];
 
