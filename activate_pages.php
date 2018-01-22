@@ -1,9 +1,13 @@
 <?php
-// Activate some pages for the wp-wetterturnier frontend
-
 global $wpdb;
 
 
+/**
+ * Activate pages when the wordpress wp-wetterturnier plugin is getting
+ * activated. This has no effect on a running system!
+ *
+ * @todo Needs a check, not yet fully tested!
+ */
 function wp_wetterturnier_add_the_page($lang) {
 
     if ( strlen($lang) === 0 ) {

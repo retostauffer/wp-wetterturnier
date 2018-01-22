@@ -1,20 +1,29 @@
 <?php
-// ------------------------------------------------------------------
-/// @file oldoutputclass.php
-/// @author Reto Stauffer
-/// @date January 9 2018
-/// @brief Mimiking the old archive text files.
-// ------------------------------------------------------------------
+/**
+ * A helper class returning the ranking/points/bets from the last weekend.
+ * This file (only the upper part at the moment) looks exactely like the
+ * ASCII files before 2018. Some more details see class description.
+ *
+ * @file oldoutputclass.php
+ * @author Reto Stauffer
+ * @date January 9 2018
+ * @brief Mimiking the old archive text files.
+ */
 
 
-// ------------------------------------------------------------------
-/// @details A class to handle city information. Loads and stores
-// ------------------------------------------------------------------
+/**
+ * A helper class returning the ranking/points/bets from the last weekend.
+ * This file (only the upper part at the moment) looks exactely like the
+ * ASCII files before 2018 and can be accessed under the same URL's
+ * using .htaccess redirects. The idea was that Moses comes back to life,
+ * however, the last two weeks this didn't happen.
+ * This class is used solely by oldarchive.php in the same directory.
+ */
 class wetterturnier_oldoutputObject {
 
-   /// Will contain a copy of the global $wpdb instance. Used as
-   /// class-internal reference for database requests.
-   private $wpdb;
+    /// Will contain a copy of the global $wpdb instance. Used as
+    /// class-internal reference for database requests.
+    private $wpdb;
 	/// Attribute to store the tournament date.
 	private $tdate;
 	/// Attribute to store the cityObject.
@@ -22,31 +31,46 @@ class wetterturnier_oldoutputObject {
 	/// Attribute to store the number of bet days.
 	private $days;
 
-   function __construct( $cityObj, $tdate, $days = 2 ) {
+    /**
+     * Object constructor.
+     *
+     * @param object $cityObj Object of class @ref wetterturnier_cityObject for which
+     * the data should be returned.
+     *
+     * @param integer $tdate Tournament date as days since 1970-01-01 representation.
+     *
+     * @param integer $days Number of days, default is 2, the current setting.
+     */
+    function __construct( $cityObj, $tdate, $days = 2 ) {
 
-      global $wpdb; $this->wpdb = $wpdb;
+       global $wpdb; $this->wpdb = $wpdb;
 
-		# Convert to tdate, days since 1970-01-01
-		$this->tdate   = $tdate;
-		$this->cityObj = $cityObj;
-		$this->days    = $days;
+     	# Convert to tdate, days since 1970-01-01
+     	$this->tdate   = $tdate;
+     	$this->cityObj = $cityObj;
+     	$this->days    = $days;
 
-      # Check if access is granted
-      global $WTuser;
-      ob_start();
-      $closed = $WTuser->check_view_is_closed( $this->tdate );
-      ob_end_clean();
-      if ( $closed ) { die("No access! Go away, please! :)"); }
+       # Check if access is granted
+       global $WTuser;
+       ob_start();
+       $closed = $WTuser->check_view_is_closed( $this->tdate );
+       ob_end_clean();
+       if ( $closed ) { die("No access! Go away, please! :)"); }
 
-   }
+    }
 
-	// ---------------------------------------------------------------
-	/// @details Helper function. Returns the output format (as string!).
-	/// @param $pramName. String, name of the parameter.
-	/// @return Returns a string of type '%Xs' for a string of length X
-	///	where X depends on the input $paramName.
-	// ---------------------------------------------------------------
+    /**
+     * Helper function. Returns the output format (as string!), someting
+     * like '%.3f ' or '  %8d '.
+     *
+     * @param string $paramName Name of the pararameter. Used to return
+     * the correct format from a lookup-procedure.
+     *
+	 * @return Returns a string of type '%Xs' for a string of length X
+	 *where X depends on the input $paramName.
+	 */
 	private function _get_param_format_( $paramName ) {
+        # Note that there is no space after Wn, looks horrible, but is as it is.
 		if ( in_array( $paramName, array("name") ) )
 		{ $fmt = "%-25s"; }	
 		else if ( in_array( $paramName, array( "TTm","TTn","TTd","RR") ) )
@@ -54,7 +78,7 @@ class wetterturnier_oldoutputObject {
 		else if ( in_array( $paramName, array( "N" ) ) )
 		{ $fmt = " %1s"; }	
 		else if ( in_array( $paramName, array( "Wn" ) ) )
-		{ $fmt = "%2s"; }	 # No space!
+		{ $fmt = "%2s"; }
 		else if ( in_array( $paramName, array( "ff","fx","Wv" ) ) )
 		{ $fmt = " %2s"; }	
 		else if ( in_array( $paramName, array( "Sd" ) ) )
@@ -67,36 +91,43 @@ class wetterturnier_oldoutputObject {
 		return( $fmt );
 	}
 
-	// -----------------------------------------------------------------
-	/// @details Helper function to cut a string to a specific length if
-	///	it is longer than $len.
-	/// @param $str. String uf unknown length.
-	/// @param $len. Integer, length to which the string should be cut if longer than $len.
-	/// @return Returns string cut to length $len.
-	// -----------------------------------------------------------------
+    /**
+     * Helper function to cut a string to a specific length if it is longer than $len.
+     *
+	 * @param $str. String uf unknown length.
+     *
+	 * @param $len. Integer, length to which the string should be cut if longer than $len.
+     *
+	 * @return Returns string cut to length $len.
+	 */
 	private function _str_cut_( $str, $len ) {
 		if ( strlen($str) <= $len ) { return( $str ); }
 		return( substr( $str, 0, $len ) );
 	}
 
-   // -----------------------------------------------------------------
-   /// @details Heper function to always show float point numbers
-   ///   in the same format, with a ".".
-   /// @param $value. Float value.
-   /// @param $decimals. Integer, deault 1, number of digits after comma.
-   /// @return Returns string using number_format with fixed format
-   ///   internally.
-   // -----------------------------------------------------------------
+   /**
+    * Heper function to always show float point numbers
+    * in the same format, with a ".".
+    *
+    * @param $value. Float value.
+    *
+    * @param $decimals. Integer, deault 1, number of digits after comma.
+    *
+    * @return Returns string using number_format with fixed format internally.
+    */
    private function show_number( $value, $decimals = 1 ) {
       return number_format( $value, $decimals, ".", "" );
    }
 
 
-	// -----------------------------------------------------------------
-	/// @details This is the main function which proces the output.
-	/// 	No extra inputs needed, all we need was already processed
-	///	in the class __construct method.
-	// -----------------------------------------------------------------
+	/**
+	 * This is the main function which proces the output.
+	 * No extra inputs needed, all we need was already processed
+	 * in the class __construct method.
+     * Note that I've removed two Umlaute (non utf-8 characters). They break
+     * my sphinx! And I am quite sure no one searches for non utf-8 to get
+     * the data position.
+     */
 	public function show() {
 
 		global $WTuser;
@@ -104,9 +135,9 @@ class wetterturnier_oldoutputObject {
 		// ------------------------------------------------------------------
 		// File header dingsda
 		// ------------------------------------------------------------------
-      printf("Innsbrucker Wetterprognoseturnier %s\n\n\n"
-			   ."Eingetroffene Werte und abgegebene Prognosen:\n\n",
-				date("d.m.Y",$this->tdate*86400));
+        printf("Innsbrucker Wetterprognoseturnier %s\n\n\n"
+               ."Eingetroffene Werte und abgegebene Prognosen:\n\n",
+                date("d.m.Y",$this->tdate*86400));
 
 		// Show stations and their values for day 1
 		for ( $day=1; $day <= $this->days; $day++ ) {
@@ -208,8 +239,8 @@ class wetterturnier_oldoutputObject {
 		// Mean points
 		
 		if ( $stats["N"] > 0 ) {
-      	printf("Die durchschnittliche Punktzahl beträgt:    %5s Punkte.\n"
-      	      ."Wertung für nicht teilnehmende Mitspieler:  %5s Punkte.\n\n",
+      	printf("Die durchschnittliche Punktzahl betragt:    %5s Punkte.\n"
+      	      ."Wertung fur nicht teilnehmende Mitspieler:  %5s Punkte.\n\n",
       	      $this->show_number($stats["points"]/$stats["N"]),
                $this->show_number($stats["Sleepy"]));
 		}
@@ -217,27 +248,6 @@ class wetterturnier_oldoutputObject {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

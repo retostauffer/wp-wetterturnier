@@ -1,18 +1,22 @@
 <?php
-// ------------------------------------------------------------------
-// - NAME:        widgets/latestobs.php 
-// - AUTHOR:      Reto Stauffer
-// - DATE:        2014-12-30
-// ------------------------------------------------------------------
-// - DESCRIPTION: Shows latestobs minimap if there is an image. 
-// ------------------------------------------------------------------
-
+/**
+ * This is the widget displaying the latest observations for all stations
+ * attached to a specific city (the active city). Note that this plugin
+ * uses the @ref wetterturnier_latestobsClass which itself makes use of the
+ * 'obs' database (proper read-permissions have to be set).
+ * If there are no data at all or the latest observations are too old they
+ * will not be displayed.
+ *
+ * @file latestobs.php
+ * @author Reto Stauffer
+ * @date Somewhen back in 2015
+ */
 class WP_wetterturnier_widget_latestobs extends WP_Widget
 {
 
-    // --------------------------------------------------------------
-    // Constructor method: construct the plugin
-    // --------------------------------------------------------------
+    /**
+     * Setting up the widget name and the control options
+     */
     function __construct() {
 
         global $WTuser;
@@ -28,9 +32,12 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
     }
 
 
-    // --------------------------------------------------------------
-    // widget admin form creation
-    // --------------------------------------------------------------
+
+    /**
+     * Creates the admin-widget box (drag-and-drop widget with attributes/settings)
+     *
+     * @param array $instance The widget options
+     */
     function form($instance) {  
         // Check values
         if( $instance) {
@@ -58,9 +65,15 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
         <?php
     }
 
-    // --------------------------------------------------------------
-    // widget update
-    // --------------------------------------------------------------
+    /**
+     * Processing widget options on save
+     *
+     * @param array $new_instance The new options
+     *
+     * @param array $old_instance The previous options
+     *
+     * @return array $instance (updated)
+     */
     function update($new_instance, $old_instance) {
         $instance = $old_instance;
         // Fields
@@ -69,12 +82,14 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
         return $instance;
     }
 
-
-    // --------------------------------------------------------------
-    // widget display
-    // --------------------------------------------------------------
+    /**
+     * Outputs the content of the widget
+     *
+     * @param array $args
+     *
+     * @param array $instance
+     */
     function widget( $args, $instance ) {
-
 
         extract( $args, EXTR_SKIP );
 
@@ -100,9 +115,11 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
         echo $after_widget;
     }
 
-    // --------------------------------------------------------------
-    // Show the latestobs 
-    // --------------------------------------------------------------
+    /**
+     * The 'core function' of this widget: loads latest observations from database.
+     * if the data are too old (older than $nhours) they won't be displayed, e.g.,
+     * if the data stream breaks down.
+     */
     function show_latestobs() {
 
         global $wpdb;

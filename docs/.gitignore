@@ -1,0 +1,17 @@
+
+# Ignore build
+generated
+_build
+html
+
+# Ignore local config files
+*.conf
+
+# Always include .conf.templates
+!*.conf.template
+
+# Take
+!.gitignore
+!conf.py
+!*.rst
+!Makefile

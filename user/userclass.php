@@ -1,9 +1,7 @@
 <?php
-// ------------------------------------------------------------------
-// The userclass contains all the necessary functions for the
-// frontend pages shown when visiting the wordpress page.
-// ------------------------------------------------------------------
-
+/** The userclass contains all the necessary functions for the
+ * frontend pages shown when visiting the wordpress page.
+ */
 class wetterturnier_userclass extends wetterturnier_generalclass
 {
 
@@ -36,9 +34,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     /// and admin (current_user_can('manage_options')).
     private $is_admin = false;
 
-    // --------------------------------------------------------------
-    // constructor method 
-    // --------------------------------------------------------------
+    /** constructor method  */
     function __construct()
     {
 
@@ -158,9 +154,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
 
-    // ---------------------------------------------------------------
-    /// @details hide display name in profiles
-    // ---------------------------------------------------------------
+    /** Hide display name in profiles */
     function disable_display_name_settings() {
        ?>
        <script type="text/javascript">
@@ -171,11 +165,11 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        </script>
     <?php }
 
-    // --------------------------------------------------------------
-    /// @details Adding special wetterturnier options to the user
-    ///     profile or settings page.
-    /// @param $user is a stdClass object containing the user Information.
-    // --------------------------------------------------------------
+    /** Adding special wetterturnier options to the user
+     * profile or settings page.
+     *
+     * @param $user is a stdClass object containing the user Information.
+     */
     function wt_custom_user_options( $user ) { ?>
         <h3>Wetterturnier Options</h3>
 
@@ -223,12 +217,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         </table>
     <?php }
 
-    // --------------------------------------------------------------
-    /// @details There is a @ref method called wt_custom_user_option
-    ///     which adds custom settings to the user profile page.
-    ///     This method saves the options to the database.
-    /// @param $user_id. Integer user ID of the active user.
-    // --------------------------------------------------------------
+    /** There is a @ref method called wt_custom_user_option
+     * which adds custom settings to the user profile page.
+     * This method saves the options to the database.
+     *
+     * @param $user_id. Integer user ID of the active user.
+     */
     function wt_save_custom_user_options( $user_id ) {
     
        // Securety
@@ -246,24 +240,22 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        }
     }
 
-    // --------------------------------------------------------------
-    /// @details Function which will be executed as soon as wordpress is loaded.
-    ///   Checks whether user is admin when logged in. Sets private attribute
-    ///   $this->is_admin to true.
-    // --------------------------------------------------------------
+    /** Function which will be executed as soon as wordpress is loaded.
+     * Checks whether user is admin when logged in. Sets private attribute
+     * $this->is_admin to true.
+     */
     function check_is_admin() {
        if ( ! is_admin() ) { $this->is_admin = true; }
        ///if ( ! current_user_can('manage_options') ) { $this->is_admin = true; }
     }
-    // --------------------------------------------------------------
-    /// @details Wrapper function for wordpress is_admin function.
-    /// @return Returns boolean attribute $this->is_admin.
-    // --------------------------------------------------------------
+
+    /** Wrapper function for wordpress is_admin function.
+     *
+     *  @return Returns boolean attribute $this->is_admin.
+     */
     function is_admin() { return( $this->is_admin ); }
 
-   // ---------------------------------------------------------------
-   // Append terms and conditions flag during registration
-   // ---------------------------------------------------------------
+   /** Append terms and conditions flag during registration */
    function wetterturnier_registration_form() {
       ?>
       <input type="checkbox" name="wt_accept"></input>
@@ -273,19 +265,17 @@ class wetterturnier_userclass extends wetterturnier_generalclass
              $this->get_terms_link(),__("Terms and Conditions","wpwt"));
    }
 
-   // ---------------------------------------------------------------
-   // Extends the bbpress profile page (see above,
-   // add_action('bbp_template_after_user_profile',...)) with some
-   // wetterturnier related statistics and stuff.
-   // ---------------------------------------------------------------
+   /* ---------------------------------------------------------------
+   /** Extends the bbpress profile page (see above,
+    * add_action('bbp_template_after_user_profile',...)) with some
+    * wetterturnier related statistics and stuff.
+    */
    function show_wetterturnier_user_profile() {
       print $this->shortcode_include("views/userprofile.php");
    }
 
 
-    // --------------------------------------------------------------
-    // Load js script snippet, manipulate, return and add to header
-    // --------------------------------------------------------------
+    /** Load js script snippet, manipulate, return and add to header */
     function add_cities_nav() {
 
         $css_pos = get_option("wetterturnier_cities_menu_css");
@@ -326,10 +316,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    // Loadaing wetterturnier.bet.tooltip.js and manipulate content.
-    // Add this (js) to the head of the wordpress. 
-    // --------------------------------------------------------------
+    /** Loadaing wetterturnier.bet.tooltip.js and manipulate content.
+     * Add this (js) to the head of the wordpress. 
+     */
     function wetterturnier_add_tooltip_js() {
 
         $content = file_get_contents(sprintf("%s/templates/wetterturnier.bet.tooltip.js",
@@ -353,9 +342,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    // load defined cities
-    // --------------------------------------------------------------
+    /** load defined cities */
     function initialize_cities_menu() {
         // Add all of them to the primary menu
         $nav_locations = get_nav_menu_locations();
@@ -364,9 +351,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    // Load js script snippet, manipulate, return and add to header
-    // --------------------------------------------------------------
+    /** Load js script snippet, manipulate, return and add to header */
     function add_wetterturnier_bet_validate_js() {
         global $wpdb;
 
@@ -403,9 +388,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
     
-    // --------------------------------------------------------------
-    // Check which city is choosen 
-    // --------------------------------------------------------------
+    /** Check which city is choosen */
     function city_check() {
 
         // If $_GET argument ['wetterturnier_city'] is set,
@@ -444,10 +427,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
     }
 
-    // --------------------------------------------------------------
-    // workaround function, only call it after init!
-    // add_action('init','logincheck'). Returns bool value.
-    // --------------------------------------------------------------
+    /** workaround function, only call it after init!
+     * add_action('init','logincheck'). Returns bool value.
+     */
     function logincheck() {
         if ( is_user_logged_in() ) {
             return(true);
@@ -456,30 +438,22 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         }
     }
 
-    // --------------------------------------------------------------
-    // In-page registration shortcode 
-    // --------------------------------------------------------------
+    /** In-page registration shortcode */
     function shortcode_wetterturnier_linkcollection() {
         return($this->shortcode_include("views/linkcollection.php"));
     }
 
-    // --------------------------------------------------------------
-    // In-page registration shortcode 
-    // --------------------------------------------------------------
+    /** In-page registration shortcode */
     function shortcode_wetterturnier_register() {
         return($this->shortcode_include("views/register.php"));
     }
 
-    // --------------------------------------------------------------
-    // Wetterturnier synop symbol overview. 
-    // --------------------------------------------------------------
+    /** Wetterturnier synop symbol overview. */
     function shortcode_wetterturnier_synopsymbols() {
         return($this->shortcode_include("views/synopsymbols.php"));
     }
 
-    // --------------------------------------------------------------
-    // Wetterturnier forecast and analysis map navigation
-    // --------------------------------------------------------------
+    /** Wetterturnier forecast and analysis map navigation */
     function shortcode_wetterturnier_mapsforecasts() {
         return($this->shortcode_include("views/maps-forecasts.php"));
     }
@@ -487,72 +461,77 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         return($this->shortcode_include("views/maps-analysis.php"));
     }
 
-    // --------------------------------------------------------------
-    // Wetterturnier show archive list and values. 
-    // Note: ob caches the "print output" of the functions in
-    // between ob_start and ob_end. We have to return the content
-    // to replace the [wetterturnier xxxx] shortcodes in the pages.
-    // --------------------------------------------------------------
+    /** Wetterturnier show archive list and values. 
+     * Note: ob caches the "print output" of the functions in
+     * between ob_start and ob_end. We have to return the content
+     * to replace the [wetterturnier xxxx] shortcodes in the pages.
+     */
     function shortcode_wetterturnier_archive() {
         return($this->shortcode_include("views/archive.php"));
     }
 
-    // --------------------------------------------------------------
-    // Wetterturnier show current values (bet/obs), last tournament 
-    // Note: ob caches the "print output" of the functions in
-    // between ob_start and ob_end. We have to return the content
-    // to replace the [wetterturnier xxxx] shortcodes in the pages.
-    // --------------------------------------------------------------
+    /** Wetterturnier show current values (bet/obs), last tournament 
+     * Note: ob caches the "print output" of the functions in
+     * between ob_start and ob_end. We have to return the content
+     * to replace the [wetterturnier xxxx] shortcodes in the pages.
+     */
     function shortcode_wetterturnier_current( $args ) {
         $args = shortcode_atts( array('daybyday'=>false), $args );
         return($this->shortcode_include("views/current.php",$args));
     }
 
-    // --------------------------------------------------------------
-    // Wetterturnier groups shows the groups and its users.
-    // Note: ob caches the "print output" of the functions in
-    // between ob_start and ob_end. We have to return the content
-    // to replace the [wetterturnier xxxx] shortcodes in the pages.
-    // --------------------------------------------------------------
+    /** Wetterturnier groups shows the groups and its users.
+     * Note: ob caches the "print output" of the functions in
+     * between ob_start and ob_end. We have to return the content
+     * to replace the [wetterturnier xxxx] shortcodes in the pages.
+     */
     function shortcode_wetterturnier_groups() {
         return($this->shortcode_include("views/groups.php"));
     }
 
-    // --------------------------------------------------------------
-    // There is a special form where users can apply theirselves
-    // to get member of a group. An administrator has to check
-    // the promotion and approve or delete the promotion.
-    // --------------------------------------------------------------
+    /** There is a special form where users can apply theirselves
+     * to get member of a group. An administrator has to check
+     * the promotion and approve or delete the promotion.
+     */
     function shortcode_wetterturnier_applygroup() {
         return($this->shortcode_include("views/applygroup.php"));
     }
 
-    // --------------------------------------------------------------
-    // Wetterturnier groups shows the groups and its users.
-    // Note: ob caches the "print output" of the functions in
-    // between ob_start and ob_end. We have to return the content
-    // to replace the [wetterturnier xxxx] shortcodes in the pages.
-    // --------------------------------------------------------------
+    /** Wetterturnier groups shows the groups and its users.
+     * Note: ob caches the "print output" of the functions in
+     * between ob_start and ob_end. We have to return the content
+     * to replace the [wetterturnier xxxx] shortcodes in the pages.
+     */
     function shortcode_wetterturnier_bet() {
         return($this->shortcode_include("views/bet.php"));
     }
 
-    // --------------------------------------------------------------
-    // The wetterturnier has different ranking tables like
-    // daily rankings, seasonal ranking, total ranking,
-    // and some more. This is a function including differnt ranking
-    // types, and also offers a set of options (if the user would like
-    // to change what will be shown). 
-    // --------------------------------------------------------------
+    /** The wetterturnier has different ranking tables like
+     * daily rankings, seasonal ranking, total ranking,
+     * and some more. This is a function including differnt ranking
+     * types, and also offers a set of options (if the user would like
+     * to change what will be shown). 
+     */
     function shortcode_wetterturnier_ranking( $args ) {
-        $args = shortcode_atts( array('type'=>'weekend', // default type
-                                      'limit'=>false, // shows top X
-                                      'tdate'=>FALSE, // An explicit tournament date can be set
-                                      'city'=>false, // for single-city-rankings
-                                      'cities'=>'1,2,3', // for cities ranking
-                                      'slim'=>false, // Hide some columns
-                                      'weeks'=>15, // for total- and cities ranking
-                                      'header'=>true, // Hide header title and stuff
+        // The first array defined is the 'default settings array',
+        // the second ($args) the user options.
+        // type'=>'weekend',     default type
+        // limit'=>false,        shows top X
+        // tdate'=>FALSE,        An explicit tournament date can be set
+        // city'=>false,         for single-city-rankings
+        // cities'=>'1,2,3',     for cities ranking
+        // slim'=>false,         Hide some columns
+        // weeks'=>15,           for total- and cities ranking
+        // header'=>true,        Hide header title and stuff
+        // $args are the user-args, will be combined with de defaults.
+        $args = shortcode_atts( array('type'=>'weekend',
+                                      'limit'=>false,
+                                      'tdate'=>FALSE,
+                                      'city'=>false,
+                                      'cities'=>'1,2,3',
+                                      'slim'=>false,
+                                      'weeks'=>15,
+                                      'header'=>true,
                                       'hidebuttons'=>false), $args );
         if ( $args["slim"] === "true" )    { $args["slim"] = true; } else { $args["slim"] = false; }
         if ( $args["header"] === "false" ) { $args["header"] = false; } else { $args["header"] = true; }
@@ -563,9 +542,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         return($this->shortcode_include("views/ranking.php",$args));
     }
 
-    // --------------------------------------------------------------
-    // Referer to the dataexport
-    // --------------------------------------------------------------
+    /** Referer to the dataexport */
     function shortcode_wetterturnier_exportobslive() {
         return($this->shortcode_include("views/export-obslive.php"));
     }
@@ -573,32 +550,23 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         return($this->shortcode_include("views/export-obsarchive.php"));
     }
 
-    // --------------------------------------------------------------
-    // Statistics interfaces. There are some based on R, others are
-    // purely php based.
-    // --------------------------------------------------------------
+    /** Statistics interfaces. There are some based on R, others are purely php based. */
     function shortcode_wetterturnier_googlecharts() {
         return($this->shortcode_include("views/googlecharts.php"));
     }
 
-    // --------------------------------------------------------------
-    // Obs images 
-    // --------------------------------------------------------------
+    /** Obs images */
     function shortcode_wetterturnier_obsimages() {
         return($this->shortcode_include("views/obsimages.php"));
     }
 
-    // --------------------------------------------------------------
-    // Observation table
-    // --------------------------------------------------------------
+    /** Observation table */
     function shortcode_wetterturnier_obstable() {
         return($this->shortcode_include("views/obstable.php"));
     }
 
-    // --------------------------------------------------------------
-    // Show GEFS Meteograms and Meteogram data
-    // And the MOS forecasts
-    // --------------------------------------------------------------
+    /** Show GEFS Meteograms and Meteogram data
+     * And the MOS forecasts */
     function shortcode_wetterturnier_meteogram() {
         return($this->shortcode_include("views/meteogram.php"));
     }
@@ -620,12 +588,11 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         return($this->shortcode_include("views/judgingform.php",$args));
     }
 
-    // --------------------------------------------------------------
-    // Forward to bbpress profile if we can find the user name.
-    // Note: ob caches the "print output" of the functions in
-    // between ob_start and ob_end. We have to return the content
-    // to replace the [wetterturnier xxxx] shortcodes in the pages.
-    // --------------------------------------------------------------
+    /** Forward to bbpress profile if we can find the user name.
+     * Note: ob caches the "print output" of the functions in
+     * between ob_start and ob_end. We have to return the content
+     * to replace the [wetterturnier xxxx] shortcodes in the pages.
+     */
     function shortcode_wetterturnier_profilelink($args) {
         $args = (object)shortcode_atts( array('user'=>false), $args );
         if ( ! $args->user ) { return(''); }
@@ -640,17 +607,14 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         return( '' ); 
     }
 
-    // --------------------------------------------------------------
-    // Frontend
-    // --------------------------------------------------------------
+    /** Frontend */
     function shortcode_wtcode( $args, $content ) {
       return( "<span class='wtcode'>".$content."</span>" );
     }
 
-    // --------------------------------------------------------------
-    // List of cities/stations and the corresponding stations.
-    // Used in frontend (rules/spielregeln).
-    // --------------------------------------------------------------
+    /** List of cities/stations and the corresponding stations.
+     * Used in frontend (rules/spielregeln).
+     */
     function shortcode_wetterturnier_stationinfo( ) {
        $res = array("<ul>");
        foreach ( $this->get_all_cityObj() as $cityObj ) {
@@ -667,10 +631,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        return( join("\n",$res) );
     }
 
-    // --------------------------------------------------------------
-    // Frontend output to show which parameters of each station are neglected!
-    // Used in frontend (rules/spielregeln).
-    // --------------------------------------------------------------
+    /** Frontend output to show which parameters of each station are neglected!
+     * Used in frontend (rules/spielregeln).
+     */
     function shortcode_wetterturnier_stationparamdisabled( ) {
        $res = array("<ul>");
        foreach ( $this->get_all_cityObj() as $cityObj ) {
@@ -688,11 +651,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        return( join("\n",$res) );
     }
 
-    // --------------------------------------------------------------
-    // Function used for the shortcodes - includes the file using
-    // buffering. Returns the content which should replace the
-    // shortcode in the pages.
-    // --------------------------------------------------------------
+    /** Function used for the shortcodes - includes the file using
+    * buffering. Returns the content which should replace the
+    * shortcode in the pages.
+    */
     function shortcode_include( $file, $args=NULL ) {
         ob_start();
         require(sprintf('%s/%s',dirname(__FILE__),$file)); 
@@ -700,14 +662,13 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         ob_end_clean(); return($content);
     }
 
-    // --------------------------------------------------------------
-    // Counting how many players already got points for a certain
-    // tournament date for each city. The method is used for some
-    // applications where the current leading players will be shown.
-    // If there are no points for any of the players, it does not make
-    // a lot of sense to show the "ranking of the ongoing tournament"
-    // bur rather show the "ranking of the last tournament".
-    // --------------------------------------------------------------
+    /** Counting how many players already got points for a certain
+     * tournament date for each city. The method is used for some
+     * applications where the current leading players will be shown.
+     * If there are no points for any of the players, it does not make
+     * a lot of sense to show the "ranking of the ongoing tournament"
+     * bur rather show the "ranking of the last tournament".
+     */
     function scored_players_per_town( $tdate ) {
 
       global $wpdb;
@@ -729,12 +690,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
 
 
-    // --------------------------------------------------------------
-    // Used to display the group-lists
-    // --------------------------------------------------------------
-    /// @details Prints the table of a certain group and its members.
-    /// @param $inactive. Bool. If true this indicates that there are
-    ///   inactive users in the group.
+    /** Used to display the group-lists
+     *
+     * @details Prints the table of a certain group and its members.
+     * @param $inactive. Bool. If true this indicates that there are
+     * inactive users in the group.
+    */
     function print_group_table($id,$group,$users,$inactive) {
 
         echo '<h2>'.$group->groupName.'</h2>';
@@ -800,11 +761,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
 
-    // ------------------------------------------------------------------
-    // Loading all tournament dates stored in the db ever for this
-    // city (based on the bets, not on the obs. Should change that
-    // probably).
-    // ------------------------------------------------------------------
+    /** Loading all tournament dates stored in the db ever for this
+     * city (based on the bets, not on the obs. Should change that
+     * probably).
+     */
     function archive_show_bet_data() {
     
         global $wpdb;
@@ -1002,12 +962,11 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         }
     }
 
-    // --------------------------------------------------------------
-    /// @details Displays the 'color legend' which shows the color 
-    ///  mapping in the bet tables and allows the user to show/hide
-    ///  a certain type of players (e.g., mitteltips or automaten).
-    ///  Is a bit static, however, works.
-    // --------------------------------------------------------------
+    /** Displays the 'color legend' which shows the color 
+     * mapping in the bet tables and allows the user to show/hide
+     * a certain type of players (e.g., mitteltips or automaten).
+     * Is a bit static, however, works.
+     */
     function archive_show_colorlegend() { ?>
                <?php
                printf("<b>%s</b><br>\n",__("Color legend:","wpwt"));
@@ -1037,11 +996,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                </ul>
     <?php }
 
-    // ------------------------------------------------------------------
-    // Show total points for a given weekend with additional link to
-    // the archive to see the single parameter points if somewone is
-    // interested in that.
-    // ------------------------------------------------------------------
+    /** Show total points for a given weekend with additional link to
+     * the archive to see the single parameter points if somewone is
+     * interested in that.
+     */
     function archive_show_ranking_weekend() {
     
         global $wpdb;
@@ -1162,10 +1120,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
 
-    // --------------------------------------------------------------
-    // Show archive and/or current data
-    // If input $pionts is true, loading points from database.
-    // --------------------------------------------------------------
+    /** Show archive and/or current data
+     * If input $pionts is true, loading points from database.
+     */
     function archive_show( $type, $tdate, $points = false, $showday = False ) {
 
         global $wpdb;
@@ -1276,7 +1233,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             echo "<table id=\"".$tableid."\" class=\"wttable-show-".$type." wttable-show tablesorter ".$wttable_style."\">\n"
                 ."  <thead>\n"
                 ."    <tr>\n"
-                .$nameth // Player's name
+                .$nameth
                 ."      <th class=\"param-day filter-false\">".__("Day","wpwt")."</th>";
                 // Adding header (parameter names)
                 if ( ! $showday ) {                        $params = $data->day_1->params; }
@@ -1307,9 +1264,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
     }
 
-    // --------------------------------------------------------------
-    // Show archive and/or current data
-    // --------------------------------------------------------------
+    /** Show archive and/or current data */
     function show_bet_data_rows($data,$number,$type,$points=false,$editable=false,$tdate) {
 
         // Do I have to display observations?
@@ -1446,10 +1401,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         } 
     }
 
-   // ---------------------------------------------------------------
-   /// @details Function to add the 'edit' button to observations
-   ///   and bets if an admin is logged in.
-   // ---------------------------------------------------------------
+   /** Function to add the 'edit' button to observations
+    * and bets if an admin is logged in.
+    */
    function create_edit_button( $type, $cityObj, $identifier, $tdate ) {
       // If no admin: return
       if ( ! current_user_can('manage_options') ) { return(""); }
@@ -1465,9 +1419,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       }
    }
 
-   // ---------------------------------------------------------------
-   // Loading average points from database
-   // ---------------------------------------------------------------
+   /** Loading average points from database */
    public function get_average_points( $cityID=False, $tdate=False ) {
       
       global $wpdb;
@@ -1491,9 +1443,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       return $this->number_format($res->points,1);
    }
 
-   // ---------------------------------------------------------------
-   // Loading current sleepy points 
-   // ---------------------------------------------------------------
+   /** Loading current sleepy points */
    public function get_sleepy_points( $cityID=False, $tdate=False ) {
       
       global $wpdb;
@@ -1519,12 +1469,11 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       }
    }
 
-   // ---------------------------------------------------------------
-   // There is an ajax function call to save users which try to apply for
-   // a group membership.
-   // Returns json array. If user is allready an active member of this group,
-   // return value 'got' is 'ismember'.
-   // ---------------------------------------------------------------
+   /** There is an ajax function call to save users which try to apply for
+    * a group membership.
+    * Returns json array. If user is allready an active member of this group,
+    * return value 'got' is 'ismember'.
+    */
    public function applygroup_ajax() {
 
        global $wpdb;
@@ -1578,11 +1527,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    }
 
 
-   // ---------------------------------------------------------------
-   // This is a small ajax script I am using to call an Rscript
-   // on the prognose server. Used for different R-Calls
-   // WARNING: only integer values as arguments allowed.
-   // ---------------------------------------------------------------
+   /** This is a small ajax script I am using to call an Rscript
+    * on the prognose server. Used for different R-Calls
+    * WARNING: only integer values as arguments allowed.
+    */
    public function judging_ajax() {
 
       global $wpdb;
@@ -1624,10 +1572,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
    }
 
-   // ---------------------------------------------------------------
-   // Used for the ranking-frontend: display details of a certain
-   // user. Dynamically loaded via an ajax call.
-   // ---------------------------------------------------------------
+   /** Used for the ranking-frontend: display details of a certain
+    * user. Dynamically loaded via an ajax call.
+    */
    public function wttable_show_details_ajax() {
       global $wpdb;
       global $WTuser;
@@ -1773,11 +1720,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    }
 
 
-   // ---------------------------------------------------------------
-   // This is a small ajax script I am using to call an Rscript
-   // on the prognose server. Used for different R-Calls
-   // WARNING: only integer values as arguments allowed.
-   // ---------------------------------------------------------------
+   /** This is a small ajax script I am using to call an Rscript
+    * on the prognose server. Used for different R-Calls
+    * WARNING: only integer values as arguments allowed.
+    */
    public function callRscript_ajax() {
 
       global $wpdb;
@@ -1841,14 +1787,13 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    }
 
 
-    // --------------------------------------------------------------
-    // Some pages are restricted for logged in users only. Instead
-    // of using wordpress 'private' pages (which will result in a
-    // 404: page not found if the user is not logged in) we are using
-    // this small method. If a user is not logged in, an access
-    // denied message will be shown. Return value 'true' in this case.
-    // else the return value will be 'false', and nothing will be shown.
-    // --------------------------------------------------------------
+    /** Some pages are restricted for logged in users only. Instead
+     * of using wordpress 'private' pages (which will result in a
+     * 404: page not found if the user is not logged in) we are using
+     * this small method. If a user is not logged in, an access
+     * denied message will be shown. Return value 'true' in this case.
+     * else the return value will be 'false', and nothing will be shown.
+     */
     function access_denied() {
        if ( is_user_logged_in() ) { return(False); }
        // Else the user is not logged in, show message and return True
@@ -1866,20 +1811,24 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        return(True);
     }
 
-    // --------------------------------------------------------------
-    /// @details Shows the leading players of the current or ongoing
-    ///   tournament.
-    /// @param $city. If `NULL` (default) the current or active city
-    ///   will be used. Can also be a string (city hash) or numeric
-    ///   value (city ID). Details see
-    ///   @ref wetterturnier_generalclass::get_current_cityObj
-    /// @param $tdate. Numeric representation of the tournament date.
-    ///   If `NULL` the current tournament will be used.
-    /// @param $number. Positive integer. Number of players which
-    ///   should be shown. Default is `3`.
-    /// @param $style. Default `NULL`. Can be set to 'wide' for a 
-    ///   landscape rather than a portrait representation.
-    // --------------------------------------------------------------
+    /** Shows the leading players of the current or ongoing
+     * tournament.
+     *
+     * @param $city. If `NULL` (default) the current or active city
+     * will be used. Can also be a string (city hash) or numeric
+     * value (city ID). Details see
+     *
+     * @ref wetterturnier_generalclass::get_current_cityObj
+     *
+     * @param $tdate. Numeric representation of the tournament date.
+     * If `NULL` the current tournament will be used.
+     *
+     * @param $number. Positive integer. Number of players which
+     * should be shown. Default is `3`.
+     *
+     * @param $style. Default `NULL`. Can be set to 'wide' for a 
+     * landscape rather than a portrait representation.
+     */
     function show_leading($city=NULL,$tdate=NULL,$number=3,$style=NULL) {
 
       global $wpdb;
@@ -2065,10 +2014,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
    }
 
-   // ---------------------------------------------------------------
-   // Loading available stations (and their dates) from the obs
-   // databases. Either 'obs.live' or 'obs.archive'.
-   // ---------------------------------------------------------------
+   /** Loading available stations (and their dates) from the obs
+    * databases. Either 'obs.live' or 'obs.archive'.
+    */
    public function obsdb_get_avaliable_stations( $table = 'archive' ) {
 
       global $wpdb;
@@ -2094,10 +2042,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    }
 
 
-
-
-
-}
+} // End of class!
 
 
 ?>

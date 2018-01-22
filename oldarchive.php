@@ -10,6 +10,9 @@ require_once("../../../wp-config.php");
 global $wpdb;
 global $WTuser;
 
+// Requires oldoutputclass
+require_once( sprintf("%s/oldoutputclass.php",dirname(__FILE__)) );
+
 $args = (object)$_REQUEST;
 if ( ! property_exists($args,"date") | ! property_exists($args,"city") ) {
 	die("Input arguments missing, stop.");

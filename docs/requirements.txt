@@ -1,0 +1,14 @@
+# We wana have three things. We use a virtualenv
+# but with site packages, so the rtd-theme might
+# already installed, in this case it should just say
+# that this depencency is already satisfied. Wat we
+# definitively need are the two php sphinx extensions
+# for autodoc and the phpdomain.
+#
+# I'm not using a specific version here as I hope that
+# newer versions will still support my commands :).
+sphinx
+sphinx-autobuild
+tk.phpautodoc
+sphinxcontrib-phpdomain
+sphinx_rtd_theme

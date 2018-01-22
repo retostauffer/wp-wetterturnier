@@ -1,0 +1,29 @@
+
+
+# Which format to create (none -> html and json are done aniways)
+formats:
+    - none
+
+# As this is one of our php code repositories we neec a bit of 
+# a more non-standard approach as the sphinxcontribution-phpdomain
+# package and the tk.phpautodoc packages we need for compilation 
+# are not available on the system itself.
+# This requirements file specifies the packages we need to have
+# installed in a virtual environment to be able to render our docs.
+requirements_file: docs/requirements.txt
+
+# This is default, we want to build the last image. Does not have
+# to be set, but ... why not.
+build:
+    image: latest
+
+# Important: using python version 2.7 as we know that our packages
+# for sphinx run under this version.
+# In addition we force readthedocs to set up a virtualenv for us
+# such that we can install our requirements.
+python:
+    version: 2.7
+    setup_py_install: false
+
+
+

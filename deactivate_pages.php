@@ -1,8 +1,12 @@
 <?php
-
 global $wpdb;
 
-
+/**
+ * Deactivate pages when the wp-wetterturnier plugin is getting
+ * deactivated.
+ *
+ * @todo Needs a check, not yet fully tested!
+ */
 function wp_wetterturnier_remove_the_page($lang) {
 
     $the_page_title = get_option( "wetterturnier_page_title_".$lang );
@@ -31,6 +35,4 @@ if ( add_action('is_plugin_active','polylang') ) {
     wp_wetterturnier_remove_the_page('');
 }
 
-
 ?>
-

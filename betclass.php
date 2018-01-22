@@ -567,7 +567,7 @@ class wetterturnier_betclass
       // Now show that stuff
       if ( count($all_param) > 0 ) {
          // Show header
-         printf("  %-20s ","");
+         printf("  %-20s\n","");
          foreach ( $all_days as $day ) {
             printf("%8s ",sprintf("Day %d",$day));
          }

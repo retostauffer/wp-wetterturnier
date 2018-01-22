@@ -1,18 +1,24 @@
 <?php
-// ------------------------------------------------------------------
-// - NAME:        widgets/blitzortung.php 
-// - AUTHOR:      Reto Stauffer
-// - DATE:        2014-12-30
-// ------------------------------------------------------------------
-// - DESCRIPTION: Shows blitzortung minimap if there is an image. 
-// ------------------------------------------------------------------
-
+/*
+ * This is the blitzortung plugin for wp-wetterturnier.
+ * A small script which reads a tiny text file to get the information
+ * about the last data update and whether there are strokes in the
+ * surrounding or not. If there is lightning activity a small image
+ * will be shown.
+ * The data source is indirectly blitzortung.org, the data are delivered
+ * as a small sqlite3 file from the ACINN, the Atmospheric and Cryospheric
+ * Institute Innsbruck in case of Wetterturnier.de.
+ *
+ * @file blitzortung.php
+ * @author Reto Stauffer
+ * @date Somewhen back in 2015.
+ */
 class WP_wetterturnier_widget_blitzortung extends WP_Widget
 {
 
-    // --------------------------------------------------------------
-    // Constructor method: construct the plugin
-    // --------------------------------------------------------------
+    /**
+     * Setting up the widget name and the control options
+     */
     function __construct() {
 
         global $WTuser;
@@ -28,9 +34,11 @@ class WP_wetterturnier_widget_blitzortung extends WP_Widget
     }
 
 
-    // --------------------------------------------------------------
-    // widget admin form creation
-    // --------------------------------------------------------------
+    /**
+     * Creates the admin-widget box (drag-and-drop widget with attributes/settings)
+     *
+     * @param array $instance The widget options
+     */
     function form($instance) {  
         // Check values
         if( $instance) {
@@ -55,9 +63,15 @@ class WP_wetterturnier_widget_blitzortung extends WP_Widget
         <?php
     }
 
-    // --------------------------------------------------------------
-    // widget update
-    // --------------------------------------------------------------
+    /**
+     * Processing widget options on save
+     *
+     * @param array $new_instance The new options
+     *
+     * @param array $old_instance The previous options
+     *
+     * @return array $instance (updated)
+     */
     function update($new_instance, $old_instance) {
         $instance = $old_instance;
         // Fields
@@ -67,9 +81,13 @@ class WP_wetterturnier_widget_blitzortung extends WP_Widget
     }
 
 
-    // --------------------------------------------------------------
-    // widget display
-    // --------------------------------------------------------------
+    /**
+     * Outputs the content of the widget
+     *
+     * @param array $args
+     *
+     * @param array $instance
+     */
     function widget( $args, $instance ) {
 
 
@@ -96,9 +114,14 @@ class WP_wetterturnier_widget_blitzortung extends WP_Widget
         echo $after_widget;
     }
 
-    // --------------------------------------------------------------
-    // Show the blitzortung 
-    // --------------------------------------------------------------
+
+    /**
+     * The 'core function' of this widget: reading a file called 'lastrun'
+	 * located in /var/www/html/Rimages/blitzortung/ to see whether there
+	 * are new data (output will be ignored if incoming data stream would break down)
+     * Displays a small image and a time stamp if there is lightning activity in the
+	 * area. Data from ACINN, see class header description.
+     */
     function show_blitzortung() {
 
         global $wpdb;

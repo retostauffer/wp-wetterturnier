@@ -39,12 +39,19 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+
 // Including wp-config to have access to the WT plugin functions
 // and wordpress database. 
 require_once('../../../../../wp-config.php');
 
+// Load betclass file if not yet loaded, initialize  WTbetclass
+if ( ! defined("loaded_betclass") ) {
+    require_once( sprintf("../../betclass.php") );
+    define( "loaded_betclass", 1 );
+}
+$WTbetclass = new wetterturnier_betclass();
 global $WTuser;
-global $WTbetclass;
+
 
 // ------------------------------------------------------------------
 // Parsing input data
@@ -68,6 +75,7 @@ if ( ! $checkflag ) {
 // ------------------------------------------------------------------
 // Parsing input data
 // ------------------------------------------------------------------
+$maxdays = $WTuser->options->wetterturnier_betdays;
 $data = $WTbetclass->check_correct_values( $data, $maxdays );
 
 

@@ -1,30 +1,31 @@
 <?php
-/*
+/**
 Plugin Name: WP Wetterturnier 
 Text Domain: wtlang
 Domain Path: /languages
 Plugin URI: http://www.wetterturnire.de
 Description: The Wetterturnier bet plugin 
-Version: 0.1
+Version: 1.0
 Author: Reto Stauffer
 Author URI: http://www.wetterturnier.de
 License: GPL2
 */
-/*
-Copyright 2017  Reto Stauffer  (email : reto.stauffer@uibk.ac.at)
+
+/**
+Copyright 2018  Reto Stauffer  (email : reto.stauffer@uibk.ac.at)
 */
 
 
 
 
-// ------------------------------------------------------------------
-/// @file wt-wetterturnier.php
-/// @author Reto Stauffer
-/// @date 16 June 2017
-/// @brief Wordpress plugin specification script. This script
-///   initializes the wordpress plugin and is used by wordpress
-///   to load and construct all required classes.
-// ------------------------------------------------------------------
+/**
+ * @file wt-wetterturnier.php
+ * @author Reto Stauffer
+ * @date 16 June 2017
+ * @brief Wordpress plugin specification script. This script
+ *   initializes the wordpress plugin and is used by wordpress
+ *   to load and construct all required classes.
+ */
 if(!class_exists('WP_wetterturnier'))
 {
    // WP_wetterturnier extends the generalclass
@@ -35,16 +36,14 @@ if(!class_exists('WP_wetterturnier'))
    // autosubmit and the frontend
    require_once('betclass.php');
 
-   // ---------------------------------------------------------------
-   /// @brief Contains the main wordpress plugin structure initialization
-   ///   methods.
-   /// @details Initializes the plugin and sets e.g., plugin path,
-   ///   specifies the plugin textdomain which is used by the polylang
-   ///   plugin used for multilingual support and so far and so on.
-   ///   The class also contains the @ref activate and @ref deactivate
-   ///   methods which are used by wordpress within the plugin
-   ///   management system.
-   // ---------------------------------------------------------------
+   /**
+    * Initializes the plugin and sets e.g., plugin path,
+    * specifies the plugin textdomain which is used by the polylang
+    * plugin used for multilingual support and so far and so on.
+    * The class also contains the @ref activate and @ref deactivate
+    * methods which are used by wordpress within the plugin
+    * management system.
+    */
    class WP_wetterturnier extends wetterturnier_generalclass
    {
 
@@ -76,18 +75,18 @@ if(!class_exists('WP_wetterturnier'))
       } // END public function __construct
 
 
-      // ----------------------------------------------------------
-      /// @details Function which is used to activate the plugin.
-      ///   when activating the plugin some options are set and
-      ///   databases will be created if not existing.
-      ///   This method also makes use of the demo database sql files
-      ///   in the `demodb` folder which are used to create the
-      ///   required tables when activating the plugin the first
-      ///   time.
-      ///
-      /// @todo Reto develop and test activate/deactivate/uninstall
-      ///   procedures for the plugin. Not yet done properly.
-      // ----------------------------------------------------------
+      /**
+       * Function which is used to activate the plugin.
+       * when activating the plugin some options are set and
+       * databases will be created if not existing.
+       * This method also makes use of the demo database sql files
+       * in the `demodb` folder which are used to create the
+       * required tables when activating the plugin the first
+       * time.
+       *
+       * @todo Reto develop and test activate/deactivate/uninstall
+       *   procedures for the plugin. Not yet done properly.
+       */
       public static function activate()
       {
           global $wpdb;
@@ -205,15 +204,15 @@ if(!class_exists('WP_wetterturnier'))
       } // END public static function activate
 
 
-      // ----------------------------------------------------------
-      /// @details Procedure called by wordpress when the plugin
-      ///   is deactivated in the plugin management system of
-      ///   wordpress. 
-      ///   Deletes some wetterturnier-related options from the
-      ///   wordpress options database, ...
-      ///
-      /// @todo Reto check activate/deactivate procedure.
-      // ----------------------------------------------------------
+      /**
+       * Procedure called by wordpress when the plugin
+       * is deactivated in the plugin management system of
+       * wordpress. 
+       * Deletes some wetterturnier-related options from the
+       * wordpress options database, ...
+       *
+       * @todo Reto check activate/deactivate procedure.
+       */
       public static function deactivate()
       {
           global $wpdb;
@@ -247,17 +246,17 @@ if(!class_exists('WP_wetterturnier'))
 } // END if(!class_exists('WP_wetterturnier'))
 
 
-// ------------------------------------------------------------------
-/// @details Initializin the plugin if WP_Wetterturnier class exists
-///   (wordpress was able to read the class file). Registers some
-///   wordpress hooks like e.g., the activation, deactivation and
-///   uninstall hook (used by the wordpress plugin manager).
-///   Impors/reads the widget files from user/widgets such that
-///   you can use them via the wordpress admin interface.
-///   Last but not least: imports the adminclass (if admin) or
-///   userclass and betclass (for all visitors) which contain
-///   the core methods for the whole wetterturnier plugin.
-// ------------------------------------------------------------------
+/**
+ * Initializin the plugin if WP_Wetterturnier class exists
+ * (wordpress was able to read the class file). Registers some
+ * wordpress hooks like e.g., the activation, deactivation and
+ * uninstall hook (used by the wordpress plugin manager).
+ * Impors/reads the widget files from user/widgets such that
+ * you can use them via the wordpress admin interface.
+ * Last but not least: imports the adminclass (if admin) or
+ * userclass and betclass (for all visitors) which contain
+ * the core methods for the whole wetterturnier plugin.
+ */
 if( class_exists('WP_wetterturnier') )
 {
 
@@ -272,38 +271,41 @@ if( class_exists('WP_wetterturnier') )
 
     // Custom helper class instance
     // Has to be called BEFORE loading the widgets.
-    require_once(sprintf("%s/classes.php",   dirname(__FILE__)));
-    require_once(sprintf("%s/chartclass.php",   dirname(__FILE__)));
-    require_once(sprintf("%s/oldoutputclass.php",   dirname(__FILE__)));
-
-    // INCLUDE WIDGETS ----------------------------------------------
-    // include the widgets for this plugin 
-    // INCLUDE WIDGETS ----------------------------------------------
-    require_once(sprintf("%s/user/widgets/tournaments.php", dirname(__FILE__)));
-    require_once(sprintf("%s/user/widgets/blitzortung.php", dirname(__FILE__)));
-    require_once(sprintf("%s/user/widgets/webcams.php", dirname(__FILE__)));
-    require_once(sprintf("%s/user/widgets/leading.php",     dirname(__FILE__)));
-    require_once(sprintf("%s/user/widgets/latestobs.php",   dirname(__FILE__)));
-    require_once(sprintf("%s/user/widgets/bbpmessages.php", dirname(__FILE__)));
+    //$files = array();
+    $files = array("classes",
+                   "chartclass",
+                   "betclass",
+                   "user/widgets/tournaments",
+                   "user/widgets/blitzortung",
+                   "user/widgets/webcams",
+                   "user/widgets/leading",
+                   "user/widgets/latestobs",
+                   "user/widgets/bbpmessages");
+    foreach( $files as $file ) {
+        if ( ! defined(sprintf("included_%s",$file)) ) {
+            require_once(sprintf("%s/%s.php", dirname(__FILE__),$file));
+            define(sprintf("included_%s",$file),1);
+        }
+    }
 
     // instantiate the plugin class
     $wp_wetterturnier = new WP_wetterturnier();
 
     if ( is_admin() ) {
-        require_once(sprintf("%s/admin/adminclass.php", dirname(__FILE__)));
+        if ( ! defined("included_adminclass") ) {
+            require_once(sprintf("%s/admin/adminclass.php", dirname(__FILE__)));
+            define("included_adminclass",1);
+        }
         $WTadmin = new wetterturnier_adminclass();
-        require_once(sprintf("%s/user/userclass.php", dirname(__FILE__)));
-        $WTuser     = new wetterturnier_userclass();
-        require_once(sprintf("%s/betclass.php", dirname(__FILE__)));
-        $WTbetclass = new wetterturnier_betclass();
-    } else {
-        require_once(sprintf("%s/admin/adminclass.php", dirname(__FILE__)));
-        require_once(sprintf("%s/user/userclass.php", dirname(__FILE__)));
-        $WTuser     = new wetterturnier_userclass();
-        require_once(sprintf("%s/betclass.php", dirname(__FILE__)));
-        $WTbetclass = new wetterturnier_betclass();
     }
+    // Userclass
+    if ( ! defined("included_userclass") ) {
+        require_once(sprintf("%s/user/userclass.php", dirname(__FILE__)));
+        define("included_userclass",1);
+    }
+    $WTuser = new wetterturnier_userclass();
 
 }
+
 ?>
 
