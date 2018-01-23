@@ -47,10 +47,45 @@ jQuery(document).on('ready',function() {
          $(elem).empty().append("<h1>"+input.title+"</h1>")
 
          // Adding Navigation checkboxes
-         $(elem).append("<div id='wetterturnier-obstable-nav'><ul></ul><div style=\"clear: both;\"></div></div>");
+         $(elem).append("<div id='wetterturnier-obstable-nav'><div class=\"preset\"></div><ul></ul><div style=\"clear: both;\"></div></div>");
+
+         $("#wetterturnier-obstable-nav div.preset").append("<h3>Presets:</h3>")
+            .append("<ul></ul>");
+         $("#wetterturnier-obstable-nav div.preset ul")
+            .append("<li do=\"show\" what=\"all\">show all</li>")
+            .append("<li do=\"show\" what=\"stint,datum,stdmin\">hide all</li>")
+            .append("<li do=\"show\" what=\"stint,datum,stdmin,w1,w2,ww,rr24,rrr1,rrr3,rrr6,rrr12\">show ww/rain</li>");
+
          $.each( $.map(data.data,function(elem,index) { return index; }), function(i,param) {
             $("#wetterturnier-obstable-nav > ul").append("<li><input type=\"checkbox\" "
                   + " param='" + param + "' checked /> " + param + "</li>");
+         });
+
+         // Adding functionality to the presets
+         $("#wetterturnier-obstable-nav div.preset ul").on("click","li",function(){
+             var todo = $(this).attr("do");
+             var what = $(this).attr("what");
+             // Show all
+             if ( todo == "show" & what == "all" ) {
+                 $(".wetterturnier-obstable th, .wetterturnier-obstable td").show();
+                 $("#wetterturnier-obstable-nav input").prop("checked",true);
+             // Hide all, show only these
+             } else if ( todo == "show" ) {
+                 $(".wetterturnier-obstable th, .wetterturnier-obstable td").hide();
+                 $("#wetterturnier-obstable-nav input").prop("checked",false);
+                 $.each( what.split(","), function(idx,param) {
+                    $(".wetterturnier-obstable th[param='"+param+"']").show()
+                    $(".wetterturnier-obstable td[param='"+param+"']").show()
+                    $("#wetterturnier-obstable-nav input[param='"+param+"']").prop("checked",true);
+                 });
+             // Hide some
+             } else if ( todo == "hide" ) {
+                 $.each( what.split(","), function(idx,param) {
+                    $(".wetterturnier-obstable th[param='"+param+"']").show()
+                    $(".wetterturnier-obstable td[param='"+param+"']").show()
+                    $("#wetterturnier-obstable-nav input[param='"+param+"']").prop("checked",false);
+                 });
+             }
          });
 
          // Adding the title
