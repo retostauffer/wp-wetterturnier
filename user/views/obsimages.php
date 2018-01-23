@@ -78,6 +78,9 @@ $now=(int)floor(time()/120)*120;
         stroke-dasharray: 3,1;
         stroke-width: .5px;
     }
+    rect.bar-sun {
+        fill: orange !important;
+    }
  
 </style>
 
@@ -101,6 +104,7 @@ jQuery(document).on('ready',function() {
       var args =  {
           ajaxurl: '<?php echo admin_url('admin-ajax.php'); ?>',
           statnr: <?php print $cityObj->stations()[0]->get("wmo"); ?>,
+          name: "<?php print $cityObj->stations()[0]->get("name"); ?>",
           width: 800, height: 250,
           setup: [
               {main:"Temperature",parameter:["t","td"],
@@ -112,6 +116,7 @@ jQuery(document).on('ready',function() {
               {main:"Cloud Cover and rel. Humidity",parameter:["cc","rh"],
                   ylab:"Percent",ylim:[0,100]},
               {main:"Sunshine Duration",parameter:["sun"],
+                  type:{"sun":"bar"},
                   ylab:"Minutes",ylim:[0,60]},
               {main:"Mean Sea Level Pressure",parameter:["pmsl"],
                   ylab:"Hectopascal", scalingfactor: 100.},

@@ -10,6 +10,7 @@
 
         var globalsettings = $.extend({
             statnr: null,
+            name: null,
             days: 4,
             color: "#556b2f",
             ajaxurl: null,
@@ -119,6 +120,7 @@
         	var settings = $.extend({
 				main: "N/A",
 				ylab: "N/A",
+                type: {},
 				scalingfactor: null, // Do scaling in plot
 				parameter: [], // Nothing to plot
 				ylim: [null,null] // Default
@@ -240,12 +242,14 @@
                 const x0 = xScale.invert(d3.mouse(this)[0]);
                 const y0 = yScale.invert(d3.mouse(this)[1]);
                 var closest_idx = arraySearchClosest( data.datumsec, x0, "index" );
-                var closest = {x: data.data[closest_idx].datumsec*1000,
-                               y: []}
+                var closest = {x: data.data[closest_idx].datumsec*1000, y: []}
+
 				$.each(settings.parameter,function(k,param) {
 					closest.y = $.merge(closest.y,[data.data[closest_idx][param]]);
 				});
 				closest.y = arraySearchClosest( closest.y, y0, "value" );
+                closest.y = ( settings.scalingfactor == null ) ? closest.y :
+                            closest.y/settings.scalingfactor;
 
 				// Modify the plot now
                 focus.select("circle").style("display","block")
@@ -271,23 +275,36 @@
             svg.append("text")
                 .attr("text-anchor", "middle")
                 .attr("transform", "translate("+ (svgopt.width/2) +","+(-svgopt.margin.bottom/3)+")")
-                .text( settings.main + "  (" + globalsettings.statnr + ")" )
+                .text( settings.main + "  (" + globalsettings.statnr + " " + globalsettings.name + ")" )
 
 			// ---------------------------------------------------------------
 			// Adding data in a loop
 			$.each( settings.parameter, function( k, param ) {
-                
+
+                var plottype = ( settings.type.hasOwnProperty(param) ) ? settings.type[param] : "line";
+
                 // Skip if no data
-                console.log( data.range[param] )
                 if ( ! (data.range[param] == null) ) {
-            	    // Append data line here
-            	    var lineFunction = d3.line()
-            	            .x(function(d) { return xScale(d.datumsec * 1000); })
-            	            .y(function(d) { return ( settings.scalingfactor==null ) ?
-                                yScale(d[param]) : yScale(d[param]/settings.scalingfactor); });
-            	    svg.append("path").attr("class","data").attr("param",param)
-                            .attr("d", lineFunction(data.data))
-            	            .attr("stroke", "blue").attr("stroke-width",2).attr("fill", "none");
+            	    // If plot type is line: append line
+                    if ( plottype == "line" ) {
+            	       var lineFunction = d3.line()
+            	               .x(function(d) { return xScale(d.datumsec * 1000); })
+            	               .y(function(d) { return ( settings.scalingfactor==null ) ?
+                                   yScale(d[param]) : yScale(d[param]/settings.scalingfactor); });
+            	       svg.append("path").attr("class","data").attr("param",param)
+                               .attr("d", lineFunction(data.data))
+            	               .attr("stroke", "blue").attr("stroke-width",2).attr("fill", "none");
+                    } else if ( plottype == "bar" ) {
+
+                        var width = xScale(1000.*3600) - xScale(0)
+                        svg.selectAll("bar").data(data.data).enter()
+                            .append("rect").attr("class","bar bar-"+param)
+                            .attr("x",function(d) {return xScale(d.datumsec*1000.) - width; })
+                            .attr("y",     function(d) { return yScale(d[param]);})
+                            .attr("width",width)
+                            .attr("height",function(d) { return yScale(0)-yScale(d[param]);})
+                            .style("fill","red")
+                    }
                 }
 
 			});
