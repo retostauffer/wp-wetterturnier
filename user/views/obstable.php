@@ -88,6 +88,7 @@ table.wetterturnier-obstable tr td          { background-color: transparent !imp
 table.wetterturnier-obstable tr:nth-child(odd) { background-color: #eef0f2; } 
 table.wetterturnier-obstable tr.highlighted { background-color: #ffe4a8; }
 table.wetterturnier-obstable tr.highlighted:nth-child(odd) { background-color: #ffd270; }
+.wetterturnier-obstable th, .wetterturnier-obstable td { max-width: 100px; }
 #wetterturnier-obstable-nav {
     margin-bottom: 1em; 
 }
@@ -96,8 +97,14 @@ table.wetterturnier-obstable tr.highlighted:nth-child(odd) { background-color: #
     position: relative;
 }
 #wetterturnier-obstable-nav > ul > li {
-    float: left;
-    min-width: 100px;
+    float: left; min-width: 100px;
+}
+#wetterturnier-obstable-nav > .preset > ul {
+   list-style: none;
+   position: relative;
+}
+#wetterturnier-obstable-nav > .preset > ul li {
+   float: left; min-width: 100px;
 }
 </style>
 
