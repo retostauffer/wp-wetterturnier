@@ -15,7 +15,7 @@ or temperature as good as possible for the consecutive two days.
 their forecasts/bets*. Furthermore this plugin provides live ranking tables, a leader-board,
 a data archive, and access to a set of important data sets such as observations and forecast maps.
 
-.. image:: docs/images/screenshot_frontend.png
+.. image:: images/screenshot_frontend.png
    :width: 800px
    :height: 396px
    :scale: 100 %
