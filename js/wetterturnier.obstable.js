@@ -47,14 +47,19 @@ jQuery(document).on('ready',function() {
          $(elem).empty().append("<h1>"+input.title+"</h1>")
 
          // Adding Navigation checkboxes
-         $(elem).append("<div id='wetterturnier-obstable-nav'><div class=\"preset\"></div><ul></ul><div style=\"clear: both;\"></div></div>");
+         $(elem).append("<div id='wetterturnier-obstable-nav'>"
+            +"<div class=\"preset\"></div><ul></ul><div style=\"clear: both;\"></div></div>");
 
          $("#wetterturnier-obstable-nav div.preset").append("<h3>Presets:</h3>")
-            .append("<ul></ul>");
+            .append("<ul></ul><div style=\"clear: both;\" />");
          $("#wetterturnier-obstable-nav div.preset ul")
             .append("<li do=\"show\" what=\"all\">show all</li>")
             .append("<li do=\"show\" what=\"stint,datum,stdmin\">hide all</li>")
-            .append("<li do=\"show\" what=\"stint,datum,stdmin,w1,w2,ww,rr24,rrr1,rrr3,rrr6,rrr12\">show ww/rain</li>");
+            .append("<li do=\"show\" what=\"stint,datum,stdmin,w1,w2,ww,rr24,rrr1,rrr3,rrr6,rrr12\">ww/rain</li>")
+            .append("<li do=\"show\" what=\"stint,datum,stdmin,sun,sunday,cc,ccl,ccm,chl,chm\">clouds/sun</li>")
+            .append("<li do=\"show\" what=\"stint,datum,stdmin,dd,ff,ffinst,ffx,ffx1,ffx3,ffx6\">wind</li>")
+            .append("<li do=\"show\" what=\"stint,datum,stdmin,rh,td,tmax12,tmin12,t\">temp/hum</li>")
+            .append("<li do=\"show\" what=\"stint,datum,stdmin,pch,pmsl,psta,ptend\">pressure</li>");
 
          $.each( $.map(data.data,function(elem,index) { return index; }), function(i,param) {
             $("#wetterturnier-obstable-nav > ul").append("<li><input type=\"checkbox\" "

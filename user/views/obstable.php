@@ -78,6 +78,7 @@ console.log( statnr+'  '+title+'  '+days )
 </script>
 
 <style type="text/css">
+table.wetterturnier-obstable            { width: auto; }
 table.wetterturnier-obstable tr td.null { color: #B2B2B2; }
 table.wetterturnier-obstable tr td      { white-space: nowrap; }
 input[type='button'].obs-table-station  { margin-right: 10px; }
@@ -99,12 +100,20 @@ table.wetterturnier-obstable tr.highlighted:nth-child(odd) { background-color: #
 #wetterturnier-obstable-nav > ul > li {
     float: left; min-width: 100px;
 }
+#wetterturnier-obstable-nav > .preset > h3 {
+   font-size: 1em; float: left;
+   padding-right: 1em; line-height: 1.5em;
+}
 #wetterturnier-obstable-nav > .preset > ul {
    list-style: none;
    position: relative;
 }
 #wetterturnier-obstable-nav > .preset > ul li {
-   float: left; min-width: 100px;
+   float: left; padding: 0 1em 0 0;
+   cursor: pointer;
+}
+#wetterturnier-obstable-nav > .preset > ul li:hover {
+    color: #ff6600;
 }
 </style>
 
