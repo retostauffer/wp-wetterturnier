@@ -45,13 +45,22 @@ jQuery(document).on('ready',function() {
 
          // Clear element, adding table
          $(elem).empty().append("<h1>"+input.title+"</h1>")
+
+         // Adding Navigation checkboxes
+         $(elem).append("<div id='wetterturnier-obstable-nav'><ul></ul><div style=\"clear: both;\"></div></div>");
+         $.each( $.map(data.data,function(elem,index) { return index; }), function(i,param) {
+            $("#wetterturnier-obstable-nav > ul").append("<li><input type=\"checkbox\" "
+                  + " param='" + param + "' checked /> " + param + "</li>");
+         });
+
+         // Adding the title
          $(elem).append("<table class='wetterturnier-obstable "+input.style+"'><thead></thead><tbody></tbody></table>")
          var id = "#" + $(elem).attr('id')
 
          // Header from first entry in the data object
          //$.each( data.data, function(k,v) {
          $.each( $.map(data.data,function(elem,index) { return index; }), function(i,param) {
-            $(id+' table thead').append("<th>" + param + "</th>");
+            $(id+' table thead').append("<th param='" + param + "'>" + param + "</th>");
          });
          // Setting 'add tr class' true
          if ( 'datum' in data.data && 'stdmin' in data.data ) {
@@ -69,10 +78,22 @@ jQuery(document).on('ready',function() {
             $.each( $.map(data.data,function(elem,index) { return index; }), function(pi,param) {
                var tdclass = ( data.data[param][i] === null ) ? " class=\"null\" " : "";
                $(id+' table tbody tr:last')
-                    .append("<td " + tdclass + ">" + data.data[param][i] + "</td>");
+                    .append("<td param='" + param + "' " + tdclass + ">" + data.data[param][i] + "</td>");
             });
          }
 
+
+         // Adding functionality to the checkboxes
+         $("#wetterturnier-obstable-nav ul").on("click","input[type='checkbox']",function() {
+             var p = $(this).attr("param");
+             if ( $(this).attr("checked") == "checked" ) {
+                 $(".wetterturnier-obstable td[param='"+p+"']").show();
+                 $(".wetterturnier-obstable th[param='"+p+"']").show();
+             } else {
+                 $(".wetterturnier-obstable td[param='"+p+"']").hide();
+                 $(".wetterturnier-obstable th[param='"+p+"']").hide();
+             }
+         });
 
       } else {
          $(elem).empty().html("Sorry, no data available.")

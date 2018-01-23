@@ -78,13 +78,27 @@ console.log( statnr+'  '+title+'  '+days )
 </script>
 
 <style type="text/css">
-table.wetterturnier-obstable tr.highlighted { background-color: #CCFFCC; }
 table.wetterturnier-obstable tr td.null { color: #B2B2B2; }
-table.wetterturnier-obstable tr td { white-space: nowrap; }
-input[type='button'].obs-table-station { margin-right: 10px; }
-input[type='button'].obs-table-days    { margin-right: 10px; }
-input[type='button'].active { background-color: #41a62a;     }
-div#obs-table { margin-top: 20px; }
+table.wetterturnier-obstable tr td      { white-space: nowrap; }
+input[type='button'].obs-table-station  { margin-right: 10px; }
+input[type='button'].obs-table-days     { margin-right: 10px; }
+input[type='button'].active             { background-color: #41a62a;     }
+div#obs-table                           { margin-top: 20px; }
+table.wetterturnier-obstable tr td          { background-color: transparent !important; }
+table.wetterturnier-obstable tr:nth-child(odd) { background-color: #eef0f2; } 
+table.wetterturnier-obstable tr.highlighted { background-color: #ffe4a8; }
+table.wetterturnier-obstable tr.highlighted:nth-child(odd) { background-color: #ffd270; }
+#wetterturnier-obstable-nav {
+    margin-bottom: 1em; 
+}
+#wetterturnier-obstable-nav > ul {
+    list-style: none;
+    position: relative;
+}
+#wetterturnier-obstable-nav > ul > li {
+    float: left;
+    min-width: 100px;
+}
 </style>
 
 <?php
