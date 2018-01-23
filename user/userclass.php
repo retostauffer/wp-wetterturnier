@@ -1542,7 +1542,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       $param    = str_replace(" ","",$_REQUEST['param']);
 
       // Printing output
-      $cmd_base = "cd /home/retos/WTbackend && venv/bin/python TestPoints.py --quiet";
+      $cmd_base = "cd /home/wetterturnier/wetterturnier-backend && venv/bin/python TestPoints.py --quiet";
 
       // Special observations? The extra obs
       if ( empty($_REQUEST['extra1']) && empty($_REQUEST['extra2']) ) {
