@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-01-05 13:05 on marvin
+# - L@ST MODIFIED: 2018-01-23 14:50 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -332,11 +332,9 @@ if ( empty($ranking->data) && ($today-$tdate) <= 1 ) {
       echo "    <th class=\"points\">".__('Points','wpwt')."</th>\n";
    }
    // Extra columns if not slim
-   if ( ! $args->slim ) {
-       echo "    <th class=\"points difference\">".__('Difference','wpwt')."</th>\n"
-           ."    <th class=\"\"".$thwidth.">".__('Status','wpwt')."</th>\n"
-           ."  </tr>\n";
-   }
+   echo "    <th class=\"points difference\">".__('Difference','wpwt')."</th>\n"
+       ."    <th class=\"\"".$thwidth.">".__('Status','wpwt')."</th>\n"
+       ."  </tr>\n";
 
    // Width of the points status bar
    $show_sleepy_note = False;
@@ -410,11 +408,9 @@ if ( empty($ranking->data) && ($today-$tdate) <= 1 ) {
                 ."    <td class=\"points\">".$sleepy_marker.$this->number_format($rec->points_d2,1)."</td>\n";
          }
       }
-      echo "    <td class=\"points\">".$this->number_format($rec->points,1)."</td>\n";
-      if ( ! $args->slim ) {
-          echo "    <td class=\"points difference\">".$this->number_format($rec->difference,1)."</td>\n"
-              ."    <td>".$sbar."</td>\n  </tr>\n";
-      }
+      echo "    <td class=\"points\">".$this->number_format($rec->points,1)."</td>\n"
+          ."    <td class=\"points difference\">".$this->number_format($rec->difference,1)."</td>\n"
+          ."    <td>".$sbar."</td>\n  </tr>\n";
    
    }
    // End table
