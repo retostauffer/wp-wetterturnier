@@ -1234,12 +1234,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                 ."  <thead>\n"
                 ."    <tr>\n"
                 .$nameth
-                ."      <th class=\"param-day filter-false\">".__("Day","wpwt")."</th>";
+                ."      <th class=\"param-day filter-false align-center\">".__("Day","wpwt")."</th>";
                 // Adding header (parameter names)
                 if ( ! $showday ) {                        $params = $data->day_1->params; }
                 else { $hash = sprintf("day_%d",$showday); $params = $data->$hash->params; }
                 foreach ( $params as $rec ) {
-                    printf("      <th class=\"param-col param-col-%s filter-false\">%s</th>",$rec->paramName,$rec->paramName);
+                    printf("      <th class=\"param-col param-col-%s filter-true align-right\">%s</th>",$rec->paramName,$rec->paramName);
                 }
                 // - If points, then show sums, too.
                 if ( $points ) { 

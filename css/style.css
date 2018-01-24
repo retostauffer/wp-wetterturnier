@@ -135,6 +135,7 @@ input[type="submit"].settings-button:hover {
 /*.wttable-show * td.username            { font-weight: bold; }*/
 .wttable-show * td.data                { text-align: right; }
 .wttable-show * td.day                 { text-align: center; }
+.wttable-show * td.align-right         { text-align: right; }
 .wttable-show                          { table-layout: fixed; } 
 /***.wttable-show * tr:hover td            { background-color: #c0d2eb; }***/
 .wttable-show * td.data.changed-status { font-weight: bold;  }
@@ -254,7 +255,9 @@ table.tablesorter tbody td {
 .wttable-show * td.difference                                 { color: gray; }
 
 .wttable-show-bets,                   .wttable-show-obs    { table-layout: auto; }
-.wttable-show-bets th,                .wttable-show-obs th { text-align: center; }
+.wttable-show-bets th,                .wttable-show-obs th { text-align: left; }
+.wttable-show-bets th.align-center,   .wttable-show-obs th.align-center  { text-align: center; }
+.wttable-show-bets th.align-right,    .wttable-show-obs th.align-right   { text-align: right; }
 .wttable-show-bets th.param-day,      .wttable-show-obs th.param-day     { width: 60px; }
 .wttable-show-bets th.param-col,      .wttable-show-obs th.param-col     { width: 60px; }
 .wttable-show-bets th.param-col-N,    .wttable-show-obs th.param-col-N   { width: 40px; }
