@@ -104,7 +104,13 @@ $xml_file = sprintf("%s/user/xmlfiles/maps_forecasts.xml",
 <script type="text/javascript">
 jQuery(document).on('ready',function() {
    $ = jQuery
-   $("#wt-maps-container").wtmapsforecasts("<?php print $xml_file; ?>");
+   function setImageWidth() {
+          var width = parseInt( $("#wt-maps-container").width() );
+      var width = (width > 900) ? 900 : width;
+      $( "#wt-map-image" ).width( width );
+   }
+   $("#wt-maps-container").wtmapsforecasts("<?php print $xml_file; ?>",setImageWidth);
+   $(window).resize(function(){ setImageWidth(); });
 });
 </script>
 

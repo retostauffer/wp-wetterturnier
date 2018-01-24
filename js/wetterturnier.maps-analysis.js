@@ -6,7 +6,7 @@ jQuery(document).on('ready',function() {
    // Copy jQuery to $
    $ = jQuery
 
-   $.fn.wtmapsanalysis = function( xmlfile ) {
+   $.fn.wtmapsanalysis = function( xmlfile, callback = null ) {
 
       var target = $(this)
 
@@ -22,7 +22,10 @@ jQuery(document).on('ready',function() {
          },
          error: function() {
             alert("Problems reading the xml file.");
-         }
+         },
+         complete: function() {
+            if ( $.isFunction(callback) ) { callback(); } 
+         } 
       });
 
       // Jumping one time step forwards. If active is the last one,

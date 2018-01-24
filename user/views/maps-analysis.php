@@ -99,21 +99,18 @@ $xml_file = sprintf("%s/user/xmlfiles/maps_analysis.xml",
 #wt-maps-timeline   ul li:hover {
    background-color: #41a62a;
 }
-/* Styling image (setting maximum height and width) */
-#wt-maps-image {
-   max-height: 700px;
-   min-height: 400px;
-   max-width: 1200px;
-   min-width: 650px;
-   height: 100%;
-   width: 100%;
-}
 </style>
 
 <script type="text/javascript">
 jQuery(document).on('ready',function() {
    $ = jQuery
-   $("#wt-maps-container").wtmapsanalysis("<?php print $xml_file; ?>");
+   function setImageWidth() {
+	  var width = parseInt( $("#wt-maps-container").width() );
+      var width = (width > 900) ? 900 : width;
+      $( "#wt-map-image" ).width( width );
+   }
+   $("#wt-maps-container").wtmapsanalysis("<?php print $xml_file; ?>",setImageWidth);
+   $(window).resize(function(){ setImageWidth(); });
 });
 </script>
 

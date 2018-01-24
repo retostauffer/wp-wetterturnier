@@ -6,7 +6,7 @@ jQuery(document).on('ready',function() {
    // Copy jQuery to $
    $ = jQuery
 
-   $.fn.wtmapsforecasts = function( xmlfile ) {
+   $.fn.wtmapsforecasts = function( xmlfile, callback = null ) {
 
       var target = $(this)
 
@@ -22,6 +22,9 @@ jQuery(document).on('ready',function() {
          },
          error: function() {
             alert("Problems reading the xml file.");
+         },
+	 complete: function() {
+            if ( $.isFunction(callback) ) { callback(); }
          }
       });
 
