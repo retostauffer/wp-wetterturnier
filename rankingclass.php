@@ -18,6 +18,14 @@
  * using .htaccess redirects. The idea was that Moses comes back to life,
  * however, the last two weeks this didn't happen.
  * This class is used solely by oldarchive.php in the same directory.
+ * 
+ * Args:
+ *    deadman (:obj:`str`): string, use login name of the user which
+ *      provides the points for players not having participated. On 
+ *      wetterturnier this user is known as "Sleepy" (default).
+ *    points_max (:obj:`int`): Maximum number of points per weekend.
+ *      Used to compute the 'relative points' gained of the players
+ *      given the ranking settings. Default is 200 as on wetterturnier.de.
  */
 class wetterturnier_rankingObject {
 
@@ -28,24 +36,29 @@ class wetterturnier_rankingObject {
 	private $tdate = null;
 	/// Attribute to store the cityObject.
 	private $cityObj = null;
+    /// Maximum number of points per weekend.
+    private $points_max = 200;
+
     private $WTuser;
+
+    # Used to store the ranking from prepare_ranking
+    private $ranking = null;
 
     # Name of the deadman.
     private $deadman;
 
     /**
      * Object constructor.
-     *
-     * No input arguments. Cities/tdates are set via set_cities and set_tdates.
      */
-    function __construct( $deadman = "Sleepy" ) {
+    function __construct( $deadman = "Sleepy", $points_max = 200 ) {
 
        global $wpdb; $this->wpdb = $wpdb;
 
        # Check if access is granted
        global $WTuser;
-       $this->WTuser = $WTuser;
-       $this->deadman = $deadman;
+       $this->WTuser     = $WTuser;
+       $this->deadman    = $deadman;
+       $this->points_max = $points_max;
        echo "initialized\n";
 
     }
@@ -149,8 +162,7 @@ class wetterturnier_rankingObject {
         array_push($sql,sprintf("%s AND %s %s",$where_city,$where_tdate,$where_user));
         array_push($sql,"GROUP BY u.ID, b.tdate;");
 
-        printf("\n%s\n", join("\n",$sql));
-
+        # printf("\n%s\n", join("\n",$sql));
         $dbres = $this->wpdb->get_results( join( "\n", $sql ) );
 
         # If deadman is requested: create one stdClass object containing
@@ -204,7 +216,19 @@ class wetterturnier_rankingObject {
         return $res->tdate;
     }
 
-    function prepare_data() {
+    /* Prepares a ranking object based on the class attributes 'tdate' and
+     * 'cityObj' (also allowed for time periods and multiple cities at the
+     * same time). This function loads the data from the database and creates
+     * a structured object containing the user points and ranks.
+     * Given a valid deadman username the points will be filled with the
+     * points of deadman (known as Sleepy on wetterturnier.de), if not
+     * 0 points will be given for not participating at all.
+     *
+     * Returns:
+     *  No return! Stores the ranking object on the parent object itself.
+     *  There are different ouptut methods to display/return the data.
+     */
+    function prepare_ranking() {
         echo "Prepare now\n";
 
         if ( is_null($this->tdate) || is_null($this->cityObj) ) {
@@ -238,215 +262,146 @@ class wetterturnier_rankingObject {
         $ranking = (object)array("pre"=>new stdClass(), "now"=>new stdClass());
 
         # Looping over cities
-        foreach ( $userdata->cityIDs as $cityID ) {
-            $chash = sprintf("city_%d",$cityID);
-            foreach ( $userdata->tdates as $tdate ) {
-                $thash = sprintf("city_%d",$cityID);
+        foreach ( $userdata->data as $user=>$data ) {
 
-                die("looping over users here");
-                # Append points
-                if        ( $rec->tdate == $tdate->min ) {
-                    $ranking->pre->$user += $rec->points;
-                } else if ( $rec->tdate == $tdate->max ) {
-                    $ranking->now->$user += $rec->points;
-                } else {
-                    $ranking->pre->$user += $rec->points;
-                    $ranking->now->$user += $rec->points;
+            # Append user to $ranking object if not yet existing
+            if ( ! property_exists($ranking->pre,$user) ) {
+                $ranking->pre->$user = (object)array("played"=>0,"points"=>0);
+                $ranking->now->$user = (object)array("played"=>0,"points"=>0);
+            }
+
+            foreach ( $userdata->cityIDs as $cityID ) {
+                $chash = sprintf("city_%d",$cityID);
+                foreach ( $userdata->tdates as $tdate ) {
+                    $thash = sprintf("tdate_%d",$tdate);
+
+                    # Default: 0 points
+                    $points = 0;
+                    # And not participated (default)
+                    $played = 0;
+
+                    # If user got points: use user points 
+                    if ( property_exists($data->$chash,$thash) ) {
+                        $points = $data->$chash->$thash;
+                        $played = 1;
+                    # Else check if deadman exists and has points for this
+                    # specific city ($chash) and tournament date ($thash).
+                    } else if ( $deadman ) {
+                        if ( property_exists($deadman,$chash) ) {
+                            if ( property_exists($deadman->$chash,$thash) ) {
+                                $points = $deadman->$chash->$thash;
+                            }
+                        }
+                    }
+
+                    # Adding points
+                    if ( $tdate == $this->tdate->previous ) {
+                        $ranking->pre->$user->points += $points;
+                        $ranking->pre->$user->played += $played;
+                    } else if ( $tdate == $this->tdate->max ) {
+                        $ranking->now->$user->points += $points;
+                        $ranking->now->$user->played += $played;
+                    } else {
+                        $ranking->pre->$user->points += $points;
+                        $ranking->now->$user->points += $points;
+                        $ranking->pre->$user->played += $played;
+                        $ranking->now->$user->played += $played;
+                    }
+
                 }
             }
         }
 
-        print_r($ranking);
+        /* Assign rank to each value of the array $in. 
+         * Pretty cool function I wrote, I think :).
+         *
+         * Args:
+         *   in (array): Array containing as set of numeric values.
+         *
+         * Returns:
+         *   Returns an array of the same length with ranks. Highest
+         *   values of $in get rank 1, lower values get higher ranks.
+         *   The same values are attributed to the same ranks.
+         *   Ranks are re-used. Some ranks may not appear if some
+         *   elements in $in do have the same value!
+         */
+        function array_rank( $in ) {
+            # Keep input array "x" and replace values with rank.
+            # This preserves the order. Working on a copy called $x
+            # to set the ranks.
+            $x = $in; arsort($x); 
+            # Initival values
+            $rank       = 0;
+            $hiddenrank = 0;
+            $hold = null;
+            foreach ( $x as $key=>$val ) {
+                # Always increade hidden rank
+                $hiddenrank += 1;
+                # If current value is lower than previous:
+                # set new hold, and set rank to hiddenrank.
+                if ( is_null($hold) || $val < $hold ) {
+                    $rank = $hiddenrank; $hold = $val;
+                }
+                # Set rank $rank for $in[$key]
+                $in[$key] = $rank;
+            }
+            return $in;
+        }
 
+        # Extracting points to get rank
+        $rank = (object)array("pre"=>array(),"now"=>array());
+        foreach ( $ranking->pre as $rec ) {
+            array_push( $rank->pre, round($rec->points,2) );
+        }
+        $rank->pre = array_rank( $rank->pre );
+
+        foreach ( $ranking->now as $rec ) {
+            array_push( $rank->now, round($rec->points,2) );
+        }
+        $rank->now = array_rank( $rank->now );
+
+        # Array of the same order as $rank containing usernames
+        $users = array();
+        foreach ( $ranking->pre as $user=>$x ) { array_push($users,$user); }
+
+        # Looping in rank order
+        $order = $rank->now; asort($order);
+
+        # Create final object, adding ranks and tendencies.
+        $ntournaments = count($userdata->tdates);
+        $points_max = $this->points_max * $ntournaments;
+        $final = new stdClass();
+        foreach ( $order as $idx=>$trash ) {
+            $user = $users[$idx];
+            $final->$user = new stdClass();
+            $final->$user->rank_pre  = $rank->pre[$idx];
+            $final->$user->rank_now  = $rank->now[$idx];
+            $final->$user->points_pre = $ranking->pre->$user->points;
+            $final->$user->points_now = $ranking->now->$user->points;
+            $final->$user->played_pre = $ranking->pre->$user->played;
+            $final->$user->played_now = $ranking->now->$user->played;
+            $final->$user->points_relative = $ranking->now->$user->points / $points_max;
+            $final->$user->trend = $rank->now[$idx] - $rank->pre[$idx];
+            $final->$ntournaments = $ntournaments;
+        }
+
+        unset($ranking);
+        unset($rank);
+
+        print_r($final);
+        $this->ranking = $final;
     }
 
     /**
-     * Helper function. Returns the output format (as string!), someting
-     * like '%.3f ' or '  %8d '.
-     *
-     * @param string $paramName Name of the pararameter. Used to return
-     * the correct format from a lookup-procedure.
-     *
-	 * @return Returns a string of type '%Xs' for a string of length X
-	 *where X depends on the input $paramName.
-	 */
-	private function _get_param_format_( $paramName ) {
-        # Note that there is no space after Wn, looks horrible, but is as it is.
-		if ( in_array( $paramName, array("name") ) )
-		{ $fmt = "%-25s"; }	
-		else if ( in_array( $paramName, array( "TTm","TTn","TTd","RR") ) )
-		{ $fmt = " %5s"; }	
-		else if ( in_array( $paramName, array( "N" ) ) )
-		{ $fmt = " %1s"; }	
-		else if ( in_array( $paramName, array( "Wn" ) ) )
-		{ $fmt = "%2s"; }
-		else if ( in_array( $paramName, array( "ff","fx","Wv" ) ) )
-		{ $fmt = " %2s"; }	
-		else if ( in_array( $paramName, array( "Sd" ) ) )
-		{ $fmt = " %3s"; }	
-		else if ( in_array( $paramName, array( "dd" ) ) )
-		{ $fmt = " %4s"; }	
-		else if ( in_array( $paramName, array( "PPP" ) ) )
-		{ $fmt = " %7s"; }	
-		else { $fmt = " %10s"; }
-		return( $fmt );
-	}
-
-    /**
-     * Helper function to cut a string to a specific length if it is longer than $len.
-     *
-	 * @param $str. String uf unknown length.
-     *
-	 * @param $len. Integer, length to which the string should be cut if longer than $len.
-     *
-	 * @return Returns string cut to length $len.
-	 */
-	private function _str_cut_( $str, $len ) {
-		if ( strlen($str) <= $len ) { return( $str ); }
-		return( substr( $str, 0, $len ) );
-	}
-
-   /**
-    * Heper function to always show float point numbers
-    * in the same format, with a ".".
-    *
-    * @param $value. Float value.
-    *
-    * @param $decimals. Integer, deault 1, number of digits after comma.
-    *
-    * @return Returns string using number_format with fixed format internally.
-    */
-   private function show_number( $value, $decimals = 1 ) {
-      return number_format( $value, $decimals, ".", "" );
-   }
-
-
-	/**
-	 * This is the main function which proces the output.
-	 * No extra inputs needed, all we need was already processed
-	 * in the class __construct method.
-     * Note that I've removed two Umlaute (non utf-8 characters). They break
-     * my sphinx! And I am quite sure no one searches for non utf-8 to get
-     * the data position.
+     * Returns the ranking prepared by prepare_ranking as json array.
      */
-	public function show() {
-
-		global $WTuser;
-
-		// ------------------------------------------------------------------
-		// File header dingsda
-		// ------------------------------------------------------------------
-        printf("Innsbrucker Wetterprognoseturnier %s\n\n\n"
-               ."Eingetroffene Werte und abgegebene Prognosen:\n\n",
-                date("d.m.Y",$this->tdate*86400));
-
-		// Show stations and their values for day 1
-		for ( $day=1; $day <= $this->days; $day++ ) {
-
-			// ---------------------------------------------------------------
-			// SHOW STATION OBSERVATIONS
-			// ---------------------------------------------------------------
-
-			// Show header
-			printf("%s:\n",($day==1) ? "Samstag" : "Sonntag" );
-			printf( $this->_get_param_format_("name"), "Name");
-			foreach ( $this->cityObj->getParams() as $paramObj ) {
-				printf( $this->_get_param_format_($paramObj->get("paramName")),
-						  $paramObj->get("paramName") );
-			}; print "\n";
-			printf("%s\n",str_repeat("_",80));
-
-			// Show observations
-			$obs = $WTuser->get_obs_values($this->cityObj->get("ID"),$this->tdate+1,false);
-			foreach ( $this->cityObj->stations() as $stnObj ) {
-
-				// Station name
-				printf( $this->_get_param_format_("name"), $this->_str_cut_($stnObj->get("name"),25) );
-
-				// Getting data from $obs stdClass object
-				$hash = sprintf("wmo_%d",(int)$stnObj->get("wmo"));
-				if ( ! property_exists($obs->data,$hash) ) { continue; }
-				$data = $obs->data->$hash;
-
-				foreach ( $stnObj->getParams() as $paramObj ) {
-					if ( $paramObj->isParameterActive( (int)$this->cityObj->get("ID") ) ) {
-						$hash = sprintf("pid_%d",(int)$paramObj->get("paramID"));
-						if ( ! property_exists($data,$hash) ) {
-							$val = "n";
-						} else {
-							$val = $this->show_number( $data->$hash->value, (int)$paramObj->get("decimals") );
-						}
-					} else {	$val = "n"; }
-					printf( $this->_get_param_format_($paramObj->get("paramName")), $val );
-				}; print "\n";
-			}; print "\n"; # End of observations, line break
-
-			// ---------------------------------------------------------------
-			// SHOW BETS
-			// ---------------------------------------------------------------
-			$bets = $WTuser->get_bet_values( (int)$this->cityObj->get("ID"),
-							$this->tdate, $day, false );
-
-			foreach ( $bets->data as $rec ) {
-				printf( $this->_get_param_format_("name"),
-               $this->_str_cut_( preg_replace("/^GRP_/","",$rec->user_login),25 ) );
-				foreach ( $stnObj->getParams() as $paramObj ) {
-					if ( $paramObj->isParameterActive( (int)$this->cityObj->get("ID") ) ) {
-						$hash = sprintf("pid_%d",(int)$paramObj->get("paramID"));
-						if ( ! property_exists($rec,$hash) ) {
-							$val = "n";
-						} else {
-							$val = $this->show_number( $rec->$hash->value, (int)$paramObj->get("decimals") );
-						}
-					} else {	$val = "n"; }
-					printf( $this->_get_param_format_($paramObj->get("paramName")), $val );
-				}; print "\n"; 
-			}
-
-		}; print "\n";
-
-		// ----------------------------------------------------------------
-		// ----------------------------------------------------------------
-		printf("Wertung der Prognose vom %s:\n",date("d.m.Y",$this->tdate*86400));
-
-		printf("%2s. %-25s %6s %5s %5s\n","Pl","Name","Punkte","Tag1","Tag2");
-		printf("%s\n",str_repeat("_",49));
-
-		$data = $WTuser->get_ranking_data( $this->cityObj, (int)$this->tdate );
-		$rank = 0;
-		$keep_points = NULL;
-		$stats = array( "N" => 0, "points" => 0.0, "Sleepy" => NULL );
-		foreach ( $data->data as $rec ) {
-			if ( is_null($keep_points) ) {
-				$rank +=1; $keep_points = round($rec->points,2);
-			} else if ( round($rec->points,2) < $keep_points ) {
-				$rank +=1; $keep_points = round($rec->points,2);
-			}
-			// Show output
-			printf("%2d. %-25s %5s (%5s/%5s)\n", $rank,
-				$this->_str_cut_( preg_replace("/^GRP_/","",$rec->user_login), 25),
-				$this->show_number($rec->points,1),
-            $this->show_number($rec->points_d1,1),
-            $this->show_number($rec->points_d2));
-
-			// Stats
-			if ( strcmp($rec->user_login,"Sleepy") === 0 ) {
-				$stats["Sleepy"] = $rec->points;
-			} else {
-				$stats["N"] += 1; $stats["points"] += $rec->points;
-			}
-		}; print "\n";
-
-		// Mean points
-		
-		if ( $stats["N"] > 0 ) {
-      	printf("Die durchschnittliche Punktzahl betragt:    %5s Punkte.\n"
-      	      ."Wertung fur nicht teilnehmende Mitspieler:  %5s Punkte.\n\n",
-      	      $this->show_number($stats["points"]/$stats["N"]),
-               $this->show_number($stats["Sleepy"]));
-		}
-
-	}
+    function return_json( ) {
+        if ( is_null($this->ranking) ) {
+            return json_encode(array("error"=>"Data not prepared, prepare_ranking not called?"));
+        } else {
+            return json_encode( $this->ranking );
+        }
+    }
 
 }
 
