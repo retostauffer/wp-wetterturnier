@@ -213,6 +213,54 @@ class wetterturnier_rankingObject {
         return $res->tdate;
     }
 
+
+    /* Creates the admin link to modify the current user/station.
+     *
+     * Args:
+     *      type (:obj:`str`): String with user type (e.g., user or mitteltip)
+     *      Obj (...): Either a wordpress user Object or a wetterturnier
+     *          :class:`wetterturnier_stationObject` for the observations.
+     * Returns:
+     *      str: Returns a string with a html element to place the edit button or
+     *      an empty string if no editbuttion is needed (or not allowed as the user
+     *      is no admin).
+     */
+    private function _get_edit_button_( $type, $Obj ) {
+
+       // If no admin: return
+       if ( ! current_user_can('manage_options') ) { return(""); }
+       // If mitteltip: return
+       if ( $type === "mitteltip" ) { return(""); }
+       // If this is an observation entry (use $type = "obs")
+       if ( $type === "obs" ) {
+           return( sprintf("<span class='button small edit edit-obs' url='%s' "
+                          ."station='%d' cityID='%s' tdate='%d'></span>",
+                          admin_url(),(int)$identifier,
+                          $this->cityObj->get('ID'),$this->tdate->max));
+       } else {
+           return( sprintf("<span class='button small edit edit-bet' url='%s' "
+                          ."userID='%d' cityID='%s' tdate='%d'></span>",
+                          admin_url(),$Obj->ID,$this->cityObj->get('ID'),$this->tdate->max));
+       }
+
+    }
+
+
+    /* Creates the admin link to modify the current user/station.
+     *
+     * Args:
+     *      Obj (...): Either a wordpress user Object.
+     * Returns:
+     *      str: Returns a string with a html element to place the edit button or
+     *      an empty string if no editbuttion is needed (or not allowed as the user
+     *      is no admin).
+     */
+    private function _get_detail_button_( $userObj ) {
+        return sprintf("<span class=\"button small detail\" userid=\"%d\" "
+                      ."cityid=\"%d\" tdate=\"%d\"></span>",
+                      $userObj->ID, $this->cityObj->get("ID"), $this->tdate->max);
+    }
+
     /* Prepares a ranking object based on the class attributes 'tdate' and
      * 'cityObj' (also allowed for time periods and multiple cities at the
      * same time). This function loads the data from the database and creates
@@ -363,8 +411,13 @@ class wetterturnier_rankingObject {
         # Looping in rank order
         $order = $rank->now; asort($order);
 
+
         # Create final object, adding ranks and tendencies.
-        $ntournaments = count($userdata->tdates);
+        if ( $this->tdate->previous ) {
+            $ntournaments = count($userdata->tdates) - 1;
+        } else {
+            $ntournaments = count($userdata->tdates);
+        }
         $points_max = $this->points_max * $ntournaments;
         $final = new stdClass();
         foreach ( $order as $idx=>$trash ) {
@@ -372,31 +425,42 @@ class wetterturnier_rankingObject {
             $final->$user = new stdClass();
             $final->$user->rank_pre  = $rank->pre[$idx];
             $final->$user->rank_now  = $rank->now[$idx];
-            $final->$user->points_pre = $ranking->pre->$user->points;
-            $final->$user->points_now = $ranking->now->$user->points;
-            $final->$user->played_pre = $ranking->pre->$user->played;
+            #$final->$user->points_pre = $ranking->pre->$user->points;
+            $final->$user->points_now = $this->WTuser->number_format($ranking->now->$user->points,1);
+            #$final->$user->played_pre = $ranking->pre->$user->played;
             $final->$user->played_now = $ranking->now->$user->played;
             $final->$user->points_relative = $ranking->now->$user->points / $points_max;
-            $final->$user->trend = $rank->now[$idx] - $rank->pre[$idx];
-            $final->$ntournaments = $ntournaments;
+            $final->$user->trend = $rank->pre[$idx] - $rank->now[$idx];
 
             # Replace username with "user display name"
             # and add userclass (for display) using the
             # method :meth:`generalclass.get_user_display_class_and_name`.
             $userObj = get_user_by( "login", $user );
+            $final->$user->userID       = $userObj->ID;
             $tmp = $this->WTuser->get_user_display_class_and_name($userObj->ID,
                                 $userObj);
             $final->$user->display_name = $tmp->display_name;
             $final->$user->userclass    = $tmp->userclass;
 
+            // Create edit button for administrators
+
+            if ( ! is_array($this->cityObj) && $ntournaments == 1 ) {
+                $final->$user->edit_button = $this->_get_edit_button_( $tmp->userclass, $userObj );
+            }
+            $final->$user->detail_button = $this->_get_detail_button_( $userObj );
+
             // Getting profile link
-            //$final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
+            $final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
         }
 
         unset($ranking);
         unset($rank);
 
-        $this->ranking = $final;
+        $this->ranking = new stdClass();
+        $this->ranking->data               = $final;
+        $this->ranking->meta               = new stdClass();
+        $this->ranking->meta->points_max   = $points_max;
+        $this->ranking->meta->ntournaments = $ntournaments;
     }
 
     /**

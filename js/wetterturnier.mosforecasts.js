@@ -8,11 +8,15 @@ jQuery(document).on('ready',function() {
    $.fn.wtmosforecasts = function( file ) {
       var container = $(this)
 
+      // Adding current time to file name to force the script
+      // to re-load and not to cache the data.
+      var now = new Date();
+
       // Loading json file with the mos data. 
       //console.log( file )
       $.ajax({
          type: "GET",
-         url: file,
+         url: file + "?" + now.getTime(),
          dataType: "json",
          success: function (data) {
 
