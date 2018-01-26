@@ -89,6 +89,11 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_action('wp_ajax_judging_ajax',array($this,'judging_ajax'));
         add_action('wp_ajax_nopriv_judging_ajax',array($this,'judging_ajax'));
 
+        // Interfaces the rankingclass to return a json array containing
+        // the ranking table.
+        add_action('wp_ajax_ranking_ajax',array($this,'ranking_ajax'));
+        add_action('wp_ajax_nopriv_ranking_ajax',array($this,'ranking_ajax'));
+
         // Adding the needed shortcodes
         add_shortcode( 'wetterturnier_linkcollection',   array($this,'shortcode_wetterturnier_linkcollection') );
         add_shortcode( 'wetterturnier_profilelink',      array($this,'shortcode_wetterturnier_profilelink') );
@@ -1524,6 +1529,40 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        }
 
        die(); # important
+   }
+
+   /** There is an ajax function call to save users which try to apply for
+    * a group membership.
+    * Returns json array. If user is allready an active member of this group,
+    * return value 'got' is 'ismember'.
+    */
+   public function ranking_ajax() {
+
+       global $wpdb;
+       if ( empty($_REQUEST["cities"]) || empty($_REQUEST["from"]) || empty($_REQUEST["to"]) ) {
+           print json_encode(array("error"=>"Error by ajax interface function: wrong inputs."));
+           die(0);
+       }
+
+       # Parsing cities
+       $cityObj = array();
+       foreach ( explode( ":", $_REQUEST["cities"] ) as $cityID ) {
+           array_push( $cityObj, new wetterturnier_cityObject( (int)$cityID ) );
+       }
+       # Parsing tdate
+       $tdate = array( (int)$_REQUEST["from"], (int)$_REQUEST["to"] );
+
+       $cityObj = new wetterturnier_cityObject( 4 );
+       # Loading ranking
+       $rankingObj = new wetterturnier_rankingObject(); # $cityID, 17543 );
+       $rankingObj->set_cities( $cityObj );
+       $rankingObj->set_tdate( $tdate );
+       $rankingObj->prepare_ranking();
+       print $rankingObj->return_json();
+
+       die(0);
+
+       // Single date
    }
 
 

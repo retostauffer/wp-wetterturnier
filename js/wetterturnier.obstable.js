@@ -35,7 +35,7 @@ jQuery(document).on('ready',function() {
          error: function(e) {
             //$error = e; console.log('errorlog'); console.log(e);
             $(elem).html('Problems loading observation data.<br><br>\n' + e.responseText)
-            data == false
+            data = false
          }
 
       });

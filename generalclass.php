@@ -803,7 +803,7 @@ class wetterturnier_generalclass
     }
 
     /** Returns the link to the profile page of the player.
-     * @param $username. String containing the user login name. Case sensitive!
+     * @param $usr. Wordpress user object.
      * @return Returns `<a href=...>...</a>` tag with the link to the
      * user profile (currently to bbpress /forum/users/<username>).
      */

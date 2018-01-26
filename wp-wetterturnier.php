@@ -275,6 +275,7 @@ if( class_exists('WP_wetterturnier') )
     $files = array("classes",
                    "chartclass",
                    "betclass",
+                   "rankingclass",
                    "user/widgets/tournaments",
                    "user/widgets/blitzortung",
                    "user/widgets/webcams",

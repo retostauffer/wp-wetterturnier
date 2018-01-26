@@ -59,7 +59,6 @@ class wetterturnier_rankingObject {
        $this->WTuser     = $WTuser;
        $this->deadman    = $deadman;
        $this->points_max = $points_max;
-       echo "initialized\n";
 
     }
 
@@ -72,7 +71,6 @@ class wetterturnier_rankingObject {
      *      of these objects. Whether to load ranking for one or several cities.
      */
     function set_cities( $cityObj ) {
-        echo "Setting city\n";
         $this->cityObj = $cityObj;
     }
 
@@ -84,7 +82,6 @@ class wetterturnier_rankingObject {
      *      for one single tournament date) or an array (for a time period, uses min/max).
      */
     function set_tdate( $tdate ) {
-        echo "Setting tdate\n";
         $this->tdate = $this->_get_tdate_object_( $tdate );
     }
 
@@ -151,7 +148,7 @@ class wetterturnier_rankingObject {
         }
 
         # Just no need to load user_login for a known user!
-        $usercol = ($deadman) ? "" : "u.user_login, ";
+        $usercol = ($deadman) ? "" : "u.ID, u.user_login, ";
 
         # Create SQL command
         $sql = array();
@@ -229,10 +226,9 @@ class wetterturnier_rankingObject {
      *  There are different ouptut methods to display/return the data.
      */
     function prepare_ranking() {
-        echo "Prepare now\n";
 
         if ( is_null($this->tdate) || is_null($this->cityObj) ) {
-            echo "Sorry, cannot prepare ranking, tdate or cityObject not set!";
+            //echo "Sorry, cannot prepare ranking, tdate or cityObject not set!";
             return null;
         }
 
@@ -383,12 +379,23 @@ class wetterturnier_rankingObject {
             $final->$user->points_relative = $ranking->now->$user->points / $points_max;
             $final->$user->trend = $rank->now[$idx] - $rank->pre[$idx];
             $final->$ntournaments = $ntournaments;
+
+            # Replace username with "user display name"
+            # and add userclass (for display) using the
+            # method :meth:`generalclass.get_user_display_class_and_name`.
+            $userObj = get_user_by( "login", $user );
+            $tmp = $this->WTuser->get_user_display_class_and_name($userObj->ID,
+                                $userObj);
+            $final->$user->display_name = $tmp->display_name;
+            $final->$user->userclass    = $tmp->userclass;
+
+            // Getting profile link
+            //$final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
         }
 
         unset($ranking);
         unset($rank);
 
-        print_r($final);
         $this->ranking = $final;
     }
 

@@ -12,12 +12,29 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-01-23 14:50 on marvin
+# - L@ST MODIFIED: 2018-01-25 21:50 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
 global $WTuser;
 $args = (object)$args;
+
+# Including the jquery file to retrieve the ranking data
+$WTuser->include_js_script("wetterturnier.rankingtable");
+
+?>
+<script type="text/javascript">
+jQuery(document).on("ready",function() {
+    ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+    //args = {ajaxurl:ajaxurl,cities:[1,2,3],from:17550,to:17550};
+    args = {ajaxurl:ajaxurl,cities:1,from:17550,to:17550};
+    $("#wt-ranking-container").show_ranking( args );
+});
+</script>
+<div id="wt-ranking-container">
+<span style="color: red;">#wt-ranking-container</span>
+</div>
+<?php
 
 // ------------------------------------------------------------------
 // If no city input is set: using current city as default
