@@ -252,7 +252,7 @@ table.tablesorter tbody td {
 .wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 45px; }
 .wttable-show * th.trend,      .wttable-show * td.trend       { text-align: center; width: 45px; }
 .wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 40px; }
-.wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 100px; }
+.wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 60px; }
 .wttable-show * th.statusbar,  .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
 .wttable-show * td.difference                                 { color: gray; }
 

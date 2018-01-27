@@ -47,6 +47,11 @@ class wetterturnier_rankingObject {
     # Name of the deadman.
     private $deadman;
 
+    # Used to store some words to be able to provide multilingual
+    # output. Using php language files to store some words into the
+    # resulting JSON array to display the tables via jQuery.
+    private $dict;
+
     /**
      * Object constructor.
      */
@@ -59,6 +64,16 @@ class wetterturnier_rankingObject {
        $this->WTuser     = $WTuser;
        $this->deadman    = $deadman;
        $this->points_max = $points_max;
+
+       $this->dict = new stdClass();
+       $this->dict->previous     = __("Older","wpwt");
+       $this->dict->later        = __("Newer","wpwt");
+       $this->dict->points       = __("Points","wpwt");
+       $this->dict->trend        = __("+/-","wpwt");
+       $this->dict->played       = __("N","wpwt");
+       $this->dict->difference   = __("Diff","wpwt");
+       $this->dict->rank         = __("Rank","wpwt");
+       $this->dict->user         = __("User","wpwt");
 
     }
 
@@ -202,10 +217,26 @@ class wetterturnier_rankingObject {
      * for the ranking. If the first one for the ranking is the first, so that 
      * there is no previous, a :obj:`null` will be returned.
      */
-    private function _get_previous_tournament_date_( ) {
+    private function _get_previous_tournament_date_( $sort = "DESC" ) {
         # Find tdate before $tdate->min for ranking
         $sql = sprintf("SELECT distinct(tdate) from %swetterturnier_betstat "
             ." WHERE tdate < %d ORDER BY tdate DESC LIMIT 1;",$this->wpdb->prefix,$this->tdate->min);
+        $res = $this->wpdb->get_row($sql);
+        if ( $this->wpdb->num_rows == 0 ) {
+            return null;
+        }
+        return $res->tdate;
+    }
+
+    /* Helper method, returns the tournament date after the last tournament date
+     * requested. This is used to provide the link on the front page to navigate
+     * trough the ranking pages. 
+     * If the last tournament is the current one (newest) a :obj:`null` will be returned.
+     */
+    private function _get_later_tournament_date_( ) {
+        # Find tdate before $tdate->min for ranking
+        $sql = sprintf("SELECT distinct(tdate) from %swetterturnier_betstat "
+            ." WHERE tdate > %d ORDER BY tdate ASC LIMIT 1;",$this->wpdb->prefix,$this->tdate->max);
         $res = $this->wpdb->get_row($sql);
         if ( $this->wpdb->num_rows == 0 ) {
             return null;
@@ -295,6 +326,7 @@ class wetterturnier_rankingObject {
         # Loading previous tournament date, needed to get the position changes
         # from the last to the current tournament.
         $this->tdate->previous = $this->_get_previous_tournament_date_();
+        $this->tdate->later    = $this->_get_later_tournament_date_();
 
         # Loading deadman points. Whenever a player did not participate he/she
         # will get these points. May return "0" if the deadman is not defined.
@@ -420,15 +452,24 @@ class wetterturnier_rankingObject {
         }
         $points_max = $this->points_max * $ntournaments;
         $final = new stdClass();
+        $points_winner = NULL;
         foreach ( $order as $idx=>$trash ) {
+
+            # Current user in loop (winner first)
             $user = $users[$idx];
+
+            # Setting winner points, used to compute differences.
+            if ( is_null($points_winner) ) { $points_winner = $ranking->now->$user->points; }
+
+            # Appending data
             $final->$user = new stdClass();
-            $final->$user->rank_pre  = $rank->pre[$idx];
-            $final->$user->rank_now  = $rank->now[$idx];
+            $final->$user->rank_pre    = $rank->pre[$idx];
+            $final->$user->rank_now    = $rank->now[$idx];
             #$final->$user->points_pre = $ranking->pre->$user->points;
-            $final->$user->points_now = $this->WTuser->number_format($ranking->now->$user->points,1);
+            $final->$user->points_now  = $this->WTuser->number_format($ranking->now->$user->points,1);
+            $final->$user->points_diff = $this->WTuser->number_format($points_winner - $ranking->now->$user->points,1);
             #$final->$user->played_pre = $ranking->pre->$user->played;
-            $final->$user->played_now = $ranking->now->$user->played;
+            $final->$user->played_now  = $ranking->now->$user->played;
             $final->$user->points_relative = $ranking->now->$user->points / $points_max;
             $final->$user->trend = $rank->pre[$idx] - $rank->now[$idx];
 
@@ -461,6 +502,9 @@ class wetterturnier_rankingObject {
         $this->ranking->meta               = new stdClass();
         $this->ranking->meta->points_max   = $points_max;
         $this->ranking->meta->ntournaments = $ntournaments;
+        $this->ranking->meta->previous     = $this->tdate->previous;
+        $this->ranking->meta->later        = $this->tdate->later;
+
     }
 
     /**
@@ -470,7 +514,8 @@ class wetterturnier_rankingObject {
         if ( is_null($this->ranking) ) {
             return json_encode(array("error"=>"Data not prepared, prepare_ranking not called?"));
         } else {
-            return json_encode( $this->ranking );
+            $res = $this->ranking; $res->dict = $this->dict;
+            return json_encode( $res );
         }
     }
 

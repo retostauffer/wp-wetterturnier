@@ -1240,10 +1240,11 @@ class wetterturnier_generalclass
      * representation of the tournament date) and `status`.
      */
     public function tournament_get_dates() {
+
         global $wpdb;
         $today = (int)(time()/86400);
         $res = $wpdb->get_results(sprintf("SELECT tdate, status FROM "
-                ." %swetterturnier_dates WHERE tdate >= %d ORDer BY tdate LIMIT 50",
+                ." %swetterturnier_dates WHERE tdate >= %d ORDer BY tdate",
                 $wpdb->prefix, $today));
         if ( ! $res ) { return false; }
         // Else return status

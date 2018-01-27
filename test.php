@@ -1,7 +1,17 @@
 <?php
 
+#// Output as text/plain
+require_once("../../../wp-config.php");
 
-$x = file_get_contents("/var/www/html/referrerdata/mos/mos.json","r");
+delete_option('wetterturnier_calendar_ndays');
+add_option(   'wetterturnier_calendar_ndays', 50, '', 'yes');
 
-print_r( json_decode($x) );
+
+global $WTuser;
+
+print_r($WTuser->options);
+
+die();
+
+
 ?>
