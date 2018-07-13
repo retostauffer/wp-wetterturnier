@@ -321,7 +321,7 @@
          </gt500>
 
          <gt850>
-            <name>Geopotential 850hPa</name>
+            <name>Temperatur 850hPa</name>
             <lt>12</lt>
             <lt>18</lt>
             <lt>24</lt>
@@ -455,7 +455,7 @@
          </gt500>
 
          <gt850>
-            <name>Geopotential 850hPa</name>
+            <name>Temperatur 850hPa</name>
             <lt>12</lt>
             <lt>18</lt>
             <lt>24</lt>
