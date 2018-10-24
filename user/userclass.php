@@ -1878,24 +1878,27 @@ class wetterturnier_userclass extends wetterturnier_generalclass
          $cityObj = new wetterturnier_cityObject( $city );
       }
 
-      if ( ! $tdate ) {
-         $current = $this->current_tournament; ###current_tournament(0,false,0,true);
-      } else {
-         $current = new stdClass(); $current->tdate = $tdate;
-         $current->readable = $this->date_format($tdate);
+
+      // Check if there are any valid rankings at the moment
+      $current = $this->current_tournament;
+      $scored  = $this->scored_players_per_town( $current->tdate );
+      print_r($scored);
+      // No results for the current one? Well, take the one before!
+      if ( ! $scored ) {
+         $current = $this->older_tournament( $current->tdate );
       }
       $ranking = $this->get_ranking_data($cityObj,(int)$current->tdate);
 
-      // If the length of $res is equal to zero (or $res equals false)
-      // we cannot show leading users.
-      if ( $ranking->dataLength < 1 ) { 
-         print '<div class="wetterturnier-info warning">'
-              .__('Sorry currently no information about the leading users.'
-                 .'Possible reason: no observations (and therefore no points) at all.'
-                 .'However, good luck in the ongoing tournament!','wpwt')
-                 ."</div>\n";
-         return;
-      }
+      //// If the length of $res is equal to zero (or $res equals false)
+      //// we cannot show leading users.
+      //if ( $ranking->dataLength < 1 ) { 
+      //   print '<div class="wetterturnier-info warning">'
+      //        .__('Sorry currently no information about the leading users.'
+      //           .'Possible reason: no observations (and therefore no points) at all.'
+      //           .'However, good luck in the ongoing tournament!','wpwt')
+      //           ."</div>\n";
+      //   return;
+      //}
 
       // ------------------------------------------------------------
       // There are (two) kinds of output styling. One is compact, showing only 

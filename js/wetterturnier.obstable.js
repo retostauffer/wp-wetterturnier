@@ -102,6 +102,10 @@ jQuery(document).on('ready',function() {
          $.each( $.map(data.data,function(elem,index) { return index; }), function(i,param) {
             $(id+' table thead').append("<th param='" + param + "'>" + param + "</th>");
          });
+         if ( data.data == null ) {
+            $(elem).append("<div style=\"color: red; padding-bottom: 50px;\">Sorry, no data available!</div>");
+            return;
+         }
          // Setting 'add tr class' true
          if ( 'datum' in data.data && 'stdmin' in data.data ) {
             addrowname = true

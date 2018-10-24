@@ -10,7 +10,7 @@
 
       <meteogram>
          <file>ICON_det_HH_berlin.gif</file>
-         <name>Berlin Tempelhof</name>
+         <name>Berlin Schönefeld</name>
       </meteogram>
       <meteogram>
          <file>ICON_det_HH_essen.gif</file>
@@ -44,7 +44,7 @@
 
       <meteogram>
          <file>COSMOEU_det_HH_berlin-tempelhof.gif</file>
-         <name>Berlin Tempelhof</name>
+         <name>Berlin Sch&ouml;nefeld</name>
       </meteogram>
       <meteogram>
          <file>COSMOEU_det_HH_greifswald.gif</file>
