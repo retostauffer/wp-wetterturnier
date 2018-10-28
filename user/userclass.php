@@ -1843,7 +1843,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       // Check if there are any valid rankings at the moment
       $current = $this->current_tournament;
       $scored  = $this->scored_players_per_town( $current->tdate );
-      print_r($scored);
+      #print_r($scored);
       // No results for the current one? Well, take the one before!
       if ( ! $scored ) {
          $current = $this->older_tournament( $current->tdate );
