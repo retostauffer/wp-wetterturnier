@@ -32,10 +32,10 @@ class wetterturnier_rankingObject {
     /// Will contain a copy of the global $wpdb instance. Used as
     /// class-internal reference for database requests.
     private $wpdb;
-	/// Attribute to store the tournament date.
-	private $tdate = null;
-	/// Attribute to store the cityObject.
-	private $cityObj = null;
+    /// Attribute to store the tournament date.
+    private $tdate = null;
+    /// Attribute to store the cityObject.
+    private $cityObj = null;
     /// Maximum number of points per weekend.
     private $points_max = 200;
 
@@ -43,6 +43,9 @@ class wetterturnier_rankingObject {
 
     # Used to store the ranking from prepare_ranking
     private $ranking = null;
+
+    # Whether file caching should be used or not
+    private $cache = false;
 
     # Name of the deadman.
     private $deadman;
@@ -55,7 +58,7 @@ class wetterturnier_rankingObject {
     /**
      * Object constructor.
      */
-    function __construct( $deadman = "Sleepy", $points_max = 200 ) {
+    function __construct( $deadman = "Sleepy", $points_max = 200, $cache = true ) {
 
        global $wpdb; $this->wpdb = $wpdb;
 
@@ -64,6 +67,7 @@ class wetterturnier_rankingObject {
        $this->WTuser     = $WTuser;
        $this->deadman    = $deadman;
        $this->points_max = $points_max;
+       $this->cache      = $cache;
 
        $this->dict = new stdClass();
        $this->dict->previous     = __("Older","wpwt");
@@ -155,9 +159,9 @@ class wetterturnier_rankingObject {
 
         # Where tdate
         if ( $this->tdate->previous ) {
-            $where_tdate = sprintf("b.tdate between %d and %d",$this->tdate->previous,$this->tdate->max);
+            $where_tdate = sprintf("b.tdate between %d and %d", $this->tdate->previous, $this->tdate->max);
         } else if ( ! $tdate->min == $tdate->max ) {
-            $where_tdate = sprintf("b.tdate between %d and %d",$this->tdate->min,$this->tdate->max);
+            $where_tdate = sprintf("b.tdate between %d and %d", $this->tdate->min, $this->tdate->max);
         } else {
             $where_tdate = sprintf("b.tdate = %d",$this->tdate->max);
         }
@@ -167,15 +171,15 @@ class wetterturnier_rankingObject {
 
         # Create SQL command
         $sql = array();
-        array_push($sql,"SELECT b.cityID, b.tdate, ".$usercol." SUM(b.points) AS points");
-        array_push($sql,sprintf("FROM %susers AS u RIGHT OUTER JOIN",$this->wpdb->prefix));
-        array_push($sql,sprintf("%swetterturnier_betstat AS b",$this->wpdb->prefix));
-        array_push($sql,"ON u.ID=b.userID WHERE");
-        array_push($sql,sprintf("%s AND %s %s",$where_city,$where_tdate,$where_user));
-        array_push($sql,"GROUP BY u.ID, b.tdate;");
+        array_push($sql, "SELECT b.cityID, b.tdate, " . $usercol . " SUM(b.points) AS points");
+        array_push($sql, sprintf("FROM %susers AS u RIGHT OUTER JOIN", $this->wpdb->prefix));
+        array_push($sql, sprintf("%swetterturnier_betstat AS b", $this->wpdb->prefix));
+        array_push($sql, "ON u.ID=b.userID WHERE");
+        array_push($sql, sprintf("%s AND %s %s", $where_city, $where_tdate, $where_user));
+        array_push($sql, "GROUP BY u.ID, b.tdate;");
 
-        # printf("\n%s\n", join("\n",$sql));
-        $dbres = $this->wpdb->get_results( join( "\n", $sql ) );
+        #printf("\n%s\n", join("\n",$sql));
+        $dbres = $this->wpdb->get_results(join( "\n", $sql));
 
         # If deadman is requested: create one stdClass object containing
         # the points for each tournament date, no need to add an extra
@@ -209,6 +213,7 @@ class wetterturnier_rankingObject {
                 $res->data->$uhash->$chash->$thash = $rec->points;
             }
         }
+
         return $res;
     }
 
@@ -292,6 +297,36 @@ class wetterturnier_rankingObject {
                       $userObj->ID, $this->cityObj->get("ID"), $this->tdate->max);
     }
 
+
+    /** Returns the file name for the cache file (only used if cache is set
+     * to true, see __construct method).
+     *
+     * Returns the absolute path to the cache file.
+     */
+    private function _get_cache_file_name() {
+        # Where city
+        if ( is_array($this->cityObj) ) {
+            $tmp = array();
+            foreach ( $this->cityObj as $rec ) { array_push($tmp,sprintf("%d",$rec->get("ID"))); }
+            $city_hash  = join(":", $tmp);
+        } else {
+            $city_hash  = sprintf("%d", (int)$this->cityObj->get("ID"));
+        }
+
+        # Where tdate
+        if ( $this->tdate->previous ) {
+            $tdate_hash  = sprintf("%d-%d", $this->tdate->previous, $this->tdate->max);
+        } else if ( ! $tdate->min == $tdate->max ) {
+            $tdate_hash  = sprintf("%d-%d", $this->tdate->min, $this->tdate->max);
+        } else {
+            $tdate_hash  = sprintf("%d", $this->tdate->max);
+        }
+
+        # Return cache file
+        return(sprintf("%scache/wt-ranking_%s_%s.json", plugin_dir_path(__FILE__),
+                       $tdate_hash, $city_hash));
+    }
+
     /* Prepares a ranking object based on the class attributes 'tdate' and
      * 'cityObj' (also allowed for time periods and multiple cities at the
      * same time). This function loads the data from the database and creates
@@ -300,9 +335,22 @@ class wetterturnier_rankingObject {
      * points of deadman (known as Sleepy on wetterturnier.de), if not
      * 0 points will be given for not participating at all.
      *
+     * Note: if cache is set to true (see __construct method) the result
+     * will be stored in a file as a serialized object. If the file exists
+     * and is not older than 600 seconds the data will be loaded from the
+     * file rather than re-calculating the rankings based on the database.
+     * This can be used to reduce the server load, especially as most
+     * users do check the very same rankings over and over again.
+     * Requires a folder "wp-wetterturnier/cache" with rw permissions for
+     * the webserver user. Files are _not_ deleted via php, if you use
+     * the caching take care of removing the files in the cache folder
+     * every now and then to avoid filling the disc for nothing.
+     *
      * Returns:
      *  No return! Stores the ranking object on the parent object itself.
      *  There are different ouptut methods to display/return the data.
+     *
+     * .. todo:: Explain caching.
      */
     function prepare_ranking() {
 
@@ -318,7 +366,6 @@ class wetterturnier_rankingObject {
             if ( $closed ) { die("No access! Go away, please! :)"); }
         }
 
-
         $tdate  = $this->tdate;
         $cityID = $this->cityObj->get("ID");
         $prefix = $this->wpdb->prefix;
@@ -327,6 +374,19 @@ class wetterturnier_rankingObject {
         # from the last to the current tournament.
         $this->tdate->previous = $this->_get_previous_tournament_date_();
         $this->tdate->later    = $this->_get_later_tournament_date_();
+
+        // If caching is enabled: check if we can load the
+        // data from disc to ont re-calculate the ranking again.
+        if ( $this->cache ) {
+            $cache_file  = $this->_get_cache_file_name();
+            if ( file_exists($cache_file) ) {
+                # If newer than 10 minutes: load file
+                if ( time() - filemtime($cache_file) <= 600 ) {
+                    $this->ranking = unserialize(file_get_contents($cache_file));
+                    return(false);
+                }
+            }
+        }
 
         # Loading deadman points. Whenever a player did not participate he/she
         # will get these points. May return "0" if the deadman is not defined.
@@ -504,6 +564,11 @@ class wetterturnier_rankingObject {
         $this->ranking->meta->ntournaments = $ntournaments;
         $this->ranking->meta->previous     = $this->tdate->previous;
         $this->ranking->meta->later        = $this->tdate->later;
+
+        # Write data to cache file
+        if ( $this->cache & is_writable(dirname($cache_file)) ) {
+            file_put_contents($cache_file, serialize($this->ranking), LOCK_EX);
+        }
 
     }
 

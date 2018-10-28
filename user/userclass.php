@@ -24,6 +24,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                               "wetterturnier.bets",
                               "wetterturnier.judgingform",
                               "wetterturnier.registrationform",
+                              "wetterturnier.rankingtable",
+                              "wetterturnier.rankingtable_init",
                               "jquery.featherlight-1.5.0.min",
                               "jquery.tooltipster.min");
 
@@ -158,6 +160,16 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
     }
 
+
+    /** Helper function to create a random string.
+     * @param $length int, default is 10. Length of the string to be returned.
+     * @param $prefix str, string prefix.
+     */
+    function random_string($length = 10, $prefix = "") {
+        $res = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                      ceil($length/strlen($x)) )),1,$length);
+        return (strlen($prefix) > 0) ? sprintf("%s-%s", $prefix, $res) : $res;
+    }
 
     /** Hide display name in profiles */
     function disable_display_name_settings() {
@@ -524,16 +536,16 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // limit'=>false,        shows top X
         // tdate'=>FALSE,        An explicit tournament date can be set
         // city'=>false,         for single-city-rankings
-        // cities'=>'1,2,3',     for cities ranking
+        // #TODO# REMOVED, kill! cities'=>'1,2,3',     for cities ranking
         // slim'=>false,         Hide some columns
         // weeks'=>15,           for total- and cities ranking
         // header'=>true,        Hide header title and stuff
         // $args are the user-args, will be combined with de defaults.
         $args = shortcode_atts( array('type'=>'weekend',
                                       'limit'=>false,
-                                      'tdate'=>FALSE,
+                                      'tdate'=>false,
                                       'city'=>false,
-                                      'cities'=>'1,2,3',
+                                      #'cities'=>false,
                                       'slim'=>false,
                                       'weeks'=>15,
                                       'header'=>true,
@@ -1539,22 +1551,26 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    public function ranking_ajax() {
 
        global $wpdb;
-       if ( empty($_REQUEST["cities"]) || empty($_REQUEST["from"]) || empty($_REQUEST["to"]) ) {
+       if ( empty($_REQUEST["city"]) || empty($_REQUEST["from"]) || empty($_REQUEST["to"]) ) {
            print json_encode(array("error"=>"Error by ajax interface function: wrong inputs."));
            die(0);
        }
 
        # Parsing cities
-       $cityObj = array();
-       foreach ( explode( ":", $_REQUEST["cities"] ) as $cityID ) {
-           array_push( $cityObj, new wetterturnier_cityObject( (int)$cityID ) );
+       if ( is_numeric($_REQUEST["city"]) ) {
+          $cityObj = new wetterturnier_cityObject( (int)$_REQUEST["city"] );
+       } else {
+          $cityObj = array();
+          foreach ( explode( ":", $_REQUEST["cities"] ) as $cityID ) {
+              array_push( $cityObj, new wetterturnier_cityObject( (int)$cityID ) );
+          }
        }
        # Parsing tdate
        $tdate = array( (int)$_REQUEST["from"], (int)$_REQUEST["to"] );
 
-       $cityObj = new wetterturnier_cityObject( 4 );
+       ///$cityObj = new wetterturnier_cityObject( (int)$cityID );
        # Loading ranking
-       $rankingObj = new wetterturnier_rankingObject(); # $cityID, 17543 );
+       $rankingObj = new wetterturnier_rankingObject();
        $rankingObj->set_cities( $cityObj );
        $rankingObj->set_tdate( $tdate );
        $rankingObj->prepare_ranking();
