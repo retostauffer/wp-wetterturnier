@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-10-28 20:04 on marvin
+# - L@ST MODIFIED: 2018-10-28 22:02 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -335,10 +335,12 @@ $today = (int)(time()/86400);
    ?>
 
    <?php
-   if ( $args->header ) {
-      printf("%s <b>%s</b>.",__("The maximum score (total) for the ranking is","wpwt"),
-                    $this->number_format($ranking->maxpoints,0));
-   }
+   ///// TODO the maximum number of points should not be static here!
+   ///// but they seem to be deliverd by the ranking object?
+   ///if ( $args->header ) {
+   ///   printf("%s <b>%s</b>.",__("The maximum score (total) for the ranking is","wpwt"),
+   ///                 $this->number_format(200));
+   ///}
 
    // Get custom table styling
    $wttable_style = get_user_option("wt_wttable_style");

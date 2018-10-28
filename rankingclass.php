@@ -61,23 +61,24 @@ class wetterturnier_rankingObject {
     function __construct( $deadman = "Sleepy", $points_max = 200, $cache = true ) {
 
        global $wpdb; $this->wpdb = $wpdb;
+       global $WTuser;
 
        # Check if access is granted
-       global $WTuser;
        $this->WTuser     = $WTuser;
        $this->deadman    = $deadman;
        $this->points_max = $points_max;
        $this->cache      = $cache;
 
        $this->dict = new stdClass();
-       $this->dict->previous     = __("Older","wpwt");
-       $this->dict->later        = __("Newer","wpwt");
-       $this->dict->points       = __("Points","wpwt");
-       $this->dict->trend        = __("+/-","wpwt");
-       $this->dict->played       = __("N","wpwt");
-       $this->dict->difference   = __("Diff","wpwt");
-       $this->dict->rank         = __("Rank","wpwt");
-       $this->dict->user         = __("User","wpwt");
+       $this->dict->previous     = __("Older", "wpwt");
+       $this->dict->later        = __("Newer", "wpwt");
+       $this->dict->points       = __("Points", "wpwt");
+       $this->dict->trend        = __("+/-", "wpwt");
+       $this->dict->played       = __("N", "wpwt");
+       $this->dict->difference   = __("Diff", "wpwt");
+       $this->dict->rank         = __("Rank", "wpwt");
+       $this->dict->user         = __("User", "wpwt");
+       $this->dict->points_max   = __("The maximum score (total) for the ranking is", "wpwt");
 
     }
 

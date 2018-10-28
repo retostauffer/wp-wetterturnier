@@ -115,7 +115,9 @@ jQuery(document).on('ready',function() {
                    .append("<th class=\"statusbar\"></th>");
 
           counter = 0;
-          if ( typeof(input.limit) == undefined ) { input.limit = data.data.length; }
+          if ( typeof(input.limit) == undefined | typeof(input.limit) === "boolean" ) {
+              input.limit = data.data.length;
+          }
           $.each( data.data, function(idx,rec) {
 
              // Append new table row and select the new html element (variable tr)
@@ -140,6 +142,9 @@ jQuery(document).on('ready',function() {
               if ( counter >= input.limit ) { return false; }
 
           });
+
+          // Short information
+          $(e).append(data.dict.points_max + " <b>" + data.meta.points_max + "</b>.");
 
 
 

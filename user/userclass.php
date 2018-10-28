@@ -536,7 +536,6 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // limit'=>false,        shows top X
         // tdate'=>FALSE,        An explicit tournament date can be set
         // city'=>false,         for single-city-rankings
-        // #TODO# REMOVED, kill! cities'=>'1,2,3',     for cities ranking
         // slim'=>false,         Hide some columns
         // weeks'=>15,           for total- and cities ranking
         // header'=>true,        Hide header title and stuff
@@ -545,7 +544,6 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                                       'limit'=>false,
                                       'tdate'=>false,
                                       'city'=>false,
-                                      #'cities'=>false,
                                       'slim'=>false,
                                       'weeks'=>15,
                                       'header'=>true,
@@ -556,7 +554,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         if ( ! in_array($args['type'],array('weekend','total','cities','season','yearly')) ) {
             return(sprintf("Sorry, ranking of type='%s' unknown. Option wrong.",$args['type']));
         }
-        return($this->shortcode_include("views/ranking.php",$args));
+        if ( ! $args["city"] ) {
+            $args["city"] = $this->get_current_cityObj()->get("ID");
+        }
+        return($this->shortcode_include("views/ranking.php", $args));
     }
 
     /** Referer to the dataexport */
@@ -1561,7 +1562,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
           $cityObj = new wetterturnier_cityObject( (int)$_REQUEST["city"] );
        } else {
           $cityObj = array();
-          foreach ( explode( ":", $_REQUEST["cities"] ) as $cityID ) {
+          foreach ( explode( ":", $_REQUEST["city"] ) as $cityID ) {
               array_push( $cityObj, new wetterturnier_cityObject( (int)$cityID ) );
           }
        }
