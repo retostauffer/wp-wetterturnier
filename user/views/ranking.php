@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-10-29 11:05 on marvin
+# - L@ST MODIFIED: 2018-10-29 21:15 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -36,14 +36,6 @@ if ( is_bool($args->city) | $args->city == 'false' ) {
    $cityObj = new wetterturnier_cityObject($args->city);
 }
 
-// ------------------------------------------------------------------
-// Getting "date" information if nothing is given
-// ------------------------------------------------------------------
-if ( ! is_null($args->tdate) )        { $tdate = (int)$args->tdate; }
-else if ( empty($_REQUEST['tdate']) ) {
-   $tdate = (int)$this->current_tournament(0,false,0,true)->tdate;
-} else { $tdate = (int)$_REQUEST['tdate']; }
-
 
 // ------------------------------------------------------------------
 // Loading userID for the Sleepy player (to compute points
@@ -56,20 +48,23 @@ if ( ! $sleepy ) { echo('Could not find userID for Sleepy! Stop! Error!'); retur
 // ------------------------------------------------------------------
 // Getting "date" information if nothing is given
 // ------------------------------------------------------------------
+
+// Checking input argument tdate
 if ( ! is_null($args->tdate) )        { $tdate = (int)$args->tdate; }
 else if ( empty($_REQUEST['tdate']) ) {
-   $tdate = (int)$this->current_tournament(0,false,0,true)->tdate;
-} else { $tdate = (int)$_REQUEST['tdate']; }
+   $args->tdate = (int)$this->current_tournament(0,false,0,true)->tdate;
+} else { $args->tdate = (int)$_REQUEST['tdate']; }
 
 
 // ------------------------------------------------------------------
 // Depending on the type of ranking which should be shown to the end
 // user, we have to prepare a few things.
 // ------------------------------------------------------------------
-$dostop = false; # Takes too much memory, killed for the moment
-$tdates = (object) array("from"=>Null, "to"=>Null,
-                         "from_prev"=>Null, "to_prev"=>Null,
-                         "older"=>Null, "newer"=>Null);
+$tdates = (object) array("from"      => Null, "to"      => Null,
+                         "from_prev" => Null, "to_prev" => Null,
+                         "older"     => Null, "newer"   => Null);
+// Latest possible tournament
+$tdates->latest = $WTuser->latest_tournament(floor(time() / 86400.))->tdate;
 
 switch ( $args->type ) {
 
@@ -79,10 +74,10 @@ switch ( $args->type ) {
    case "weekend":
       // Title of the ranking table
       $title = $cityObj->get('name').": ".__("This is the weekend ranking for the weekend around","wpwt")
-                 .sprintf(" %s.",$WTuser->date_format( $tdate ));
+                 .sprintf(" %s.",$WTuser->date_format($args->tdate));
       // For the overview: smaller title
       $short_title = sprintf("Top %d %s (%s)",$args->limit,$cityObj->get('name'),
-                              $WTuser->date_format( $tdate ));
+                              $WTuser->date_format($args->tdate));
       // Appending link to $short_title
       // Bit freaky. Translation needs to be the permalink to the
       // corresponding language!
@@ -91,17 +86,22 @@ switch ( $args->type ) {
                      $short_title);
 
       // Navigation items 
-      $tdates->older = $WTuser->older_tournament((int)$tdate);
-      $tdates->newer = $WTuser->newer_tournament((int)$tdate);
+      $tdates->older = $WTuser->older_tournament($args->tdate)->tdate;
+      $tdates->newer = $WTuser->newer_tournament($args->tdate)->tdate;
+
+      // Next tournament is in the future?
+      if ( $tdates->newer > $tdates->latest ) {
+          $tdates->newer = Null;
+      }
 
       // Define the two time periods for the ranking.
       // integers, days since 1970-01-01.
       // Current rank based on bets "from - to", the previous
       // rank is based on "from_prev - to_prev".
-      $tdates->from      = $tdate;
-      $tdates->to        = $tdate;
-      $tdates->from_prev = $tdates->older->tdate;
-      $tdates->to_prev   = $tdates->older->tdate;
+      $tdates->from      = $args->tdate;
+      $tdates->to        = $args->tdate;
+      $tdates->from_prev = $tdates->older;
+      $tdates->to_prev   = $tdates->older;
 
       break;
 
@@ -152,7 +152,6 @@ switch ( $args->type ) {
       $newer = $WTuser->newer_tournament((int)$tdate);
 
       // Loading the data set
-      //$ranking = $WTuser->get_ranking_data($city_array,(int)$tdate,$args->limit);
       $from = $tdate;
       $to   = $tdate;
       break;
@@ -162,8 +161,8 @@ switch ( $args->type ) {
    // ---------------------------------------------------------------
    case "season":
       // Compute begin and end tournament date for the season
-      $month = (int)$WTuser->date_format($tdate,"%m");
-      $year  = (int)$WTuser->date_format($tdate,"%Y");
+      $month = (int)$WTuser->date_format($args->tdate, "%m");
+      $year  = (int)$WTuser->date_format($args->tdate, "%Y");
       if ( in_array($month,array(1,2)) ) {
          $season = __("Winter","wpwt");
          $dates = array( round(strtotime(sprintf("%04d-12-01",$year-1))/86400),
@@ -185,20 +184,34 @@ switch ( $args->type ) {
          $dates = array( round(strtotime(sprintf("%04d-12-01",$year))/86400),
                          round(strtotime(sprintf("%04d-03-01",$year+1))/86400)-1  );
       }
-      // Loading the data set
-      //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
-      // Generate the title, using meta-info from the $ranking object
-      $title = sprintf("%s %s %s %s %d %s %s %s %s",
-               $season,__("season ranking for","wpwt"),$cityObj->get('name'),
-               __("including","wpwt"),$ranking->tdate_count,__("tournaments from","wpwt"),
-               $WTuser->date_format($ranking->tdate_first),__("to","wpwt"),
-               $WTuser->date_format($ranking->tdate_last ));
-      // Navigation items 
-      $older = $WTuser->older_tournament($dates[0]);
-      $newer = $WTuser->newer_tournament($dates[1]);
 
-      $from = $tdate;
-      $to   = $tdate;
+      // Navigation items 
+      $tdates->older    = $WTuser->older_tournament($dates[0])->tdate;
+      $tdates->newer    = $WTuser->newer_tournament($dates[1])->tdate;
+
+      // Define the two time periods for the ranking.
+      // integers, days since 1970-01-01.
+      // Current rank based on bets "from - to", the previous
+      // rank is based on "from_prev - to_prev".
+      $tdates->from      = $dates[0];
+      $tdates->to        = $dates[1];
+      $tdates->from_prev = $dates[0];
+      $tdates->to_prev   = $WTuser->older_tournament(min($tdates->latest,$dates[1]))->tdate;
+
+      // Hide trend if season has lies in the past
+      if ( $tdates->to < $WTuser->newer_tournament($tdates->latest)->tdate ) {
+          $tdates->from_prev = $tdates->to_prev = Null;
+      }
+
+      // If the next is in the future
+      if ( $tdates->to > $tdates->latest ) { $tdates->newer = Null; }
+
+      // Generate the title, using meta-info from the $ranking object
+      $title = sprintf("%s %s %s, %s %s %s %s",
+               $season,__("season ranking for","wpwt"),$cityObj->get('name'),
+               __("tournaments from","wpwt"),
+               $WTuser->date_format($tdates->from),__("to","wpwt"),
+               $WTuser->date_format($tdates->to));
 
       break;
 
@@ -207,52 +220,69 @@ switch ( $args->type ) {
    // ---------------------------------------------------------------
    case "yearly":
       // Compute begin and end tournament date for the season
-      $year = (int)$WTuser->date_format($tdate,"%Y");
-      $dates = array( round(strtotime(sprintf("%04d-01-01",$year))/86400),
-                      round(strtotime(sprintf("%04d-12-31",$year))/86400) );
-      // Loading the data set
-      //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
-      // Generate the title, using meta-info from the $ranking object
-      $title = sprintf("%s %s %s %04d %s %d %s",
-               __("Ranking for","wpwt"),$cityObj->get('name'),
-               __("for","wpwt"),$year,
-               __("including","wpwt"),$ranking->tdate_count,__("tournaments","wpwt"));
+      $year = (int)$WTuser->date_format($args->tdate,"%Y");
+      $dates = array( round(strtotime(sprintf("%04d-12-31",$year - 1)) / 86400),
+                      round(strtotime(sprintf("%04d-01-01",$year)) / 86400),
+                      round(strtotime(sprintf("%04d-12-31",$year)) / 86400),
+                      round(strtotime(sprintf("%04d-12-31",$year + 1)) / 86400) );
+
+      // Time periods for data aggregation
+      $tdates->from      = $dates[1];
+      $tdates->to        = $dates[2];
+
+      $tdates->from_prev = $dates[1];
+      $tdates->to_prev   = $WTuser->older_tournament($dates[2])->tdate;
+      // If the year has past ...
+      if ( $tdates->latest > $tdates->to_prev ) {
+         $tdates->from_prev = $tdates->to_prev = Null;
+      }
+
       // Navigation items 
-      $older = $WTuser->older_tournament($dates[0]);
-      $newer = $WTuser->newer_tournament($dates[1]);
+      $tdates->older = $dates[0];
+      $tdates->newer = $dates[3];
 
-      $from = $tdate;
-      $to   = $tdate;
+      // Hide 'newer' button if this is the current year.
+      if ( (int)date("Y") === $year ) { $tdates->newer = Null; }
+      print_r($tdates->newer);
 
-      $dostop = true;
+      // Generate the title, using meta-info from the $ranking object
+      $title = sprintf("%s %s %s %04d",
+               __("Ranking for","wpwt"),$cityObj->get('name'),
+               __("for","wpwt"),$year);
+
       break;
 
    // ---------------------------------------------------------------
    case "total":
+
       // Need the last $args->weeks tournament weekends for this ranking
       // type. 
       $sql = array();
-      array_push($sql,sprintf("SELECT tdate FROM %swetterturnier_betstat",$wpdb->prefix));
-      array_push($sql,sprintf("WHERE cityID = %d AND tdate <= %d",$cityObj->get('ID'),$tdate));
-      array_push($sql,sprintf("GROUP BY tdate DESC LIMIT %d",$args->weeks));
+      array_push($sql,sprintf("SELECT tdate FROM %swetterturnier_betstat", $wpdb->prefix));
+      array_push($sql,sprintf("WHERE cityID = %d AND tdate <= %d", $cityObj->get('ID'), $args->tdate));
+      array_push($sql,sprintf("GROUP BY tdate DESC LIMIT %d", $args->weeks));
+
       $dates = $wpdb->get_results(join(" ",$sql));
-      $dates = array(end($dates)->tdate,$tdate);
+      $dates = array(end($dates)->tdate,$args->tdate);
+
+      $tdates->from      = $dates[0];
+      $tdates->to        = $dates[1];
+      $tdates->from_prev = $dates[0];
+      $tdates->to_prev   = $WTuser->older_tournament($dates[1])->tdate;
+
+      # For navigation
+      $tdates->older     = $tdates->to_prev;
+      $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
+      if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
+
       // Loading the data set
       //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
       // Generate the title, using meta-info from the $ranking object
-      $title = sprintf("%s %s %s %d %s %s %s %s",
+      $title = sprintf("%s %s %s %s %s",
                __("Total ranking for","wpwt"),$cityObj->get('name'),
-               __("including","wpwt"),$ranking->tdate_count,__("tournaments from","wpwt"),
-               $WTuser->date_format($ranking->tdate_first),__("to","wpwt"),
-               $WTuser->date_format($ranking->tdate_last));
-      // Navigation items 
-      $older = $WTuser->older_tournament($tdate);
-      $newer = $WTuser->newer_tournament($tdate);
+               $WTuser->date_format($tdates->from),__("to","wpwt"),
+               $WTuser->date_format($tdates->to));
 
-      $from = $tdate;
-      $to   = $tdate;
-
-      $dostop = true;
       break;
 
    // ---------------------------------------------------------------
@@ -265,9 +295,12 @@ switch ( $args->type ) {
 }
 
 
+
+// URL for navigation
+$hrefurl = $WTuser->curPageURL(true);
+
 // Append date range to $arg's object
 $args->tdates = $tdates;
-
 if ( ! $args->hidebuttons & $args->header ) { ?>
    <div class="wt-twocolumn wrapper">
       <div class="wt-twocolumn column-left" style="width: 65%;">
@@ -280,13 +313,13 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
          ?>
 
          <div style="min-height: 30px;">
-            <?php if ( is_object($older) ) { ?>
-            <form style='float: left; padding-right: 3px;' method='post' action='<?php echo $aurl.'?tdate='.$older->tdate; ?>'>
+            <?php if ( ! is_null($tdates->older) ) { ?>
+            <form style="float: left; padding-right: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->older); ?>">
                 <input class="button" type="submit" value="<< <?php _e("older","wpwt"); ?>" />
             </form>
             <?php } ?>
-            <?php if ( is_object($newer) ) { ?>
-            <form style='float: left; padding-left: 3px;' method='post' action='<?php echo $aurl.'?tdate='.$newer->tdate; ?>'>
+            <?php if ( ! is_null($tdates->newer) ) { ?>
+            <form style="float: left; padding-left: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->newer); ?>">
                 <input class="button" type="submit" value="<?php _e("newer","wpwt"); ?> >>" />
             </form>
             <?php } ?>
@@ -309,7 +342,9 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
 # Random container ID
 $containerID = $WTuser->random_string(10, "wt-ranking-container");
 ?>
+<!---
 <b>Args:&nbsp;</b><?php print htmlspecialchars(json_encode($args)); ?><br><br>
+-->
 <div id="<?php print $WTuser->random_string(10, "wt-ranking-container"); ?>"
      class="wt-ranking-container"
      args="<?php print htmlspecialchars(json_encode($args)); ?>">
@@ -320,28 +355,7 @@ $containerID = $WTuser->random_string(10, "wt-ranking-container");
 <?php
 // Print dates in a ugly way
 $today = (int)(time()/86400);
-///TODO DEL//if ( empty($ranking->data) && ($today-$tdate) <= 1 ) {
-///TODO DEL//    echo "<br><div class='wetterturnier-info ok'>"
-///TODO DEL//        .__("Ranking can't be shown yet. The reason: "
-///TODO DEL//           ."this is the weekend ranking of the ongoing "
-///TODO DEL//           ."tournament and as we don't have any observed " 
-///TODO DEL//           ."parameters, we can't compute points, or ranks, "
-///TODO DEL//           ."at the moment. As soon as we can judge the "
-///TODO DEL//           ."parameter you can access the live-ranking here. "
-///TODO DEL//           ."Thank you for your understanding.","wpwt")
-///TODO DEL//        ."</div>";    
-///TODO DEL//} else if ( empty($ranking->data) ) {
-///TODO DEL//    echo "<br><div class='wetterturnier-info warning'>"
-///TODO DEL//        .__('Sorry, but we do have a problem computing the ' 
-///TODO DEL//           .' ranking you\'ll have. If the problem exists '
-///TODO DEL//           .' for a longer time period please inform '
-///TODO DEL//           .' one of our administrators. Please note that '
-///TODO DEL//           .' the message also shows up if this is the '
-///TODO DEL//           .' ongoing tournament. Thank you.','wpwt')
-///TODO DEL//        ."</div>";    
-///TODO DEL//} else {
-
-   ?>
+?>
 
    <?php
    ///// TODO the maximum number of points should not be static here!

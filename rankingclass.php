@@ -37,6 +37,14 @@ class wetterturnier_rankingObject {
     /// Maximum number of points per weekend.
     private $points_max = 200;
 
+    # Whether or not the trend (increase/decrease in rank)
+    # should be calculated. Is controlled by set_tdates().
+    private $calc_trend;
+
+    # Used to generate the name of the cache files if $cache is enabled.
+    private $cachehash = "UNNAMED";
+
+    # WTuser object
     private $WTuser;
 
     # Used to store the ranking from prepare_ranking
@@ -70,8 +78,8 @@ class wetterturnier_rankingObject {
        $this->cache      = $cache;
 
        $this->dict = new stdClass();
-       $this->dict->previous     = __("Older", "wpwt");
-       $this->dict->later        = __("Newer", "wpwt");
+       $this->dict->older        = __("Older", "wpwt");
+       $this->dict->newer        = __("Newer", "wpwt");
        $this->dict->points       = __("Points", "wpwt");
        $this->dict->trend        = __("+/-", "wpwt");
        $this->dict->played       = __("N", "wpwt");
@@ -91,6 +99,16 @@ class wetterturnier_rankingObject {
      */
     function set_cities( $cityObj ) {
         $this->cityObj = $cityObj;
+    }
+
+    /* Simply setting a type or name. Only used to define the cache file name.
+     * Default is "UNNAMED".
+     *
+     * Args:
+     *    name (:obj:`str`): Name or hash used to create the cache files.
+     */
+    public function set_cachehash( $name ) {
+        $this->cachehash = str_replace(" ", "_", (string)$name);
     }
 
 
@@ -116,14 +134,21 @@ class wetterturnier_rankingObject {
      */
     function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null) {
         if ( ! is_object($from) ) {
-            $this->tdates = (object) array("from"=>$from, "to"=>$to,
-                                          "from_prev"=>$from_prev, "to_prev"=>$to_prev);
+            $this->tdates = (object) array("from"      => $from,      "to"      => $to,
+                                           "from_prev" => $from_prev, "to_prev" => $to_prev);
         } else { $this->tdates = $from; }
 
-        $this->tdates->min = min($this->tdates->from,      $this->tdates->to,
-                                 $this->tdates->from_prev, $this->tdates->to_prev);
-        $this->tdates->max = max($this->tdates->from, $this->tdates->to,
-                                 $this->tdates->from_prev, $this->tdates->to_prev);
+        if ( is_null($this->tdates->from_prev) | is_null($this->tdates->to_prev) ) {
+            $this->tdates->min = min($this->tdates->from, $this->tdates->to);
+            $this->tdates->max = max($this->tdates->from, $this->tdates->to);
+            $this->calc_trend = false;
+        } else {
+            $this->tdates->min = min($this->tdates->from,      $this->tdates->to,
+                                     $this->tdates->from_prev, $this->tdates->to_prev);
+            $this->tdates->max = max($this->tdates->from, $this->tdates->to,
+                                     $this->tdates->from_prev, $this->tdates->to_prev);
+            $this->calc_trend = true;
+        }
     }
 
 
@@ -333,8 +358,8 @@ class wetterturnier_rankingObject {
      *      is no admin).
      */
     private function _get_detail_button( $userObj ) {
-        return sprintf("<span class='button small detail' userid='%d' "
-                      ."cityid='%d' tdate='%d'></span>",
+        return sprintf("<span class=\"button small detail\" userid=\"%d\" "
+                      ."cityid=\"%d\" tdate=\"%d\"></span>",
                       $userObj->ID, $this->cityObj->get("ID"), $this->tdates->max);
     }
 
@@ -355,17 +380,14 @@ class wetterturnier_rankingObject {
         }
 
         # Where tdate
-        if ( $this->tdates->previous ) {
-            $tdate_hash  = sprintf("%d-%d", $this->tdates->previous, $this->tdates->max);
-        } else if ( ! $tdate->min == $tdate->max ) {
-            $tdate_hash  = sprintf("%d-%d", $this->tdates->min, $this->tdates->max);
-        } else {
-            $tdate_hash  = sprintf("%d", $this->tdates->max);
-        }
+        $tdate_hash = sprintf("%s-%s_%d-%d",
+             (is_null($this->tdates->from_prev)) ? "NULL" : sprintf("%d", $this->tdates->from_prev),
+             (is_null($this->tdates->from_prev)) ? "NULL" : sprintf("%d", $this->tdates->to_prev),
+             $this->tdates->from, $this->tdates->to);
 
         # Return cache file
-        return(sprintf("%scache/wt-ranking_%s_%s.json", plugin_dir_path(__FILE__),
-                       $tdate_hash, $city_hash));
+        return(sprintf("%scache/wt-ranking_%s_%s_%s.json", plugin_dir_path(__FILE__),
+                       $this->cachehash, $tdate_hash, $city_hash));
     }
 
     /* Prepares a ranking object based on the class attributes 'tdate' and
@@ -400,20 +422,15 @@ class wetterturnier_rankingObject {
             return null;
         }
 
-        if ( is_numeric($this->tdates->max) ) {
-            ob_start();
-            $closed = $this->WTuser->check_view_is_closed($this->tdates->max);
-            ob_end_clean();
-            if ( $closed ) { die("No access! Go away, please! :)"); }
-        }
+        ///if ( is_numeric($this->tdates->max) ) {
+        ///    ob_start();
+        ///    $closed = $this->WTuser->check_view_is_closed($this->tdates->max);
+        ///    ob_end_clean();
+        ///    if ( $closed ) { die("No access! Go away, please! :)"); }
+        ///}
 
         $cityID = $this->cityObj->get("ID");
         $prefix = $this->wpdb->prefix;
-
-        # Loading previous tournament date, needed to get the position changes
-        # from the last to the current tournament.
-        $this->tdates->previous = $this->_get_previous_tournament_date();
-        $this->tdates->later    = $this->_get_later_tournament_date();
 
         // If caching is enabled: check if we can load the
         // data from disc to ont re-calculate the ranking again.
@@ -437,17 +454,33 @@ class wetterturnier_rankingObject {
 
         $ranking = (object)array("pre"=>new stdClass(), "now"=>new stdClass());
 
-        # Looping over cities
+        # Number of played tournaments so far
+        $ntournaments = 0;
+        $latest = $this->WTuser->latest_tournament(floor(time() / 86400))->tdate;
+        foreach ( $userdata->tdates as $tdate ) {
+            if ( $tdate >= $this->tdates->from && $tdate <= $latest ) { $ntournaments++; }
+        }
+
+        # Prepare data
         foreach ( $userdata->data as $user=>$data ) {
 
             # Append user to $ranking object if not yet existing
             if ( ! property_exists($ranking->pre,$user) ) {
-                $ranking->pre->$user = (object)array("played"=>0,"points"=>0);
+                if ( $this->calc_trend ) {
+                    $ranking->pre->$user = (object)array("played"=>0,"points"=>0);
+                }
                 $ranking->now->$user = (object)array("played"=>0,"points"=>0);
             }
+
+            # Looping over cities
             foreach ( $userdata->cityIDs as $cityID ) {
                 $chash = sprintf("city_%d",$cityID);
                 foreach ( $userdata->tdates as $tdate ) {
+
+                    # Skip if in the future
+                    if ( $tdate > $latest ) { continue; }
+
+                    # Create hash for the object names
                     $thash = sprintf("tdate_%d",$tdate);
 
                     # Default: 0 points
@@ -456,7 +489,7 @@ class wetterturnier_rankingObject {
                     $played = 0;
 
                     # If user got points: use user points 
-                    if ( property_exists($data->$chash,$thash) ) {
+                    if ( property_exists($data->$chash, $thash) ) {
                         $points = $data->$chash->$thash;
                         $played = 1;
                     # Else check if deadman exists and has points for this
@@ -470,11 +503,14 @@ class wetterturnier_rankingObject {
                     }
 
                     # Adding points
-                    if ( ($tdate >= $this->tdates->from_prev) && ($tdate <= $this->tdates->to_prev) ) {
-                        $ranking->pre->$user->points += $points;
-                        $ranking->pre->$user->played += $played;
+                    if ( $this->calc_trend ) {
+                        if ( $tdate >= $this->tdates->from_prev &&
+                             $tdate <= $this->tdates->to_prev ) {
+                            $ranking->pre->$user->points += $points;
+                        }
                     }
-                    if ( ($tdate >= $this->tdates->from) && ($tdate <= $this->tdates->to) ) {
+                    if ( $tdate >= $this->tdates->from &&
+                         $tdate <= $this->tdates->to ) {
                         $ranking->now->$user->points += $points;
                         $ranking->now->$user->played += $played;
                     }
@@ -520,34 +556,34 @@ class wetterturnier_rankingObject {
         }
 
         # Extracting points to get rank
-        $rank = (object)array("pre"=>array(),"now"=>array());
-        foreach ( $ranking->pre as $rec ) {
-            array_push( $rank->pre, round($rec->points,2) );
-        }
-        $rank->pre = array_rank( $rank->pre );
+        $rank = (object)array("now"=>array());
 
+        // Current rank
         foreach ( $ranking->now as $rec ) {
             array_push( $rank->now, round($rec->points,2) );
         }
         $rank->now = array_rank( $rank->now );
 
+        # Previous rank (to calculate the trend), if requested
+        if ( $this->calc_trend ) {
+            $rank->pre = array();
+            foreach ( $ranking->pre as $rec ) {
+                array_push( $rank->pre, round($rec->points,2) );
+            }
+            $rank->pre = array_rank( $rank->pre );
+        }
+
         # Array of the same order as $rank containing usernames
         $users = array();
-        foreach ( $ranking->pre as $user=>$x ) { array_push($users,$user); }
+        foreach ( $ranking->now as $user=>$x ) { array_push($users, $user); }
 
         # Looping in rank order
         $order = $rank->now; asort($order);
 
 
-        # Create final object, adding ranks and tendencies.
-        if ( $this->tdates->previous ) {
-            $ntournaments = count($userdata->tdates) - 1;
-        } else {
-            $ntournaments = count($userdata->tdates);
-        }
-        $points_max = $this->points_max * $ntournaments;
-        $final = new stdClass();
+        $final         = new stdClass();
         $points_winner = NULL;
+        $points_max    = $this->points_max * $ntournaments;
         foreach ( $order as $idx=>$trash ) {
 
             # Current user in loop (winner first)
@@ -558,15 +594,18 @@ class wetterturnier_rankingObject {
 
             # Appending data
             $final->$user = new stdClass();
-            $final->$user->rank_pre    = $rank->pre[$idx];
             $final->$user->rank_now    = $rank->now[$idx];
-            #$final->$user->points_pre = $ranking->pre->$user->points;
             $final->$user->points_now  = $this->WTuser->number_format($ranking->now->$user->points,1);
-            $final->$user->points_diff = $this->WTuser->number_format($points_winner - $ranking->now->$user->points,1);
-            #$final->$user->played_pre = $ranking->pre->$user->played;
             $final->$user->played_now  = $ranking->now->$user->played;
             $final->$user->points_relative = $ranking->now->$user->points / $points_max;
-            $final->$user->trend = $rank->pre[$idx] - $rank->now[$idx];
+            $final->$user->points_diff = $this->WTuser->number_format($points_winner
+                                                 - $ranking->now->$user->points,1);
+
+            if ( $this->calc_trend ) {
+                $final->$user->rank_pre    = $rank->pre[$idx];
+                $final->$user->trend = $rank->pre[$idx] - $rank->now[$idx];
+            }
+
 
             # Replace username with "user display name"
             # and add userclass (for display) using the
@@ -594,10 +633,11 @@ class wetterturnier_rankingObject {
 
         $this->ranking = new stdClass();
         $this->ranking->meta               = new stdClass();
-        $this->ranking->meta->points_max   = $points_max;
+        $this->ranking->meta->has_trends   = $this->calc_trend;
         $this->ranking->meta->ntournaments = $ntournaments;
-        $this->ranking->meta->previous     = $this->tdates->previous;
-        $this->ranking->meta->later        = $this->tdates->later;
+        $this->ranking->meta->points_max   = $points_max;
+        $this->ranking->meta->older        = $this->tdates->older;
+        $this->ranking->meta->newer        = $this->tdates->newer;
         $this->ranking->data               = $final;
 
         # Write data to cache file

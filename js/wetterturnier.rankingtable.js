@@ -12,13 +12,11 @@ jQuery(document).on('ready',function() {
       // Element where we have to store the data to
       var elem = $(this)
 
-// TODO: remove this here
-console.log($(this).attr("id"));
-
-
       // Setting defaults
       var defaults = {hidebuttons: false}
-      $.each(defaults, function(key, val) { input[key] = val; });
+      $.each(defaults, function(key, val) {
+          if ( ! input.hasOwnProperty(key) ) { input[key] = val; }
+      });
 
       // Check if file exists. If it exists, just display.
       // If not existing, start Rscript to create the image.
@@ -30,14 +28,11 @@ console.log($(this).attr("id"));
 
              if ( results.error != undefined ) {
                 $(elem).html("<div class=\"wetterturnier-info error\">" +
-                    results.error + "</div>");
+                             results.error + "</div>");
              } else {
                 $(elem).html( "<div class=\"wetterturnier-info\">Data loaded, waiting for js to display it.</div>" );
-                 data = results;
+                data = results;
              }
-             console.log(results)
-             $.reto = results
-
              display_ranking($(elem), results, input);
          },
          error: function( hxr, ajaxOptions, thrownError ) {
@@ -65,7 +60,8 @@ console.log($(this).attr("id"));
           return html;
       }
 
-      function colorize_trend( trend ) {
+      // This one was my original, currently unused.
+      function colorize_trend_11cols( trend ) {
           // Creates a color id btw, 0 and 10 to address color.
           // Trend divided by 3, so every three the color changes.
           colidx = Math.min( Math.max( -5, Math.round(trend/3) ), 5 ) + 5
@@ -75,32 +71,33 @@ console.log($(this).attr("id"));
           return "<span style=\"color: " + cols[10-colidx] + ";\">" + sign + trend + "</span>";
       }
 
+      // Same as above, but with less colors.
+      function colorize_trend( trend ) {
+          // Creates a color id btw, 0 and 4 to address color.
+          // Trend divided by 3, so every three the color changes.
+          colidx = Math.min( Math.max( -1, Math.round(trend/10) ), 1 ) + 1
+          if ( trend == 0 ) { var col = "#8D8D8D" } else if ( trend < 0 ) { var col = "#ff6616"; } else { col = "#668fcc"; }
+          var sign = ( trend > 0 ) ? "+" : "";
+          return "<span style=\"color: " + col + ";\">" + sign + trend + "</span>";
+      }
+
       function display_ranking( e, data, input ) {
 
+          // Clear content of the div
           $(e).empty();
 
-          if ( ! input.hidebuttons ) {
-             if ( data.meta.previous ) {
-                $(e).append("<form method=\"post\" action=\"http://www.wetterturnier.de/wertungen/wochenendwertungen/?tdate="+data.meta.previous+"\">"
-                           +"   <input class=\"button\" type=\"submit\" value=\"<< "+data.dict.previous+"\">"
-                           +"</form>");
-             }
-             if ( data.meta.later ) {
-                $(e).append("<form method=\"post\" action=\"http://www.wetterturnier.de/wertungen/wochenendwertungen/?tdate="+data.meta.later+"\">"
-                           +"   <input class=\"button\" type=\"submit\" value=\""+data.dict.later+" >>\">"
-                           +"</form>");
-             }
-          }
-
+          // Append new table
           $(e).append("<table class=\"wttable-show-ranking wttable-show small ranking-weekend default\"></table>")
           $(e).find("table").append("<thead><tr></tr></thead><tbody></tbody>")
 
           var head = $(e).find("table thead tr")
           var body = $(e).find("table tbody")
-          $( head ).append("<th class=\"rank\">"+data.dict.rank+"</th>")
-                   .append("<th class=\"trend\">"+data.dict.trend+"</th>");
+          $( head ).append("<th class=\"rank\">"+data.dict.rank+"</th>");
+          if ( data.meta.has_trends ) {
+              $( head ).append("<th class=\"trend\">"+data.dict.trend+"</th>");
+          }
           // Only show number of played games if begin/end date differ
-          if ( ! input.begin === input.to ) { $( head ).append("<th class=\"played\">"+data.dict.played+"</th>"); }
+          if ( data.meta.ntournaments > 1 ) { $( head ).append("<th class=\"played\">"+data.dict.played+"</th>"); }
           $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                    .append("<th class=\"points difference\">"+data.dict.difference+"</th>")
                    .append("<th class=\"points\">"+data.dict.points+"</th>")
@@ -117,12 +114,14 @@ console.log($(this).attr("id"));
              var tr = $( body ).find("tr").last()
 
              // Appending data ...
-             $(tr).append("<td class=\"rank "+rec.userclass+"\">"+rec.rank_now+"</td>")
-                  .append("<td class=\"trend\">"+colorize_trend(rec.trend)+"</td>");
+             $(tr).append("<td class=\"rank "+rec.userclass+"\">"+rec.rank_now+"</td>");
+             if ( data.meta.has_trends ) {
+                 $( tr ).append("<td class=\"trend\">"+colorize_trend(rec.trend)+"</td>");
+             }
              // Only show number of played games if begin/end date differ
-             if ( ! input.begin === input.to ) { $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.ntournaments+"</td>"); }
+             if ( data.meta.ntournaments > 1 ) { $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.ntournaments+"</td>"); }
              $(tr).append("<td>" +
-                          (( rec.detail_button != undefined ) ? rec.detail_button : "") + 
+                          (( rec.detail_button != undefined && data.meta.ntournaments === 1 ) ? rec.detail_button : "") + 
                           (( rec.edit_button != undefined ) ? rec.edit_button : "") +
                           rec.profile_link + "</td>")
                        .append("<td class=\"points difference\">"+rec.points_diff+"</td>")

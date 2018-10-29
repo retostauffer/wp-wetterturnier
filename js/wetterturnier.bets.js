@@ -13,7 +13,7 @@ jQuery(document).on("ready",function(){
    });
 
    // Functionality on the buttons to show the user details
-   $("table.wttable-show > tbody > tr > td > span.button.detail").on("click",function(){
+   $("table.wttable-show > tbody > tr > td > span.button.detail").live("click",function(){
 
       // --------------------
       // Ajaxing the calculation miniscript
@@ -41,7 +41,7 @@ jQuery(document).on("ready",function(){
    });      
 
    // Functionality on the buttons to forward admins to 'edit user bets' page.
-   $("table.wttable-show > tbody > tr > td > span.button.edit-bet").on("click",function(){
+   $("table.wttable-show > tbody > tr > td > span.button.edit-bet").live("click",function(){
 
       var userID  = parseInt($(this).attr("userID"));
       var cityID  = parseInt($(this).attr("cityID"));

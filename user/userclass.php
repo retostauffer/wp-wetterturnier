@@ -533,30 +533,29 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // The first array defined is the 'default settings array',
         // the second ($args) the user options.
         // type'=>'weekend',     default type
+        // tdate=>false,         tournament date to be displayed. If not set
+        //                       the latest tournament will be shown.
         // limit'=>false,        shows top X
-        // tdate'=>FALSE,        An explicit tournament date can be set
         // city'=>false,         for single-city-rankings
         // slim'=>false,         Hide some columns
         // weeks'=>15,           for total- and cities ranking
         // header'=>true,        Hide header title and stuff
         // $args are the user-args, will be combined with de defaults.
         $args = shortcode_atts( array('type'=>'weekend',
+                                      'tdate'=>Null,
                                       'limit'=>false,
-                                      'tdate'=>false,
                                       'city'=>false,
                                       'slim'=>false,
                                       'weeks'=>15,
                                       'header'=>true,
                                       'hidebuttons'=>false), $args );
-        if ( $args["slim"] === "true" )    { $args["slim"] = true; } else { $args["slim"] = false; }
-        if ( $args["header"] === "false" ) { $args["header"] = false; } else { $args["header"] = true; }
-        if ( is_numeric($args["tdate"]) )  { $args["tdate"] = (int)$args['tdate']; } else { $args["tdate"] = NULL; }
-        if ( ! in_array($args['type'],array('weekend','total','cities','season','yearly')) ) {
+        foreach ( array("slim", "hidebuttons", "header") as $key ) {
+            $args[$key] = ( $args[$key] === "true" ) ? true : false;
+        }
+        if ( ! in_array($args['type'], array('weekend','total','cities','season','yearly')) ) {
             return(sprintf("Sorry, ranking of type='%s' unknown. Option wrong.",$args['type']));
         }
-        if ( ! $args["city"] ) {
-            $args["city"] = $this->get_current_cityObj()->get("ID");
-        }
+        if ( ! $args["city"] ) { $args["city"] = $this->get_current_cityObj()->get("ID"); }
         return($this->shortcode_include("views/ranking.php", $args));
     }
 
@@ -1564,6 +1563,18 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                print json_encode(array("error"=>"Error by ajax interface function: "
                        ." Missing argument \"" . $required . "\"."));
                die(0);
+           } else {
+               // Can be Null. If we get an empty string that is what
+               // JSON delivers us as Null.
+               if ( strlen($tdates->$required) === 0 ) {
+                  $tdates->$required = Null;
+               // Else check if numeric. If not, stop.
+               } else if ( ! is_numeric($tdates->$required) ) {
+                  print json_encode(array("error"=>"Error by ajax interface function: "
+                      ." Wrong format for argument " . $required . "=\"".$tdates->$required."\"."
+                      ." (is of type \"".gettype($tdates->$required)."\")."));
+                  die(0);
+               } else { $tdates->$required = (int)$tdates->$required; }
            }
        }
 
@@ -1582,6 +1593,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        $rankingObj = new wetterturnier_rankingObject();
        $rankingObj->set_cities($cityObj);
        $rankingObj->set_tdates($tdates);
+       $rankingObj->set_cachehash($_REQUEST["type"]);
        $rankingObj->prepare_ranking();
        print $rankingObj->return_json();
        die(0);
@@ -1904,7 +1916,6 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       // Check if there are any valid rankings at the moment
       $current = $this->current_tournament;
       $scored  = $this->scored_players_per_town( $current->tdate );
-      print_r($scored);
       // No results for the current one? Well, take the one before!
       if ( ! $scored ) {
          $current = $this->older_tournament( $current->tdate );
