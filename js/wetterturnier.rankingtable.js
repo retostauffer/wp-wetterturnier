@@ -11,18 +11,10 @@ jQuery(document).on('ready',function() {
 
       // Element where we have to store the data to
       var elem = $(this)
-       console.log($(this).attr("id"));
 
-      if ( typeof(input) == 'undefined' ) {
-         $(elem).html('Problems in function fn.show_ranking. Input type wrong.'); return(false); 
-      // TODO Removed, delete
-      //} else if ( input.cities == undefined ) {
-      //   $(elem).html('Problems in function fn.show_ranking. Missing input cities!'); return(false); 
-      } else if ( input.from == undefined ) {
-         $(elem).html('Problems in function fn.show_ranking. Missing input from!'); return(false); 
-      } else if ( input.to == undefined ) {
-         $(elem).html('Problems in function fn.show_ranking. Missing input to!'); return(false); 
-      }
+// TODO: remove this here
+console.log($(this).attr("id"));
+
 
       // Setting defaults
       var defaults = {hidebuttons: false}
@@ -33,24 +25,24 @@ jQuery(document).on('ready',function() {
       // Ajaxing the calculation miniscript
       input["action"] = "ranking_ajax"
       $.ajax({
-         url: ajaxurl, dataType: 'json', type: 'post', async: false, data: input,
+         url: ajaxurl, dataType: 'json', type: 'post', data: input,
          success: function( results, hxr, settings ) {
-             //console.log(results)
-             //console.log(hxr)
-             //console.log( e.responseText );
+
              if ( results.error != undefined ) {
                 $(elem).html("<div class=\"wetterturnier-info error\">" +
                     results.error + "</div>");
              } else {
                 $(elem).html( "<div class=\"wetterturnier-info\">Data loaded, waiting for js to display it.</div>" );
-                data = results;
+                 data = results;
              }
+             console.log(results)
+             $.reto = results
 
-             display_ranking( $(elem), data, input );
+             display_ranking($(elem), results, input);
          },
          error: function( hxr, ajaxOptions, thrownError ) {
             //$error = e; console.log('errorlog'); console.log(e);
-            $(elem).html('Problems loading ranking data.<br><br>\n' +
+            $(this).html("Problems loading ranking data.<br><br>\n" +
                 hxr.responseText + "\n" + thrownError );
             data = false
          }
@@ -63,12 +55,12 @@ jQuery(document).on('ready',function() {
           var percent = parseInt(rel*1000)/10.;
           if ( rel > 0.5 ) {
              var html = "<span class=\"ranking-statusbar\" style=\"width: 100%;\">"
-                       +"  <span style=\"width: "+rel*100+"%;\">"+percent+"%&nbsp;</span>"
-                       +"</span>";
+                      + "  <span style=\"width: " + rel * 100 + "%;\">" + percent + "%&nbsp;</span>"
+                      + "</span>";
           } else {
              var html = "<span class=\"ranking-statusbar\" style=\"width: 100%;\">"
-                       +"  <span style=\"width: "+rel+"%;\"></span>&nbsp;"+percent+"%"
-                       +"</span>";
+                      + "  <span style=\"width: " + rel * 100 + "%;\"></span>&nbsp;" + percent + "%"
+                      + "</span>";
           }
           return html;
       }

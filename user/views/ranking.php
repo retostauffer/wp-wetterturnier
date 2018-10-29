@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-10-28 22:02 on marvin
+# - L@ST MODIFIED: 2018-10-29 11:05 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -52,6 +52,7 @@ else if ( empty($_REQUEST['tdate']) ) {
 $sleepy = $WTuser->get_user_by_username('Sleepy');
 if ( ! $sleepy ) { echo('Could not find userID for Sleepy! Stop! Error!'); return; }
 
+
 // ------------------------------------------------------------------
 // Getting "date" information if nothing is given
 // ------------------------------------------------------------------
@@ -60,11 +61,16 @@ else if ( empty($_REQUEST['tdate']) ) {
    $tdate = (int)$this->current_tournament(0,false,0,true)->tdate;
 } else { $tdate = (int)$_REQUEST['tdate']; }
 
+
 // ------------------------------------------------------------------
 // Depending on the type of ranking which should be shown to the end
 // user, we have to prepare a few things.
 // ------------------------------------------------------------------
 $dostop = false; # Takes too much memory, killed for the moment
+$tdates = (object) array("from"=>Null, "to"=>Null,
+                         "from_prev"=>Null, "to_prev"=>Null,
+                         "older"=>Null, "newer"=>Null);
+
 switch ( $args->type ) {
 
    // ---------------------------------------------------------------
@@ -85,12 +91,17 @@ switch ( $args->type ) {
                      $short_title);
 
       // Navigation items 
-      $older = $WTuser->older_tournament((int)$tdate);
-      $newer = $WTuser->newer_tournament((int)$tdate);
-      // Loading the data set 
-      //$ranking = $WTuser->get_ranking_data($cityObj,$tdate,$args->limit);
-      $from = $tdate;
-      $to   = $tdate;
+      $tdates->older = $WTuser->older_tournament((int)$tdate);
+      $tdates->newer = $WTuser->newer_tournament((int)$tdate);
+
+      // Define the two time periods for the ranking.
+      // integers, days since 1970-01-01.
+      // Current rank based on bets "from - to", the previous
+      // rank is based on "from_prev - to_prev".
+      $tdates->from      = $tdate;
+      $tdates->to        = $tdate;
+      $tdates->from_prev = $tdates->older->tdate;
+      $tdates->to_prev   = $tdates->older->tdate;
 
       break;
 
@@ -255,9 +266,7 @@ switch ( $args->type ) {
 
 
 // Append date range to $arg's object
-$args->from = $from;  //$ranking->tdate_first;
-$args->to   = $to;    //$ranking->tdate_last;
-
+$args->tdates = $tdates;
 
 if ( ! $args->hidebuttons & $args->header ) { ?>
    <div class="wt-twocolumn wrapper">
@@ -345,7 +354,6 @@ $today = (int)(time()/86400);
    // Get custom table styling
    $wttable_style = get_user_option("wt_wttable_style");
    $wttable_style = (is_bool($wttable_style) ? "" : $wttable_style);
-
 
    ////////// Create a table to show the data
    ////////$max_width = 200;

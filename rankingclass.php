@@ -32,8 +32,6 @@ class wetterturnier_rankingObject {
     /// Will contain a copy of the global $wpdb instance. Used as
     /// class-internal reference for database requests.
     private $wpdb;
-    /// Attribute to store the tournament date.
-    private $tdate = null;
     /// Attribute to store the cityObject.
     private $cityObj = null;
     /// Maximum number of points per weekend.
@@ -45,7 +43,7 @@ class wetterturnier_rankingObject {
     private $ranking = null;
 
     # Whether file caching should be used or not
-    private $cache = false;
+    private $cache = true;
 
     # Name of the deadman.
     private $deadman;
@@ -62,6 +60,8 @@ class wetterturnier_rankingObject {
 
        global $wpdb; $this->wpdb = $wpdb;
        global $WTuser;
+       ///global $polylang;
+       ///$lang = pll_current_language();
 
        # Check if access is granted
        $this->WTuser     = $WTuser;
@@ -86,39 +86,44 @@ class wetterturnier_rankingObject {
     /* Setting cityObj argument within this class.
      *
      * Args:
-     *    tdate (:obj:`array` or :class:`wetterturnier_cityObj`): Either a
-     *      :class:`wetterturnier_cityObject` object or an array containing one or several
-     *      of these objects. Whether to load ranking for one or several cities.
+     *      cityObj (:obj:`cityObj` or an :obj:`array`): request for only one
+     *          specific city or multiple cities (then an array is needed).
      */
     function set_cities( $cityObj ) {
         $this->cityObj = $cityObj;
     }
 
 
-    /* Setting tdate argument within this class.
+    /* Store the date ranges for which the request should be made.
      *
      * Args:
-     *    tdate (:obj:`array` or :obj:`int`): Either a single numeric (prepare ranking
-     *      for one single tournament date) or an array (for a time period, uses min/max).
+     *    from (:obj:`int` or :obj:`stdClass`): Either a single integer
+     *      for the first date (days since 1970-01-01) for the current rank,
+     *      or an object. If it is an object we assume it contains four elements
+     *      specifying 'from', 'to', 'from_prev', and 'to_prev'. Else all four
+     *      iputs have to be given!
+     *    to (:obj:`Null` or :obj:`int`): If input $from is an object this argument
+     *      is simply ignored. Else should contain an integer with the last day
+     *      (days since 1970-01-01) of the period for the current rank.
+     *    from_prev (:obj:`Null` or :obj:`int`): If input $from is an object this argument
+     *      is simply ignored. Else should contain an integer with the first day
+     *      (days since 1970-01-01) of the period for the previouse rank. Used to
+     *      compute the trend.
+     *    to_prev (:obj:`Null` or :obj:`int`): If input $from is an object this argument
+     *      is simply ignored. Else should contain an integer with the last day
+     *      (days since 1970-01-01) of the period for the previouse rank. Used to
+     *      compute the trend.
      */
-    function set_tdate( $tdate ) {
-        $this->tdate = $this->_get_tdate_object_( $tdate );
-    }
+    function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null) {
+        if ( ! is_object($from) ) {
+            $this->tdates = (object) array("from"=>$from, "to"=>$to,
+                                          "from_prev"=>$from_prev, "to_prev"=>$to_prev);
+        } else { $this->tdates = $from; }
 
-
-    /* Prepare tdate argument within this class.
-     *
-     * Args:
-     *    tdate (:obj:`array` or :obj:`int`): Either a single numeric (prepare ranking
-     *      for one single tournament date) or an array (for a time period, uses min/max).
-     */
-    private function _get_tdate_object_( $tdate ) {
-        if ( is_numeric($tdate) ) {
-            $tdate = (object)array("min"=>$tdate,"max"=>$tdate);
-        } else {
-            $tdate = (object)array("min"=>min($tdate),"max"=>max($tdate));
-        }
-        return $tdate;
+        $this->tdates->min = min($this->tdates->from,      $this->tdates->to,
+                                 $this->tdates->from_prev, $this->tdates->to_prev);
+        $this->tdates->max = max($this->tdates->from, $this->tdates->to,
+                                 $this->tdates->from_prev, $this->tdates->to_prev);
     }
 
 
@@ -133,11 +138,47 @@ class wetterturnier_rankingObject {
      *          If the deadman user cannot be found: return null such that players
      *          which have not participated simply get 0 points.
      * Returns:
-     *      Stuff.
-     *
-     * .. todo:: Explain return.
+     * A stdClass object of the following form, here one example
+     * with for only one city (cityID = 4) and only one tournament date (tdate).
+     * If input argument $deadman is true, only the deadman user will be loaded.
+     * >>> stdClass Object
+     * >>>  (
+     * >>>    [data] => stdClass Object
+     * >>>      (
+     * >>>        [ambot_lang] => stdClass Object
+     * >>>          (
+     * >>>            [city_4] => stdClass Object
+     * >>>              (
+     * >>>                [tdate_17830] => 158.60000610351562
+     * >>>              )
+     * >>>          )
+     * >>>        [DWD-MOS-Mix] => stdClass Object
+     * >>>          (
+     * >>>            [city_4] => stdClass Object
+     * >>>              (
+     * >>>                [tdate_17830] => 152.8000030517578
+     * >>>              )
+     * >>>          )
+     * >>>        [..next user..] ...
+     * >>>  
+     * >>>      )
+     * >>>    [users] => Array
+     * >>>      (
+     * >>>        [0] => ambot_lang
+     * >>>        [1] => DWD-MOS-Mix
+     * >>>        [2] => ..next user..
+     * >>>      )
+     * >>>    [cityIDs] => Array
+     * >>>        (
+     * >>>            [0] => 4
+     * >>>        )
+     * >>>    [tdates] => Array
+     * >>>        (
+     * >>>            [0] => 17830
+     * >>>        )
+     * >>>  )
      */
-    private function _get_data_object_( $deadman = false ) {
+    private function _get_data_object( $deadman = false ) {
 
         # If $deadman is set to true: only fetch deadman data
         if ( $deadman ) {
@@ -159,12 +200,10 @@ class wetterturnier_rankingObject {
         }
 
         # Where tdate
-        if ( $this->tdate->previous ) {
-            $where_tdate = sprintf("b.tdate between %d and %d", $this->tdate->previous, $this->tdate->max);
-        } else if ( ! $tdate->min == $tdate->max ) {
-            $where_tdate = sprintf("b.tdate between %d and %d", $this->tdate->min, $this->tdate->max);
+        if ( $this->tdates->min == $this->tdates->max ) {
+            $where_tdate = sprintf("b.tdate = %d",$this->tdates->max);
         } else {
-            $where_tdate = sprintf("b.tdate = %d",$this->tdate->max);
+            $where_tdate = sprintf("b.tdate between %d and %d", $this->tdates->min, $this->tdates->max);
         }
 
         # Just no need to load user_login for a known user!
@@ -223,10 +262,11 @@ class wetterturnier_rankingObject {
      * for the ranking. If the first one for the ranking is the first, so that 
      * there is no previous, a :obj:`null` will be returned.
      */
-    private function _get_previous_tournament_date_( $sort = "DESC" ) {
+    private function _get_previous_tournament_date( $sort = "DESC" ) {
         # Find tdate before $tdate->min for ranking
         $sql = sprintf("SELECT distinct(tdate) from %swetterturnier_betstat "
-            ." WHERE tdate < %d ORDER BY tdate DESC LIMIT 1;",$this->wpdb->prefix,$this->tdate->min);
+            ." WHERE tdate < %d ORDER BY tdate DESC LIMIT 1;",
+            $this->wpdb->prefix, $this->tdates->min);
         $res = $this->wpdb->get_row($sql);
         if ( $this->wpdb->num_rows == 0 ) {
             return null;
@@ -239,10 +279,10 @@ class wetterturnier_rankingObject {
      * trough the ranking pages. 
      * If the last tournament is the current one (newest) a :obj:`null` will be returned.
      */
-    private function _get_later_tournament_date_( ) {
+    private function _get_later_tournament_date( ) {
         # Find tdate before $tdate->min for ranking
         $sql = sprintf("SELECT distinct(tdate) from %swetterturnier_betstat "
-            ." WHERE tdate > %d ORDER BY tdate ASC LIMIT 1;",$this->wpdb->prefix,$this->tdate->max);
+            ." WHERE tdate > %d ORDER BY tdate ASC LIMIT 1;",$this->wpdb->prefix,$this->tdates->max);
         $res = $this->wpdb->get_row($sql);
         if ( $this->wpdb->num_rows == 0 ) {
             return null;
@@ -262,7 +302,7 @@ class wetterturnier_rankingObject {
      *      an empty string if no editbuttion is needed (or not allowed as the user
      *      is no admin).
      */
-    private function _get_edit_button_( $type, $Obj ) {
+    private function _get_edit_button( $type, $Obj ) {
 
        // If no admin: return
        if ( ! current_user_can('manage_options') ) { return(""); }
@@ -272,12 +312,12 @@ class wetterturnier_rankingObject {
        if ( $type === "obs" ) {
            return( sprintf("<span class='button small edit edit-obs' url='%s' "
                           ."station='%d' cityID='%s' tdate='%d'></span>",
-                          admin_url(),(int)$identifier,
-                          $this->cityObj->get('ID'),$this->tdate->max));
+                          admin_url(), (int)$identifier,
+                          $this->cityObj->get('ID'), $this->tdates->max));
        } else {
            return( sprintf("<span class='button small edit edit-bet' url='%s' "
                           ."userID='%d' cityID='%s' tdate='%d'></span>",
-                          admin_url(),$Obj->ID,$this->cityObj->get('ID'),$this->tdate->max));
+                          admin_url(), $Obj->ID, $this->cityObj->get('ID'), $this->tdates->max));
        }
 
     }
@@ -292,10 +332,10 @@ class wetterturnier_rankingObject {
      *      an empty string if no editbuttion is needed (or not allowed as the user
      *      is no admin).
      */
-    private function _get_detail_button_( $userObj ) {
-        return sprintf("<span class=\"button small detail\" userid=\"%d\" "
-                      ."cityid=\"%d\" tdate=\"%d\"></span>",
-                      $userObj->ID, $this->cityObj->get("ID"), $this->tdate->max);
+    private function _get_detail_button( $userObj ) {
+        return sprintf("<span class='button small detail' userid='%d' "
+                      ."cityid='%d' tdate='%d'></span>",
+                      $userObj->ID, $this->cityObj->get("ID"), $this->tdates->max);
     }
 
 
@@ -315,12 +355,12 @@ class wetterturnier_rankingObject {
         }
 
         # Where tdate
-        if ( $this->tdate->previous ) {
-            $tdate_hash  = sprintf("%d-%d", $this->tdate->previous, $this->tdate->max);
+        if ( $this->tdates->previous ) {
+            $tdate_hash  = sprintf("%d-%d", $this->tdates->previous, $this->tdates->max);
         } else if ( ! $tdate->min == $tdate->max ) {
-            $tdate_hash  = sprintf("%d-%d", $this->tdate->min, $this->tdate->max);
+            $tdate_hash  = sprintf("%d-%d", $this->tdates->min, $this->tdates->max);
         } else {
-            $tdate_hash  = sprintf("%d", $this->tdate->max);
+            $tdate_hash  = sprintf("%d", $this->tdates->max);
         }
 
         # Return cache file
@@ -355,26 +395,25 @@ class wetterturnier_rankingObject {
      */
     function prepare_ranking() {
 
-        if ( is_null($this->tdate) || is_null($this->cityObj) ) {
+        if ( is_null($this->tdates) || is_null($this->cityObj) ) {
             //echo "Sorry, cannot prepare ranking, tdate or cityObject not set!";
             return null;
         }
 
-        if ( is_numeric($this->tdate) ) {
+        if ( is_numeric($this->tdates->max) ) {
             ob_start();
-            $closed = $this->WTuser->check_view_is_closed( $this->tdate );
+            $closed = $this->WTuser->check_view_is_closed($this->tdates->max);
             ob_end_clean();
             if ( $closed ) { die("No access! Go away, please! :)"); }
         }
 
-        $tdate  = $this->tdate;
         $cityID = $this->cityObj->get("ID");
         $prefix = $this->wpdb->prefix;
 
         # Loading previous tournament date, needed to get the position changes
         # from the last to the current tournament.
-        $this->tdate->previous = $this->_get_previous_tournament_date_();
-        $this->tdate->later    = $this->_get_later_tournament_date_();
+        $this->tdates->previous = $this->_get_previous_tournament_date();
+        $this->tdates->later    = $this->_get_later_tournament_date();
 
         // If caching is enabled: check if we can load the
         // data from disc to ont re-calculate the ranking again.
@@ -391,10 +430,10 @@ class wetterturnier_rankingObject {
 
         # Loading deadman points. Whenever a player did not participate he/she
         # will get these points. May return "0" if the deadman is not defined.
-        $deadman = $this->_get_data_object_( true );
+        $deadman = $this->_get_data_object(true);
 
         # Loading user data
-        $userdata = $this->_get_data_object_( false );
+        $userdata = $this->_get_data_object(false);
 
         $ranking = (object)array("pre"=>new stdClass(), "now"=>new stdClass());
 
@@ -406,7 +445,6 @@ class wetterturnier_rankingObject {
                 $ranking->pre->$user = (object)array("played"=>0,"points"=>0);
                 $ranking->now->$user = (object)array("played"=>0,"points"=>0);
             }
-
             foreach ( $userdata->cityIDs as $cityID ) {
                 $chash = sprintf("city_%d",$cityID);
                 foreach ( $userdata->tdates as $tdate ) {
@@ -432,16 +470,12 @@ class wetterturnier_rankingObject {
                     }
 
                     # Adding points
-                    if ( $tdate == $this->tdate->previous ) {
+                    if ( ($tdate >= $this->tdates->from_prev) && ($tdate <= $this->tdates->to_prev) ) {
                         $ranking->pre->$user->points += $points;
                         $ranking->pre->$user->played += $played;
-                    } else if ( $tdate == $this->tdate->max ) {
+                    }
+                    if ( ($tdate >= $this->tdates->from) && ($tdate <= $this->tdates->to) ) {
                         $ranking->now->$user->points += $points;
-                        $ranking->now->$user->played += $played;
-                    } else {
-                        $ranking->pre->$user->points += $points;
-                        $ranking->now->$user->points += $points;
-                        $ranking->pre->$user->played += $played;
                         $ranking->now->$user->played += $played;
                     }
 
@@ -506,7 +540,7 @@ class wetterturnier_rankingObject {
 
 
         # Create final object, adding ranks and tendencies.
-        if ( $this->tdate->previous ) {
+        if ( $this->tdates->previous ) {
             $ntournaments = count($userdata->tdates) - 1;
         } else {
             $ntournaments = count($userdata->tdates);
@@ -547,9 +581,9 @@ class wetterturnier_rankingObject {
             // Create edit button for administrators
 
             if ( ! is_array($this->cityObj) && $ntournaments == 1 ) {
-                $final->$user->edit_button = $this->_get_edit_button_( $tmp->userclass, $userObj );
+                $final->$user->edit_button = $this->_get_edit_button( $tmp->userclass, $userObj );
             }
-            $final->$user->detail_button = $this->_get_detail_button_( $userObj );
+            $final->$user->detail_button = $this->_get_detail_button( $userObj );
 
             // Getting profile link
             $final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
@@ -559,18 +593,33 @@ class wetterturnier_rankingObject {
         unset($rank);
 
         $this->ranking = new stdClass();
-        $this->ranking->data               = $final;
         $this->ranking->meta               = new stdClass();
         $this->ranking->meta->points_max   = $points_max;
         $this->ranking->meta->ntournaments = $ntournaments;
-        $this->ranking->meta->previous     = $this->tdate->previous;
-        $this->ranking->meta->later        = $this->tdate->later;
+        $this->ranking->meta->previous     = $this->tdates->previous;
+        $this->ranking->meta->later        = $this->tdates->later;
+        $this->ranking->data               = $final;
 
         # Write data to cache file
-        if ( $this->cache & is_writable(dirname($cache_file)) ) {
-            file_put_contents($cache_file, serialize($this->ranking), LOCK_EX);
+        if ( $this->cache ) {
+            if ( is_writable(dirname($cache_file)) ) {
+                file_put_contents($cache_file, serialize($this->ranking), LOCK_EX);
+            }
         }
 
+    }
+
+    /**
+     * Prints the content of $this->ranking (or $this->ranking->data),
+     * just a development helper function!
+     */
+    public function print_r($data = false) {
+        print_r(($data) ? $this->ranking->data : $this->ranking );
+        die("Exit in development method \"print_r\"");
+    }
+
+    public function return_obj() {
+        return($this->ranking);
     }
 
     /**
@@ -580,8 +629,8 @@ class wetterturnier_rankingObject {
         if ( is_null($this->ranking) ) {
             return json_encode(array("error"=>"Data not prepared, prepare_ranking not called?"));
         } else {
-            $res = $this->ranking; $res->dict = $this->dict;
-            return json_encode( $res );
+            $this->ranking->dict = $this->dict;
+            return json_encode($this->ranking);
         }
     }
 

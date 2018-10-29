@@ -1552,9 +1552,19 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    public function ranking_ajax() {
 
        global $wpdb;
-       if ( empty($_REQUEST["city"]) || empty($_REQUEST["from"]) || empty($_REQUEST["to"]) ) {
+       if ( empty($_REQUEST["city"]) || empty($_REQUEST["tdates"]) ) {
            print json_encode(array("error"=>"Error by ajax interface function: wrong inputs."));
            die(0);
+       }
+       // Extractig tdates and convert to object. Should contain
+       // from, to, from_prev, to_prev.
+       $tdates = (object)$_REQUEST["tdates"];
+       foreach ( array("from", "to", "from_prev", "to_prev") as $required ) {
+           if ( ! property_exists($tdates, $required) ) {
+               print json_encode(array("error"=>"Error by ajax interface function: "
+                       ." Missing argument \"" . $required . "\"."));
+               die(0);
+           }
        }
 
        # Parsing cities
@@ -1566,20 +1576,15 @@ class wetterturnier_userclass extends wetterturnier_generalclass
               array_push( $cityObj, new wetterturnier_cityObject( (int)$cityID ) );
           }
        }
-       # Parsing tdate
-       $tdate = array( (int)$_REQUEST["from"], (int)$_REQUEST["to"] );
 
        ///$cityObj = new wetterturnier_cityObject( (int)$cityID );
        # Loading ranking
        $rankingObj = new wetterturnier_rankingObject();
-       $rankingObj->set_cities( $cityObj );
-       $rankingObj->set_tdate( $tdate );
+       $rankingObj->set_cities($cityObj);
+       $rankingObj->set_tdates($tdates);
        $rankingObj->prepare_ranking();
        print $rankingObj->return_json();
-
        die(0);
-
-       // Single date
    }
 
 

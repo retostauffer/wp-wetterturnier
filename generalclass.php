@@ -1866,7 +1866,7 @@ class wetterturnier_generalclass
                     // Ajaxing the calculation miniscript
                     var all_dates = false;
                     $.ajax({
-                        url: ajaxurl, dataType: 'json', type: 'post', async: false,
+                        url: ajaxurl, dataType: 'json', type: 'post',
                         data: {action:'tournament_datepicker_ajax'},
                         success: function(results) { all_dates = results; },
                         error: function(e) { $error = e; console.log('errorlog'); console.log(e); } 
