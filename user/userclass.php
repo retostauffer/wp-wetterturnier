@@ -538,7 +538,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // limit=>false,        shows top X
         // city=>false,         for single-city-rankings
         // cities=>1,2,3        List of cities for multi-city-ranking.
-        //                      Only used if type="cities".
+        //                      Only used if type="cities" or
+        //                      type="seasoncities".
         // slim=>false,         Hide some columns
         // weeks=>15,           for total- and cities ranking
         // header=>true,        Hide header title and stuff
@@ -555,8 +556,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         foreach ( array("slim", "hidebuttons", "header") as $key ) {
             $args[$key] = ( $args[$key] === "true" ) ? true : false;
         }
-        if ( ! in_array($args['type'], array('weekend','total','cities','season','yearly')) ) {
-            return(sprintf("Sorry, ranking of type='%s' unknown. Option wrong.",$args['type']));
+        if ( ! in_array($args['type'], array('weekend','total','season','seasoncities','cities','yearly')) ) {
+            return(sprintf("<div class=\"wetterturnier-info error\">%s</div>",
+                sprintf("Sorry, ranking of <b>type='%s'</b> unknown. Option wrong.",$args['type'])));
         }
         if ( ! $args["city"] ) { $args["city"] = $this->get_current_cityObj()->get("ID"); }
         return($this->shortcode_include("views/ranking.php", $args));
@@ -1582,7 +1584,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        }
 
        # Parsing cities
-       if ( $_REQUEST["type"] == "cities" ) {
+       if ( in_array($_REQUEST["type"], array("cities", "seasoncities")) ) {
           $cityObj = array();
           foreach ( explode(",", $_REQUEST["cities"]) as $cityID ) {
              array_push($cityObj, new wetterturnier_cityObject( (int)$cityID ));

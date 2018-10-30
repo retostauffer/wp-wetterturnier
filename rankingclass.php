@@ -64,7 +64,7 @@ class wetterturnier_rankingObject {
     /**
      * Object constructor.
      */
-    function __construct( $deadman = "Sleepy", $points_max = 200, $cache = false ) {
+    function __construct( $deadman = "Sleepy", $points_max = 200, $cache = true ) {
 
        global $wpdb; $this->wpdb = $wpdb;
        global $WTuser;
@@ -162,7 +162,7 @@ class wetterturnier_rankingObject {
      *          which have not participated simply get 0 points.
      * Returns:
      * A stdClass object of the following form, here one example
-     * with for only one city (cityID = 4) and only one tournament date (tdate).
+     * with for only one tournament date (tdate).
      * If input argument $deadman is true, only the deadman user will be loaded.
      * >>> stdClass Object
      * >>>  (
@@ -170,17 +170,11 @@ class wetterturnier_rankingObject {
      * >>>      (
      * >>>        [ambot_lang] => stdClass Object
      * >>>          (
-     * >>>            [city_4] => stdClass Object
-     * >>>              (
-     * >>>                [tdate_17830] => 158.60000610351562
-     * >>>              )
+     * >>>            [tdate_17830] => 158.60000610351562
      * >>>          )
      * >>>        [DWD-MOS-Mix] => stdClass Object
      * >>>          (
-     * >>>            [city_4] => stdClass Object
-     * >>>              (
-     * >>>                [tdate_17830] => 152.8000030517578
-     * >>>              )
+     * >>>            [tdate_17830] => 152.8000030517578
      * >>>          )
      * >>>        [..next user..] ...
      * >>>  
@@ -191,10 +185,6 @@ class wetterturnier_rankingObject {
      * >>>        [1] => DWD-MOS-Mix
      * >>>        [2] => ..next user..
      * >>>      )
-     * >>>    [cityIDs] => Array
-     * >>>        (
-     * >>>            [0] => 4
-     * >>>        )
      * >>>    [tdates] => Array
      * >>>        (
      * >>>            [0] => 17830
@@ -244,14 +234,13 @@ class wetterturnier_rankingObject {
         array_push($sql, "GROUP BY u.ID, b.tdate");
         $sql = join("\n", $sql);
 
+
         # If calculating the ranking for multiple
         # cities we have to capsule the statement above: 
         if ( count($this->cityObj) > 1 ) {
             $sql = sprintf("SELECT * FROM (\n%s\n) AS X WHERE X.played = %d",
                            $sql, count($this->cityObj));
         }
-
-        #print_r($sql); print("\n\n");
 
         #printf("\n%s\n", join("\n",$sql));
         $dbres = $this->wpdb->get_results($sql);
@@ -262,30 +251,24 @@ class wetterturnier_rankingObject {
         if ( $deadman ) {
             $res = new stdClass();
             foreach ( $dbres as $rec ) {
-                # City has, append if not yet defined.
-                $chash = sprintf("city_%d",$rec->cityID);
-                if ( ! property_exists($res,$chash) ) { $res->$chash = new stdClass(); }
                 # Append tourmanet date to city
                 $thash = sprintf("tdate_%d",$rec->tdate);
-                $res->$chash->$thash = $rec->points;
+                $res->$thash = $rec->points;
             }
         } else {
-            $res = (object)array("data"=>new stdClass(),
-                    "users"=>array(),"cityIDs"=>array(), "tdates"=>array());
+            $res = (object)array("data"=>new stdClass(), "users"=>array(), "tdates"=>array());
             foreach ( $dbres as $rec ) {
-                # Append cityID's and tdates
+                # Append user names and tournament dates
                 if ( ! in_array($rec->user_login, $res->users) ) { array_push($res->users,$rec->user_login); }
-                if ( ! in_array($rec->cityID,$res->cityIDs) ) { array_push($res->cityIDs,$rec->cityID); }
                 if ( ! in_array($rec->tdate, $res->tdates ) ) { array_push($res->tdates, $rec->tdate ); }
+
                 # User hash
                 $uhash = $rec->user_login;
                 if ( ! property_exists($res->data,$uhash) ) { $res->data->$uhash = new stdClass(); }
-                # City has, append if not yet defined.
-                $chash = sprintf("city_%d",$rec->cityID);
-                if ( ! property_exists($res->data->$uhash,$chash) ) { $res->data->$uhash->$chash = new stdClass(); }
+
                 # Append tourmanet date to city
                 $thash = sprintf("tdate_%d",$rec->tdate);
-                $res->data->$uhash->$chash->$thash = $rec->points;
+                $res->data->$uhash->$thash = $rec->points;
             }
         }
 
@@ -479,50 +462,45 @@ class wetterturnier_rankingObject {
                 $ranking->now->$user = (object)array("played"=>0,"points"=>0);
             }
 
-            # Looping over cities
-            foreach ( $userdata->cityIDs as $cityID ) {
-                $chash = sprintf("city_%d",$cityID);
-                foreach ( $userdata->tdates as $tdate ) {
+            # Looping over the tournament dates
+            foreach ( $userdata->tdates as $tdate ) {
 
-                    # Skip if in the future
-                    if ( $tdate > $latest ) { continue; }
+                # Skip if in the future
+                if ( $tdate > $latest ) { continue; }
 
-                    # Create hash for the object names
-                    $thash = sprintf("tdate_%d",$tdate);
+                # Create hash for the object names
+                $thash = sprintf("tdate_%d",$tdate);
 
-                    # Default: 0 points
-                    $points = 0;
-                    # And not participated (default)
-                    $played = 0;
+                # Default: 0 points
+                $points = 0;
+                # And not participated (default)
+                $played = 0;
 
-                    # If user got points: use user points 
-                    if ( property_exists($data->$chash, $thash) ) {
-                        $points = $data->$chash->$thash;
-                        $played = 1;
-                    # Else check if deadman exists and has points for this
-                    # specific city ($chash) and tournament date ($thash).
-                    } else if ( $deadman ) {
-                        if ( property_exists($deadman,$chash) ) {
-                            if ( property_exists($deadman->$chash,$thash) ) {
-                                $points = $deadman->$chash->$thash;
-                            }
-                        }
+                # If user got points: use user points 
+                if ( property_exists($data, $thash) ) {
+                    $points = $data->$thash;
+                    $played = 1;
+                # Else check if deadman exists and has points for this
+                # specific tournament date ($thash).
+                } else if ( $deadman ) {
+                    if ( property_exists($deadman, $thash) ) {
+                        $points = $deadman->$thash;
                     }
-
-                    # Adding points
-                    if ( $this->calc_trend ) {
-                        if ( $tdate >= $this->tdates->from_prev &&
-                             $tdate <= $this->tdates->to_prev ) {
-                            $ranking->pre->$user->points += $points;
-                        }
-                    }
-                    if ( $tdate >= $this->tdates->from &&
-                         $tdate <= $this->tdates->to ) {
-                        $ranking->now->$user->points += $points;
-                        $ranking->now->$user->played += $played;
-                    }
-
                 }
+
+                # Adding points
+                if ( $this->calc_trend ) {
+                    if ( $tdate >= $this->tdates->from_prev &&
+                         $tdate <= $this->tdates->to_prev ) {
+                        $ranking->pre->$user->points += $points;
+                    }
+                }
+                if ( $tdate >= $this->tdates->from &&
+                     $tdate <= $this->tdates->to ) {
+                    $ranking->now->$user->points += $points;
+                    $ranking->now->$user->played += $played;
+                }
+
             }
         }
 
@@ -590,7 +568,7 @@ class wetterturnier_rankingObject {
 
         $final         = new stdClass();
         $points_winner = NULL;
-        $points_max    = $this->points_max * $ntournaments;
+        $points_max    = $this->points_max * $ntournaments * count($this->cityObj);
         foreach ( $order as $idx=>$trash ) {
 
             # Current user in loop (winner first)

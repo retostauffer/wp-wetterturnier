@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-10-30 12:54 on marvin
+# - L@ST MODIFIED: 2018-10-30 14:55 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -118,8 +118,9 @@ switch ( $args->type ) {
          }
       }
       if ( count($cityObj) == 0 ) {
-         print __("Sorry, no proper city definition for","wpwt")
-              ." wetterturnier_ranking type cities"; return;
+          printf("<div class=\"wetterturnier-info error\">%s</div>",
+              __("Sorry, no proper city definition for","wpwt")
+              ." wetterturnier_ranking type cities"); return;
       }
       // Define title
       $names = array(); foreach ( $cityObj as $rec ) { array_push($names, $rec->get("name")); }
@@ -158,6 +159,25 @@ switch ( $args->type ) {
       $tdates->to_prev   = $tdates->older;
 
       break;
+
+   // ---------------------------------------------------------------
+   // Season ranking for cities: use "season" procedure but pre-process
+   // the cities string (list of comma separated city ID's)
+   // ---------------------------------------------------------------
+   case "seasoncities":
+      // City-ranking is for more than one city. Create $city_array first.
+      $tmp = explode(",", $args->cities);
+      $cityObj = array();
+      foreach ( $tmp as $elem ) {
+         if (is_numeric($elem)) {
+            array_push($cityObj, new wetterturnier_cityObject((int)$elem));
+         }
+      }
+      if ( count($cityObj) == 0 ) {
+          printf("<div class=\"wetterturnier-info error\">%s</div>",
+              __("Sorry, no proper city definition for","wpwt")
+              ." wetterturnier_ranking type cities"); return;
+      }
 
    // ---------------------------------------------------------------
    // Season ranking
@@ -210,11 +230,25 @@ switch ( $args->type ) {
       if ( $tdates->to > $tdates->latest ) { $tdates->newer = Null; }
 
       // Generate the title, using meta-info from the $ranking object
-      $title = sprintf("%s %s %s, %s %s %s %s",
-               $season,__("season ranking for","wpwt"),$cityObj->get('name'),
-               __("tournaments from","wpwt"),
-               $WTuser->date_format($tdates->from),__("to","wpwt"),
-               $WTuser->date_format($tdates->to));
+      // If only for one city:
+      if ( ! is_array($cityObj) ) {
+         $title = sprintf("%s %s %s, %s %s %s %s",
+                  $season,__("season ranking for","wpwt"),$cityObj->get('name'),
+                  __("tournaments from","wpwt"),
+                  $WTuser->date_format($tdates->from),__("to","wpwt"),
+                  $WTuser->date_format($tdates->to));
+      // Else prepare the title for the "seasoncities" request.
+      } else {
+         $names = array(); foreach ( $cityObj as $rec ) { array_push($names, $rec->get("name")); }
+         $title = sprintf("%s %s %s %d %s<br>\n%s,<br>\n%s %s %s %s", $season,
+                  __("season ranking for","wpwt"), __("the", "wpwt"),
+                  count($cityObj), __("cities", "wpwt"),
+                  join(" ".__(" and ","wpwt")." ",
+                    array(join(", ",array_slice($names,0,-1)), end($names))),
+                  __("tournaments from","wpwt"),
+                  $WTuser->date_format($tdates->from),__("to","wpwt"),
+                  $WTuser->date_format($tdates->to));
+      }
 
       break;
 
@@ -292,7 +326,9 @@ switch ( $args->type ) {
    // Else there was a problem with the shortcode specification
    // ---------------------------------------------------------------
    default:
-      print __("Sorry, cannot understand input 'type' for","wpwt")." wetterturnier_ranking shortcode.";
+      printf("<div class=\"wetterturnier-info error\">%s</div>",
+          __("Sorry, cannot understand input 'type' for","wpwt")
+            ." wetterturnier_ranking shortcode.");
       return;
 
 }
@@ -345,7 +381,9 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
 # Random container ID
 $containerID = $WTuser->random_string(10, "wt-ranking-container");
 ?>
+<!--
 <b>Args:&nbsp;</b><?php print htmlspecialchars(json_encode($args)); ?><br><br>
+-->
 <div id="<?php print $WTuser->random_string(10, "wt-ranking-container"); ?>"
      class="wt-ranking-container"
      args="<?php print htmlspecialchars(json_encode($args)); ?>">
