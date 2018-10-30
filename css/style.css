@@ -156,6 +156,9 @@ input[type="submit"].settings-button:hover {
 .wttable-show-bets * tr:nth-child(odd):hover td      { background-color: #c0d2eb; }
 .wttable-show-ranking * tr:nth-child(odd)       td   { background-color: #eef0f2; }
 .wttable-show-ranking * tr:nth-child(odd):hover td   { background-color: #c0d2eb; }
+.wttable-show-ranking * tr.partial-participation a,
+.wttable-show-ranking * tr.partial-participation     { color: gray; }
+
 .wetterturnier-obstable * tr:nth-child(odd)       td { background-color: #eef0f2; }
 .wetterturnier-obstable * tr:nth-child(odd):hover td { background-color: #c0d2eb; }
 

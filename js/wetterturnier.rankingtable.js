@@ -109,13 +109,13 @@ jQuery(document).on('ready',function() {
           }
           $.each( data.data, function(idx,rec) {
 
-             ////// If input.type === "seasoncities": hide all rows where
-             ////// the number of participations is _NOT_ equal to the number
-             ////// of tournaments over this time period (season).
-             //////if ( input.type === "seasoncities" && rec.played_now < data.meta.ntournaments ) { return; }
+             // If input.type === "seasoncities": colorize the guys who have
+             // not played all games.
+             if ( input.type === "seasoncities" && rec.played_now < data.meta.ntournaments )
+             { tdclass = " partial-participation"; } else { tdclass = ""; }
 
              // Append new table row and select the new html element (variable tr)
-             $( body ).append("<tr class=\"" + rec.userclass + "\"></tr>")
+             $( body ).append("<tr class=\"" + rec.userclass + tdclass + "\"></tr>")
              var tr = $( body ).find("tr").last()
 
              // Appending data ...
