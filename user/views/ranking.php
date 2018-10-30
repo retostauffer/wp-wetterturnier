@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-10-30 14:55 on marvin
+# - L@ST MODIFIED: 2018-10-30 16:02 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -65,6 +65,8 @@ $tdates = (object) array("from"      => Null, "to"      => Null,
                          "older"     => Null, "newer"   => Null);
 // Latest possible tournament
 $tdates->latest = $WTuser->latest_tournament(floor(time() / 86400.))->tdate;
+
+$short_title = "This should be the <i>short title</i>, but seems to be missing.";
 
 switch ( $args->type ) {
 
