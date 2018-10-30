@@ -532,19 +532,22 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     function shortcode_wetterturnier_ranking( $args ) {
         // The first array defined is the 'default settings array',
         // the second ($args) the user options.
-        // type'=>'weekend',     default type
-        // tdate=>false,         tournament date to be displayed. If not set
-        //                       the latest tournament will be shown.
-        // limit'=>false,        shows top X
-        // city'=>false,         for single-city-rankings
-        // slim'=>false,         Hide some columns
-        // weeks'=>15,           for total- and cities ranking
-        // header'=>true,        Hide header title and stuff
+        // type=>'weekend',     default type
+        // tdate=>false,        tournament date to be displayed. If not set
+        //                      the latest tournament will be shown.
+        // limit=>false,        shows top X
+        // city=>false,         for single-city-rankings
+        // cities=>1,2,3        List of cities for multi-city-ranking.
+        //                      Only used if type="cities".
+        // slim=>false,         Hide some columns
+        // weeks=>15,           for total- and cities ranking
+        // header=>true,        Hide header title and stuff
         // $args are the user-args, will be combined with de defaults.
         $args = shortcode_atts( array('type'=>'weekend',
                                       'tdate'=>Null,
                                       'limit'=>false,
                                       'city'=>false,
+                                      'cities'=>"1,2,3",
                                       'slim'=>false,
                                       'weeks'=>15,
                                       'header'=>true,
@@ -1579,16 +1582,22 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        }
 
        # Parsing cities
-       if ( is_numeric($_REQUEST["city"]) ) {
-          $cityObj = new wetterturnier_cityObject( (int)$_REQUEST["city"] );
-       } else {
+       if ( $_REQUEST["type"] == "cities" ) {
           $cityObj = array();
-          foreach ( explode( ":", $_REQUEST["city"] ) as $cityID ) {
-              array_push( $cityObj, new wetterturnier_cityObject( (int)$cityID ) );
+          foreach ( explode(",", $_REQUEST["cities"]) as $cityID ) {
+             array_push($cityObj, new wetterturnier_cityObject( (int)$cityID ));
+          }
+       } else {
+          if ( is_numeric($_REQUEST["city"]) ) {
+             $cityObj = new wetterturnier_cityObject( (int)$_REQUEST["city"] );
+          } else {
+             $cityObj = array();
+             foreach ( explode( ":", $_REQUEST["city"] ) as $cityID ) {
+                 array_push( $cityObj, new wetterturnier_cityObject( (int)$cityID ) );
+             }
           }
        }
 
-       ///$cityObj = new wetterturnier_cityObject( (int)$cityID );
        # Loading ranking
        $rankingObj = new wetterturnier_rankingObject();
        $rankingObj->set_cities($cityObj);

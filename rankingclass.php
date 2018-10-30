@@ -64,12 +64,10 @@ class wetterturnier_rankingObject {
     /**
      * Object constructor.
      */
-    function __construct( $deadman = "Sleepy", $points_max = 200, $cache = true ) {
+    function __construct( $deadman = "Sleepy", $points_max = 200, $cache = false ) {
 
        global $wpdb; $this->wpdb = $wpdb;
        global $WTuser;
-       ///global $polylang;
-       ///$lang = pll_current_language();
 
        # Check if access is granted
        $this->WTuser     = $WTuser;
@@ -78,15 +76,15 @@ class wetterturnier_rankingObject {
        $this->cache      = $cache;
 
        $this->dict = new stdClass();
-       $this->dict->older        = __("Older", "wpwt");
-       $this->dict->newer        = __("Newer", "wpwt");
-       $this->dict->points       = __("Points", "wpwt");
-       $this->dict->trend        = __("+/-", "wpwt");
-       $this->dict->played       = __("N", "wpwt");
-       $this->dict->difference   = __("Diff", "wpwt");
-       $this->dict->rank         = __("Rank", "wpwt");
-       $this->dict->user         = __("User", "wpwt");
-       $this->dict->points_max   = __("The maximum score (total) for the ranking is", "wpwt");
+       $this->dict->older        = "Older"; ##__("Older", "wpwt");
+       $this->dict->newer        = "Newer"; ##__("Newer", "wpwt");
+       $this->dict->points       = "Points"; ##__("Points", "wpwt");
+       $this->dict->trend        = "+/-"; ##__("+/-", "wpwt");
+       $this->dict->played       = "N"; ##__("N", "wpwt");
+       $this->dict->difference   = "Diff"; ##__("Diff", "wpwt");
+       $this->dict->rank         = "Rank"; ##__("Rank", "wpwt");
+       $this->dict->user         = "User"; ##__("User", "wpwt");
+       $this->dict->points_max   = "The maximum score (total) for the ranking is"; ##"; ##__("The maximum score (total) for the ranking is", "wpwt");
 
     }
 
@@ -217,7 +215,7 @@ class wetterturnier_rankingObject {
         # Where city
         if ( is_array($this->cityObj) ) {
             $tmp = array();
-            foreach ( $this->cityObj as $rec ) { array_push($tmp,sprintf("%d",$rec->get("ID"))); }
+            foreach ( $this->cityObj as $rec ) { array_push($tmp, sprintf("%d",$rec->get("ID"))); }
             $where_city = sprintf("b.cityID IN (%s)", join(",",$tmp));
             unset($tmp);
         } else {
@@ -236,15 +234,27 @@ class wetterturnier_rankingObject {
 
         # Create SQL command
         $sql = array();
-        array_push($sql, "SELECT b.cityID, b.tdate, " . $usercol . " SUM(b.points) AS points");
+        array_push($sql, sprintf("SELECT b.tdate, %s", $usercol));
+        array_push($sql, " SUM(b.points) AS points,");
+        array_push($sql, " COUNT(*) AS played");
         array_push($sql, sprintf("FROM %susers AS u RIGHT OUTER JOIN", $this->wpdb->prefix));
         array_push($sql, sprintf("%swetterturnier_betstat AS b", $this->wpdb->prefix));
         array_push($sql, "ON u.ID=b.userID WHERE");
         array_push($sql, sprintf("%s AND %s %s", $where_city, $where_tdate, $where_user));
-        array_push($sql, "GROUP BY u.ID, b.tdate;");
+        array_push($sql, "GROUP BY u.ID, b.tdate");
+        $sql = join("\n", $sql);
+
+        # If calculating the ranking for multiple
+        # cities we have to capsule the statement above: 
+        if ( count($this->cityObj) > 1 ) {
+            $sql = sprintf("SELECT * FROM (\n%s\n) AS X WHERE X.played = %d",
+                           $sql, count($this->cityObj));
+        }
+
+        #print_r($sql); print("\n\n");
 
         #printf("\n%s\n", join("\n",$sql));
-        $dbres = $this->wpdb->get_results(join( "\n", $sql));
+        $dbres = $this->wpdb->get_results($sql);
 
         # If deadman is requested: create one stdClass object containing
         # the points for each tournament date, no need to add an extra
@@ -428,9 +438,6 @@ class wetterturnier_rankingObject {
         ///    ob_end_clean();
         ///    if ( $closed ) { die("No access! Go away, please! :)"); }
         ///}
-
-        $cityID = $this->cityObj->get("ID");
-        $prefix = $this->wpdb->prefix;
 
         // If caching is enabled: check if we can load the
         // data from disc to ont re-calculate the ranking again.
@@ -620,9 +627,9 @@ class wetterturnier_rankingObject {
             // Create edit button for administrators
 
             if ( ! is_array($this->cityObj) && $ntournaments == 1 ) {
-                $final->$user->edit_button = $this->_get_edit_button( $tmp->userclass, $userObj );
+                $final->$user->edit_button   = $this->_get_edit_button( $tmp->userclass, $userObj );
+                $final->$user->detail_button = $this->_get_detail_button( $userObj );
             }
-            $final->$user->detail_button = $this->_get_detail_button( $userObj );
 
             // Getting profile link
             $final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
@@ -639,6 +646,10 @@ class wetterturnier_rankingObject {
         $this->ranking->meta->older        = $this->tdates->older;
         $this->ranking->meta->newer        = $this->tdates->newer;
         $this->ranking->data               = $final;
+
+        if ( is_plugin_active("polylang") ) {
+            $this->ranking->meta->lang = pll_get_current_language();
+        }
 
         # Write data to cache file
         if ( $this->cache ) {

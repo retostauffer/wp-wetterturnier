@@ -143,6 +143,9 @@ input[type="submit"].settings-button:hover {
 .wttable-show * tr.highlighted:nth-child(odd) td  { background-color: #d1e2f9; }
 /*{ background-color: #d1e2f9; }*/
 
+.wttable-show-ranking { padding-bottom: 0; margin-bottom: 0; }
+.wt-ranking-container { padding-bottom: 2em; padding-top: .5em; }
+
 /* Default styling */
 .wttable-show * tr:hover td                          { background-color: #d1e2f9; }
 .wttable-show-bets * tr:hover td                     { background-color: #d1e2f9; }
@@ -313,28 +316,19 @@ table.tablesorter tbody td {
    padding-right: 3px;
 }
 
-/*
 @media screen and (max-width: 1200px) {
-   #content .wttable-show-ranking th:nth-child(4),
-   #content .wttable-show-ranking th:nth-child(5),
-   #content .wttable-show-ranking td:nth-child(4),
-   #content .wttable-show-ranking td:nth-child(5) {
-      display: none;
+   #content .wttable-show-ranking th:nth-last-child(3),
+   #content .wttable-show-ranking td:nth-last-child(3) {
+       display: none;
    }
 }
-@media screen and (max-width: 1350px) {
-   #content .wttable-show-ranking th:nth-child(7),
-   #content .wttable-show-ranking td:nth-child(7) {
-      display: none;
+
+@media screen and (max-width: 1400px) {
+   #content .wttable-show-ranking th:nth-last-child(1),
+   #content .wttable-show-ranking td:nth-last-child(1) {
+       display: none;
    }
 }
-@media screen and (max-width: 1600px) {
-   #content .wttable-show-ranking th:nth-child(8),
-   #content .wttable-show-ranking td:nth-child(8) {
-      display: none;
-   }
-}
-*/
 
 /* These 'cboxes' are used for the legend color indicator */
 .colorlegend-wrapper  ul {

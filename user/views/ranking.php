@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-10-29 21:15 on marvin
+# - L@ST MODIFIED: 2018-10-30 12:54 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -110,50 +110,53 @@ switch ( $args->type ) {
    // ---------------------------------------------------------------
    case "cities":
       // City-ranking is for more than one city. Create $city_array first.
-      $tmp = explode(",",$args->cities);
-      $city_array = array(); $city_names = array();
+      $tmp = explode(",", $args->cities);
+      $cityObj = array();
       foreach ( $tmp as $elem ) {
          if (is_numeric($elem)) {
-            array_push($city_array,new wetterturnier_cityObject((int)$elem));
-            array_push($city_names,end($city_array)->get('name'));
+            array_push($cityObj, new wetterturnier_cityObject((int)$elem));
          }
       }
-      if ( count($city_array) == 0 ) {
+      if ( count($cityObj) == 0 ) {
          print __("Sorry, no proper city definition for","wpwt")
               ." wetterturnier_ranking type cities"; return;
       }
       // Define title
-      $title = sprintf("%d-%s %s %s %s",count($city_array),__("City-ranking for the cities ","wpwt"),
+      $names = array(); foreach ( $cityObj as $rec ) { array_push($names, $rec->get("name")); }
+      $title = sprintf("%d-%s %s %s %s",count($cityObj),__("City-ranking for the cities ","wpwt"),
                   join(" ".__(" and ","wpwt")." ",
-                  array(join(", ",array_slice($city_names,0,-1)),end($city_names))),
-                  __("for the weekend around","wpwt"),$WTuser->date_format($tdate));
-      // For the overview: smaller title
-      $short_title = sprintf("Top %d for %d city ranking %s (%s)",$args->limit, count($city_array),
-                  join(" ".__(" and ","wpwt")." ",
-                  array(join(", ",array_slice($city_names,0,-1)),end($city_names))),
-                  $WTuser->date_format($tdate));
+                  array(join(", ",array_slice($names,0,-1)), end($names))),
+                  __("for the weekend around","wpwt"),$WTuser->date_format($args->tdate));
+
       // Appending link to $short_title
       // Bit freaky. Translation needs to be the permalink to the
       // corresponding language!
-      if ( count($city_array) === 3 ) {
+      if ( count($cityObj) === 3 ) {
          $permalink = __("/ranking/3-city-ranking/","wpwt");
-      } else if ( count($city_array) === 5 ) {
+      } else if ( count($cityObj) === 5 ) {
          $permalink = __("/ranking/5-city-ranking/","wpwt");
       } else {
          $permalink = false;
       }
-      if ( ! is_bool($permalink) ) {
-         $short_title = sprintf("<a href='%s' target='_self'>%s</a>",
-                        $permalink, $short_title);
-      }
 
       // Navigation items 
-      $older = $WTuser->older_tournament((int)$tdate);
-      $newer = $WTuser->newer_tournament((int)$tdate);
+      $tdates->older = $WTuser->older_tournament($args->tdate)->tdate;
+      $tdates->newer = $WTuser->newer_tournament($args->tdate)->tdate;
 
-      // Loading the data set
-      $from = $tdate;
-      $to   = $tdate;
+      // Next tournament is in the future?
+      if ( $tdates->newer > $tdates->latest ) {
+          $tdates->newer = Null;
+      }
+
+      // Define the two time periods for the ranking.
+      // integers, days since 1970-01-01.
+      // Current rank based on bets "from - to", the previous
+      // rank is based on "from_prev - to_prev".
+      $tdates->from      = $args->tdate;
+      $tdates->to        = $args->tdate;
+      $tdates->from_prev = $tdates->older;
+      $tdates->to_prev   = $tdates->older;
+
       break;
 
    // ---------------------------------------------------------------
@@ -342,9 +345,7 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
 # Random container ID
 $containerID = $WTuser->random_string(10, "wt-ranking-container");
 ?>
-<!---
 <b>Args:&nbsp;</b><?php print htmlspecialchars(json_encode($args)); ?><br><br>
--->
 <div id="<?php print $WTuser->random_string(10, "wt-ranking-container"); ?>"
      class="wt-ranking-container"
      args="<?php print htmlspecialchars(json_encode($args)); ?>">
