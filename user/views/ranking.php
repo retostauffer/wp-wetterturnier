@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-10-30 16:02 on marvin
+# - L@ST MODIFIED: 2018-10-31 09:07 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -131,17 +131,6 @@ switch ( $args->type ) {
                   array(join(", ",array_slice($names,0,-1)), end($names))),
                   __("for the weekend around","wpwt"),$WTuser->date_format($args->tdate));
 
-      // Appending link to $short_title
-      // Bit freaky. Translation needs to be the permalink to the
-      // corresponding language!
-      if ( count($cityObj) === 3 ) {
-         $permalink = __("/ranking/3-city-ranking/","wpwt");
-      } else if ( count($cityObj) === 5 ) {
-         $permalink = __("/ranking/5-city-ranking/","wpwt");
-      } else {
-         $permalink = false;
-      }
-
       // Navigation items 
       $tdates->older = $WTuser->older_tournament($args->tdate)->tdate;
       $tdates->newer = $WTuser->newer_tournament($args->tdate)->tdate;
@@ -163,28 +152,10 @@ switch ( $args->type ) {
       break;
 
    // ---------------------------------------------------------------
-   // Season ranking for cities: use "season" procedure but pre-process
-   // the cities string (list of comma separated city ID's)
+   // Season ranking for single cities or a set of cities (e.g.,
+   // the three and five city rankings)
    // ---------------------------------------------------------------
-   case "seasoncities":
-      // City-ranking is for more than one city. Create $city_array first.
-      $tmp = explode(",", $args->cities);
-      $cityObj = array();
-      foreach ( $tmp as $elem ) {
-         if (is_numeric($elem)) {
-            array_push($cityObj, new wetterturnier_cityObject((int)$elem));
-         }
-      }
-      if ( count($cityObj) == 0 ) {
-          printf("<div class=\"wetterturnier-info error\">%s</div>",
-              __("Sorry, no proper city definition for","wpwt")
-              ." wetterturnier_ranking type cities"); return;
-      }
-
-   // ---------------------------------------------------------------
-   // Season ranking
-   // ---------------------------------------------------------------
-   case "season":
+   case "season" || "seasoncities":
       // Compute begin and end tournament date for the season
       $month = (int)$WTuser->date_format($args->tdate, "%m");
       $year  = (int)$WTuser->date_format($args->tdate, "%Y");
@@ -231,26 +202,49 @@ switch ( $args->type ) {
       // If the next is in the future
       if ( $tdates->to > $tdates->latest ) { $tdates->newer = Null; }
 
-      // Generate the title, using meta-info from the $ranking object
-      // If only for one city:
-      if ( ! is_array($cityObj) ) {
-         $title = sprintf("%s %s %s, %s %s %s %s",
-                  $season,__("season ranking for","wpwt"),$cityObj->get('name'),
-                  __("tournaments from","wpwt"),
-                  $WTuser->date_format($tdates->from),__("to","wpwt"),
-                  $WTuser->date_format($tdates->to));
-      // Else prepare the title for the "seasoncities" request.
-      } else {
-         $names = array(); foreach ( $cityObj as $rec ) { array_push($names, $rec->get("name")); }
-         $title = sprintf("%s %s %s %d %s<br>\n%s,<br>\n%s %s %s %s", $season,
-                  __("season ranking for","wpwt"), __("the", "wpwt"),
-                  count($cityObj), __("cities", "wpwt"),
-                  join(" ".__(" and ","wpwt")." ",
-                    array(join(", ",array_slice($names,0,-1)), end($names))),
-                  __("tournaments from","wpwt"),
-                  $WTuser->date_format($tdates->from),__("to","wpwt"),
-                  $WTuser->date_format($tdates->to));
+
+   // ---------------------------------------------------------------
+   // Specific settings for "seasoncities"
+   // ---------------------------------------------------------------
+   case "seasoncities":
+      // City-ranking is for more than one city. Create $city_array first.
+      $tmp = explode(",", $args->cities);
+      $cityObj = array();
+      foreach ( $tmp as $elem ) {
+         if (is_numeric($elem)) {
+            array_push($cityObj, new wetterturnier_cityObject((int)$elem));
+         }
       }
+      if ( count($cityObj) == 0 ) {
+          printf("<div class=\"wetterturnier-info error\">%s</div>",
+              __("Sorry, no proper city definition for","wpwt")
+              ." wetterturnier_ranking type cities"); return;
+      }
+
+      // Generate the title
+      $names = array(); foreach ( $cityObj as $rec ) { array_push($names, $rec->get("name")); }
+      $title = sprintf("%s %s %s %d %s<br>\n%s,<br>\n%s %s %s %s", $season,
+               __("season ranking for","wpwt"), __("the", "wpwt"),
+               count($cityObj), __("cities", "wpwt"),
+               join(" ".__(" and ","wpwt")." ",
+                 array(join(", ",array_slice($names,0,-1)), end($names))),
+               __("tournaments from","wpwt"),
+               $WTuser->date_format($tdates->from),__("to","wpwt"),
+               $WTuser->date_format($tdates->to));
+
+      break;
+
+   // ---------------------------------------------------------------
+   // Specific settings for "seasoncities"
+   // ---------------------------------------------------------------
+   case "season":
+
+      // Title
+      $title = sprintf("%s %s %s, %s %s %s %s",
+               $season,__("season ranking for","wpwt"),$cityObj->get('name'),
+               __("tournaments from","wpwt"),
+               $WTuser->date_format($tdates->from),__("to","wpwt"),
+               $WTuser->date_format($tdates->to));
 
       break;
 
