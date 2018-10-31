@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2018-01-19, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-01-21 15:15 on marvin
+# - L@ST MODIFIED: 2018-10-31 11:54 on marvin
 # -------------------------------------------------------------------
 
 import logging
@@ -263,8 +263,8 @@ class setup( object ):
         data = cur.fetchone()
         partitions = re.findall(".*(PARTITION.*),.*", "".join(data))
         if len(partitions) > 0:
-            res.append("Partitions on:\n\n")
-            for rec in partitions: res.append("* ``{:s}``\n".format(rec))
+            res.append("\nPartitions on:\n\n")
+            for rec in partitions: res.append("* ``{:s}``".format(rec))
 
 
         res.append( "\n\n" )

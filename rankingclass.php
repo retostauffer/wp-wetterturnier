@@ -1,31 +1,34 @@
 <?php
 /**
- * A helper class returning the ranking/points/bets from the last weekend.
- * This file (only the upper part at the moment) looks exactely like the
- * ASCII files before 2018. Some more details see class description.
+ * Class which calculates (and caches) the rankings for different views,
+ * e.g., weekend rankings, yearly rankings, alpine ranking, and so far
+ * and so on.
  *
- * @file oldoutputclass.php
+ * @file rankingclass.php
  * @author Reto Stauffer
- * @date January 9 2018
- * @brief Mimiking the old archive text files.
+ * @date Octover 31 2018
+ * @brief New more efficient ranking table calculation.
  */
 
 
-/**
- * A helper class returning the ranking/points/bets from the last weekend.
- * This file (only the upper part at the moment) looks exactely like the
- * ASCII files before 2018 and can be accessed under the same URL's
- * using .htaccess redirects. The idea was that Moses comes back to life,
- * however, the last two weeks this didn't happen.
- * This class is used solely by oldarchive.php in the same directory.
- * 
- * Args:
- *    deadman (:obj:`str`): string, use login name of the user which
- *      provides the points for players not having participated. On 
- *      wetterturnier this user is known as "Sleepy" (default).
- *    points_max (:obj:`int`): Maximum number of points per weekend.
- *      Used to compute the 'relative points' gained of the players
- *      given the ranking settings. Default is 200 as on wetterturnier.de.
+/** Class which calculates (and caches) the rankings for different views,
+ * e.g., weekend rankings, yearly rankings, alpine ranking, and so far
+ * and so on.
+ *
+ * @param deadman (str)
+ *   login name of the user which
+ *   provides the points for players not having participated. On 
+ *   wetterturnier this user is known as "Sleepy" (default).
+ * @param points_max (int):
+ *   maximum number of points per weekend.
+ *   Used to compute the 'relative points' gained of the players
+ *   given the ranking settings. Default is `200` as on wetterturnier.de.
+ * @param cache (bool)
+ *   whether file cache is active or not. If `true` (default) the rankings
+ *   will be stored (serialized) in the `cache` folder and will be re-used
+ *   if another user makes the same request. Files will be kept for 10 minutes.
+ *   Can be disabled if set to `false`. Note: requires write access to the
+ *   `cache` folder within the wp-wetterturnier plugin directory!
  */
 class wetterturnier_rankingObject {
 
@@ -61,9 +64,6 @@ class wetterturnier_rankingObject {
     # resulting JSON array to display the tables via jQuery.
     private $dict;
 
-    /**
-     * Object constructor.
-     */
     function __construct( $deadman = "Sleepy", $points_max = 200, $cache = true ) {
 
        global $wpdb; $this->wpdb = $wpdb;
@@ -89,48 +89,58 @@ class wetterturnier_rankingObject {
     }
 
 
-    /* Setting cityObj argument within this class.
+    /* Set city/cities. Rankings can be computed for one specific city or
+     * for multiple cities (overall ranking for users participating in 
+     * all cities, e.g., the 5-city-ranking).
      *
-     * Args:
-     *      cityObj (:obj:`cityObj` or an :obj:`array`): request for only one
-     *          specific city or multiple cities (then an array is needed).
+     * The input argument `$cityObj` can either be a single object of the
+     * class :php:class:`wetterturnier_cityObject` or an array containing
+     * multiple :php:class:`wetterturnier_cityObject` objects.
+     * This method has no return value, it simply stores the object internally
+     * which is then used later on when preparing the data/ranks.
+     *
+     * @param $cityObj (:php:class:`wetterturnier_cityObject` or an :obj:`array` of :php:class:`wetterturnier_cityObject`)
+     *    defines for which city/cities the ranking should be calculated.
+     *
+     * See also :php:meth:`set_tdates`.
      */
-    function set_cities( $cityObj ) {
-        $this->cityObj = $cityObj;
-    }
+    public function set_cities( $cityObj ) { $this->cityObj = $cityObj; }
 
     /* Simply setting a type or name. Only used to define the cache file name.
      * Default is "UNNAMED".
      *
-     * Args:
-     *    name (:obj:`str`): Name or hash used to create the cache files.
+     * @param name (str)
+     *    name or hash used to create the cache files.
      */
-    public function set_cachehash( $name ) {
-        $this->cachehash = str_replace(" ", "_", (string)$name);
-    }
+    public function set_cachehash( $name ) { $this->cachehash = str_replace(" ", "_", (string)$name); }
 
 
     /* Store the date ranges for which the request should be made.
      *
-     * Args:
-     *    from (:obj:`int` or :obj:`stdClass`): Either a single integer
-     *      for the first date (days since 1970-01-01) for the current rank,
-     *      or an object. If it is an object we assume it contains four elements
-     *      specifying 'from', 'to', 'from_prev', and 'to_prev'. Else all four
-     *      iputs have to be given!
-     *    to (:obj:`Null` or :obj:`int`): If input $from is an object this argument
-     *      is simply ignored. Else should contain an integer with the last day
-     *      (days since 1970-01-01) of the period for the current rank.
-     *    from_prev (:obj:`Null` or :obj:`int`): If input $from is an object this argument
-     *      is simply ignored. Else should contain an integer with the first day
-     *      (days since 1970-01-01) of the period for the previouse rank. Used to
-     *      compute the trend.
-     *    to_prev (:obj:`Null` or :obj:`int`): If input $from is an object this argument
-     *      is simply ignored. Else should contain an integer with the last day
-     *      (days since 1970-01-01) of the period for the previouse rank. Used to
-     *      compute the trend.
+     * @param from(int or stdClass)
+     *   either a single integer
+     *   for the first date (days since 1970-01-01) for the current rank,
+     *   or an object. If it is an object we assume it contains four elements
+     *   specifying 'from', 'to', 'from_prev', and 'to_prev'. Else all four
+     *   iputs have to be given!
+     * @param to (Null or int)
+     *   if input $from is an object this argument
+     *   is simply ignored. Else should contain an integer with the last day
+     *   (days since 1970-01-01) of the period for the current rank.
+     * @param from_prev (Null or int)
+     *   if input $from is an object this argument
+     *   is simply ignored. Else should contain an integer with the first day
+     *   (days since 1970-01-01) of the period for the previouse rank. Used to
+     *   compute the trend.
+     * @param to_prev (Null or int)
+     *   if input $from is an object this argument
+     *   is simply ignored. Else should contain an integer with the last day
+     *   (days since 1970-01-01) of the period for the previouse rank. Used to
+     *   compute the trend.
+     *
+     * See also :php:meth:`set_tdates`.
      */
-    function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null) {
+    public function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null) {
         if ( ! is_object($from) ) {
             $this->tdates = (object) array("from"      => $from,      "to"      => $to,
                                            "from_prev" => $from_prev, "to_prev" => $to_prev);
@@ -152,18 +162,18 @@ class wetterturnier_rankingObject {
 
     /* Returns the data in a structured way. The 'data' are the points for each
      * specific city/tournament_date/user where the 'user' nesting level is not
-     * requred (and therefore not returned) if input $deadman is set to true.
+     * requred (and therefore not returned) if input `$deadman = true`.
      *
-     * Args:
-     *      deadman (:obj:`bool`): If false (default) all points will
-     *          be returned. Else (if true) only the deadman points will
-     *          be returned. Uses the 'deadman' argument from this object.
-     *          If the deadman user cannot be found: return null such that players
-     *          which have not participated simply get 0 points.
+     * @pararm deadman (bool)
+     *   if `false` (default) all points will
+     *   be returned. Else (if `true`) only the deadman points will
+     *   be returned. Uses the 'deadman' argument from this object.
+     *   If the deadman user cannot be found: return null such that players
+     *   which have not participated simply get 0 points.
      * Returns:
      * A stdClass object of the following form, here one example
      * with for only one tournament date (tdate).
-     * If input argument $deadman is true, only the deadman user will be loaded.
+     * If input argument $deadman is `true`, only the deadman user will be loaded.
      * >>> stdClass Object
      * >>>  (
      * >>>    [data] => stdClass Object
@@ -311,14 +321,14 @@ class wetterturnier_rankingObject {
 
     /* Creates the admin link to modify the current user/station.
      *
-     * Args:
-     *      type (:obj:`str`): String with user type (e.g., user or mitteltip)
-     *      Obj (...): Either a wordpress user Object or a wetterturnier
-     *          :class:`wetterturnier_stationObject` for the observations.
-     * Returns:
-     *      str: Returns a string with a html element to place the edit button or
-     *      an empty string if no editbuttion is needed (or not allowed as the user
-     *      is no admin).
+     * @param type (str)
+     *   user type (e.g., user or mitteltip)
+     *   Obj (...): Either a wordpress user Object or a wetterturnier
+     *   :class:`wetterturnier_stationObject` for the observations.
+     *
+     * @return Returns a string with a html element to place the edit button or
+     *   an empty string if no editbuttion is needed (or not allowed as the user
+     *   is no admin).
      */
     private function _get_edit_button( $type, $Obj ) {
 
@@ -343,12 +353,11 @@ class wetterturnier_rankingObject {
 
     /* Creates the admin link to modify the current user/station.
      *
-     * Args:
-     *      Obj (...): Either a wordpress user Object.
-     * Returns:
-     *      str: Returns a string with a html element to place the edit button or
-     *      an empty string if no editbuttion is needed (or not allowed as the user
-     *      is no admin).
+     * @param $userObj (object)
+     *    A a wordpress user Object.
+     * @return Returns a string with a html element to place the edit button or
+     *    an empty string if no editbuttion is needed (or not allowed as the user
+     *    is no admin).
      */
     private function _get_detail_button( $userObj ) {
         return sprintf("<span class=\"button small detail\" userid=\"%d\" "
@@ -358,9 +367,9 @@ class wetterturnier_rankingObject {
 
 
     /** Returns the file name for the cache file (only used if cache is set
-     * to true, see __construct method).
+     * to ``true``, see initialization arguments of this class).
      *
-     * Returns the absolute path to the cache file.
+     * @return Returns the absolute path to the cache file.
      */
     private function _get_cache_file_name() {
         # Where city
@@ -402,13 +411,12 @@ class wetterturnier_rankingObject {
      * the caching take care of removing the files in the cache folder
      * every now and then to avoid filling the disc for nothing.
      *
-     * Returns:
-     *  No return! Stores the ranking object on the parent object itself.
+     * @return No return! Stores the ranking object on the parent object itself.
      *  There are different ouptut methods to display/return the data.
      *
      * .. todo:: Explain caching.
      */
-    function prepare_ranking() {
+    public function prepare_ranking() {
 
         if ( is_null($this->tdates) || is_null($this->cityObj) ) {
             //echo "Sorry, cannot prepare ranking, tdate or cityObject not set!";
@@ -641,20 +649,34 @@ class wetterturnier_rankingObject {
     /**
      * Prints the content of $this->ranking (or $this->ranking->data),
      * just a development helper function!
+     *
+     * @param $data (bool)
+     *   if ``false`` the whole object will be printed, if set to ``true``
+     *   only the ``data`` is printed.
      */
     public function print_r($data = false) {
         print_r(($data) ? $this->ranking->data : $this->ranking );
         die("Exit in development method \"print_r\"");
     }
 
+    /**
+     * Public function which simply returns the internal object.
+     *
+     * @return Returns the structured object containing the data.
+     */
     public function return_obj() {
         return($this->ranking);
     }
 
     /**
-     * Returns the ranking prepared by prepare_ranking as json array.
+     * Returns the ranking prepared by prepare_ranking as JSON string.
+     * This is what will be returned for the ajax requests.
+     *
+     * @return Returns JSON string containing data and meta information
+     *   which is used by the :file:`js/wetterturnier.ranking.js` function
+     *  ``show_ranking(..)`` to display the ranking table on the frontend.
      */
-    function return_json( ) {
+    public function return_json( ) {
         if ( is_null($this->ranking) ) {
             return json_encode(array("error"=>"Data not prepared, prepare_ranking not called?"));
         } else {
