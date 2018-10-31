@@ -82,7 +82,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
   function display_ranking( e, data, input ) {
 
       // Clear content of the div
-      $(e).empty();
+      $(e).hide().empty();
 
       // Short information about the maximum number of points possible
       if ( input.header ) {
@@ -144,7 +144,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
 
       });
 
-
+      $(e).fadeIn("slow");
 
   };
 
@@ -194,11 +194,11 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     function display_leaders( e, data, input ) {
   
         // Clear content of the div
-        $(e).empty();
-
+        $(e).hide().empty();
+    
         counter = 1
         $.each( data.data, function(idx,rec) {
-
+    
             $(e).append("<div class=\"wt-leaderboard\">\n"
                       + "    <div class=\"wt-leaderboard-avatar\" style=\"width: 33%;\">\n"
                       + "        <a href=\"https://www.wetterturnier.de/forums/users/heiko/\" target=\"_self\">"
@@ -213,11 +213,13 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
                       + "        <bar></bar><info class=\"small\">" + data.meta.city + "&nbsp;" + data.meta.to + "</info><br>\n"
                       + "    </div>"
                       + "</div>");
-
-
+    
+    
             // Breaking .each
             if ( counter >= input.limit ) { return(false); }; counter++;
         });
+
+        $(e).fadeIn("slow");
 
 
     };
