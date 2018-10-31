@@ -86,6 +86,13 @@ jQuery(document).on('ready',function() {
           // Clear content of the div
           $(e).empty();
 
+          // Short information about the maximum number of points possible
+          if ( input.header ) {
+              $(e).append("<div class=\"wttable-show-points-max\">" +
+                  data.dict.points_max + " <b>" + data.meta.points_max + "</b>." +
+                  "</div>");
+          }
+
           // Append new table
           $(e).append("<table class=\"wttable-show-ranking wttable-show small ranking-weekend default\"></table>")
           $(e).find("table").append("<thead><tr></tr></thead><tbody></tbody>")
@@ -138,9 +145,6 @@ jQuery(document).on('ready',function() {
               if ( counter >= input.limit ) { return false; }
 
           });
-
-          // Short information
-          $(e).append(data.dict.points_max + " <b>" + data.meta.points_max + "</b>.");
 
 
 

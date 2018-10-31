@@ -143,8 +143,13 @@ input[type="submit"].settings-button:hover {
 .wttable-show * tr.highlighted:nth-child(odd) td  { background-color: #d1e2f9; }
 /*{ background-color: #d1e2f9; }*/
 
-.wttable-show-ranking { padding-bottom: 0; margin-bottom: 0; }
 .wt-ranking-container { padding-bottom: 2em; padding-top: .5em; }
+.wttable-show-ranking { padding-bottom: 0; margin-bottom: 0; }
+/* Div containing the "The maximum score (total) is ..." string */
+.wttable-show-points-max {
+    width: 100%;
+    text-align: right;
+}
 
 /* Default styling */
 .wttable-show * tr:hover td                          { background-color: #d1e2f9; }

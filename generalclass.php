@@ -17,6 +17,8 @@
 class wetterturnier_generalclass
 {
 
+    public $version = 1.1; // Wp-wetterturnier version (used when registering css/js files)
+
     public $date_format = "%Y-%m-%d"; // Default date format on initialization
     public $datetime_format = "%Y-%m-%d %H:%M"; // Default datetime format on init
 
@@ -139,7 +141,9 @@ class wetterturnier_generalclass
         return number_format((float)$value,$decimals,$this->float_format->dsep,$this->float_format->tsep);
     }
 
-    /** Adding css files (array) to the head of the wordpress theme. */
+    /** Adding css files (array) to the head of the wordpress theme.
+     * Uses the public attribute $version to add a version string to
+     * overcome browser caching issues.*/
     function register_css_files() {
         if ( ! empty( $this->options->wetterturnier_style_deps ) & ! is_admin() )
         { $arr = array($this->options->wetterturnier_style_deps); }
@@ -151,16 +155,19 @@ class wetterturnier_generalclass
         // Now add
         foreach ( $this->css_files as $file ) {
             wp_register_style(  'wetterturnier_'.$file,
-                    sprintf('%s/css/%s.css',$this->plugins_url(),$file),$arr);
+                sprintf('%s/css/%s.css',$this->plugins_url(),$file),
+                $arr, $this->version);
             wp_enqueue_style( 'wetterturnier_'.$file);
         }
     }
 
-    /** Adding js files (array) to the head of the wordpress. */
+    /** Adding js files (array) to the head of the wordpress.
+     * Uses the public attribute $version to add a version string to
+     * overcome browser caching issues.*/
     function register_js_files() {
         foreach ( $this->js_files as $file ) {
             wp_register_script(  'wetterturnier_'.$file,
-                    sprintf('%s/js/%s.js',$this->plugins_url(),$file));
+                sprintf('%s/js/%s.js',$this->plugins_url(), $file), array(), $this->version);
             wp_enqueue_script( 'wetterturnier_'.$file );
         }
     }
