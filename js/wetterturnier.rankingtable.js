@@ -210,7 +210,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
                       + "        <info class=\"color\">" + idx + "</info><br>\n"
                       + "        <info class=\"color big\">" + rec.points_now + "</info>&nbsp;\n"
                       + "        <info class=\"color\">points</info><br>\n"
-                      + "        <bar></bar><info class=\"small\">Berlin&nbsp;2018-10-26</info><br>\n"
+                      + "        <bar></bar><info class=\"small\">" + data.meta.city + "&nbsp;" + data.meta.to + "</info><br>\n"
                       + "    </div>"
                       + "</div>");
 

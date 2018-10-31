@@ -634,6 +634,18 @@ class wetterturnier_rankingObject {
         $this->ranking->meta->points_max   = $points_max;
         $this->ranking->meta->older        = $this->tdates->older;
         $this->ranking->meta->newer        = $this->tdates->newer;
+        $this->ranking->meta->from         = $this->WTuser->date_format($this->tdates->from);
+        $this->ranking->meta->to           = $this->WTuser->date_format($this->tdates->to);
+
+        // If only one city:
+        if ( ! is_array($this->cityObj) ) {
+            $this->ranking->meta->city = $this->cityObj->get("name");
+        } else {
+            $names = array(); foreach ( $this->cityObj as $rec ) { array_push($names, $rec->get("name")); }
+            $this->ranking->meta->city = join(" ", $names); 
+        }
+
+        // The data
         $this->ranking->data               = $final;
 
         if ( is_plugin_active("polylang") ) {
