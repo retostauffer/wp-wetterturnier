@@ -193,15 +193,12 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     // Creates the frontend output
     function display_leaders( e, data, input ) {
   
-        console.log("foooo")
         // Clear content of the div
         $(e).empty();
 
-        console.log(data.data)
         counter = 1
         $.each( data.data, function(idx,rec) {
 
-            console.log(rec)
             $(e).append("<div class=\"wt-leaderboard\">\n"
                       + "    <div class=\"wt-leaderboard-avatar\" style=\"width: 33%;\">\n"
                       + "        <a href=\"https://www.wetterturnier.de/forums/users/heiko/\" target=\"_self\">"

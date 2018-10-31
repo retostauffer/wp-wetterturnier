@@ -17,7 +17,7 @@
 class wetterturnier_generalclass
 {
 
-    public $version = 1.1; // Wp-wetterturnier version (used when registering css/js files)
+    public $version = "1.1-2"; // Wp-wetterturnier version (used when registering css/js files)
 
     public $date_format = "%Y-%m-%d"; // Default date format on initialization
     public $datetime_format = "%Y-%m-%d %H:%M"; // Default datetime format on init
