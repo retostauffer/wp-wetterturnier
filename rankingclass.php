@@ -279,6 +279,7 @@ class wetterturnier_rankingObject {
                 # Append tourmanet date to city
                 $thash = sprintf("tdate_%d",$rec->tdate);
                 $res->data->$uhash->$thash = $rec->points;
+                $res->data->$uhash->userID = $rec->ID;
             }
         }
 
@@ -605,8 +606,7 @@ class wetterturnier_rankingObject {
             # method :meth:`generalclass.get_user_display_class_and_name`.
             $userObj = get_user_by( "login", $user );
             $final->$user->userID       = $userObj->ID;
-            $tmp = $this->WTuser->get_user_display_class_and_name($userObj->ID,
-                                $userObj);
+            $tmp = $this->WTuser->get_user_display_class_and_name($userObj->ID, $userObj);
             $final->$user->display_name = $tmp->display_name;
             $final->$user->userclass    = $tmp->userclass;
 
@@ -616,6 +616,9 @@ class wetterturnier_rankingObject {
                 $final->$user->edit_button   = $this->_get_edit_button( $tmp->userclass, $userObj );
                 $final->$user->detail_button = $this->_get_detail_button( $userObj );
             }
+
+            # Loading additional information
+            $final->$user->avatar = get_wp_user_avatar($userObj->ID, 96);
 
             // Getting profile link
             $final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
