@@ -1678,35 +1678,33 @@ class wetterturnier_generalclass
                 // status classes on datepicker. Note that I am doing
                 // this for ALL tournament dates in the db, does not
                 // matter what is on screen. Probably not the best way.
-                var datepicker_get_dates = function() {
-                    // Ajaxing the calculation miniscript
-                    var all_dates = false;
-                    $.ajax({
-                        url: ajaxurl, dataType: 'json', type: 'post',
-                        data: {action:'tournament_datepicker_ajax'},
-                        success: function(results) { all_dates = results; },
-                        error: function(e) { $error = e; console.log('errorlog'); console.log(e); } 
-                    });
-                    return all_dates;
-                }
-                var datepicker_set_dates = function(d,all_dates) {
-                    var mydate = $.datepicker.formatDate('yy-mm-dd',d);
-                    var arr = [true,""];
-                    $.each( all_dates, function(key,val) {
-                        if ( key == mydate ) { arr = [true,"status-"+val]; }
-                    });
-                    return arr;
-                }
+                $.ajax({
+                    url: ajaxurl, dataType: 'json', type: 'post',
+                    data: {action:'tournament_datepicker_ajax'},
+                    success: function(results) {
+                        all_dates = results;
+                        console.log(all_dates)
 
+                       // Helper function to convert the loaded dates
+                       var datepicker_set_dates = function(d,all_dates) {
+                           var mydate = $.datepicker.formatDate('yy-mm-dd',d);
+                           var arr = [true,""];
+                           $.each( all_dates, function(key,val) {
+                               if ( key == mydate ) { arr = [true,"status-"+val]; }
+                           });
+                           return arr;
+                       }
 
-                // Loading dates from database
-                var all_dates = datepicker_get_dates();
-
-                // Initialize datepicker
-                $('#wtwidget_tournaments').datepicker({
-                    firstDay: 1,
-                    dateFormat : 'yy-mm-dd', numberOfMonths: 1, showButtonPanel: true, async: false,
-                    beforeShowDay: function(d) { return datepicker_set_dates(d,all_dates,false); },
+                       // Initialize datepicker
+                       $('#wtwidget_tournaments').datepicker({
+                           firstDay: 1,
+                           dateFormat : 'yy-mm-dd', numberOfMonths: 1, showButtonPanel: true, async: false,
+                           beforeShowDay: function(d) {
+                               return datepicker_set_dates(d,all_dates,false);
+                           },
+                       });
+                           
+                    }, error: function(e) { $error = e; console.log('errorlog'); console.log(e); } 
                 });
 
             })(jQuery);
