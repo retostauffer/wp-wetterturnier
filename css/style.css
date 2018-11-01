@@ -98,10 +98,6 @@ span.orientation:hover {
    color: #FF6600;
 }
 
-input[type="submit"] {
-   margin-bottom: 20px;
-}
-
 /* Group tables */
 table.wttable-groups td.inactive {
    color: gray; 

@@ -157,8 +157,16 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
         add_action( 'wp_head', array($this,'disable_display_name_settings') );
 
+        // Append javascript snippet
+        add_action( 'wp_head', array($this, 'wt_add_ajax_admin') );
+
     }
 
+    public function wt_add_ajax_admin() { ?>
+        <script type="text/javascript">
+           jQuery.ajaxurl  = "<?php print admin_url('admin-ajax.php'); ?>";
+        </script>
+    <?php }
 
     /** Helper function to create a random string.
      * @param $length int, default is 10. Length of the string to be returned.

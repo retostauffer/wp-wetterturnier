@@ -12,20 +12,13 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-10-31 09:07 on marvin
+# - L@ST MODIFIED: 2018-11-01 18:43 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
 global $WTuser;
 $args = (object)$args;
 
-?>
-
-<script type="text/javascript">
-jQuery.ajaxurl  = "<?php print admin_url('admin-ajax.php'); ?>";
-</script>
-
-<?php
 // ------------------------------------------------------------------
 // If no city input is set: using current city as default
 // In this case we can load the pre-fetched city (active or current city)
