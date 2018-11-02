@@ -116,16 +116,25 @@ class WP_wetterturnier_widget_leading extends WP_Widget
 
         global $WTuser;
 
+        // Check if there are any valid rankings at the moment
+        $current = $WTuser->current_tournament;
+        $scored  = $WTuser->scored_players_per_town( $current->tdate );
+
+        // No results for the current one? Well, take the one before!
+        if ( ! $scored ) {
+           $current = $WTuser->older_tournament( $current->tdate );
+        }
+
         $args = array(
             "type"    => "weekend",
             "tdate"   => "17830",
             "limit"   => 3,
             "city"    => $WTuser->get_current_city_id(),
-            "tdates"  => array("from"      => $WTuser->current_tournament->tdate,
-                              "to"        => $WTuser->current_tournament->tdate,
-                              "from_prev" => Null, "to_prev" => Null,
-                              "older"     => Null, "newer" => Null,
-                              "userinfo"  => true));
+            "tdates"  => array("from"      => $current->tdate,
+                               "to"        => $current->tdate,
+                               "from_prev" => Null, "to_prev" => Null,
+                               "older"     => Null, "newer" => Null,
+                               "userinfo"  => true));
         printf("<div class=\"wt-leaderboard\" args=\"%s\"></div>", 
                htmlspecialchars(json_encode($args)));
     }
