@@ -157,6 +157,9 @@ class wetterturnier_rankingObject {
                                      $this->tdates->from_prev, $this->tdates->to_prev);
             $this->calc_trend = true;
         }
+
+        // If 'max' > 'latest':
+        if ( $this->tdates->max > $this->tdates->latest ) { $this->tdates->max = $this->tdates->latest; }
     }
 
 

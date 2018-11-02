@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-11-01 18:43 on marvin
+# - L@ST MODIFIED: 2018-11-02 10:43 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -58,6 +58,12 @@ $tdates = (object) array("from"      => Null, "to"      => Null,
                          "older"     => Null, "newer"   => Null);
 // Latest possible tournament
 $tdates->latest = $WTuser->latest_tournament(floor(time() / 86400.))->tdate;
+if ( ! $WTuser->scored_players_per_town( $args->tdate ) ) {
+    $current = $WTuser->older_tournament( $args->tdate );
+    $args->tdate = $current->tdate;
+    $tdates->latest = $current->tdate;
+}
+
 
 $short_title = "This should be the <i>short title</i>, but seems to be missing.";
 
@@ -321,8 +327,6 @@ switch ( $args->type ) {
       return;
 
 }
-
-
 
 // URL for navigation
 $hrefurl = $WTuser->curPageURL(true);
