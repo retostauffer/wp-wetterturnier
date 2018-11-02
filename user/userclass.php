@@ -1897,7 +1897,20 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
        // Show login form
        printf("<h1 class='entry-title'>%s</h1>",__("Login form","wpwt"));
-       wp_login_form( );
+       printf("<div id=\"login-restricted\">\n");
+       _e("Due to the European general data protection regulation (GDPR) we kindly "
+          ."ask you to accept our privacy policy before you login. "
+          ."As soon as you agree (click the button above) the login form will "
+          ."be shown.", "wpwt");
+       wp_login_form(array(
+           "remember"    => true,
+           "form_id"     => "restricted-login",
+           "id_username" => "restricted-user_login",
+           "id_password" => "restricted-user_pass",
+           "id_remember" => "restricted-rememberme",
+           "id_submit"   => "restricted-wp-submit"
+       ));
+       printf("</div>\n");
 
        return(True);
     }
