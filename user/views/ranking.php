@@ -12,7 +12,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-11-10, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-11-02 10:43 on marvin
+# - L@ST MODIFIED: 2018-11-02 13:01 on marvin
 # -------------------------------------------------------------------
 
 global $wpdb;
@@ -154,7 +154,8 @@ switch ( $args->type ) {
    // Season ranking for single cities or a set of cities (e.g.,
    // the three and five city rankings)
    // ---------------------------------------------------------------
-   case "season" || "seasoncities":
+   case "season":
+   case "seasoncities":
       // Compute begin and end tournament date for the season
       $month = (int)$WTuser->date_format($args->tdate, "%m");
       $year  = (int)$WTuser->date_format($args->tdate, "%Y");
@@ -200,7 +201,6 @@ switch ( $args->type ) {
 
       // If the next is in the future
       if ( $tdates->to > $tdates->latest ) { $tdates->newer = Null; }
-
 
    // ---------------------------------------------------------------
    // Specific settings for "seasoncities"
