@@ -159,7 +159,11 @@ class wetterturnier_rankingObject {
         }
 
         // If 'max' > 'latest':
-        if ( $this->tdates->max > $this->tdates->latest ) { $this->tdates->max = $this->tdates->latest; }
+        if ( property_exists($this->tdates, "latest") ) {
+            if ( $this->tdates->max > $this->tdates->latest ) {
+                $this->tdates->max = $this->tdates->latest;
+            }
+        }
     }
 
 
