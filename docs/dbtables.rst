@@ -72,7 +72,7 @@ structure can be summarized as follows:
   :ref:`day <table-wp_wetterturnier_dates>`, and
   :ref:`parameter <table-wp_wetterturnier_param>` using the 
   :ref:`wordpress user ID <table-wp_users>` to link the forecasts to the users.
-* Forecasts are summarized and stored in the :ref:`betstat table <tables-wp_wetterturnier_betstat>`
+* Forecasts are summarized and stored in the :ref:`betstat table <table-wp_wetterturnier_betstat>`
   where the sum of the points will be added by the
   `wetterturnier backend judging <https://github.com/retostauffer/wetterturnier-backend>`_.
 
@@ -160,13 +160,6 @@ wp_wetterturnier_rerunrequest
 .. _table-wp_wetterturnier_rerunrequest:
 
 .. include:: dbtables/wp_wetterturnier_rerunrequest.rsx
-
-wp_wetterturnier_rerunrequests
-------------------------------------------------
-
-.. _table-wp_wetterturnier_rerunrequests:
-
-.. include:: dbtables/wp_wetterturnier_rerunrequests.rsx
 
 wp_wetterturnier_stationparams
 ------------------------------------------------

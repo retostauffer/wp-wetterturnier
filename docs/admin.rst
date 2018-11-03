@@ -220,7 +220,7 @@ API
 
 .. _admin-API:
 
-.. todo:: Experimenta, not yet documented.
+.. todo:: Experimental, not yet documented.
 
 Rerun Requests
 ---------------------

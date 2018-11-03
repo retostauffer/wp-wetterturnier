@@ -105,6 +105,9 @@ if(!class_exists('WP_wetterturnier'))
           delete_option("wetterturnier_bet_closingoffset");
           add_option(   "wetterturnier_bet_closingoffset", "5","","yes");
 
+          delete_option('wetterturnier_calendar_ndays');
+          add_option(   'wetterturnier_calendar_ndays', 50, '', 'yes');
+
           // Add new role
           //remove_role('wetterturnier_admin');
           $capabilities = array('read'=>true);
@@ -275,6 +278,7 @@ if( class_exists('WP_wetterturnier') )
     $files = array("classes",
                    "chartclass",
                    "betclass",
+                   "rankingclass",
                    "user/widgets/tournaments",
                    "user/widgets/blitzortung",
                    "user/widgets/webcams",

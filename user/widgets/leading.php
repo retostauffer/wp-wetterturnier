@@ -107,20 +107,36 @@ class WP_wetterturnier_widget_leading extends WP_Widget
     }
 
     /**
-     * The 'core' function of the widget, creates the output.
-     * 
-     * @todo Should be based on a rankingclass object and procude
-     * it's own output rather than using a function from the userclass.
-     *
-     * @param array $args
-     *
-     * @param array $instance
+     * The function which creates the frontend output. It basically only
+     * creates a html div element with a specific class. The jQuery plugin
+     * js/wetterturnier.rankingtable.js is looking for these elements and
+     * fills them with data.
      */
     function show_leading() {
 
-      global $WTuser;
-      $WTuser->show_leading(); 
+        global $WTuser;
 
+        // Check if there are any valid rankings at the moment
+        $current = $WTuser->current_tournament;
+        $scored  = $WTuser->scored_players_per_town( $current->tdate );
+
+        // No results for the current one? Well, take the one before!
+        if ( ! $scored ) {
+           $current = $WTuser->older_tournament( $current->tdate );
+        }
+
+        $args = array(
+            "type"    => "weekend",
+            "tdate"   => "17830",
+            "limit"   => 3,
+            "city"    => $WTuser->get_current_city_id(),
+            "tdates"  => array("from"      => $current->tdate,
+                               "to"        => $current->tdate,
+                               "from_prev" => Null, "to_prev" => Null,
+                               "older"     => Null, "newer" => Null,
+                               "userinfo"  => true));
+        printf("<div class=\"wt-leaderboard\" args=\"%s\"></div>", 
+               htmlspecialchars(json_encode($args)));
     }
 
 }

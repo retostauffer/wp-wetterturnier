@@ -98,10 +98,6 @@ span.orientation:hover {
    color: #FF6600;
 }
 
-input[type="submit"] {
-   margin-bottom: 20px;
-}
-
 /* Group tables */
 table.wttable-groups td.inactive {
    color: gray; 
@@ -143,6 +139,14 @@ input[type="submit"].settings-button:hover {
 .wttable-show * tr.highlighted:nth-child(odd) td  { background-color: #d1e2f9; }
 /*{ background-color: #d1e2f9; }*/
 
+.wt-ranking-container { padding-bottom: 2em; padding-top: .5em; }
+.wttable-show-ranking { padding-bottom: 0; margin-bottom: 0; }
+/* Div containing the "The maximum score (total) is ..." string */
+.wttable-show-points-max {
+    width: 100%;
+    text-align: right;
+}
+
 /* Default styling */
 .wttable-show * tr:hover td                          { background-color: #d1e2f9; }
 .wttable-show-bets * tr:hover td                     { background-color: #d1e2f9; }
@@ -153,6 +157,9 @@ input[type="submit"].settings-button:hover {
 .wttable-show-bets * tr:nth-child(odd):hover td      { background-color: #c0d2eb; }
 .wttable-show-ranking * tr:nth-child(odd)       td   { background-color: #eef0f2; }
 .wttable-show-ranking * tr:nth-child(odd):hover td   { background-color: #c0d2eb; }
+.wttable-show-ranking * tr.partial-participation a,
+.wttable-show-ranking * tr.partial-participation     { color: gray; }
+
 .wetterturnier-obstable * tr:nth-child(odd)       td { background-color: #eef0f2; }
 .wetterturnier-obstable * tr:nth-child(odd):hover td { background-color: #c0d2eb; }
 
@@ -250,8 +257,10 @@ table.tablesorter tbody td {
 
 .wttable-show * th { padding: 0 2px; }
 .wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 45px; }
+.wttable-show * th.trend,      .wttable-show * td.trend       { text-align: center; width: 45px; }
 .wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 40px; }
-.wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 100px; }
+.wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 60px; }
+.wttable-show * th.statusbar,  .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
 .wttable-show * td.difference                                 { color: gray; }
 
 .wttable-show-bets,                   .wttable-show-obs    { table-layout: auto; }
@@ -299,8 +308,10 @@ table.tablesorter tbody td {
 }
 
 /* Hide the "played n/N tournaments" for weekend and city rankings */
+/*
 .wttable-show.ranking-weekend .played { display: none; }
 .wttable-show.ranking-cities  .played { display: none; }
+*/
 
 /* Show 'sleepy marker', a gray asterisk */
 .wttable-show-sleepymarker {
@@ -310,23 +321,16 @@ table.tablesorter tbody td {
 }
 
 @media screen and (max-width: 1200px) {
-   #content .wttable-show-ranking th:nth-child(4),
-   #content .wttable-show-ranking th:nth-child(5),
-   #content .wttable-show-ranking td:nth-child(4),
-   #content .wttable-show-ranking td:nth-child(5) {
-      display: none;
+   #content .wttable-show-ranking th:nth-last-child(3),
+   #content .wttable-show-ranking td:nth-last-child(3) {
+       display: none;
    }
 }
-@media screen and (max-width: 1350px) {
-   #content .wttable-show-ranking th:nth-child(7),
-   #content .wttable-show-ranking td:nth-child(7) {
-      display: none;
-   }
-}
-@media screen and (max-width: 1600px) {
-   #content .wttable-show-ranking th:nth-child(8),
-   #content .wttable-show-ranking td:nth-child(8) {
-      display: none;
+
+@media screen and (max-width: 1400px) {
+   #content .wttable-show-ranking th:nth-last-child(1),
+   #content .wttable-show-ranking td:nth-last-child(1) {
+       display: none;
    }
 }
 

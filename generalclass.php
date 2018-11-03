@@ -17,6 +17,8 @@
 class wetterturnier_generalclass
 {
 
+    public $version = "1.1-2"; // Wp-wetterturnier version (used when registering css/js files)
+
     public $date_format = "%Y-%m-%d"; // Default date format on initialization
     public $datetime_format = "%Y-%m-%d %H:%M"; // Default datetime format on init
 
@@ -139,7 +141,9 @@ class wetterturnier_generalclass
         return number_format((float)$value,$decimals,$this->float_format->dsep,$this->float_format->tsep);
     }
 
-    /** Adding css files (array) to the head of the wordpress theme. */
+    /** Adding css files (array) to the head of the wordpress theme.
+     * Uses the public attribute $version to add a version string to
+     * overcome browser caching issues.*/
     function register_css_files() {
         if ( ! empty( $this->options->wetterturnier_style_deps ) & ! is_admin() )
         { $arr = array($this->options->wetterturnier_style_deps); }
@@ -151,16 +155,19 @@ class wetterturnier_generalclass
         // Now add
         foreach ( $this->css_files as $file ) {
             wp_register_style(  'wetterturnier_'.$file,
-                    sprintf('%s/css/%s.css',$this->plugins_url(),$file),$arr);
+                sprintf('%s/css/%s.css',$this->plugins_url(),$file),
+                $arr, $this->version);
             wp_enqueue_style( 'wetterturnier_'.$file);
         }
     }
 
-    /** Adding js files (array) to the head of the wordpress. */
+    /** Adding js files (array) to the head of the wordpress.
+     * Uses the public attribute $version to add a version string to
+     * overcome browser caching issues.*/
     function register_js_files() {
         foreach ( $this->js_files as $file ) {
             wp_register_script(  'wetterturnier_'.$file,
-                    sprintf('%s/js/%s.js',$this->plugins_url(),$file));
+                sprintf('%s/js/%s.js',$this->plugins_url(), $file), array(), $this->version);
             wp_enqueue_script( 'wetterturnier_'.$file );
         }
     }
@@ -803,7 +810,7 @@ class wetterturnier_generalclass
     }
 
     /** Returns the link to the profile page of the player.
-     * @param $username. String containing the user login name. Case sensitive!
+     * @param $usr. Wordpress user object.
      * @return Returns `<a href=...>...</a>` tag with the link to the
      * user profile (currently to bbpress /forum/users/<username>).
      */
@@ -961,197 +968,6 @@ class wetterturnier_generalclass
     }
 
 
-    /** Creates the ultra freaky SQL query for the ranking
-     * and returns all the data and all necessary information.
-     * The ranking data will be stored on `data`. There are several
-     * additional properties such as `maxpoints` (max points to reach),
-     * `tdate_count` (the number of individual tournament dates the
-     * ranking is based on). 
-     * This is used in users/views/ranking.php.
-     *
-     * @param $cityObj. Object of class wetterturnier_cityObject.
-     * Can be either a single object containing
-     * city information, or an array of @ref wetterturnier_cityObject
-     * objects containing more than only one city. The array option is
-     * used to create the 3-city ranking (could also be used to do
-     * a 5-city-ranking or something similar). 
-     *
-     * @param $tdate. Integer representation of the tournament date.
-     *
-     * @param $limit. Either boolean (`false`) to set no limit (all
-     * entries will be shown, full ranking) or a positive integer.
-     * If positive integer only the best N players will be loaded.
-     *
-     * @return Returns a (quite big) stdClass object containing all
-     * required information to show the ranking.
-     */
-    public function get_ranking_data($cityObj,$tdate,$limit=false) {
-
-        global $wpdb;
-
-        // Generate the city-slug with all city ID's we need. 
-        // With this approach we can use this method to either
-        // compute the ranking for one town OR for a combination of
-        // different towns for the 3-town ranking for example.
-        if      ( is_object( $cityObj ) )  { $city_array = array($cityObj); }
-        else if ( is_array( $cityObj ) )   { $city_array = $cityObj;        }
-        else { die('Problems in get_ranking_data. Cannot understand input <city>.'); }
-       
-        // Prepare city slug for the sql statement and count
-        // the elements in the city_array (needed to compute
-        // the total number of points reachable).
-        for ( $i=0; $i < count($city_array); $i++ )
-        { $city_array[$i] = sprintf('cityID=%d',$city_array[$i]->get('ID')); }
-        $city_slug  = "(".join(" OR ",$city_array).")";
-        $city_count = count($city_array);
-
-        // Prepare the tdate. If tdate is empty (false) then take
-        // tdate_first = tdate_last = latest tournament. If tdate
-        // is a single integer, take this.
-        // If tdate is an array, take min/max array.
-        if      ( is_object( $tdate ) )  { $tdate_array = array((int)$tdate->tdate); }
-        else if ( is_integer( $tdate ) ) { $tdate_array = array((int)$tdate); }
-        else if ( is_array( $tdate ) )   { $tdate_array = $tdate; }
-        else { die('Problems in get_ranking_data. Cannot understand input <tdate>.'); }
-        $tdate_first = min($tdate_array);
-        $tdate_last  = max($tdate_array);
-
-        // Count number of tournaments between these two dates
-        $tdsql = 'SELECT tdate FROM %swetterturnier_betstat WHERE %s '
-                .'AND tdate >= %d AND tdate <= %d AND rank IS NOT NULL GROUP BY tdate';
-        $tdsql = sprintf($tdsql,$wpdb->prefix,$city_slug,(int)$tdate_first,(int)$tdate_last);
-        $tdate_count = count($wpdb->get_results($tdsql));
-
-        // Loading userID for the Sleepy player (to compute points
-        // for players without a bet).
-        $sleepy = $this->get_user_by_username('Sleepy');
-        if ( ! $sleepy ) { die('Could not find userID for Sleepy! Stop! Error!'); }
-
-        // [1] create the sql_usrdate statement.
-        //     This statement gets a full but unique
-        //     list of CITY/DATE/USER. We need this
-        //     to fill in the points and sleepy points later on.
-        $sql_usrdate = array();
-        array_push($sql_usrdate,"      SELECT dateUsr.cityID, dateUsr.userID, dateDate.tdate FROM (");
-        array_push($sql_usrdate,"         SELECT cityID, userID FROM %swetterturnier_betstat");
-        array_push($sql_usrdate,"         WHERE tdate >= %d AND tdate <= %d AND %s");
-        array_push($sql_usrdate,"         GROUP BY cityID, userID");
-        array_push($sql_usrdate,"      ) AS dateUsr CROSS JOIN (");
-        array_push($sql_usrdate,"         SELECT tdate FROM %swetterturnier_betstat");
-        array_push($sql_usrdate,"         WHERE tdate >= %d AND tdate <= %d AND %s");
-        array_push($sql_usrdate,"         AND userID=%d GROUP BY tdate");
-        array_push($sql_usrdate,"      ) AS dateDate");
-        
-        //print "<div style='font-weight:bold;'>[1] sql_usrdate</div>";
-        //printf( join("<br>\n",$sql_usrdate),
-        //        $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,
-        //        $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,(int)$sleepy->ID);
-        $sql_usrdate = sprintf( join("\n",$sql_usrdate),
-                       $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,
-                       $wpdb->prefix,(int)$tdate_first,(int)$tdate_last,$city_slug,(int)$sleepy->ID);
-        //sprintf("<div style='font-weight:bold;'>%d</div>",
-        //      count($wpdb->get_results($sql_usrdate)));
-        
-        
-        // [2] The second thing we need are the points of the sleepy.
-        //     The sleepy is the user containing the points for all the
-        //     players not having inserted a bet and therefore get the
-        //     mean-std points for this weekend.
-        $sql_dead = array();
-        array_push($sql_dead,"      SELECT cityID, tdate, points_d1, points_d2, points");
-        array_push($sql_dead,"      FROM %swetterturnier_betstat WHERE userID=%d");
-        array_push($sql_dead,"      AND %s AND tdate>=%d AND tdate <=%d");
-        
-        //print "<div style='font-weight:bold;'>[2] sql_dead</div>";
-        //printf( join("<br>\n",$sql_dead),
-        //        $wpdb->prefix,(int)$sleepy->ID,$city_slug,(int)$tdate_first,(int)$tdate_last);
-        $sql_dead = sprintf( join("\n",$sql_dead),
-                       $wpdb->prefix,(int)$sleepy->ID,$city_slug,(int)$tdate_first,(int)$tdate_last);
-        //printf("<div style='font-weight:bold;'>%d</div>",
-        //      count($wpdb->get_results($sql_dead)));
-        
-        // [3] Now we have the sleepy and the USER/DADTE/CITY combination.
-        //     We can combine now the points based on USR/DATE/CITY from
-        //     the user itself and the sleepy. Note: not yet the sum
-        //     over the periode tdate_first to tdate_last. There is
-        //     a step [4] to get the sum of points.
-        $sql_points = array();
-        array_push($sql_points,"   SELECT dt.cityID, dt.userID, dt.tdate,");
-        array_push($sql_points,"   CASE WHEN data.points IS NULL THEN 0 ELSE 1 END AS played,");
-        array_push($sql_points,"   COALESCE(data.points_d1, dead.points_d1) AS points_d1,");
-        array_push($sql_points,"   COALESCE(data.points_d2, dead.points_d2) AS points_d2,");
-        array_push($sql_points,"   COALESCE(data.points, dead.points) AS points");
-        array_push($sql_points,"   FROM (");
-        array_push($sql_points,"      %s");
-        array_push($sql_points,"   ) AS dt LEFT JOIN (");
-        array_push($sql_points,"      %s");
-        array_push($sql_points,"   ) AS dead ON dt.tdate=dead.tdate AND dt.cityID=dead.cityID");
-        array_push($sql_points,"   LEFT OUTER JOIN %swetterturnier_betstat AS data ON dt.cityID=data.cityID");
-        array_push($sql_points,"   AND dt.userID=data.userID AND dt.tdate=data.tdate");
-        
-        //print "<div style='font-weight:bold;'>[3] sql_points</div>";
-        //printf( join("<br>\n",$sql_points),$sql_usrdate,$sql_dead,$wpdb->prefix );
-        $sql_points = sprintf( join("\n",$sql_points),$sql_usrdate,$sql_dead,$wpdb->prefix );
-        //printf("<div style='font-weight:bold;'>%d</div>",
-        //      count($wpdb->get_results($sql_points)));
-        
-        // [4] No create sums of points. This then gives us the
-        //     final sql statement for the ranking tables.
-        $sql = array();
-        array_push($sql,"SELECT usr.user_login AS user_login, usr.display_name AS display_name,");
-        array_push($sql,"x.cityID AS cityID, x.userID AS userID, SUM(x.played) AS played,");
-        array_push($sql,"SUM(x.points_d1) AS points_d1,");
-        array_push($sql,"SUM(x.points_d2) AS points_d2,");
-        array_push($sql,"SUM(x.points) AS points FROM (");
-        array_push($sql,"   %s");
-        array_push($sql,") AS x LEFT OUTER JOIN %susers AS usr");
-        array_push($sql,"ON usr.ID = x.userID ");
-        # TODO RETO: wenn ich den ruasnehmen integriert er wohl auch halbe tips
-        # also den played > 0.
-        # (nicht vollstaendige tips) in die rankings? Oder nicht?
-
-        //array_push($sql,"WHERE played > 0 ");
-        array_push($sql,"GROUP BY x.userID ORDER BY points DESC, points_d1 DESC, points_d2 DESC");
-        if ( is_numeric($limit) ) {
-            array_push($sql,sprintf("LIMIT %d",(int)$limit));
-        }
-        
-        //print "<div style='font-weight:bold;'>[4] final sql command</div>";
-        //printf( join("<br>\n",$sql),$sql_points,$wpdb->prefix );
-        $sql = sprintf( join("\n",$sql),$sql_points,$wpdb->prefix );
-
-        // If multi-city-ranking is requested (count($city_array)>1) we
-        // would like to show only these who have had played for all cities!
-        if ( count($city_array) > 1 ) {
-            $sql = sprintf("SELECT * FROM (%s) AS tmp WHERE played=%d ORDER BY points DESC",
-                           $sql,count($city_array));
-        }
-        #print "<br><br>".$sql."<br><br>\n";
-
-        ##printf("<div style='font-weight:bold;'>%d</div>",
-        ##      count($wpdb->get_results($sql)));
-
-        // Last but not least store all the data into a new
-        // stdClass and return the results.
-        $result = new stdClass();
-        $result->data = $wpdb->get_results($sql);
-        $result->dataLength = count($result->data);
-        $result->tdate_first = $tdate_first;
-        $result->tdate_last  = $tdate_last;
-        $result->city_array  = $city_array;
-        $result->city_count  = $city_count;
-        $result->tdate_count = $tdate_count;
-        // Total number of points reachable in the ranking 
-        // of a weekend (200) times number of weeks and
-        // number of cities in the ranking. As an example:
-        // If you compute the 'total ranking' for '3 towns'
-        // total number to reach is 200*15*3 or in code
-        $result->maxpoints   = 200. * (float)$city_count * (float)$tdate_count;
-
-        return($result);
-
-    }
-
     /** Returns parameter details from the database given
      * a parameter ID.
      *
@@ -1240,10 +1056,11 @@ class wetterturnier_generalclass
      * representation of the tournament date) and `status`.
      */
     public function tournament_get_dates() {
+
         global $wpdb;
         $today = (int)(time()/86400);
         $res = $wpdb->get_results(sprintf("SELECT tdate, status FROM "
-                ." %swetterturnier_dates WHERE tdate >= %d ORDer BY tdate LIMIT 50",
+                ." %swetterturnier_dates WHERE tdate >= %d ORDer BY tdate",
                 $wpdb->prefix, $today));
         if ( ! $res ) { return false; }
         // Else return status
@@ -1861,35 +1678,33 @@ class wetterturnier_generalclass
                 // status classes on datepicker. Note that I am doing
                 // this for ALL tournament dates in the db, does not
                 // matter what is on screen. Probably not the best way.
-                var datepicker_get_dates = function() {
-                    // Ajaxing the calculation miniscript
-                    var all_dates = false;
-                    $.ajax({
-                        url: ajaxurl, dataType: 'json', type: 'post', async: false,
-                        data: {action:'tournament_datepicker_ajax'},
-                        success: function(results) { all_dates = results; },
-                        error: function(e) { $error = e; console.log('errorlog'); console.log(e); } 
-                    });
-                    return all_dates;
-                }
-                var datepicker_set_dates = function(d,all_dates) {
-                    var mydate = $.datepicker.formatDate('yy-mm-dd',d);
-                    var arr = [true,""];
-                    $.each( all_dates, function(key,val) {
-                        if ( key == mydate ) { arr = [true,"status-"+val]; }
-                    });
-                    return arr;
-                }
+                $.ajax({
+                    url: ajaxurl, dataType: 'json', type: 'post',
+                    data: {action:'tournament_datepicker_ajax'},
+                    success: function(results) {
+                        all_dates = results;
+                        console.log(all_dates)
 
+                       // Helper function to convert the loaded dates
+                       var datepicker_set_dates = function(d,all_dates) {
+                           var mydate = $.datepicker.formatDate('yy-mm-dd',d);
+                           var arr = [true,""];
+                           $.each( all_dates, function(key,val) {
+                               if ( key == mydate ) { arr = [true,"status-"+val]; }
+                           });
+                           return arr;
+                       }
 
-                // Loading dates from database
-                var all_dates = datepicker_get_dates();
-
-                // Initialize datepicker
-                $('#wtwidget_tournaments').datepicker({
-                    firstDay: 1,
-                    dateFormat : 'yy-mm-dd', numberOfMonths: 1, showButtonPanel: true, async: false,
-                    beforeShowDay: function(d) { return datepicker_set_dates(d,all_dates,false); },
+                       // Initialize datepicker
+                       $('#wtwidget_tournaments').datepicker({
+                           firstDay: 1,
+                           dateFormat : 'yy-mm-dd', numberOfMonths: 1, showButtonPanel: true, async: false,
+                           beforeShowDay: function(d) {
+                               return datepicker_set_dates(d,all_dates,false);
+                           },
+                       });
+                           
+                    }, error: function(e) { $error = e; console.log('errorlog'); console.log(e); } 
                 });
 
             })(jQuery);
