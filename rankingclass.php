@@ -6,7 +6,7 @@
  *
  * @file rankingclass.php
  * @author Reto Stauffer
- * @date Octover 31 2018
+ * @date November 3, 2018
  * @brief New more efficient ranking table calculation.
  */
 
