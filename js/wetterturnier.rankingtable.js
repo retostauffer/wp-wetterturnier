@@ -198,10 +198,11 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     
         counter = 1
         $.each( data.data, function(idx,rec) {
+        console.log(rec)
     
             $(e).append("<div class=\"wt-leaderboard\">\n"
                       + "    <div class=\"wt-leaderboard-avatar\" style=\"width: 33%;\">\n"
-                      + "        <a href=\"https://www.wetterturnier.de/forums/users/heiko/\" target=\"_self\">"
+                      + "        <a href=\"" + rec.avatar_link + "\" target=\"_self\">"
                       + rec.avatar + "</a>\n"
                       + "    </div>\n"
                       + "    <div class=\"wt-leaderboard-info\">\n"

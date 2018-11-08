@@ -629,6 +629,7 @@ class wetterturnier_rankingObject {
 
             // Getting profile link
             $final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
+            $final->$user->avatar_link = sprintf("/forums/users/%s/", $tmp->user_login);
         }
 
         unset($ranking);
