@@ -85,19 +85,25 @@ if ( ! empty($_REQUEST['user']) & ! empty($_REQUEST['group']) ) {
                    .' active = 1 AND userID = %d AND groupID = %d',
                    $wpdb->prefix, $userID, $groupID));
         if ( count($check) == 0 ) {
+            $now = date("Y-m-d H:m:00");
             $insert_flag = $wpdb->insert($wpdb->prefix.'wetterturnier_groupusers',
-                                         array('userID'=>$userID,'groupID'=>$groupID),
-                                         array('%d','%d'));
-            echo "<div id='message' class='updated fade'><p><strong>"
-                .__("User added to selected group as a group member.","wpwt")
-                ."</strong></p></div>";
+                                         array('userID'=>$userID,'groupID'=>$groupID,'since'=>$now),
+                                         array('%d','%d','%s'));
         } else {
             echo "<div id='message' class='error fade'><p><strong>"
                 .__("Can't add second time. User is allready an active member of the group.","wpwt")
                 ."</strong></p></div>";
         }
     }
-    if ( ! $insert_flag ) { echo 'Problems while inserting.'; }
+    if ( ! $insert_flag ) {
+        echo "<div id='message' class='error fade'><p><strong>"
+            .__("Problems adding the user! User not added.", "wpwt")
+            ."</strong></p></div>";
+    } else {
+        echo "<div id='message' class='updated fade'><p><strong>"
+            .__("User added to selected group as a group member.","wpwt")
+            ."</strong></p></div>";
+    }
 } 
     
 include_action_file('groupusers_list.php');
