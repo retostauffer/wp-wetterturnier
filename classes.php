@@ -527,7 +527,7 @@ class wetterturnier_groupsObject {
                      $this->wpdb->prefix);
       $this->groups = $this->wpdb->get_results($sql);
       foreach ( $this->groups as $rec ) {
-         array_push($this->groupIDs,(int)$rec->groupID);
+         array_push($this->groupIDs, (int)$rec->groupID);
       }
    }
 
@@ -554,7 +554,7 @@ class wetterturnier_groupsObject {
 
       // Check which group matches
       $idx = array_search((int)$groupID,$this->groupIDs,true);
-      if ( ! $idx ) { return(False); }
+      if ( $idx < 0 ) { return(False); }
 
       // Searching for members in this specific group
       $sql = array();
