@@ -178,7 +178,7 @@ class Wetterturnier_API_List_Table extends WP_List_Table {
    function display_rows() { ?>
 
       <!-- wordpress table styling -->
-      <style type="text/css">
+      <style>
          .striped > tbody .inactive                     { background-color: #F5BBBB; }
          .striped > tbody :nth-child(odd).inactive        { background-color: #F4CDCD; }
          .striped > tbody > tr:hover                      { background-color: #66ccff; }
@@ -200,7 +200,7 @@ class Wetterturnier_API_List_Table extends WP_List_Table {
          }
       </style>
       <!-- Functionality for the wordpress table -->
-      <script type="text/javascript">
+      <script>
          jQuery(document).on("ready",function() {
             (function($) {
                var targettable = "table.wp-list-table.wetterturnier_deactivateusers_list"

@@ -1,5 +1,5 @@
 <!-- Small tablesorter functionality -->
-<script type="text/javascript">
+<script>
    jQuery(document).on('ready',function($) {
       (function($) {
          // Allows user to sort the tables

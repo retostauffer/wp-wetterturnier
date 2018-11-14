@@ -145,14 +145,25 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
             $maxage = (int)date('U') - $nhours*3600;
             ?>
 
-            <style type="text/css">
-            div.wpwt-synopsymbol {
-               float:left; border: 1px solid black; margin: 2px 2px 10px 0px; padding: 2px; text-align: center;
+            <style>
+            .wpwt-synopsymbol {
+               float:left; border: 1px solid black;
+               margin: 2px 2px 10px 0px;
+               padding: 2px; text-align: center;
                max-width: 80px;
+               max-height: 120px;
+               width: auto;
+               height: auto;
+            }
+            .wpwt-synopsymbol img {
+               max-width: 80px;
+               max-height: 80px;
+               width: auto;
+               height: auto;
             }
             div.wpwt-synopsymbol:hover { border-color: #6592cf; }
             </style>
-            <script type="text/javascript">
+            <script>
             jQuery(document).on('ready',function() {
               (function($) {
                  $.each( $('div.wpwt-synopsymbol').find('img'), function() {
@@ -172,7 +183,7 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
                printf("<div class='wpwt-synopsymbol'>%s<br><img src=\"%s\"></img></div>\n",
                       $stnObj->get('wmo'), $image);
             } 
-            echo "<div style='clear:both;' />\n";
+            echo "<div style='clear:both;'></div>\n";
 
             // $show_data is just a helper function called within the loop below.
             function show_data( $time, $value, $title, $unit ) {

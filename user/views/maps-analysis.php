@@ -14,7 +14,7 @@ $xml_file = sprintf("%s/user/xmlfiles/maps_analysis.xml",
                     plugins_url("wp-wetterturnier"));
 ?>
 
-<style type="text/css">
+<style>
 /* Styling the product navigation (including 
  * model, region, and product selection */
 #wt-maps-navigation h1 {
@@ -101,7 +101,7 @@ $xml_file = sprintf("%s/user/xmlfiles/maps_analysis.xml",
 }
 </style>
 
-<script type="text/javascript">
+<script>
 jQuery(document).on('ready',function() {
    $ = jQuery
    function setImageWidth() {

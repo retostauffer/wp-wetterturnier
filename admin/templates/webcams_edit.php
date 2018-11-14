@@ -29,7 +29,7 @@ $cityObj   = new wetterturnier_cityObject( (int)$webcamObj->get("cityID") );
 $CURRENT = $WTadmin->curPageURL();
 ?>
 
-<style type="text/css">
+<style>
 form.webcamedit input[type='text'] {
    min-width: 400px;
    width: 50%;

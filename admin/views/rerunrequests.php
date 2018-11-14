@@ -69,7 +69,7 @@ if(!class_exists('WP_List_Table')){
 }
 require_once( sprintf("%s/../classes/rerunrequest_list.php",dirname(__FILE__)) );
 ?>
-<style type="text/css">
+<style>
    td.not-done {
       background-color: #fccdb5;
    }

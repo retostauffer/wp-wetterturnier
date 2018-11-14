@@ -19,7 +19,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
 
 ?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type='text/javascript'>
+<script>
 
    jQuery(document).on("ready",function() {
       (function($) {
@@ -115,7 +115,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
 </script>
 
 
-<style type="text/css">
+<style>
 #chart-options div {
    min-height: 30px;
 }

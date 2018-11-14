@@ -17,7 +17,7 @@ if ( ! is_user_logged_in() ) {
        "</a>",
        __("a new account","wpwt"),
        __("If you already have an account just","wpwt"),
-       "<a href=\"wp-login.php\" target=\"_new\">",
+       "<a href=\"wp-login.php\" target=\"_blank\">",
        __("login","wpwt"),
        "</a>",
        __("and enyoy the gambling!","wpwt"),

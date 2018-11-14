@@ -18,7 +18,7 @@ $groups = $wpdb->get_results(sprintf($sql,$wpdb->prefix));
 if ( is_user_logged_in() ) {
    // The jQuery code for sending applications. 
    ?>
-   <script type='text/javascript'>
+   <script>
    jQuery(document).on('ready',function() {
        (function($) {
            var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';

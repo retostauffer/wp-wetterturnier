@@ -163,7 +163,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
     public function wt_add_ajax_admin() { ?>
-        <script type="text/javascript">
+        <script>
            jQuery.ajaxurl  = "<?php print admin_url('admin-ajax.php'); ?>";
         </script>
     <?php }
@@ -181,7 +181,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     /** Hide display name in profiles */
     function disable_display_name_settings() {
        ?>
-       <script type="text/javascript">
+       <script>
           jQuery( document ).ready(function() {
              jQuery("#bbpress-forums label[for='nickname']").closest("div").css("display","none");
              jQuery("#bbpress-forums label[for='display_name']").closest("div").css("display","none");
@@ -284,7 +284,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       ?>
       <input type="checkbox" name="wt_accept"></input>
       <?php
-      printf("%s %s: <a href='%s' target='_new'>%s</a>",__("They can be found here","wpwt"),
+      printf("%s %s: <a href='%s' target='_blank'>%s</a>",__("They can be found here","wpwt"),
              __("Before the registration you have to read and accept our terms and conditions!","wpwt"),
              $this->get_terms_link(),__("Terms and Conditions","wpwt"));
    }
@@ -350,7 +350,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // Loading parameter
         $param = $this->get_param_data();
         // Generate dynamic content part
-        $content = "<script type=\"text/javascript\">\n".$content."\n</script>";
+        $content = "<script>\n".$content."\n</script>";
         foreach ( $param as $rec ) {
             if ( strlen($rec->help) === 0 ) { $rec->help = __('No help available'); }
             $dyn  = "       $('#param-".$rec->paramName."-tooltip').tooltipster({\n";
@@ -406,7 +406,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         $js = str_replace('%replace_daystr1%',__("First day","wpwt"),$js);
         $js = str_replace('%replace_daystr2%',__("Second day","wpwt"),$js);
         // Add to header
-        echo "<script type='text/javascript'>\n";
+        echo "<script>";
         echo $js;
         echo "</script>";
     }

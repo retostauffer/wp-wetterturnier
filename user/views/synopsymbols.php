@@ -16,7 +16,7 @@ $stations = array();
 foreach ( $res as $rec ) { array_push($stations,$rec->wmo); }
 ?>
 
-<style type="text/css">
+<style>
 div.wt-synopsymbol {
    float: left;
    text-align: center;
@@ -54,7 +54,7 @@ div.wt-synopsymbol img {
 }
 </style>
 
-<script type="text/javascript">
+<script>
 jQuery(document).on('ready',function() {
    $ = jQuery
    $("#wt-synsymb-container").wtsynopsymbols(<?php printf("[%s]",join(",",$stations)); ?>,{"show":5});

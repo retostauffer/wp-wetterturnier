@@ -144,7 +144,7 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
             // New messages
             } else {
                ?>
-               <style type="text/css">
+               <style>
                .widget_wtwidget_bbpmessages div.wt-messages-count {
                   display: block;
                   text-align: center;

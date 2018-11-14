@@ -16,7 +16,7 @@ if ( ! is_plugin_active('disable-users/init.php') ) { ?>
    "Disable Users" plugin. The "Disable Users" plugin has
    to be installed and activated!<br>
    Details can be found
-   <a href="https://de.wordpress.org/plugins/disable-users/" target="_new">
+   <a href="https://de.wordpress.org/plugins/disable-users/" target="_blank">
       on the plugins page</a>.
 </div>
 <?php die(); }

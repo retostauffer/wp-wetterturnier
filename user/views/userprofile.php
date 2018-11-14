@@ -75,7 +75,7 @@ function get_city_stats( $cityID, $userID ) {
 }
 ?>
 
-<style type="text/css">
+<style>
 div#bbp-user-profile div.bbp-user-section { display: none; }
 table#wt-profile-table, table#wt-profile-table tr, table#wt-profile-table tr td {
    border: none;

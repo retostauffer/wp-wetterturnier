@@ -15,7 +15,7 @@ $WTuser->include_js_script("wetterturnier.mosforecasts");
 $xmlfile  = sprintf("%s/user/xmlfiles/mosforecasts.xml",plugins_url("wp-wetterturnier"));
 
 ?>
-<script type='text/javascript'>
+<script>
 jQuery(document).on('ready',function() {
    (function($) {
 
@@ -28,7 +28,7 @@ jQuery(document).on('ready',function() {
 });
 </script>
 
-<style type='text/css'>
+<style>
 #wt-mosforecasts-navigation {
    display: block;
 }

@@ -25,7 +25,7 @@ if ( ! $inputs->daybyday ) {
    for ($day=1;$day<=$betdays;$day++) { array_push($showdays,$day); }
 } ?>
 
-<script type="text/javascript">
+<script>
    // Initialize demo table
    jQuery(document).on('ready',function($) {
        (function($) {

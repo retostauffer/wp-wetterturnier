@@ -12,12 +12,12 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2014-09-29, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2018-01-17 10:27 on marvin
+# - L@ST MODIFIED: 2018-11-14 19:25 on marvin
 # -------------------------------------------------------------------
 global $WTuser;
 
 ?>
-<script type="text/javascript">
+<script>
    // Initialize demo table
    jQuery(document).on('ready',function($) {
        (function($) {

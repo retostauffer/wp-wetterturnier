@@ -53,12 +53,12 @@ function end_form()   {
     of the Wordpress Wetterturnier Plugin.
     <ul>
         <li>
-            <a href="https://github.com/retostauffer/wp-wetterturnier" target="_new">
+            <a href="https://github.com/retostauffer/wp-wetterturnier" target="_blank">
                 Github repository
             </a>
         </li>
         <li>
-            <a href="http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/" target="_new">
+            <a href="http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/" target="_blank">
                 Documentation on readthedocs
             </a>
         </li>

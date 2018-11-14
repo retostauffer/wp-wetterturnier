@@ -10,7 +10,7 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2015-12-23, RS: Created file on thinkreto.
 # -------------------------------------------------------------------
-# - L@ST MODIFIED: 2015-12-24 09:04 on prognose2.met.fu-berlin.de
+# - L@ST MODIFIED: 2018-11-14 19:31 on marvin
 # -------------------------------------------------------------------
 
 
@@ -19,7 +19,7 @@ if ( ! $args['parameter'] ) {
 } else {
    // Show the form
    ?>
-   <script type='text/javascript'>
+   <script>
    jQuery(document).on('ready',function() {
    (function($) {
       var ajaxurl = "<?php print admin_url('admin-ajax.php'); ?>"

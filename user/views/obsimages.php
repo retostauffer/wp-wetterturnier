@@ -34,12 +34,12 @@ $now=(int)floor(time()/120)*120;
 
 ?>
 
-<style type="text/css">
-	div.wt-obsimage-nav {
-	   display: block;
-	   width: 99%;
-	   border: 1px solid red;
-	}
+<style>
+    div.wt-obsimage-nav {
+       display: block;
+       width: 99%;
+       border: 1px solid red;
+    }
     /* obsPlot element styling */
     line.x, line.y {
         stroke: gray;
@@ -84,7 +84,7 @@ $now=(int)floor(time()/120)*120;
  
 </style>
 
-<script type='text/javascript'>
+<script>
 jQuery(document).on('ready',function() {
    (function($) {
 

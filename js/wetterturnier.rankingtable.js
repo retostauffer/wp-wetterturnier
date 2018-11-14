@@ -1,6 +1,6 @@
 
 // Simply write jQuery to $
-$ = jQuery
+$ = jQuery;
  
 // ------------------------------------------------------------------
 // Load and display the ranking table.
@@ -19,10 +19,10 @@ $.fn.show_ranking = function(ajaxurl, input) {
   // Check if file exists. If it exists, just display.
   // If not existing, start Rscript to create the image.
   // Ajaxing the calculation miniscript
-  input["action"] = "ranking_ajax"
+  input["action"] = "ranking_ajax";
   $.ajax({
      url: ajaxurl, dataType: 'json', type: 'post', data: input,
-     success: function( results, hxr, settings ) {
+     success: function(results, hxr, settings) {
 
          if ( results.error != undefined ) {
             $(elem).html("<div class=\"wetterturnier-info error\">" +
@@ -33,16 +33,17 @@ $.fn.show_ranking = function(ajaxurl, input) {
          }
          display_ranking($(elem), results, input);
      },
-     error: function( hxr, ajaxOptions, thrownError ) {
+     error: function(hxr, ajaxOptions, thrownError) {
         //$error = e; console.log('errorlog'); console.log(e);
-        $(this).html("Problems loading ranking data.<br><br>\n" +
-            hxr.responseText + "\n" + thrownError );
-        data = false
+        $(this).html("Problems loading ranking data.<br><br>\n" + hxr.responseText + "\n" + thrownError );
+        data = false;
      }
 
   });
 
-  function statusbar( rel, width = 200 ) {
+
+  // Show status bar (return status bar html)
+  function statusbar(rel, width) {
 
       var relwidth = parseInt(width * rel);
       var percent = parseInt(rel*1000)/10.;
@@ -55,7 +56,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
                   + "  <span style=\"width: " + rel * 100 + "%;\"></span>&nbsp;" + percent + "%"
                   + "</span>";
       }
-      return html;
+      return(html);
   }
 
   // This one was my original, currently unused.
@@ -136,7 +137,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
                       rec.profile_link + "</td>")
                    .append("<td class=\"points difference\">"+rec.points_diff+"</td>")
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
-                   .append("<td class=\"statusbar\">"+statusbar(rec.points_relative)+"</td>");
+                   .append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
 
           // Increase loop counter
           counter++;

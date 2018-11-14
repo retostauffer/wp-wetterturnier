@@ -86,13 +86,13 @@ $actionlink =  sprintf('?page=%s',$_REQUEST['page']);
 ?>
 
 <!-- Bit of css styling -->
-<style type='text/css'>
-.striped > tbody > .row-valid-false              { background-color: #F5BBBB; }
-.striped > tbody>:nth-child(odd).row-valid-false { background-color: #F4CDCD; }
-.striped > tbody > tr:hover                      { background-color: #66ccff; }
-.striped > tbody > tr.row-valid-false:hover      { background-color: #ff9966; }
-#col_userID    { width: 80px; }
-#col_userlogin { width: 250px; }
+<style>
+   .striped > tbody > .row-valid-false              { background-color: #F5BBBB; }
+   .striped > tbody>:nth-child(odd).row-valid-false { background-color: #F4CDCD; }
+   .striped > tbody > tr:hover                      { background-color: #66ccff; }
+   .striped > tbody > tr.row-valid-false:hover      { background-color: #ff9966; }
+   #col_userID    { width: 80px; }
+   #col_userlogin { width: 250px; }
 </style>
 
 <div class="wrap">
@@ -124,7 +124,7 @@ $actionlink =  sprintf('?page=%s',$_REQUEST['page']);
       and edit the submitted values. 
       The form helps you searching for valid users:<br>
       <?php $WTadmin->include_js_script("wetterturnier.usersearch"); ?>
-      <script type="text/javascript">
+      <script>
          jQuery(document).on('ready',function() {
             (function($) {
                var ajaxurl = <?php printf("'%s'\n",admin_url('admin-ajax.php')); ?>

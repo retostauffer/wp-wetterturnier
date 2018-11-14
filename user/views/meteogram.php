@@ -17,7 +17,7 @@ $xmlfile  = sprintf("%s/user/xmlfiles/meteograms.xml",plugins_url("wp-wetterturn
 $runhour  = "00";
 
 ?>
-<script type='text/javascript'>
+<script>
 jQuery(document).on('ready',function() {
    (function($) {
 
@@ -36,7 +36,7 @@ jQuery(document).on('ready',function() {
 });
 </script>
 
-<style type='text/css'>
+<style>
 #wt-meteogram-navigation {
 }
 #wt-meteogram-navigation h1 {

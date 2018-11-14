@@ -167,7 +167,7 @@ class wetterturnier_generalclass
     function register_js_files() {
         foreach ( $this->js_files as $file ) {
             wp_register_script(  'wetterturnier_'.$file,
-                sprintf('%s/js/%s.js',$this->plugins_url(), $file), array(), $this->version);
+                sprintf("%s/js/%s.js",$this->plugins_url(), $file), array(), $this->version);
             wp_enqueue_script( 'wetterturnier_'.$file );
         }
     }
@@ -1669,7 +1669,7 @@ class wetterturnier_generalclass
     public function tournament_datepicker_widget() {
         ?>
 
-        <script type='text/javascript'>
+        <script>
         jQuery(document).on('ready',function() {
             (function($) {
                 var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';

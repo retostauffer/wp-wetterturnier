@@ -104,7 +104,7 @@ class wetterturnier_adminclass extends wetterturnier_generalclass
     function tournament_datepicker_admin() {
         ?>
 
-        <script type='text/javascript'>
+        <script>
         jQuery(document).on('ready',function() {
             (function($) {
                 var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';

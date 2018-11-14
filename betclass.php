@@ -879,7 +879,7 @@ class wetterturnier_betclass
          // ------------------------------------------------------------
          ?>
    
-         <script type="text/javascript">
+         <script>
          jQuery(document).ready(function() {
             $ = jQuery
             $(document).on("click","span.orientation",function() {

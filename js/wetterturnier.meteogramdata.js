@@ -158,7 +158,7 @@ jQuery(document).on('ready',function() {
          var ts = new Date(); ts = parseInt(ts.getTime()/1000/1800)
          var datfile = $.meteogramdata.datadir+"/"+file+"?"+ts
 
-         var link = "Link to download the file: <a href=\"" + datfile + "\" target=\"_new\">" +
+         var link = "Link to download the file: <a href=\"" + datfile + "\" target=\"_blank\">" +
                     datfile + "</a>.";
          $('#wt-meteogramdata-link').html(link);
          $.get(datfile, function(data) {

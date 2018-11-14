@@ -49,7 +49,7 @@ jQuery(document).on('ready',function() {
             first = false // setting first to false
             url = url + sep + key + "=" + val 
          });
-         $("#chart-share-url").html("<a href='"+url+"' target='_new'>"+url+"</a>")
+         $("#chart-share-url").html("<a href='"+url+"' target='_blank'>"+url+"</a>")
       }
 
       // ------------------------------------------------------------

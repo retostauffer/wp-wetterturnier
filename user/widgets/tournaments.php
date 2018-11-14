@@ -216,19 +216,19 @@ class WP_wetterturnier_widget_tournaments extends WP_Widget
          // If we already have information about submitted bets:
          printf("<h1 class='widget-title'>%s</h1>\n",__("Registered bets","wpwt"));
          if ( count($res) > 0 ) {
-            printf("   <info class='description'>%s %s %s\n",__("Numbers: partially saved bets, valid bets, group bets","wpwt"),
-                    __("for","wpwt"),$WTuser->date_format($next->tdate));
-            print "<div class='wt-submitted-stat'>\n<bar></bar>\n";
+            printf("   <info class='description'>%s %s %s</info>\n",
+                   __("Numbers: partially saved bets, valid bets, group bets","wpwt"),
+                   __("for","wpwt"),$WTuser->date_format($next->tdate));
+            print "<div class='wt-submitted-stat'>\n   <bar></bar>\n";
             // Looping over cities, searching for correct entries and
             // show them on widget. 
             foreach ( $res as $rec ) {
-               printf("<info class='city'>%s</info>\n", $rec->name);
-               printf("<info class='count'>%d</info>\n",$rec->total); 
-               printf("<info class='count'>%d</info>\n",$rec->active);
-               printf("<info class='count'>%d</info>\n",$rec->groups);
+               printf("   <info class='city'>%s</info>\n", $rec->name);
+               printf("   <info class='count'>%d</info>\n",$rec->total); 
+               printf("   <info class='count'>%d</info>\n",$rec->active);
+               printf("   <info class='count'>%d</info>\n",$rec->groups);
             }
-            print "<bar></bar>\n";
-            print "</div>\n";
+            print "   <bar></bar>\n</div>";
          } else {
             echo "<div class=\"wetterturnier-info warning\">"
               .__("Currently no data available about the submitted bets for the "

@@ -29,7 +29,7 @@ $wttable_style = get_user_option("wt_wttable_style");
 $wttable_style = (is_bool($wttable_style) ? "" : $wttable_style);
 ?>
 
-<script type='text/javascript'>
+<script>
 jQuery(document).on('ready',function() {
    (function($){
 
@@ -77,7 +77,7 @@ console.log( statnr+'  '+title+'  '+days )
 });
 </script>
 
-<style type="text/css">
+<style>
 table.wetterturnier-obstable            { width: auto; }
 table.wetterturnier-obstable tr td.null { color: #B2B2B2; }
 table.wetterturnier-obstable tr td      { white-space: nowrap; }

@@ -115,7 +115,7 @@ jQuery(document).on('ready',function() {
       console.log( $(container).data().rawfiles )
       $.each( $(container).data().rawfiles, function(k,rawfile) {
          $("div#wt-mosforecasts-rawfiles > ul")
-            .append("<li><a href=\""+rawfile+"\" target=\"_new\">"+rawfile+"</a></li>");
+            .append("<li><a href=\""+rawfile+"\" target=\"_blank\">"+rawfile+"</a></li>");
       });
    }
 

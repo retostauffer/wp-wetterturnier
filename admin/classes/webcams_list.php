@@ -160,10 +160,10 @@ class Wetterturnier_Webcams_List_Table extends WP_List_Table {
 
         global $wpdb;
         if ( strlen(stripslashes($item->source)) == 0 ) {
-            return "<a href=\"".$item->uri."\" target=\"_new\">".$item->uri."</a>"
+            return "<a href=\"".$item->uri."\" target=\"_blank\">".$item->uri."</a>"
                    .$this->add_actions($item)."\n";
         } else {
-            return "<a href=\"".$item->uri."\" target=\"_new\">".$item->source."</a>"
+            return "<a href=\"".$item->uri."\" target=\"_blank\">".$item->source."</a>"
                    .$this->add_actions($item)."\n";
         }
 

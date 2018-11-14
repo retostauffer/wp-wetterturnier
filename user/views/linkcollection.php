@@ -14,7 +14,7 @@
 // -------------------------------------------------------------------
 ?>
 
-<style type="text/css">
+<style>
    ul.wt-linkcollection name {
       display: inline-block;
       min-width: 300px;
@@ -56,7 +56,7 @@ if ( ! $terms ) {
          printf("  <ul class=\"wt-linkcollection\">\n");
          foreach ( $links as $link ) {
             printf("    <li><name>%s:</name> <desc>%s</desc></li>\n",
-                   sprintf("<a href=\"%s\" target=\"_new\">%s</a>",$link->link_url,$link->link_name),
+                   sprintf("<a href=\"%s\" target=\"_blank\">%s</a>",$link->link_url,$link->link_name),
                    $link->link_description);
          }
          printf("  </ul>\n");

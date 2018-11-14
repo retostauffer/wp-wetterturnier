@@ -1,5 +1,3 @@
-
-
 <?php
 
 global $WTuser;
@@ -10,7 +8,7 @@ $stations = $WTuser->obsdb_get_avaliable_stations( $table );
 ?>
 
 
-<script type="text/javascript">
+<script>
 jQuery(document).ready(function($) {
 
    var pluginpath = "<?php print plugins_url('wp-wetterturnier'); ?>";
