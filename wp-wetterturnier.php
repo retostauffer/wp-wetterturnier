@@ -5,7 +5,7 @@ Text Domain: wtlang
 Domain Path: /languages
 Plugin URI: http://www.wetterturnire.de
 Description: The Wetterturnier bet plugin 
-Version: 1.0
+Version: 1.1-3
 Author: Reto Stauffer
 Author URI: http://www.wetterturnier.de
 License: GPL2
