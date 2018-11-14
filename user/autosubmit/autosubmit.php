@@ -37,7 +37,7 @@
 
 // Development errors
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 
 
 // Including wp-config to have access to the WT plugin functions
@@ -52,6 +52,13 @@ if ( ! defined("loaded_betclass") ) {
 $WTbetclass = new wetterturnier_betclass();
 global $WTuser;
 
+print("\n");
+print("        ^        THIS IS JUST A REMINDER:\n");
+print("       / \       If something does not work please double-check\n");
+print("      / | \      that you are using https://www.wetterturnier.de\n");
+print("     /  |  \     (not http://...) and, if you are sending data vai\n");
+print("    /   .   \    wget please do not forget the --no-check-certificate\n");
+print("   -----------   option.\n\n\n");
 
 // ------------------------------------------------------------------
 // Parsing input data
