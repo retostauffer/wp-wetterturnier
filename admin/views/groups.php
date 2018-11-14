@@ -12,51 +12,60 @@
 <?php
 // The group view handles different
 // things all for the group manipulating.
-// Actions are transported by the _GET "action" argument.
+// Actions are transported by the _REQUEST "action" argument.
 // If set, try to call the correct page.
 // If no action is set (default), view grop list.
 global $wpdb;
+$request = (object)$_REQUEST;
+
 function include_action_file( $filename ) {
     include(sprintf("%s/../templates/%s", dirname(__FILE__),$filename));
 }
 
 // - If action is set
-if ( ! empty($_GET['action']) ) {
+if ( ! empty($request->action) ) {
 
     // Now depending on action we have to do some stuff
-    if ( $_GET['action'] == "edit" && ! empty($_GET['group']) ) {
+    if ( $request->action == "edit" && ! empty($request->group) ) {
         include_action_file('groups_edit.php');
+    } else if ( $request->action == "delete" ) {
+        echo("<div id='message' class='error fade'><p><strong>"
+            .__("Naaa, groups cannot be deleted, as this would change the whole archive! "
+               ."You can edit the group and change names, but not delete an entire "
+               ."group from the system.", "wpwt")
+            ."</strong></p></div>");
     }
 
 // - Show grup_list else 
 } else {
 
     // Update a group
-    if ( ! empty($_POST) ) {
+    if ( property_exists($request, "groupID") ) {
+        print_r($request);
         // Loading old entry first
         $old = $wpdb->get_row(sprintf('SELECT * FROM %swetterturnier_groups WHERE groupID = %s',
-                              $wpdb->prefix,$_POST['groupID']));
+                              $wpdb->prefix,$request->groupID));
         // Creat update array
-        $update = array('groupName'=>esc_html(stripslashes($_POST['groupName'])),
-                        'groupDesc'=>esc_html(stripslashes($_POST['groupDesc'])));
-        if ( (int)$_POST['active'] == 0 & (int)$_POST['active'] != (int)$old->active ) {
-            $update['active'] = $_POST['active'];
+        $update = array('groupName'=>esc_html(stripslashes($request->groupName)),
+                        'groupDesc'=>esc_html(stripslashes($request->groupDesc)));
+        if ( (int)$request->active == 0 & (int)$request->active != (int)$old->active ) {
+            $update['active'] = $request->active;
             $update['until']  = strftime('%Y-%m-%d %H:%M:%S',time()); 
         }
         $update_flag = $wpdb->update($wpdb->prefix.'wetterturnier_groups',$update,
-                                     array('groupID'=>(int)$_POST['groupID']));
+                                     array('groupID'=>(int)$request->groupID));
 
         if ( ! $update_flag ) { echo 'Problems while updating.'; }
     } 
 
     // Add a new group
-    if ( ! empty($_REQUEST['name']) & ! empty($_REQUEST['desc']) ) {
+    if ( ! empty($request->name) & ! empty($request->desc) ) {
         // userID and groupID
-        $name = (string)stripslashes(esc_html($_REQUEST['name'] ));
-        $desc = (string)stripslashes(esc_html($_REQUEST['desc']));
+        $name = (string)stripslashes(esc_html($request->name ));
+        $desc = (string)stripslashes(esc_html($request->desc));
 
         // Do not allow special characters in group names.
-        if (preg_match('/[\ \'^£$%&*()}{@#~?><>,|=_+¬-]/', $name))
+        if (preg_match('/[\ \'^£$%&*()}{@#~?><>,|=+¬]/', $name))
         {
             // one or more of the 'special characters' found in $string
             echo "<div id='message' class='error fade'><p><strong>"
@@ -76,7 +85,7 @@ if ( ! empty($_GET['action']) ) {
            } else {
                // If one of the ID's is negative (-9) nothing was choosen.
                if ( strlen($name) <= 0 )  {
-                   $_REQUEST['added'] = false;
+                   $request->added = false;
                    echo "<div id='message' class='error fade'><p><strong>"
                        .__("Group not added. Group name has to be set!","wpwt")
                        ."</strong></p></div>";
