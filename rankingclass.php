@@ -64,7 +64,7 @@ class wetterturnier_rankingObject {
     # resulting JSON array to display the tables via jQuery.
     private $dict;
 
-    function __construct( $deadman = "Sleepy", $points_max = 200, $cache = true ) {
+    function __construct($deadman = "Sleepy", $points_max = 200, $cache = true) {
 
        global $wpdb; $this->wpdb = $wpdb;
        global $WTuser;
@@ -438,8 +438,8 @@ class wetterturnier_rankingObject {
         ///    if ( $closed ) { die("No access! Go away, please! :)"); }
         ///}
 
-        // If caching is enabled: check if we can load the
-        // data from disc to ont re-calculate the ranking again.
+        # If caching is enabled: check if we can load the
+        # data from disc to ont re-calculate the ranking again.
         if ( $this->cache ) {
             $cache_file  = $this->_get_cache_file_name();
             if ( file_exists($cache_file) ) {
@@ -505,10 +505,25 @@ class wetterturnier_rankingObject {
                 }
 
                 # Adding points
+                # We have to check whether the points fall in the
+                # previous time period (from_prev, to_prev) or/and
+                # into the current time period (from, to).
+                # These points are used later on to calculate the
+                # trends (+/- ranks gained).
+                # 
+                # Visual help
+                #
+                #   from_prev          to_prev
+                #      +-----------------+
+                #           +-----------------+
+                #         from                to
+                #   -------------------------------> tdate axis
+                #
                 if ( $this->calc_trend ) {
                     if ( $tdate >= $this->tdates->from_prev &&
                          $tdate <= $this->tdates->to_prev ) {
                         $ranking->pre->$user->points += $points;
+                        $ranking->pre->$user->played += $played;
                     }
                 }
                 if ( $tdate >= $this->tdates->from &&
@@ -517,6 +532,21 @@ class wetterturnier_rankingObject {
                     $ranking->now->$user->played += $played;
                 }
 
+            }
+        }
+
+        # If tdates->from == tdates-> to (only one weekend)
+        # we drop the players which have _not_ participated
+        # on this specific weekend. Else they would show up
+        # getting the sleepy-points.
+        if ( $this->tdates->from == $this->tdates->to ) {
+            foreach ( $ranking->now as $username=>$info ) {
+                # If the user has not participated the current
+                # weekend: kill from $ranking object.
+                if ( $info->played == 0 ) {
+                    unset($ranking->now->$username);
+                    unset($ranking->pre->$username);
+                }
             }
         }
 
