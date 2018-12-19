@@ -199,7 +199,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     
         counter = 1
         $.each( data.data, function(idx,rec) {
-        console.log(rec)
+        //console.log(rec)
     
             $(e).append("<div class=\"wt-leaderboard\">\n"
                       + "    <div class=\"wt-leaderboard-avatar\" style=\"width: 33%;\">\n"

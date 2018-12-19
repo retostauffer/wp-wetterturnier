@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soundingsmorten>
+
+   <!-- times for which the forecasts are availbale -->
+   <times>
+      <time>09</time>
+      <time>12</time>
+      <time>15</time>
+      <time>18</time>
+      <time>21</time>
+      <time>24</time>
+      <time>27</time>
+      <time>30</time>
+      <time>33</time>
+      <time>36</time>
+      <time>39</time>
+      <time>42</time>
+      <time>45</time>
+   </times>
+
+   <!-- dwd surface analysis maps -->
+   <stations>
+      <station>
+         <name>Berlin Tegel</name>
+         <imgname>Berlin Tegel</imgname>
+      </station>
+      <station>
+         <name>Schonefeld</name>
+         <imgname>Schonefeld</imgname>
+      </station>
+      <station>
+         <name>Innsbruck</name>
+         <imgname>Innsbruck</imgname>
+      </station>
+      <station>
+         <name>Zurich Kloten</name>
+         <imgname>Zurich Kloten</imgname>
+      </station>
+      <station>
+         <name>Wien Schwechat</name>
+         <imgname>Wien Schwechat</imgname>
+      </station>
+   </stations>
+
+</soundingsmorten>

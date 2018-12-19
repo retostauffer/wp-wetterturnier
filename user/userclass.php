@@ -104,6 +104,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
         add_shortcode( 'wetterturnier_mapsforecasts',    array($this,'shortcode_wetterturnier_mapsforecasts') );
         add_shortcode( 'wetterturnier_mapsanalysis',     array($this,'shortcode_wetterturnier_mapsanalysis')  );
+        add_shortcode( 'wetterturnier_soundingsmorten',  array($this,'shortcode_wetterturnier_soundingsmorten')  );
         add_shortcode( 'wetterturnier_synopsymbols',     array($this,'shortcode_wetterturnier_synopsymbols')  );
         add_shortcode( 'wetterturnier_archive',          array($this,'shortcode_wetterturnier_archive')       );
         add_shortcode( 'wetterturnier_bet',              array($this,'shortcode_wetterturnier_bet')           );
@@ -483,6 +484,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
     function shortcode_wetterturnier_mapsanalysis() {
         return($this->shortcode_include("views/maps-analysis.php"));
+    }
+    function shortcode_wetterturnier_soundingsmorten() {
+        return($this->shortcode_include("views/soundings-morten.php"));
     }
 
     /** Wetterturnier show archive list and values. 
