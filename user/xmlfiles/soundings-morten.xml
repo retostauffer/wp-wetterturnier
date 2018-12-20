@@ -25,8 +25,12 @@
          <imgname>Berlin Tegel</imgname>
       </station>
       <station>
-         <name>Schonefeld</name>
+         <name>Berlin Schonefeld</name>
          <imgname>Schonefeld</imgname>
+      </station>
+      <station>
+         <name>Leipzig Schkeuditz</name>
+         <imgname>Leipzig Schkeuditz</imgname>
       </station>
       <station>
          <name>Innsbruck</name>
