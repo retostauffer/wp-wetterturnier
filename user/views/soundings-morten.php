@@ -27,6 +27,7 @@ $xml_file = sprintf("%s/user/xmlfiles/soundings-morten.xml",
    text-transform: uppercase;
    margin-bottom: 5px;
 }
+#wt-sounding-navigation { float: none; min-height: 220px; clear: both; }
 #wt-sounding-navigation .stations {
    display: block;
    top: 0px;

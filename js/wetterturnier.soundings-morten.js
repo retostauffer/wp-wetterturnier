@@ -89,6 +89,7 @@ jQuery(document).on('ready',function() {
          $("<div id='wt-sounding-timeline'></div>").appendTo( target )
          $("<div id='wt-sounding-navigation'></div>").appendTo( target )
          $("#wt-sounding-navigation").append("<div class='stations'>Stations</div>")
+         $("#wt-sounding-navigation").append("<div class='clear'></div>")
 
          // Add functionality that each click onto the image itself
          // will act like a "go forward in time by one time step"
