@@ -1642,12 +1642,22 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       // Special observations? The extra obs
       if ( empty($_REQUEST['extra1']) && empty($_REQUEST['extra2']) ) {
          // Printing output
-         $cmd = sprintf("%s -p %s -o %.1f,%.1f -v %.1f",$cmd_base,$param,$obs1,$obs2,$forecast);
+         $cmd = sprintf("%s -p %s -o %s,%s -v %s",
+		        $cmd_base, $param,
+			number_format($obs1,     1, ".", ""),
+			number_format($obs2,     1, ".", ""),
+			number_format($forecast, 1, ".", ""));
       } else {
          $extra1 = (float)$_REQUEST['extra1'];
          $extra2 = (float)$_REQUEST['extra2'];
-         $cmd = sprintf("%s -p %s -o %.1f,%.1f -v %.1f -s %.1f,%.1f",
-                        $cmd_base,$param,$obs1,$obs2,$forecast,$extra1,$extra2);
+         //$cmd = sprintf("%s -p %s -o %.1f,%.1f -v %.1f -s %.1f,%.1f",
+         $cmd = sprintf("%s -p %s -o %s,%s -v %s -s %s,%s",
+                        $cmd_base, $param,
+			number_format($obs1,     1, ".", ""),
+			number_format($obs2,     1, ".", ""),
+			number_format($forecast, 1, ".", ""),
+			number_format($extra1,   1, ".", ""),
+			number_format($extra2,   1, ".", ""));
       }
 
 
@@ -1661,7 +1671,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       } else {
          $points = array_pop($matches[1]);
       }
-      print json_encode( array("cmd"=>$cmd,"points"=>$points) );
+      print json_encode( array("cmd"=>$cmd,"points"=>$cmd) );
 
       die();
 
