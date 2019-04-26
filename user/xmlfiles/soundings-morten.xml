@@ -3,7 +3,7 @@
 
    <!-- times for which the forecasts are availbale -->
    <times>
-      <time>09</time>
+      <time>9</time>
       <time>12</time>
       <time>15</time>
       <time>18</time>
@@ -22,7 +22,7 @@
    <stations>
       <station>
          <name>Berlin Tegel</name>
-         <imgname>Berlin Tegel</imgname>
+         <imgname>Tegel</imgname>
       </station>
       <station>
          <name>Berlin Schonefeld</name>
@@ -30,7 +30,7 @@
       </station>
       <station>
          <name>Leipzig Schkeuditz</name>
-         <imgname>Leipzig Schkeuditz</imgname>
+         <imgname>Schkeuditz</imgname>
       </station>
       <station>
          <name>Innsbruck</name>
@@ -38,11 +38,11 @@
       </station>
       <station>
          <name>Zurich Kloten</name>
-         <imgname>Zurich Kloten</imgname>
+         <imgname>Kloten</imgname>
       </station>
       <station>
          <name>Wien Schwechat</name>
-         <imgname>Wien Schwechat</imgname>
+         <imgname>Schwechat</imgname>
       </station>
    </stations>
 
