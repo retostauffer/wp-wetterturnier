@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iconepsmorten>
+
+   <!-- times for which the forecasts are availbale -->
+   <times>
+      <time>24</time>
+      <time>30</time>
+      <time>36</time>
+      <time>42</time>
+      <time>48</time>
+      <time>54</time>
+      <time>60</time>
+      <time>66</time>
+      <time>72</time>
+      <time>78</time>
+      <time>84</time>
+      <time>90</time>
+      <time>96</time>
+      <time>102</time>
+      <time>108</time>
+      <time>114</time>
+      <time>120</time>
+      <time>126</time>
+      <time>132</time>
+      <time>138</time>
+      <time>144</time>
+      <time>150</time>
+      <time>156</time>
+      <time>162</time>
+      <time>168</time>
+      <time>174</time>
+      <time>180</time>
+   </times>
+
+   <charts>
+      <chart>
+         <name>Ensemble mean + spead of Geopotential height (gpdam) 500hPa</name>
+         <imgname>geo</imgname>
+      </chart>
+      <chart>
+         <name>Ensemble mean + spread of PRessure reduced to MSL</name>
+         <imgname>pmsl</imgname>
+      </chart>
+      <chart>
+         <name>Probability of 24h Total precipitation over 1mm</name>
+         <imgname>rr1</imgname>
+      </chart>
+      <chart>
+         <name>Probability of 24h Total precipitation over 5mm</name>
+         <imgname>rr5</imgname>
+      </chart>
+      <chart>
+         <name>Probability of 24h Total precipitation over 10mm</name>
+         <imgname>rr10</imgname>
+      </chart>
+    </charts>
+
+</iconepsmorten>
