@@ -105,7 +105,7 @@ jQuery(document).on('ready',function() {
    $ = jQuery
    function setImageWidth() {
 	  var width = parseInt( $("#wt-sounding-container").width() );
-      var width = (width > 900) ? 900 : width;
+      var width = (width > 1200) ? 1200 : width;
       $( "#wt-map-image" ).width( width );
    }
    $("#wt-sounding-container").wtsoundingsmorten("<?php print $xml_file; ?>",setImageWidth);

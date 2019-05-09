@@ -89,6 +89,7 @@ class wetterturnier_betclass
       $lookup = array( "stadt" => "city",     //i
                        "aa"    => "user",     //reto
                        "bb"    => "password", //wetter
+                       "td"    => "tdate",    //2019-04-26
                        "cc"    => "N_1",      //8
                        "dd"    => "N_2",      //6
                        "ww"    => "Sd_1",     //4
@@ -148,7 +149,7 @@ class wetterturnier_betclass
          error(12);
       }
       $res->city = $cityhash[strtolower($res->city)];
-   
+
       return( $res );
    
    }
@@ -231,12 +232,18 @@ class wetterturnier_betclass
                error(14);
             }
             $res->$rec = $data->$rec;
+            
+            //For MOS belated submit use "tdate"
+            if ( property_exists( $data , "tdate") ) {
+            $res->tdate = round(strtotime($data->tdate) / 86400);
+            }
+            //
          }
-      }
-   
+      }   
+
       // Looping trough parameters. The ones defined in $no_param
       // will be ignored (as they are already processed and no parameters)
-      $no_params = array("user","password","city","submit","cityID");
+      $no_params = array("user","password","city","submit","cityID","tdate");
       foreach ( $data as $key => $val ) {
 
          // Skip those from no_param
@@ -386,8 +393,8 @@ class wetterturnier_betclass
       return( array($data, $check) );
    
    }
-   
-   
+
+
    // ---------------------------------------------------------------
    /// @details Check if received values were valid. Corrects some of the
    ///   data or drops them if values were in a wrong format or something. 
@@ -446,40 +453,31 @@ class wetterturnier_betclass
        $res->param = $param; $res->value = $value;
 
        $pconfig = $WTuser->get_param_by_name( $param );
-       // If value is NULL simply return
+       // If value is NULL simply return NULL
        if ( is_null($value) ) { return($res); }
        // If parameter is out of range: return array(false,NULL);
-       if ( $value < $pconfig->valmin || $value > $pconfig->valmax ) {
+       if ( $value != $pconfig->valext && ( $value < $pconfig->valmin || $value > $pconfig->valmax ) ) {
            $res->value = NULL;
            $res->error = sprintf("Value was outside its limits for parameter \"%s\". "
-                    ."Defined range is %.1f to %.1f. Your submitted value was \"%.1f\". "
-                    ."Set to NULL!",$param,$pconfig->valmin/10.,$pconfig->valmax/10.,$value/10.);
+                    ."Defined range is %.1f to %.1f plus extra value %.1f. Your submitted value was \"%.1f\". "
+                    ."Set to NULL!",$param,$pconfig->valmin/10.,$pconfig->valmax/10.,$pconfig->valext/10, $value/10.);
+
            return( $res );
        }
+       $pre = $pconfig->valpre;
+       // Else return this object but round it first, if neccesary because of ruling defined in valpre (0,-1,-2 decimal places).
+       if ( $pre != 1 && $value%10**(-$pre) != 0 ) {
 
-       // If parameter is 'fx' and value is between 0 and 250: correct
-       // to 0! 250 is 25 knots. All below should be reduced to 0.
-       if ( strcmp("fx",$param) === 0 && $value > 0 && $value < 250 ) {
-           $res->value = 0;
-           $res->warning = sprintf("Corrected wind gust bet. fx is not allowed "
-               ."to be between 0 and 25.0. Should either be 0, or 25-Inf. Your "
-               ."value was corrected from %.1f to %.1f",$value/10.,$res->value/10);
-       }
-
-       // If parameter is precipitation (RR) and value is between -30 and 0
-       // (which means precip -3.0 and 0) setting value to -30.
-       if ( strcmp("RR",$param) === 0 && $value > -30 && $value < 0 ) {
-           $res->value = -30;
-           $res->warning = sprintf("Corrected precipitation bet. RR is not allowed "
-               ."to be between -3.0 and 0.0. Should either be -3.0, or 0-Inf. Your "
-               ."value was corrected from %.1f to %.1f",$value/10.,$res->value/10.);
-       }
-
-       // Else return this object. 
+       // Round the entered value mathematically:
+       $value = round($value, $pconfig->valpre, PHP_ROUND_HALF_EVEN );
+       
+       $res->error = sprintf("Your invalid value for %s has been rounded to %.1f!", $param, $value/10);
+       $res->value = $value/10;
+}
        return( $res );
    }
 
-   
+
    // --------------------------------------------------------------
    /// @details Shows a summary of the parsed (and possibly corrected)
    ///   data submitted by the user. The function also shows whether
@@ -609,7 +607,7 @@ class wetterturnier_betclass
    /// @param $adminuser. Default `NULL`. If not `NULL` this indicates
    ///   that an administrator currently changes the data/forecast.
    // --------------------------------------------------------------
-   function write_to_database( $user, $next, $data, $checkflag, $verbose = true, $adminuser=NULL ) {
+   function write_to_database( $user, $next, $data, $checkflag, $verbose = true, $adminuser=NULL, $placedby=NULL ) {
    
       global $WTuser;
       global $wpdb;
@@ -673,9 +671,15 @@ class wetterturnier_betclass
                          "betdate"        => $betdate,
                          "value"          => $value,
                          "placedby"       => 0 );
+
             // Admin mode: check if the admin really changed this value.
+            
             if ( ! is_null($adminuser) ) {
-               $tmp['placedby'] = set_placedby_if_changed($tmp,$existing,$adminuser->data->ID);
+               if ( is_null($placedby) ) {
+               
+               $tmp['placedby'] = set_placedby_if_changed($tmp,$existing,$adminuser->ID);
+
+               } else { $tmp['placedby'] = $placedby; }
             }
             
             array_push($data4db,$tmp);
@@ -685,7 +689,7 @@ class wetterturnier_betclass
    
       // No data to write to database?
       if ( count($data4db) == 0 ) {
-         printf("No data to write to database! All rejected nor not submitted?\n");
+         printf("No data to write to database! All rejected or not submitted?\n");
          $this-> error(9);
       } 
     
@@ -1223,7 +1227,7 @@ class wetterturnier_betclass
    /// @details Update or insert bet in the database.
    /// 
    /// @param next. stdClass tournament date object. Default `NULL` if a user inserts
-   ///   a bet on the frontend. If an admin maniplates the bets of
+   ///   a bet on the frontend. If an admin manipulates the bets of
    ///   a user, this should be used (to define for which date the
    ///   changes should be stored).
    /// @param user. Wordpress user object. Same as for next: is `NULL` if

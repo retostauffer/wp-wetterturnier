@@ -66,6 +66,8 @@ if ( ! $WTuser->scored_players_per_town( $args->tdate ) ) {
 
 
 $short_title = "This should be the <i>short title</i>, but seems to be missing.";
+// to prevent errors, show no title if we forgot to set it anywhere.
+$title = NULL;
 
 switch ( $args->type ) {
 
@@ -155,7 +157,6 @@ switch ( $args->type ) {
    // the three and five city rankings)
    // ---------------------------------------------------------------
    case "season":
-   case "seasoncities":
       // Compute begin and end tournament date for the season
       $month = (int)$WTuser->date_format($args->tdate, "%m");
       $year  = (int)$WTuser->date_format($args->tdate, "%Y");
@@ -203,9 +204,11 @@ switch ( $args->type ) {
       if ( $tdates->to > $tdates->latest ) { $tdates->newer = Null; }
 
    // ---------------------------------------------------------------
-   // Specific settings for "seasoncities"
+   // Specific settings for more than one city in ranking
    // ---------------------------------------------------------------
-   case "seasoncities":
+
+   if ( ! is_null($args->cities) ) {
+
       // City-ranking is for more than one city. Create $city_array first.
       $tmp = explode(",", $args->cities);
       $cityObj = array();
@@ -214,12 +217,6 @@ switch ( $args->type ) {
             array_push($cityObj, new wetterturnier_cityObject((int)$elem));
          }
       }
-      if ( count($cityObj) == 0 ) {
-          printf("<div class=\"wetterturnier-info error\">%s</div>",
-              __("Sorry, no proper city definition for","wpwt")
-              ." wetterturnier_ranking type cities"); return;
-      }
-
       // Generate the title
       $names = array(); foreach ( $cityObj as $rec ) { array_push($names, $rec->get("name")); }
       $title = sprintf("%s %s %s %d %s<br>\n%s,<br>\n%s %s %s %s", $season,
@@ -230,22 +227,20 @@ switch ( $args->type ) {
                __("tournaments from","wpwt"),
                $WTuser->date_format($tdates->from),__("to","wpwt"),
                $WTuser->date_format($tdates->to));
+	
+} else { 
 
-      break;
-
-   // ---------------------------------------------------------------
-   // Specific settings for "seasoncities"
-   // ---------------------------------------------------------------
-   case "season":
-
-      // Title
+      // Title for current city
       $title = sprintf("%s %s %s, %s %s %s %s",
                $season,__("season ranking for","wpwt"),$cityObj->get('name'),
                __("tournaments from","wpwt"),
                $WTuser->date_format($tdates->from),__("to","wpwt"),
                $WTuser->date_format($tdates->to));
 
+	}
       break;
+
+
 
    // ---------------------------------------------------------------
    // Yearly ranking
@@ -317,6 +312,10 @@ switch ( $args->type ) {
 
       break;
 
+// case "alltime":
+// if ($args->inflation-adjusted) {
+// } else { }
+
    // ---------------------------------------------------------------
    // Else there was a problem with the shortcode specification
    // ---------------------------------------------------------------
@@ -327,6 +326,7 @@ switch ( $args->type ) {
       return;
 
 }
+
 
 // URL for navigation
 $hrefurl = $WTuser->curPageURL(true);
@@ -474,7 +474,7 @@ $today = (int)(time()/86400);
    ////////   }
 
    ////////   // Show an asteriks if not played all tournaments to indicate
-   ////////   // that Saturdau and Sunday Points do NOT SUM UP to total points
+   ////////   // that Saturday and Sunday Points do NOT SUM UP to total points
    ////////   // as sleepy is used to fillup!
    ////////   if ( $rec->played < $ranking->tdate_count ) {
    ////////      $show_sleepy_note = True;

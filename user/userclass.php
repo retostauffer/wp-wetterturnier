@@ -105,6 +105,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_shortcode( 'wetterturnier_mapsforecasts',    array($this,'shortcode_wetterturnier_mapsforecasts') );
         add_shortcode( 'wetterturnier_mapsanalysis',     array($this,'shortcode_wetterturnier_mapsanalysis')  );
         add_shortcode( 'wetterturnier_soundingsmorten',  array($this,'shortcode_wetterturnier_soundingsmorten')  );
+        add_shortcode( 'wetterturnier_cosmomorten',      array($this,'shortcode_wetterturnier_cosmomorten')  );
+        add_shortcode( 'wetterturnier_iconepsmorten',    array($this,'shortcode_wetterturnier_iconepsmorten')  );
         add_shortcode( 'wetterturnier_synopsymbols',     array($this,'shortcode_wetterturnier_synopsymbols')  );
         add_shortcode( 'wetterturnier_archive',          array($this,'shortcode_wetterturnier_archive')       );
         add_shortcode( 'wetterturnier_bet',              array($this,'shortcode_wetterturnier_bet')           );
@@ -124,6 +126,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_shortcode( 'wetterturnier_mosforecasts',     array($this,'shortcode_wetterturnier_mosforecasts') );
         add_shortcode( 'wetterturnier_stationinfo',      array($this,'shortcode_wetterturnier_stationinfo') );
         add_shortcode( 'wetterturnier_stationparamdisabled', array($this,'shortcode_wetterturnier_stationparamdisabled') );
+
+// wetterturnier_moses
 
         add_shortcode( 'wc', array($this,'shortcode_wtcode') );
 
@@ -488,6 +492,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     function shortcode_wetterturnier_soundingsmorten() {
         return($this->shortcode_include("views/soundings-morten.php"));
     }
+    function shortcode_wetterturnier_cosmomorten() {
+        return($this->shortcode_include("views/cosmo-morten.php"));
+    }
+    function shortcode_wetterturnier_iconepsmorten() {
+        return($this->shortcode_include("views/iconeps-morten.php"));
+    }
 
     /** Wetterturnier show archive list and values. 
      * Note: ob caches the "print output" of the functions in
@@ -559,7 +569,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                                       'tdate'=>Null,
                                       'limit'=>false,
                                       'city'=>false,
-                                      'cities'=>"1,2,3",
+                                      'cities'=>Null,
                                       'slim'=>false,
                                       'weeks'=>15,
                                       'header'=>true,
@@ -1642,22 +1652,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       // Special observations? The extra obs
       if ( empty($_REQUEST['extra1']) && empty($_REQUEST['extra2']) ) {
          // Printing output
-         $cmd = sprintf("%s -p %s -o %s,%s -v %s",
-		        $cmd_base, $param,
-			number_format($obs1,     1, ".", ""),
-			number_format($obs2,     1, ".", ""),
-			number_format($forecast, 1, ".", ""));
+         $cmd = sprintf("%s -p %s -o %.1f,%.1f -v %.1f",$cmd_base,$param,$obs1,$obs2,$forecast);
       } else {
          $extra1 = (float)$_REQUEST['extra1'];
          $extra2 = (float)$_REQUEST['extra2'];
-         //$cmd = sprintf("%s -p %s -o %.1f,%.1f -v %.1f -s %.1f,%.1f",
-         $cmd = sprintf("%s -p %s -o %s,%s -v %s -s %s,%s",
-                        $cmd_base, $param,
-			number_format($obs1,     1, ".", ""),
-			number_format($obs2,     1, ".", ""),
-			number_format($forecast, 1, ".", ""),
-			number_format($extra1,   1, ".", ""),
-			number_format($extra2,   1, ".", ""));
+         $cmd = sprintf("%s -p %s -o %.1f,%.1f -v %.1f -s %.1f,%.1f",
+                        $cmd_base,$param,$obs1,$obs2,$forecast,$extra1,$extra2);
       }
 
 
@@ -1671,7 +1671,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       } else {
          $points = array_pop($matches[1]);
       }
-      print json_encode( array("cmd"=>$cmd,"points"=>$cmd) );
+      print json_encode( array("cmd"=>$cmd,"points"=>$points) );
 
       die();
 

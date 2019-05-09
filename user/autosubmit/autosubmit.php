@@ -39,16 +39,22 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 
-
 // Including wp-config to have access to the WT plugin functions
 // and wordpress database. 
 require_once('../../../../../wp-config.php');
+// require_once('../../generalclass.php');
+
+//TODO: this is nasty, better import from generalclass!
+function convert_tdate( $tdate, $fmt = "Y-m-d" ) {
+    return( date( $fmt, (int)$tdate*86400 ) );
+    }
 
 // Load betclass file if not yet loaded, initialize  WTbetclass
 if ( ! defined("loaded_betclass") ) {
     require_once( sprintf("../../betclass.php") );
     define( "loaded_betclass", 1 );
 }
+
 $WTbetclass = new wetterturnier_betclass();
 global $WTuser;
 
@@ -56,7 +62,7 @@ print("\n");
 print("        ^        THIS IS JUST A REMINDER:\n");
 print("       / \       If something does not work please double-check\n");
 print("      / | \      that you are using https://www.wetterturnier.de\n");
-print("     /  |  \     (not http://...) and, if you are sending data vai\n");
+print("     /  |  \     (not http://...) and, if you are sending data via\n");
 print("    /   .   \    wget please do not forget the --no-check-certificate\n");
 print("   -----------   option.\n\n\n");
 
@@ -64,6 +70,12 @@ print("   -----------   option.\n\n\n");
 // Parsing input data
 // ------------------------------------------------------------------
 $data = $WTbetclass->parse_parameters( $_REQUEST );
+
+// First, set $admin to NULL and $is_admin to FALSE. If an admin submits a bet (eg. a MOS becaus of belated submission) this will be changed later on and passed into write_to_database(...,$adminuser=$admin); in the very end of this script
+$admin = NULL;
+$is_admin = FALSE;
+// If we are just in time for the current tournament (like usually), the placedby value does not get changed. For a belated MOS we gonna assign its "userID" to $whoami later on.
+$whoami = NULL;
 
 // ------------------------------------------------------------------
 // Checks if the user has delivered ALL necessary parameters for this
@@ -94,7 +106,7 @@ $WTbetclass->show_parsed_data( $data, $maxdays );
 // ------------------------------------------------------------------
 // Login and check if login was ok
 // ------------------------------------------------------------------
-print "\n"; $msg = "Try to login to wetterturnier now";
+print "\n"; $msg = "Try to login to wetterturnier now\n";
 printf("%s\n",strtoupper($msg));
 printf("%s\n",str_repeat("=",strlen($msg)));
 
@@ -103,6 +115,16 @@ $creds['user_login']    = $data->user;
 $creds['user_password'] = $data->password;
 $creds['remember']      = false;
 $user = wp_signon( $creds, false );
+printf( "Hello, %s!\n", $user->data->user_login );
+
+// Check if current user can place bets as admin, if tournament is actually closed already.
+
+$is_admin = isset( $user->allcaps["wetterturnier_admin"] );
+
+if ( $is_admin ) {
+	print "Admin mode enabled\n";
+	$admin = $user;
+     }  else { print "You are nothing!\n" ; }
 
 // ------------------------------------------------------------------
 // If there were errors
@@ -132,13 +154,36 @@ print "\n"; $msg = "Checking next tournament and check if open or closed";
 printf("%s\n",strtoupper($msg));
 printf("%s\n",str_repeat("=",strlen($msg)));
 
-$next = $WTuser->next_tournament(0,true);
-if ( $next->closed ) {
-   printf("WARNING: tournament closed. Cannot store your bet at the moment.");
-   $WTbetclass->error(13);
+// If a tdate exists in $data use this torunament date instead of next_tournament(0,true)
+// Check via database query whether the submitted "tdate" was REALLY a tournament date.
+// TODO: Plus maybe check whether user is automaton/MOS to only allow MOS to do such dirty little things...
+if ( $is_admin && property_exists ( $data, 'tdate' ) ) {
+        $date = $data->tdate;
+	$result = $wpdb->get_results("SELECT * FROM  `wp_wetterturnier_dates` WHERE `tdate` = $date AND  `status` = 1");
+	if ( empty($result) ) {
+
+		printf("Nothing special happened on %s. Please enter a valid tournament date!",convert_tdate($date) );
+		$WTbetclass->error(404);
+	}
+	printf("You're pretty late my dear friend ;) Anyway, choosing %s as old tournament date...\n", convert_tdate($date));
+
+	// The handy function next_tournament() allows us to trick the system by inserting the custom tournament date for our belated submission :D
+	$next = $WTuser->next_tournament($row_offset=0, $check_access=false,$dayoffset=$date);
+        $whoami = $admin->ID;
+
 } else {
-   printf("Note: tournament is open to take your bet ...\n");
-}
+	$next = $WTuser->next_tournament(0,true);
+        if ( isset($data->tdate) ) {
+           print("You have no permission!");
+           $WTbetclass->error(403);
+           }
+	if ( $next->closed ) {
+   		printf("WARNING: tournament closed. Cannot store your bet at the moment.");
+   		$WTbetclass->error(13);
+	} else {
+   		printf("Note: tournament %s is open to take your bet...\n", convert_tdate($next->tdate) );
+	}
+    }
 
 // ------------------------------------------------------------------
 // Write data to database 
@@ -147,15 +192,18 @@ print "\n"; $msg = "Write data to database";
 printf("%s\n",strtoupper($msg));
 printf("%s\n",str_repeat("=",strlen($msg)));
 
-//print_r($user);
-//print("\n");
-//print("\n");
-//print_r($next);
-//print("\n");
-//print("\n");
-//print_r($data);
+/**
+#print_r($admin);
+print("\n");
+print("\n");
+#print_r($next);
+print("\n");
+print("\n");
+#print_r($data);
+*/
 
-$WTbetclass->write_to_database( $user, $next, $data, $checkflag );
+$WTbetclass->write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=$admin, $placedby=$whoami);
+// TODO: force rerunrequest afterwards if an old tournament data was updated!
 
 
 ?>
