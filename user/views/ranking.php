@@ -66,7 +66,7 @@ if ( ! $WTuser->scored_players_per_town( $args->tdate ) ) {
 
 
 $short_title = "This should be the <i>short title</i>, but seems to be missing.";
-// to prevent errors, show no title if we forgot to set it anywhere.
+// to prevent errors, show no title if we mess something up later or anything unforeseen happens (not with our forecasts)
 $title = NULL;
 
 switch ( $args->type ) {
@@ -108,6 +108,8 @@ switch ( $args->type ) {
 
       break;
 
+
+
    // ---------------------------------------------------------------
    // Cities ranking
    // ---------------------------------------------------------------
@@ -132,6 +134,8 @@ switch ( $args->type ) {
                   array(join(", ",array_slice($names,0,-1)), end($names))),
                   __("for the weekend around","wpwt"),$WTuser->date_format($args->tdate));
 
+// bug current tournament / "aktuelles turnier" / end of page !!!
+
       // Navigation items 
       $tdates->older = $WTuser->older_tournament($args->tdate)->tdate;
       $tdates->newer = $WTuser->newer_tournament($args->tdate)->tdate;
@@ -152,11 +156,28 @@ switch ( $args->type ) {
 
       break;
 
+// TODO: make it slimmer and remove repeating code, perhaps only case "season" is need, but then you have to changed userclass.php and many other stuff as well, plus the whole documentation
+
    // ---------------------------------------------------------------
    // Season ranking for single cities or a set of cities (e.g.,
    // the three and five city rankings)
    // ---------------------------------------------------------------
    case "season":
+// temporary workaround to prevent crash if arguments to "cities" are set together with type="season"
+/**
+      $tmp = explode(",", $args->cities);
+      $cityObj = array();
+      foreach ( $tmp as $elem ) {
+         if (is_numeric($elem)) {
+            array_push($cityObj, new wetterturnier_cityObject((int)$elem));
+         }
+      }
+      if ( count($cityObj) != 0 ) {
+          printf("<div class=\"wetterturnier-info error\">%s</div>",
+              __("Sorry, no city definition allowed for","wpwt")
+              ." wetterturnier_ranking type season"); return;
+      }
+*/
       // Compute begin and end tournament date for the season
       $month = (int)$WTuser->date_format($args->tdate, "%m");
       $year  = (int)$WTuser->date_format($args->tdate, "%Y");
@@ -203,11 +224,63 @@ switch ( $args->type ) {
       // If the next is in the future
       if ( $tdates->to > $tdates->latest ) { $tdates->newer = Null; }
 
-   // ---------------------------------------------------------------
-   // Specific settings for more than one city in ranking
-   // ---------------------------------------------------------------
+      // Title
+      $title = sprintf("%s %s %s, %s %s %s %s",
+               $season,__("season ranking for","wpwt"),$cityObj->get('name'),
+               __("tournaments from","wpwt"),
+               $WTuser->date_format($tdates->from),__("to","wpwt"),
+               $WTuser->date_format($tdates->to));
+break;
 
-   if ( ! is_null($args->cities) ) {
+   // ---------------------------------------------------------------
+   // Specific settings for "seasoncities"
+   // ---------------------------------------------------------------
+   case "seasoncities":
+      // Compute begin and end tournament date for the season
+      $month = (int)$WTuser->date_format($args->tdate, "%m");
+      $year  = (int)$WTuser->date_format($args->tdate, "%Y");
+      if ( in_array($month,array(1,2)) ) {
+         $season = __("Winter","wpwt");
+         $dates = array( round(strtotime(sprintf("%04d-12-01",$year-1))/86400),
+                         round(strtotime(sprintf("%04d-03-01",$year))/86400)-1  );
+      } else if ( in_array($month,array(3,4,5)) ) {
+         $season = __("Spring","wpwt");
+         $dates = array( round(strtotime(sprintf("%04d-03-01",$year))/86400),
+                         round(strtotime(sprintf("%04d-06-01",$year))/86400)-1  );
+      } else if ( in_array($month,array(6,7,8)) ) {
+         $season = __("Summer","wpwt");
+         $dates = array( round(strtotime(sprintf("%04d-06-01",$year))/86400),
+                         round(strtotime(sprintf("%04d-09-01",$year))/86400)-1  );
+      } else if ( in_array($month,array(9,10,11)) ) {
+         $season = __("Fall","wpwt");
+         $dates = array( round(strtotime(sprintf("%04d-09-01",$year))/86400),
+                         round(strtotime(sprintf("%04d-12-01",$year))/86400)-1  );
+      } else { // Month is 12
+         $season = __("Winter","wpwt");
+         $dates = array( round(strtotime(sprintf("%04d-12-01",$year))/86400),
+                         round(strtotime(sprintf("%04d-03-01",$year+1))/86400)-1  );
+      }
+
+      // Navigation items 
+      $tdates->older    = $WTuser->older_tournament($dates[0])->tdate;
+      $tdates->newer    = $WTuser->newer_tournament($dates[1])->tdate;
+
+      // Define the two time periods for the ranking.
+      // integers, days since 1970-01-01.
+      // Current rank based on bets "from - to", the previous
+      // rank is based on "from_prev - to_prev".
+      $tdates->from      = $dates[0];
+      $tdates->to        = $dates[1];
+      $tdates->from_prev = $dates[0];
+      $tdates->to_prev   = $WTuser->older_tournament(min($tdates->latest,$dates[1]))->tdate;
+
+      // Hide trend if season has lies in the past
+      if ( $tdates->to < $WTuser->newer_tournament($tdates->latest)->tdate ) {
+          $tdates->from_prev = $tdates->to_prev = Null;
+      }
+
+      // If the next is in the future
+      if ( $tdates->to > $tdates->latest ) { $tdates->newer = Null; }
 
       // City-ranking is for more than one city. Create $city_array first.
       $tmp = explode(",", $args->cities);
@@ -217,6 +290,12 @@ switch ( $args->type ) {
             array_push($cityObj, new wetterturnier_cityObject((int)$elem));
          }
       }
+      if ( count($cityObj) == 0 ) {
+          printf("<div class=\"wetterturnier-info error\">%s</div>",
+              __("Sorry, no proper city definition for","wpwt")
+              ." wetterturnier_ranking type cities"); return;
+      }
+
       // Generate the title
       $names = array(); foreach ( $cityObj as $rec ) { array_push($names, $rec->get("name")); }
       $title = sprintf("%s %s %s %d %s<br>\n%s,<br>\n%s %s %s %s", $season,
@@ -227,25 +306,15 @@ switch ( $args->type ) {
                __("tournaments from","wpwt"),
                $WTuser->date_format($tdates->from),__("to","wpwt"),
                $WTuser->date_format($tdates->to));
-	
-} else { 
 
-      // Title for current city
-      $title = sprintf("%s %s %s, %s %s %s %s",
-               $season,__("season ranking for","wpwt"),$cityObj->get('name'),
-               __("tournaments from","wpwt"),
-               $WTuser->date_format($tdates->from),__("to","wpwt"),
-               $WTuser->date_format($tdates->to));
-
-	}
       break;
-
 
 
    // ---------------------------------------------------------------
    // Yearly ranking
    // ---------------------------------------------------------------
    case "yearly":
+
       // Compute begin and end tournament date for the season
       $year = (int)$WTuser->date_format($args->tdate,"%Y");
       $dates = array( round(strtotime(sprintf("%04d-12-31",$year - 1)) / 86400),
