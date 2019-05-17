@@ -569,7 +569,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                                       'tdate'=>Null,
                                       'limit'=>false,
                                       'city'=>false,
-                                      'cities'=>Null,
+                                      'cities'=>"1,2,3",
                                       'slim'=>false,
                                       'weeks'=>15,
                                       'header'=>true,
@@ -1636,7 +1636,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     * on the prognose server. Used for different R-Calls
     * WARNING: only integer values as arguments allowed.
     */
-   public function judging_ajax() {
+public function judging_ajax() {
 
       global $wpdb;
 
@@ -1651,18 +1651,27 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
       // Special observations? The extra obs
       if ( empty($_REQUEST['extra1']) && empty($_REQUEST['extra2']) ) {
-         // Printing output
-         $cmd = sprintf("%s -p %s -o %.1f,%.1f -v %.1f",$cmd_base,$param,$obs1,$obs2,$forecast);
-      } else {
+         
+	 // Printing output
+	 $cmd = sprintf("%s -p %s -o %s,%s -v %s",
+		        $cmd_base, $param,
+			number_format($obs1,     1, ".", ""),
+			number_format($obs2,     1, ".", ""),
+			number_format($forecast, 1, ".", ""));
+	} else {
          $extra1 = (float)$_REQUEST['extra1'];
          $extra2 = (float)$_REQUEST['extra2'];
-         $cmd = sprintf("%s -p %s -o %.1f,%.1f -v %.1f -s %.1f,%.1f",
-                        $cmd_base,$param,$obs1,$obs2,$forecast,$extra1,$extra2);
-      }
-
-
-      // Calling the py script
-      $result = shell_exec($cmd); 
+         //$cmd = sprintf("%s -p %s -o %.1f,%.1f -v %.1f -s %.1f,%.1f",
+         $cmd = sprintf("%s -p %s -o %s,%s -v %s -s %s,%s",
+                        $cmd_base, $param,
+			number_format($obs1,     1, ".", ""),
+			number_format($obs2,     1, ".", ""),
+			number_format($forecast, 1, ".", ""),
+			number_format($extra1,   1, ".", ""),
+			number_format($extra2,   1, ".", ""));
+}
+ // Calling the py script
+      $result = exec($cmd);
       // Expect that the LAST word will be the points
       preg_match_all("/points\s{1,}([-]{0,1}[0-9]{1,}[.]{1}[0-9]{0,})?/",$result,$matches);
       // Setting points value
@@ -1671,11 +1680,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       } else {
          $points = array_pop($matches[1]);
       }
-      print json_encode( array("cmd"=>$cmd,"points"=>$points) );
-
+      print json_encode( array("cmd"=>$cmd,"points"=>$result) );
       die();
+}
 
-   }
 
    /** Used for the ranking-frontend: display details of a certain
     * user. Dynamically loaded via an ajax call.
