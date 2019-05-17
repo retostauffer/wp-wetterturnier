@@ -1,7 +1,7 @@
 
 
 <form name="registerform" id="registerform" action="<?php echo esc_url( wp_registration_url() ); ?>" method="post" novalidate="novalidate">
-<!-- submission form is crated via jquery to prevent spam! -->
+<!-- submission form is created via jquery to prevent spam! -->
    <p>
       <label for="user_login"><?php _e('Username') ?><br />
       <input type="text" name="user_login" id="user_login" class="input" value="" size="20" /></label>
