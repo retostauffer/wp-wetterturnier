@@ -163,21 +163,6 @@ switch ( $args->type ) {
    // the three and five city rankings)
    // ---------------------------------------------------------------
    case "season":
-// temporary workaround to prevent crash if arguments to "cities" are set together with type="season"
-/**
-      $tmp = explode(",", $args->cities);
-      $cityObj = array();
-      foreach ( $tmp as $elem ) {
-         if (is_numeric($elem)) {
-            array_push($cityObj, new wetterturnier_cityObject((int)$elem));
-         }
-      }
-      if ( count($cityObj) != 0 ) {
-          printf("<div class=\"wetterturnier-info error\">%s</div>",
-              __("Sorry, no city definition allowed for","wpwt")
-              ." wetterturnier_ranking type season"); return;
-      }
-*/
       // Compute begin and end tournament date for the season
       $month = (int)$WTuser->date_format($args->tdate, "%m");
       $year  = (int)$WTuser->date_format($args->tdate, "%Y");
@@ -381,6 +366,7 @@ break;
 
       break;
 
+// TODO: add alltime ranking, formerly known as "Ewige Liste"
 // case "alltime":
 // if ($args->inflation-adjusted) {
 // } else { }

@@ -94,7 +94,7 @@ class wetterturnier_adminclass extends wetterturnier_generalclass
 
    /** If an admin changes either a bet or observation we have to
     * recompute the points if the tournament date is not the current
-    * tournament date. If it is the cronjob will do it aniways.
+    * tournament date. If it is the cronjob will do it anyway.
     */
    function set_rerun_request( ) {
       print "Setting rerun request now";

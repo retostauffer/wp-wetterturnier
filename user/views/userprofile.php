@@ -63,7 +63,7 @@ function get_city_stats( $cityID, $userID ) {
       array_push($return,sprintf("<span class='rankhistory second'>%d</span>",$rankhistory->rank_2));
       array_push($return,sprintf("<span class='rankhistory third'>%d</span>",$rankhistory->rank_3));
       array_push($return,"<br>");
-      array_push($return, sprintf("In total <b>%d</b> %s %s %s %s %s",
+      array_push($return, sprintf("<b>%d</b> %s %s %s %s %s",
                           $res->count,__("participations","wpwt"),__("between","wpwt"),
                           $first, __("and","wpwt"), $last) );
 

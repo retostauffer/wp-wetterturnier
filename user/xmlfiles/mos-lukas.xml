@@ -1,0 +1,42 @@
+   <mosmix>
+      <name>GFS</name>
+      <lastrunfile>GFS.lastrun</lastrunfile>
+      <init>00</init>
+      <init>06</init>
+      <init>12</init>
+      <init>18</init>
+
+      <meteogram>
+         <file>mos_10382.png</file>
+         <name>Berlin Tegel</name>
+      </meteogram>
+      <meteogram>
+         <file>mos_10385.png</file>
+         <name>Schonefeld</name>
+      </meteogram>
+      <meteogram>
+         <file>mos_11120.png</file>
+         <name>Innsbruck</name>
+      </meteogram>
+      <meteogram>
+         <file>mos_06670.png</file>
+         <name>Zürich</name>
+      </meteogram
+      <meteogram>
+         <file>mos_06660.png</file>
+         <name>Zurich</name>
+      </meteogram>
+      <meteogram>
+         <file>mos_10471.png</file>
+         <name>Leipzig</name>
+      </meteogram>
+      <meteogram>
+         <file>mos_11035.png</file>
+         <name>Wien Hohe Warte</name>
+      </meteogram>
+      <meteogram>
+         <file>mos_11035.png</file>
+         <name>Wien Schwechat</name>
+      </meteogram> -->
+   </mosmix>
+

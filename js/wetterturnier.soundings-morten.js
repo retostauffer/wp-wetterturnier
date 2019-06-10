@@ -144,9 +144,9 @@ jQuery(document).on('ready',function() {
             $(target).find("ul")
                .append("<li station='"+val.imgname+"'>" + val.name + "</li>")
             // If match:
+            // alert(val.imgname)
             if ( selected == val.imgname ) { $(target).find("ul li").last().addClass("selected") } 
          });
-
          // Appending interactive functionality
          $("#wt-sounding-navigation .stations ul").on("click","li",function() {
             $(this).parent("ul").find("li").removeClass('selected')

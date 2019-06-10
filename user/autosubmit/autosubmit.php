@@ -44,7 +44,8 @@ ini_set('display_errors', 0);
 require_once('../../../../../wp-config.php');
 // require_once('../../generalclass.php');
 
-//TODO: this is nasty, better import from generalclass!
+//TODO: this is nasty, better import fuction from generalclass! But it does'nt work somehow...
+// require( sprintf("../../generalclass.php") );
 function convert_tdate( $tdate, $fmt = "Y-m-d" ) {
     return( date( $fmt, (int)$tdate*86400 ) );
     }
@@ -150,40 +151,48 @@ printf("Login for user %s with password %s was successful\n\n",
 // Loading next tournament date and check if the user is allowed
 // to place its bets or not.
 // ------------------------------------------------------------------
-print "\n"; $msg = "Checking next tournament and check if open or closed";
+print "\n"; $msg = "Checking tournament and check if open or closed";
 printf("%s\n",strtoupper($msg));
 printf("%s\n",str_repeat("=",strlen($msg)));
 
 // If a tdate exists in $data use this torunament date instead of next_tournament(0,true)
 // Check via database query whether the submitted "tdate" was REALLY a tournament date.
 // TODO: Plus maybe check whether user is automaton/MOS to only allow MOS to do such dirty little things...
-if ( $is_admin && property_exists ( $data, 'tdate' ) ) {
+
+
+if ( property_exists ( $data, 'tdate' ) ) {
         $date = $data->tdate;
 	$result = $wpdb->get_results("SELECT * FROM  `wp_wetterturnier_dates` WHERE `tdate` = $date AND  `status` = 1");
 	if ( empty($result) ) {
-
-		printf("Nothing special happened on %s. Please enter a valid tournament date!",convert_tdate($date) );
+		printf("Nothing special happened (or will happen) on %s. Please enter a valid tournament date!", convert_tdate($date) );
 		$WTbetclass->error(404);
+                exit();
 	}
-	printf("You're pretty late my dear friend ;) Anyway, choosing %s as old tournament date...\n", convert_tdate($date));
-
+        if ( $is_admin ) { 
 	// The handy function next_tournament() allows us to trick the system by inserting the custom tournament date for our belated submission :D
-	$next = $WTuser->next_tournament($row_offset=0, $check_access=false,$dayoffset=$date);
+	if ( round(strtotime( date("Y-m-d") ) / 86400) >= $date ) {
+        printf("You're pretty late my dear friend ;) Anyway, choosing %s as old tournament date...\n", convert_tdate($date));
+        }
+        else {
+        printf("You're pretty early my dear friend ;) Anyway, choosing %s as future tournament date...\n", convert_tdate($date));
+        }
+        $next = $WTuser->next_tournament($row_offset=0, $check_access=false,$date);
         $whoami = $admin->ID;
-
-} else {
-	$next = $WTuser->next_tournament(0,true);
-        if ( isset($data->tdate) ) {
-           print("You have no permission!");
-           $WTbetclass->error(403);
-           }
-	if ( $next->closed ) {
-   		printf("WARNING: tournament closed. Cannot store your bet at the moment.");
-   		$WTbetclass->error(13);
-	} else {
-   		printf("Note: tournament %s is open to take your bet...\n", convert_tdate($next->tdate) );
 	}
-    }
+        else {
+           printf("You have no permission to submit for %s since it is closed already/yet!", convert_tdate($date));
+           $WTbetclass->error(403);
+        }
+}
+else { $next = $WTuser->next_tournament(0,true); }
+
+if ( $next->closed ) {
+   	printf("WARNING: tournament closed. Cannot store your bet at the moment.");
+   	$WTbetclass->error(13);
+	}
+else {
+   		printf("Note: tournament %s is open to take your bet...\n", convert_tdate($next->tdate) );
+}
 
 // ------------------------------------------------------------------
 // Write data to database 
@@ -202,8 +211,9 @@ print("\n");
 #print_r($data);
 */
 
-$WTbetclass->write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=$admin, $placedby=$whoami);
+$WTbetclass->write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=$admin, $whoami);
 // TODO: force rerunrequest afterwards if an old tournament data was updated!
+// BUG: "modified by" of regular submissions gets changed after some time and only for some parameters...
 
 
 ?>
