@@ -200,6 +200,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
         counter = 1
         $.each( data.data, function(idx,rec) {
         //console.log(rec)
+        //console.log(rec.rank_now)
     
             $(e).append("<div class=\"wt-leaderboard\">\n"
                       + "    <div class=\"wt-leaderboard-avatar\" style=\"width: 33%;\">\n"
@@ -207,7 +208,8 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
                       + rec.avatar + "</a>\n"
                       + "    </div>\n"
                       + "    <div class=\"wt-leaderboard-info\">\n"
-                      + "        <info>" + rec.rank_now + "th place</info><br>\n"
+                      // TODO: english translation
+                      + "        <info>" + rec.rank_now + ". Platz</info><br>\n"
                       + "        <bar></bar>\n"
                       + "        <info class=\"color\">" + idx + "</info><br>\n"
                       + "        <info class=\"color big\">" + rec.points_now + "</info>&nbsp;\n"

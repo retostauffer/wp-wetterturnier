@@ -1,4 +1,5 @@
 <!-- Small tablesorter functionality -->
+
 <script>
    jQuery(document).on('ready',function($) {
       (function($) {

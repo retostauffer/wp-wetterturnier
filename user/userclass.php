@@ -127,6 +127,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_shortcode( 'wetterturnier_stationinfo',      array($this,'shortcode_wetterturnier_stationinfo') );
         add_shortcode( 'wetterturnier_stationparamdisabled', array($this,'shortcode_wetterturnier_stationparamdisabled') );
 
+// WINDY
+	add_shortcode( 'wetterturnier_windy', array($this,'shortcode_wetterturnier_windy') );
+
+
 // wetterturnier_moses
 
         add_shortcode( 'wc', array($this,'shortcode_wtcode') );
@@ -618,6 +622,33 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
     function shortcode_wetterturnier_mosforecasts() {
         return($this->shortcode_include("views/mosforecasts.php"));
+    }
+
+    // Windy Plugin
+    function shortcode_wetterturnier_windy( $args ) {
+
+// <iframe width="650" height="450" src="https://embed.windy.com/embed2.html?lat=50.036&lon=13.359&zoom=5&level=surface&overlay=wind&menu=&message=true&marker=true&calendar=&pressure=true&type=map&location=coordinates&detail=true&detailLat=52.510&detailLon=13.381&metricWind=kt&metricTemp=%C2%B0C&radarRange=-1" frameborder="0"></iframe>
+
+	$args = shortcode_atts( array('width'=>"1280",
+                                      'heigth'=>"800",
+                                      'lat'=>NULL,
+                                      'lon'=>NULL,
+                                      'zoom'=>5,
+                                      'level'=>"surface",
+                                      'overlay'=>"wind",
+                                      'menu'=>NULL,
+                                      'message'=>true,
+                                      'marker'=>true,
+                                      'calendar'=>NULL,
+                                      'pressure'=>true,
+                                      'type'=>"map",
+                                      'location'=>"coordinates",
+                                      'detail'=>NULL,
+                                      'city'=>false), $args );
+
+        if ( ! $args["city"] ) { $args["city"] = $this->get_current_cityObj()->get("ID"); }
+
+        return($this->shortcode_include("views/windy.php", $args));
     }
 
     // --------------------------------------------------------------
@@ -1632,11 +1663,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    }
 
 
-   /** This is a small ajax script I am using to call an Rscript
-    * on the prognose server. Used for different R-Calls
-    * WARNING: only integer values as arguments allowed.
-    */
-public function judging_ajax() {
+//TODO: We need to be more paranoid here!
+/** Escape shellarg version:
+
+   public function judging_ajax() {
 
       global $wpdb;
 
@@ -1647,7 +1677,53 @@ public function judging_ajax() {
       $param    = str_replace(" ","",$_REQUEST['param']);
 
       // Printing output
-      $cmd_base = "cd /home/wetterturnier/wetterturnier-backend && venv/bin/python TestPoints.py --quiet";
+      $cmd = "cd /home/wetterturnier/wetterturnier-backend && venv/bin/python TestPoints.py ";
+
+      // Special observations? The extra obs
+      if ( empty($_REQUEST['extra1']) && empty($_REQUEST['extra2']) ) {
+         // Printing output
+         $args = sprintf("-p %s -o %.1f,%.1f -v %.1f",$param,$obs1,$obs2,$forecast);
+      } else {
+         $extra1 = (float)$_REQUEST['extra1'];
+         $extra2 = (float)$_REQUEST['extra2'];
+         $args = sprintf("-p %s -o %.1f,%.1f -v %.1f -s %.1f,%.1f",
+                 $param,$obs1,$obs2,$forecast,$extra1,$extra2);
+      }
+
+      // Calling the py script
+      $result = exec($cmd.escapeshellarg($args));
+      // Expect that the LAST word will be the points
+      preg_match_all("/points\s{1,}([-]{0,1}[0-9]{1,}[.]{1}[0-9]{0,})?/",$result,$matches);
+      // Setting points value
+
+
+      if ( empty($matches[1][0]) ) {
+         $points = "empty"; 
+      } else {
+         $points = array_pop($matches[1]);
+      }
+
+      print json_encode( array("cmd"=>$cmd,"points"=>$points) );
+      
+      die();
+*/
+
+   /** This is a small ajax script I am using to call an Rscript
+    * on the prognose server. Used for different R-Calls
+    * WARNING: only integer values as arguments allowed.
+    */
+   public function judging_ajax() {
+
+      global $wpdb;
+
+      // Taking input arguments
+      $obs1     = (float)$_REQUEST['obs1'];
+      $obs2     = (float)$_REQUEST['obs2'];
+      $forecast = (float)$_REQUEST['forecast'];
+      $param    = str_replace(" ","",$_REQUEST['param']);
+
+      // Printing output
+	$cmd_base = "cd /home/wetterturnier/wetterturnier-backend && venv/bin/python TestPoints.py --quiet";
 
       // Special observations? The extra obs
       if ( empty($_REQUEST['extra1']) && empty($_REQUEST['extra2']) ) {
@@ -1683,7 +1759,6 @@ public function judging_ajax() {
       print json_encode( array("cmd"=>$cmd,"points"=>$result) );
       die();
 }
-
 
    /** Used for the ranking-frontend: display details of a certain
     * user. Dynamically loaded via an ajax call.

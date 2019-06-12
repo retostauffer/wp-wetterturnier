@@ -105,7 +105,7 @@ $bio = get_user_meta($userID,sprintf("sescription_%s",$user_lang),true);
 if ( strlen($bio) == 0 ) {
    $bio = get_user_meta($userID,"description",true);
 }
-if ( strlen($bio) > 0 ) { show_row(sprintf("%s:",__("Biography","wpwt")),
+if ( strlen($bio) > 0 ) { show_row(sprintf("%s",__("Biography","wpwt")),
                           sprintf("<b>%s</b>",$bio)); }
 
 // User roles
@@ -117,7 +117,7 @@ show_row(__("capabilities","wpwt"),join(", ",$roles));
 // Show statistics for each city
 $cities = $WTuser->get_all_cityObj();
 foreach ( $cities as $cityObj ) {
-   show_row(sprintf("%s %s",__("participations","wpwt"),
+   show_row(sprintf("%s",
             $cityObj->get('name')),get_city_stats($cityObj->get('ID'),$userID));
 }
 ?>
