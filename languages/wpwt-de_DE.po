@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: wpwt\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-11-02 11:34+0100\n"
-"PO-Revision-Date: 2019-06-10 10:16+0000\n"
+"PO-Revision-Date: 2019-06-12 21:41+0000\n"
 "Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -142,7 +142,7 @@ msgstr "Anfrage"
 
 #: admin/classes/application_list.php:162
 msgid "Applied"
-msgstr "Anfefragt"
+msgstr "Angefragt"
 
 #: admin/classes/bets_list.php:50 admin/classes/groupusers_list.php:70
 msgid "userID"
@@ -671,7 +671,7 @@ msgstr "Kein Stress!"
 
 #: betclass.php:919
 msgid "More than one day left to submit the bet."
-msgstr "Noch mehr als ein Tag bis das Abgabeformular schliesst."
+msgstr "Noch mehr als ein Tag bis das Abgabeformular schließt."
 
 #: betclass.php:922 generalclass.php:950
 msgid "hours"
@@ -704,7 +704,7 @@ msgstr "Zeit sich etwas zu beeilen, mein Freund!"
 
 #: betclass.php:932
 msgid "Only a bit more than one minute left to submit your bet!"
-msgstr "Nur noch etwas mehr als eine Minute bis das Abgabeformular schliesst!"
+msgstr "Nur noch etwas mehr als eine Minute bis das Abgabeformular schließt!"
 
 #: betclass.php:934
 msgid "Form closes in"
@@ -845,8 +845,8 @@ msgstr "Das Abgabeformular öffnet jeweils %d Tage vor dem Turnier"
 
 #: generalclass.php:870
 #, php-format
-msgid "Next tournament will take place on %s"
-msgstr "Das nächste Turnier findet am %s statt"
+msgid "Next tournament will take place on"
+msgstr "Das nächste Turnier findet statt am"
 
 #: generalclass.php:872
 #, php-format
@@ -863,8 +863,8 @@ msgstr "Das Abgabeformular für das heutige Tippspiel ist bereits geschlossen."
 
 #: generalclass.php:884
 #, php-format
-msgid "The next tournament will take place on %s"
-msgstr "Das nächste Turnier findet statt am %s"
+msgid "The next tournament will take place on"
+msgstr "Das nächste Turnier findet statt am"
 
 #: generalclass.php:918
 msgid "The requested tournament date is in the future."
@@ -1204,7 +1204,7 @@ msgstr "Bestenliste"
 
 #: user/userclass.php:2057
 msgid "nd"
-msgstr "er"
+msgstr "."
 
 #: user/userclass.php:2057 user/userclass.php:2059
 msgid "place"
@@ -1212,7 +1212,7 @@ msgstr "Platz"
 
 #: user/userclass.php:2059
 msgid "th"
-msgstr "er"
+msgstr "."
 
 #: user/userclass.php:2089
 msgid "points"
@@ -1372,7 +1372,7 @@ msgstr "Wenn selektiert: exportiere ein Subset aller Daten. Sonst alles."
 msgid "Sorry, APIKEY or the corresponding config is invalid. Stop."
 msgstr ""
 "Sorry, der API Schlüssel oder die hinterlegte Konfiguration sind nicht "
-"gültig. Stop."
+"gültig. Stopp!"
 
 #: user/views/export.php:73
 msgid ""
@@ -1393,7 +1393,7 @@ msgid ""
 "No 'action' or 'statnr' input received. Cannot do the data export without "
 "them."
 msgstr ""
-"Fehlende inputs. Entweder 'action' oder 'statnr' fehlten. Ohne diese Angaben "
+"Fehlende Eingaben. Entweder 'action' oder 'statnr' fehlten. Ohne diese Angaben "
 "kann leider nichts exportiert werden."
 
 #: user/views/googlecharts.php:188
@@ -1410,11 +1410,11 @@ msgstr "Spezialbeobachtung?"
 
 #: user/views/judgingform.php:46
 msgid "My forecast"
-msgstr "Meine Vorhersage"
+msgstr "Vorhersage"
 
 #: user/views/judgingform.php:50
 msgid "Points you'll get"
-msgstr "Deine Punkte"
+msgstr "Punkte"
 
 #: user/views/judgingform.php:55
 msgid "Compute points"
@@ -1425,8 +1425,8 @@ msgid "Sorry, no links available at the moment."
 msgstr "Sorry, im Moment sind keine Links verfügbar."
 
 #: user/views/linkcollection.php:53
-msgid "Sorry, currently no links in this category ..."
-msgstr "Sorry, im Moment keine Links in dieser Kategorie ..."
+msgid "Sorry, currently no links in this category..."
+msgstr "Sorry, im Moment keine Links in dieser Kategorie..."
 
 #: user/views/ranking.php:77
 msgid "This is the weekend ranking for the weekend around"
@@ -1477,7 +1477,6 @@ msgid "the"
 msgstr "die"
 
 #: user/views/ranking.php:227
-#, fuzzy
 msgid "cities"
 msgstr "Städte"
 
@@ -1710,3 +1709,7 @@ msgstr "Keine Webcam definiert für"
 #: wp-wetterturnier.php:114
 msgid "Wetterturnier Admin"
 msgstr "Wetterturnier Admin"
+
+#: js/wetterturnier.bets.js:23
+msgid "<div>Error loading the data!</div>"
+msgstr "Fehler beim Laden der Daten!"

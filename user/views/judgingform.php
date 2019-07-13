@@ -31,7 +31,7 @@ if ( ! $args['parameter'] ) {
    <form id='judging_form_<?php print $args['parameter']; ?>' class='judging_form'>
       <input type='hidden' name='parameter' value='<?php print $args['parameter']; ?>'>
 
-      <formdesc><?php _e("Observed"); ?>:</formdesc>
+      <formdesc><?php _e("Observed","wpwt"); ?>:</formdesc>
       <input class='judging_form_1th' type='text' name='observed_1' maxlength='7'></input>
       <input class='judging_form_2nd' type='text' name='observed_2' maxlength='7'></input>
       <br>

@@ -123,9 +123,8 @@ printf( "Hello, %s!\n", $user->data->user_login );
 $is_admin = isset( $user->allcaps["wetterturnier_admin"] );
 
 if ( $is_admin ) {
-	print "Admin mode enabled\n";
-	$admin = $user;
-     }  else { print "You are nothing!\n" ; }
+   print "Admin mode enabled\n";
+} else { print "You are nothing!\n" ; }
 
 // ------------------------------------------------------------------
 // If there were errors
@@ -161,37 +160,48 @@ printf("%s\n",str_repeat("=",strlen($msg)));
 
 
 if ( property_exists ( $data, 'tdate' ) ) {
-        $date = $data->tdate;
-	$result = $wpdb->get_results("SELECT * FROM  `wp_wetterturnier_dates` WHERE `tdate` = $date AND  `status` = 1");
-	if ( empty($result) ) {
-		printf("Nothing special happened (or will happen) on %s. Please enter a valid tournament date!", convert_tdate($date) );
-		$WTbetclass->error(404);
-                exit();
-	}
-        if ( $is_admin ) { 
-	// The handy function next_tournament() allows us to trick the system by inserting the custom tournament date for our belated submission :D
-	if ( round(strtotime( date("Y-m-d") ) / 86400) >= $date ) {
-        printf("You're pretty late my dear friend ;) Anyway, choosing %s as old tournament date...\n", convert_tdate($date));
-        }
-        else {
-        printf("You're pretty early my dear friend ;) Anyway, choosing %s as future tournament date...\n", convert_tdate($date));
-        }
-        $next = $WTuser->next_tournament($row_offset=0, $check_access=false,$date);
-        $whoami = $admin->ID;
-	}
-        else {
-           printf("You have no permission to submit for %s since it is closed already/yet!", convert_tdate($date));
-           $WTbetclass->error(403);
-        }
+   $tdate = $data->tdate;
+   $result = $wpdb->get_results("SELECT * FROM  `wp_wetterturnier_dates` WHERE `tdate` = $tdate AND  `status` = 1");
+   if ( empty($result) ) {
+      printf("Nothing special happened (or will happen) on %s. Please enter a valid tournament date!", convert_tdate($tdate) );
+      $WTbetclass->error(404);
+      exit();
+   }
+   $next = $WTuser->next_tournament(0,true);
+   if ( strcmp($tdate, $next->tdate) == 0 ) {
+      print "You sent a tdate argument which is actually the current tournament, not needed but OK!\n";
+   }
+   else if ( $is_admin ) {
+      $next = $WTuser->next_tournament(0,true);
+      if ( strcmp($tdate, $next->tdate) == 0 ) {
+         print "No admin mode needed since given tdate == current tournament. Back to user mode\n";
+      }
+      else {
+         // The handy function next_tournament() allows us to trick the system by inserting the custom tournament date for our belated submission :D
+	 if ( round(strtotime( date("Y-m-d") ) / 86400) >= $tdate ) {
+            printf("You're pretty late my dear friend ;) Anyway, choosing %s as old tournament date...\n", convert_tdate($tdate));
+         }
+         else {
+            printf("You're pretty early my dear friend ;) Anyway, choosing %s as future tournament date...\n", convert_tdate($tdate));
+            }
+         $next = $WTuser->next_tournament($row_offset=0, $check_access=false,$tdate);
+         $admin = $user;
+         $whoami = $admin->ID;    
+      }
+   }
+   else {
+     printf("You have no permission to submit for %s since it is closed already/yet!", convert_tdate($tdate));
+     $WTbetclass->error(403);
+   }
 }
 else { $next = $WTuser->next_tournament(0,true); }
 
 if ( $next->closed ) {
-   	printf("WARNING: tournament closed. Cannot store your bet at the moment.");
-   	$WTbetclass->error(13);
-	}
+   printf("WARNING: tournament closed. Cannot store your bet at the moment.");
+   $WTbetclass->error(13);
+}
 else {
-   		printf("Note: tournament %s is open to take your bet...\n", convert_tdate($next->tdate) );
+   printf("Note: tournament %s is open to take your bet...\n", convert_tdate($next->tdate) );
 }
 
 // ------------------------------------------------------------------
@@ -212,6 +222,8 @@ print("\n");
 */
 
 $WTbetclass->write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=$admin, $whoami);
+// maybe not needed but only to make sure, that tdate argument is 100% reset.
+$data->tdate=NULL;
 // TODO: force rerunrequest afterwards if an old tournament data was updated!
 // BUG: "modified by" of regular submissions gets changed after some time and only for some parameters...
 

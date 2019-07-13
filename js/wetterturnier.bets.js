@@ -20,7 +20,7 @@ jQuery(document).on("ready",function(){
       var userID = parseInt($(this).attr("userID"));
       var cityID = parseInt($(this).attr("cityID"));
       var tdate  = parseInt($(this).attr("tdate"));
-      var foo = $("<div>Error loading the data</div>"); 
+      var foo = $("<div>Error loading the data!</div>"); 
       // Loading requested information
       $.ajax({
          cache: false,

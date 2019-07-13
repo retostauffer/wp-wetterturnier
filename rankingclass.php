@@ -341,11 +341,13 @@ class wetterturnier_rankingObject {
     private function _get_edit_button( $type, $Obj ) {
 
        // If no admin: return
-       if ( ! current_user_can('manage_options') ) { return(""); }
-       // If mitteltip: return
-       if ( $type === "mitteltip" ) { return(""); }
+       // if ( ! current_user_can('manage_options') ) { return(""); }
+       if ( ! isset($user->allcaps["wetterturnier_admin"]) ) { return(""); }
+       // If mitteltip or sleepy: return
+       else if ( $type === "mitteltip" || $type === "sleepy" )
+         { return(""); }
        // If this is an observation entry (use $type = "obs")
-       if ( $type === "obs" ) {
+       else if ( $type === "obs" ) {
            return( sprintf("<span class='button small edit edit-obs' url='%s' "
                           ."station='%d' cityID='%s' tdate='%d'></span>",
                           admin_url(), (int)$identifier,
@@ -359,18 +361,17 @@ class wetterturnier_rankingObject {
     }
 
 
-    /* Creates the admin link to modify the current user/station.
-     *
-     * @param $userObj (object)
-     *    A a wordpress user Object.
-     * @return Returns a string with a html element to place the edit button or
-     *    an empty string if no editbuttion is needed (or not allowed as the user
-     *    is no admin).
+    /* Creates a button to view the bets of a user or group in detail
+     * (featherlight window)
      */
     private function _get_detail_button( $userObj ) {
+        if ( $userObj->display_name === "Sleepy" ) {
+           return( sprintf("%s",str_repeat("&nbsp;", 9))); }
+        else {
         return sprintf("<span class=\"button small detail\" userid=\"%d\" "
                       ."cityid=\"%d\" tdate=\"%d\"></span>",
                       $userObj->ID, $this->cityObj->get("ID"), $this->tdates->max);
+                      }
     }
 
 

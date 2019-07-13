@@ -104,7 +104,7 @@ jQuery(document).on('ready',function() {
       var args =  {
           ajaxurl: '<?php echo admin_url('admin-ajax.php'); ?>',
           statnr: <?php print $cityObj->stations()[0]->get("wmo"); ?>,
-          name: "<?php print $cityObj->stations()[0]->get("name"); ?>",
+          //name: "<?php print $cityObj->stations()[0]->get("name"); ?>",
           width: 800, height: 250,
           setup: [
               {main:"Temperature",parameter:["t","td"],
@@ -134,7 +134,7 @@ jQuery(document).on('ready',function() {
     // Create buttons to switch between the stations
     foreach( $cityObj->stations() as $stnObj ) {
        printf("<input class=\"button wt-obsimages\" type=\"submit\" info=\"%d\" "
-                   ."value=\"Station %d\">\n",$stnObj->get('wmo'),$stnObj->get('wmo'));
+                   ."value=\"%s (%d)\">\n",$stnObj->get('wmo'),$stnObj->get('name'),$stnObj->get('wmo'));
     }
     foreach ( array(1,3,5) as $days ) {
        printf("<input class=\"button wt-obsdays\" type=\"submit\" info=\"%d\" "

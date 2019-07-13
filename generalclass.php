@@ -793,13 +793,13 @@ class wetterturnier_generalclass
        // Check if user is Automat or mix or so
        if      ( $this->check_user_is_in_group($userID, 'Automaten') ) {
           $userclass = 'automat';
-       } elseif      ( $this->check_user_is_in_group($userID, 'Referenztipps') ) {
+       } else if      ( $this->check_user_is_in_group($userID, 'Referenztipps') ) {
           $userclass = 'referenz';
        } else if ( substr($usr->user_login,0,4) == 'GRP_' ) {
           $userclass = 'mitteltip';
           $username  = str_replace('GRP_','',$usr->user_login).' '.__('[group]','wpwt');
-       } else if ( strtolower($usr->user_login) == 'Sleepy' ) {
-          $userclass = 'Sleepy';
+       } else if ( $username == 'Sleepy' ) {
+          $userclass = 'sleepy';
           $username  = sprintf('%s <span></span>',$usr->user_login);
        } else { $userclass = 'player'; }
        $res = new stdClass();
@@ -819,8 +819,8 @@ class wetterturnier_generalclass
           $link = sprintf("<a href=\"/forums/users/%s/\" target=\"_self\">%s</a>",
                           $usr->user_login, $usr->user_login);
        } else {
-          $link = sprintf("<a href=\"/forums/users/%s/\" target=\"_self\">%s</a>",
-                          $usr->user_login, $usr->display_name);
+         $link = sprintf("<a href=\"/forums/users/%s/\" target=\"_self\">%s</a>",
+         $usr->user_login, $usr->display_name);
        }
        return( $link );
     }
@@ -880,8 +880,8 @@ class wetterturnier_generalclass
             $nextnext = $this->next_tournament($row_offset=1);
             echo "<div class=\"wetterturnier-info error\">\n";
             printf("%s<br>\n",__("Sorry, no access to these bet form.","wpwt"));
-            printf("%s<br>\n",__("The form to submit tips for todays tournament is allready closed.","wpwt"));
-            printf("%s<br>\n",sprintf("%s %s, %s.",__("The next tournament will take place on %s","wpwt"),
+            printf("%s<br>\n",__("The form to submit tips for today's tournament is already closed.","wpwt"));
+            printf("%s<br>\n",sprintf("%s %s, %s.",__("The next tournament will take place on","wpwt"),
                      $nextnext->weekday, $nextnext->readable));
             echo "</div>\n";
 
@@ -924,7 +924,7 @@ class wetterturnier_generalclass
         // is closed now.
         if ( $tdate == $today ) {
     
-            // How many minuts until you can see the data?
+            // How many minutes until you can see the data?
             $now  = gmdate('U');
             $lock = strftime('%Y-%m-%d',$tdate*86400.)." ".(int)$this->options->wetterturnier_bet_closingtime;
             $lock = strptime($lock,'%Y-%m-%d %H%M');

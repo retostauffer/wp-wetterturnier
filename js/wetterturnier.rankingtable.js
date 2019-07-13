@@ -217,7 +217,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
                       + "        <bar></bar><info class=\"small\">" + data.meta.city + "&nbsp;" + data.meta.to + "</info><br>\n"
                       + "    </div>"
                       + "</div>");
-    
+            console.log(idx)
     
             // Breaking .each
             if ( counter >= input.limit ) { return(false); }; counter++;

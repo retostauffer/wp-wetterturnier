@@ -9,8 +9,6 @@
     $.fn.obsPlot = function( options ) {
 
         var globalsettings = $.extend({
-            statnr: null,
-            name: null,
             days: 4,
             color: "#556b2f",
             ajaxurl: null,
@@ -275,7 +273,7 @@
             svg.append("text")
                 .attr("text-anchor", "middle")
                 .attr("transform", "translate("+ (svgopt.width/2) +","+(-svgopt.margin.bottom/3)+")")
-                .text( settings.main + "  (" + globalsettings.statnr + " " + globalsettings.name + ")" )
+                .text( settings.main )
 
 			// ---------------------------------------------------------------
 			// Adding data in a loop
