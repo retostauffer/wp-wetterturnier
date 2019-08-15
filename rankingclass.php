@@ -80,7 +80,7 @@ class wetterturnier_rankingObject {
        $this->dict->newer        = "Newer"; ##__("Newer", "wpwt");
        $this->dict->points       = "Points"; ##__("Points", "wpwt");
        $this->dict->trend        = "+/-"; ##__("+/-", "wpwt");
-       $this->dict->played       = "N"; ##__("N", "wpwt");
+       $this->dict->played       = "Participations"; ##__("Participations", "wpwt");
        $this->dict->difference   = "Diff"; ##__("Diff", "wpwt");
        $this->dict->rank         = "Rank"; ##__("Rank", "wpwt");
        $this->dict->user         = "User"; ##__("User", "wpwt");
@@ -367,6 +367,7 @@ class wetterturnier_rankingObject {
     private function _get_detail_button( $userObj ) {
         if ( $userObj->display_name === "Sleepy" ) {
            return( sprintf("%s",str_repeat("&nbsp;", 9))); }
+           // return( sprintf("<span class=\"button small blank\"") ); }
         else {
         return sprintf("<span class=\"button small detail\" userid=\"%d\" "
                       ."cityid=\"%d\" tdate=\"%d\"></span>",

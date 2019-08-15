@@ -45,6 +45,9 @@ if ( empty( $_GET['tdate'] ) ) {
         $newer = $WTuser->newer_tournament($_GET['tdate']);
         $aurl = explode('?', $_SERVER['REQUEST_URI'], 2);
         $aurl = 'http://'.$_SERVER['HTTP_HOST'].$aurl[0];
+        $cityID = $WTuser->get_current_cityObj()->get('ID');
+        $tdate  = $_GET['tdate'];
+
         ?>
 
          <div class="wt-twocolumn wrapper">
@@ -69,6 +72,84 @@ if ( empty( $_GET['tdate'] ) ) {
                    <input class="button" type="submit" value="<?php _e("newer"); ?> >>">
                </form>
                <?php } ?>
+                
+               <br><br>
+               <b><?php _e("Statistics","wpwt"); ?></b><br>
+               <table class="wttable-groups" style="min-width: 200px; width: 400px;">
+
+                  <tr>
+                     <td>
+                        <?php print _e("Measure","wpwt"); ?>
+                     </td>
+                     <td>
+                        <?php print _e("Points","wpwt"); ?>
+                  </tr>
+                  <tr>
+                     <td>
+                        <desc><?php _e("Mean:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate); ?>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Median:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "median"); ?>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Max:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "max"); ?>
+                    </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Min:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "min"); ?>
+                     </td>
+                  </tr>
+
+                 <tr>
+                     <td>
+                        <desc><?php _e("Range:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "spread"); ?>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Standard deviation:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "sd"); ?>
+                     </td>
+                  </tr>
+
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Sleepy:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_sleepy_points($cityID, $tdate); ?>
+                     </td>
+                  </tr>
+               </table>
+
            </div>
            <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
                <?php $WTuser->archive_show_colorlegend(); ?>

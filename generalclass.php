@@ -789,15 +789,24 @@ class wetterturnier_generalclass
      * `username` the modified username.
      */
     public function get_user_display_class_and_name($userID,$usr) {
-       $username = $usr->user_login;
+       if ( ! isset($usr->display_name) ) {
+          $username = $usr->user_login;
+       } else {
+          $username = $usr->display_name;
+       }
        // Check if user is Automat or mix or so
        if      ( $this->check_user_is_in_group($userID, 'Automaten') ) {
           $userclass = 'automat';
        } else if      ( $this->check_user_is_in_group($userID, 'Referenztipps') ) {
           $userclass = 'referenz';
+          /*
        } else if ( substr($usr->user_login,0,4) == 'GRP_' ) {
           $userclass = 'mitteltip';
           $username  = str_replace('GRP_','',$usr->user_login).' '.__('[group]','wpwt');
+          **/
+       } else if ( substr($usr->user_login,0,4) == 'GRP_' ) {
+          $userclass = 'mitteltip';
+          $username  = str_replace('GRP_', '', $usr->user_login);
        } else if ( $username == 'Sleepy' ) {
           $userclass = 'sleepy';
           $username  = sprintf('%s <span></span>',$usr->user_login);
@@ -815,12 +824,12 @@ class wetterturnier_generalclass
      * user profile (currently to bbpress /forum/users/<username>).
      */
     public function get_user_profile_link( $usr ) {
-       if ( is_null($usr->display_name) ) {
+       if ( ! isset($usr->display_name) ) {
           $link = sprintf("<a href=\"/forums/users/%s/\" target=\"_self\">%s</a>",
-                          $usr->user_login, $usr->user_login);
+                          $usr->user_login, str_replace('GRP_', '', $usr->user_login));
        } else {
          $link = sprintf("<a href=\"/forums/users/%s/\" target=\"_self\">%s</a>",
-         $usr->user_login, $usr->display_name);
+         $usr->user_login, str_replace('GRP_', '', $usr->display_name));
        }
        return( $link );
     }

@@ -294,6 +294,62 @@ break;
 
       break;
 
+   // yearly ranking for multiple cities
+   case "yearlycities":
+      // Compute begin and end tournament date for the season
+      $year = (int)$WTuser->date_format($args->tdate,"%Y");
+      $dates = array( round(strtotime(sprintf("%04d-12-31",$year - 1)) / 86400),
+                      round(strtotime(sprintf("%04d-01-01",$year)) / 86400),
+                      round(strtotime(sprintf("%04d-12-31",$year)) / 86400),
+                      round(strtotime(sprintf("%04d-12-31",$year + 1)) / 86400) );
+
+      // Time periods for data aggregation
+      $tdates->from      = $dates[1];
+      $tdates->to        = $dates[2];
+
+      $tdates->from_prev = $dates[1];
+      $tdates->to_prev   = $WTuser->older_tournament($dates[2])->tdate;
+      // If the year has past ...
+      if ( $tdates->latest > $tdates->to_prev ) {
+         $tdates->from_prev = $tdates->to_prev = Null;
+      }
+
+      // Navigation items 
+      $tdates->older = $dates[0];
+      $tdates->newer = $dates[3];
+
+      // Hide 'newer' button if this is the current year.
+      if ( (int)date("Y") === $year ) { $tdates->newer = Null; }
+      // print_r($tdates->newer);
+
+      // City-ranking is for more than one city. Create $city_array first.
+      $tmp = explode(",", $args->cities);
+      $cityObj = array();
+      foreach ( $tmp as $elem ) {
+         if (is_numeric($elem)) {
+            array_push($cityObj, new wetterturnier_cityObject((int)$elem));
+         }
+      }
+      if ( count($cityObj) == 0 ) {
+          printf("<div class=\"wetterturnier-info error\">%s</div>",
+              __("Sorry, no proper city definition for","wpwt")
+              ." wetterturnier_ranking type cities"); return;
+      }
+
+      // Generate the title
+      $names = array(); foreach ( $cityObj as $rec ) { array_push($names, $rec->get("name")); }
+      $title = sprintf("%s %s %s %d %s<br>\n%s,<br>\n%s %s %s %s", $year,
+               __("yearly ranking for","wpwt"), __("the", "wpwt"),
+               count($cityObj), __("cities", "wpwt"),
+               join(" ".__(" and ","wpwt")." ",
+                 array(join(", ",array_slice($names,0,-1)), end($names))),
+               __("tournaments from","wpwt"),
+               $WTuser->date_format($tdates->from),__("to","wpwt"),
+               $WTuser->date_format($tdates->to));
+
+
+      break;
+
 
    // ---------------------------------------------------------------
    // Yearly ranking
@@ -324,7 +380,7 @@ break;
 
       // Hide 'newer' button if this is the current year.
       if ( (int)date("Y") === $year ) { $tdates->newer = Null; }
-      print_r($tdates->newer);
+      // print_r($tdates->newer);
 
       // Generate the title, using meta-info from the $ranking object
       $title = sprintf("%s %s %s %04d",
@@ -366,8 +422,37 @@ break;
 
       break;
 
-// TODO: add alltime ranking, formerly known as "Ewige Liste"
-// case "alltime":
+
+   case "alltime":
+      $sql = array();
+      array_push($sql,sprintf("SELECT tdate FROM %swetterturnier_betstat", $wpdb->prefix));
+      array_push($sql,sprintf("WHERE cityID = %d AND tdate <= %d", $cityObj->get('ID'), $args->tdate));
+      array_push($sql,sprintf("GROUP BY tdate DESC"));
+
+      $dates = $wpdb->get_results(join(" ",$sql));
+      $dates = array(end($dates)->tdate,$args->tdate);
+
+      $tdates->from      = $dates[0];
+      $tdates->to        = $dates[1];
+      $tdates->from_prev = $dates[0];
+      $tdates->to_prev   = $WTuser->older_tournament($dates[1])->tdate;
+
+      # For navigation
+      $tdates->older     = $tdates->to_prev;
+      $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
+      if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
+
+      // Loading the data set
+      //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
+      // Generate the title, using meta-info from the $ranking object
+      $title = sprintf("%s %s %s %s %s",
+               __("Alltime ranking for","wpwt"),$cityObj->get('name'),
+               $WTuser->date_format($tdates->from),__("to","wpwt"),
+               $WTuser->date_format($tdates->to));
+
+      break;
+
+
 // if ($args->inflation-adjusted) {
 // } else { }
 
@@ -385,6 +470,7 @@ break;
 
 // URL for navigation
 $hrefurl = $WTuser->curPageURL(true);
+
 
 // Append date range to $arg's object
 $args->tdates = $tdates;
@@ -412,16 +498,24 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
             <?php } ?>
          </div>
       </div>
-      <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
-         <?php $WTuser->archive_show_colorlegend(); ?>
-      </div>
+      <?php if ( $args->legend === true ) { ?>
+         <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
+            <?php $WTuser->archive_show_colorlegend(); ?>
+         </div>
+      <?php } ?>
       <div style="clear: both;" class="wt-twocolumn footer"></div>
    </div>
    <br>
 <?php } else {
    // Show title
    if ( $args->header )
-   { printf("<h3>%s</h3><br>\n",$title); }
+   { printf("<h3>%s</h3><br>\n",$title); 
+      if ( $args->legend === true ) { ?>
+         <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
+            <?php $WTuser->archive_show_colorlegend(); ?>
+         </div>
+      <?php }
+   }
    else if ( ($args->type === "weekend" | $args->type === "cities") & is_numeric($args->limit) )
    { printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title); }
 }

@@ -258,7 +258,7 @@ table.tablesorter tbody td {
 .wttable-show * th { padding: 0 2px; }
 .wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 45px; }
 .wttable-show * th.trend,      .wttable-show * td.trend       { text-align: center; width: 45px; }
-.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 40px; }
+.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 120px; }
 .wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 60px; }
 .wttable-show * th.statusbar,  .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
 .wttable-show * td.difference                                 { color: gray; }
@@ -267,14 +267,13 @@ table.tablesorter tbody td {
 .wttable-show-bets th,                .wttable-show-obs th { text-align: left; }
 .wttable-show-bets th.align-center,   .wttable-show-obs th.align-center  { text-align: center; }
 .wttable-show-bets th.align-right,    .wttable-show-obs th.align-right   { text-align: right; }
-.wttable-show-bets th.param-day,      .wttable-show-obs th.param-day     { width: 60px; }
 .wttable-show-bets th.param-col,      .wttable-show-obs th.param-col     { width: 60px; }
 .wttable-show-bets th.param-col-N,    .wttable-show-obs th.param-col-N   { width: 40px; }
 .wttable-show-bets th.param-col-Wv,   .wttable-show-obs th.param-col-Wv  { width: 40px; }
 .wttable-show-bets th.param-col-Wn,   .wttable-show-obs th.param-col-Wn  { width: 40px; }
 .wttable-show-bets th.param-col-PPP,  .wttable-show-obs th.param-col-PPP { width: 80px; }
+.wttable-show-bets th.param-col-RR,  .wttable-show-obs th.param-col-RR  { width: 70px; }
 .wttable-show-bets th.user-name,      .wttable-show-obs  th.user-name    { min-width: 220px; }
-
 .wttable-show span.button.small {
    padding: 1px 3px;
    margin: 0px;
@@ -282,7 +281,8 @@ table.tablesorter tbody td {
 }
 
 .wttable-show span.button.small.detail,
-.wttable-show span.button.small.edit   {
+.wttable-show span.button.small.edit,
+.wttable-show span.button.small.blank {
    background-position: center;
    background-repeat: no-repeat;
    min-width: 13px;
@@ -298,6 +298,9 @@ table.tablesorter tbody td {
 .wttable-show span.button.small.edit   {
    background-image: url('../images/wetterturnier_edit.svg');
    background-color: #0e9311;
+   float: right;
+}
+.wttable-show span.button.small.blank  {
    float: right;
 }
 .wttable-show span.button.small.detail:hover {
