@@ -119,7 +119,8 @@ table.wetterturnier-obstable tr.highlighted:nth-child(odd) { background-color: #
 
 <?php
 foreach( $cityObj->stations() as $stnObj ) {
-   printf("<input type=\"button\" class=\"obs-table-station\" statnr=\"%d\" value=\"[%d] %s\"></input>",
+        if ( $stnObj->get("active") != 1 ) { continue; }     
+	printf("<input type=\"button\" class=\"obs-table-station\" statnr=\"%d\" value=\"[%d] %s\"></input>",
            $stnObj->get('wmo'),$stnObj->get('wmo'),$stnObj->get('name'));
 }
 for ( $i=2; $i<=9; $i++ ) {

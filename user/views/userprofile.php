@@ -1,5 +1,6 @@
 <?php
 
+
 // Get displayed user id first
 $userID = bbp_get_displayed_user_id();
 $user   = get_userdata( $userID );
@@ -56,6 +57,25 @@ function get_city_stats( $cityID, $userID ) {
       $tmp = sprintf("rank_%d",$rec->rank);
       $rankhistory->$tmp = $rec->count;
    }
+   
+   $tmp=array();
+   $measures=array("AVG(points) AS pavg", "median(points) AS pmed", "MAX(points) AS pmax", "MIN(points) AS pmin", "STDDEV(points) AS pstd");
+   foreach ($measures as $measure) {
+   $sql  = sprintf("SELECT %s FROM `wp_wetterturnier_betstat` WHERE userID=%s AND cityID=%s AND tdate < %d", $measure, $userID, $cityID, $tdatebefore);
+   /**
+   $measures=array("mean AS pavg", "median AS pmed", "max AS pmax", "min AS pmin", "sd AS pstd");
+   foreach ($measures as $measure) {
+   $sql  = sprintf("SELECT %s FROM `wp_wetterturnier_userstats` WHERE userID=%s AND cityID=%s", $measure, $userID, $cityID);
+   */
+   array_push($tmp, $wpdb->get_row($sql));
+   //$tmp = $wpdb->get_row($sql);
+   }
+   $pavg=$tmp[0]->pavg;
+   $pmed=$tmp[1]->pmed;
+   $pmax=$tmp[2]->pmax;
+   $pmin=$tmp[3]->pmin;
+   $pstd=$tmp[4]->pstd;
+
    // Return string
    if ( $res->count > 0 ) {
       $return = array();
@@ -66,6 +86,11 @@ function get_city_stats( $cityID, $userID ) {
       array_push($return, sprintf("<b>%d</b> %s %s %s %s %s",
                           $res->count,__("participations","wpwt"),__("between","wpwt"),
                           $first, __("and","wpwt"), $last) );
+array_push($return, sprintf("<table><tr><td>Average points:</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
+array_push($return, sprintf("<tr><td>Median points:</td><td><b>%s</b></td><tr>", number_format($pmed,1) ) );
+array_push($return, sprintf("<tr><td>Max points:</td><td><b>%s</b></td><tr>", number_format($pmax,1) ) );
+array_push($return, sprintf("<tr><td>Min points:</td><td><b>%s</b></td><tr>", number_format($pmin,1) ) );
+array_push($return, sprintf("<tr><td>Standard deviation:</td><td><b>%s</b></td><tr></table>", number_format($pstd,1) ) );
 
       return( join("\n",$return) );
 
@@ -94,10 +119,9 @@ table#wt-profile-table tr td.key {
 global $WTuser;
 
 // Some user infos
-show_row(__("Username","wpwt"),         $user->display_name);
+show_row(__("Username","wpwt"),         str_replace('GRP_','',$user->display_name));
 show_row(__("Name","wpwt"),             $user->real_name);
-show_row(__("Registered since","wpwt"), $user->user_registered);
-
+show_row(__("Registered since","wpwt"), date(__("d.m.Y","wpwt"), strtotime($user->user_registered)));
 // Loading user bio for the current language
 $user_lang = $WTuser->get_user_language("slug");
 // Try to load user description based on user language

@@ -133,7 +133,8 @@ jQuery(document).on('ready',function() {
     <?php
     // Create buttons to switch between the stations
     foreach( $cityObj->stations() as $stnObj ) {
-       printf("<input class=\"button wt-obsimages\" type=\"submit\" info=\"%d\" "
+            if ( $stnObj->get("active") != 1 ) { continue; }     
+	    printf("<input class=\"button wt-obsimages\" type=\"submit\" info=\"%d\" "
                    ."value=\"%s (%d)\">\n",$stnObj->get('wmo'),$stnObj->get('name'),$stnObj->get('wmo'));
     }
     foreach ( array(1,3,5) as $days ) {

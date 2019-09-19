@@ -3,6 +3,9 @@
 global $wpdb;
 global $WTuser;
 
+$cityObj = $WTuser->get_current_cityObj();
+$city=$cityObj->get('name');
+
 // Access only for logged in users
 if ( $WTuser->access_denied() ) { return; }
 
@@ -17,7 +20,7 @@ $xmlfile  = sprintf("%s/user/xmlfiles/mosforecasts.xml",plugins_url("wp-wettertu
 ?>
 <script>
 jQuery(document).on('ready',function() {
-   (function($) {
+   (function($city) {
 
       // Define the image here. Image names are different form the
       // Wetterturnier city names, sorry.

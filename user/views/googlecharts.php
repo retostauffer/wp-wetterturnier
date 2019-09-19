@@ -5,10 +5,7 @@
 /// @date 16 June 2017
 /// @brief Interface to create some plots.
 // ------------------------------------------------------------------
-
-
 global $WTuser;
-
 // The jQuery code for sending applications. 
 ///$ndays = (int)$WTuser->options->wetterturnier_betdays;
 ///$chartHandler = new wetterturnier_chartHandler( 'test in googleclass', $ndays );
@@ -16,20 +13,16 @@ global $WTuser;
 $WTuser->include_js_script("wetterturnier.usersearch");
 $WTuser->include_js_script("wetterturnier.googlecharts");
 //$WTuser->include_js_script("jquery-ui.min");
-
 ?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-
    jQuery(document).on("ready",function() {
       (function($) {
-
          // Prevent enter button on this page (not that the user submits
          // the <form> below)
          $(window).keydown(function(event){
            if(event.keyCode == 13) { event.preventDefault(); return false; }
          });
-
          // Initialize user search
          var adminurl = <?php printf("'%s'\n",admin_url('admin-ajax.php')); ?>
          var opts  = {target:"#chart-div",
@@ -40,7 +33,6 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          function get_current_plottype() {
             return( $("#chart-options").find("[name='opt-plottype']").val() );
          }
-
          // Execute whenever usersearch changes the userID to trigger the
          // regeneration of the googlechart. 
          $("#selected-users").live("change",function() {
@@ -55,12 +47,10 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
             refresh_chart( get_current_plottype() )
          });
          function refresh_chart(call) {
-
             // Show/hide placeholder
             if ( $("#selected-users").find(".selected-user").length === 0 ) {
                $("#selected-users li.placeholder").show()
             } else { $("#selected-users li.placeholder").hide()  }
-
             // Getting sleepy option
             var opt_column    = $("#chart-options").find("[name='opt-column']:checked").val()
             if ( opt_column !== "points" ) {
@@ -68,7 +58,6 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
             }
             var opt_sleepy   = $("#chart-options").find("[name='opt-sleepy']:checked").val()
             var opt_cityID    = $("#chart-options").find("[name='opt-cityID']").val()
-
             // Read selected users
             var lis = $("#selected-users").find("li.selected-user")
             //if ( lis.length === 0 ) { return }
@@ -77,7 +66,6 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
                if ( uid.length == 0 ) { uid = $(val).attr("userid") }
                else { uid = uid + "," + $(val).attr("userid") }
             });
-
             // Argument options for googlechart function call
             if ( call === "timeseries_user_points" ) {
                var opts = {call: call, userID: uid, cityID: opt_cityID, sleepy: opt_sleepy,
@@ -89,10 +77,8 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
             } else {
                alert("Undefind procedure creating the opts object for \""+call+"\"!");
             }
-
             $.fn.googlechart(adminurl,"chart-div",opts);
          }
-
          // If there are post-args: create plot
          <?php
          $get_opts = array();
@@ -100,7 +86,6 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
             foreach ( $_GET as $key=>$val ) { $get_opts[$key] = $val; } ?>
             var getopts = <?php print json_encode($get_opts); ?>;
          <?php } ?>
-
          // Initialize
          if ( typeof(getopts) !== "undefined" ) {
             console.log( adminurl )
@@ -109,7 +94,6 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          } else {
             refresh_chart( "init" )
          }
-
       })(jQuery);
    });
 </script>
@@ -236,4 +220,3 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
 
 <div id='chart-div'></div>
 <div id='chart-share-url'></div>
-

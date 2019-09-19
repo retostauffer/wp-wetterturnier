@@ -134,7 +134,7 @@ switch ( $args->type ) {
                   array(join(", ",array_slice($names,0,-1)), end($names))),
                   __("for the weekend around","wpwt"),$WTuser->date_format($args->tdate));
 
-// bug current tournament / "aktuelles turnier" / end of page !!!
+      // bug current tournament / "aktuelles turnier" / end of page !!!
 
       // Navigation items 
       $tdates->older = $WTuser->older_tournament($args->tdate)->tdate;
@@ -156,7 +156,7 @@ switch ( $args->type ) {
 
       break;
 
-// TODO: make it slimmer and remove repeating code, perhaps only case "season" is need, but then you have to changed userclass.php and many other stuff as well, plus the whole documentation
+   // TODO: make it slimmer and remove repeating code, perhaps only case "season" is need, but then you have to changed userclass.php and many other stuff as well, plus the whole documentation
 
    // ---------------------------------------------------------------
    // Season ranking for single cities or a set of cities (e.g.,
@@ -346,7 +346,6 @@ break;
                __("tournaments from","wpwt"),
                $WTuser->date_format($tdates->from),__("to","wpwt"),
                $WTuser->date_format($tdates->to));
-
 
       break;
 
