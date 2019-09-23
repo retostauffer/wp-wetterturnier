@@ -756,6 +756,16 @@ class wetterturnier_generalclass
         return $res; 
     }
 
+
+    public function get_user_ID( $user, $type=NULL ) {
+        global $wpdb;
+        if ($type == "group") { $user = "GRP_" . $user; }
+        $res = $wpdb->get_row(sprintf('SELECT ID FROM %susers WHERE user_login = \'%s\'',$wpdb->prefix,$user))->ID;
+        if ( ! $res ) { return false; }
+        return $res;
+    }    
+
+
     /** @details Returns a stdClass object with all information about a
      * certain user specified by it's numeric ID.
      *
@@ -837,7 +847,7 @@ class wetterturnier_generalclass
        } else { $userclass = 'player'; }
        } if ( substr($usr->user_login,0,4) == 'GRP_' ) {
           $userclass = 'mitteltip';
-          $username  = str_replace('GRP_','',$usr->user_login).' '.__('[group]','wpwt');
+          $username  = str_replace('GRP_',"",$usr->user_login);
        }
        $res = new stdClass();
        $res->userclass    = $userclass;

@@ -4,83 +4,67 @@ global $wpdb;
 global $WTuser;
 
 $cityObj = $WTuser->get_current_cityObj();
-$city=$cityObj->get('name');
+$city    = $cityObj->get('name');
 
 // Access only for logged in users
 if ( $WTuser->access_denied() ) { return; }
 
-// Including xml2json jQuery script
-$WTuser->include_js_script("jquery.xml2json");
-$WTuser->include_js_script("wetterturnier.mosforecasts");
-
-// Reading latest run. ASCII file containing a time stamp
-// like YYYY-mm-dd HH:MM.
-$xmlfile  = sprintf("%s/user/xmlfiles/mosforecasts.xml",plugins_url("wp-wetterturnier"));
+$betdays = $WTuser->init_options()->wetterturnier_betdays;
+$showdays = array();
+for ($day=1;$day<=$betdays;$day++) { array_push($showdays,$day);}
 
 ?>
 <script>
-jQuery(document).on('ready',function() {
-   (function($city) {
-
-      // Define the image here. Image names are different form the
-      // Wetterturnier city names, sorry.
-      $("#wt-mosforecasts-container")
-         .wtmosforecasts( "/referrerdata/mos/mos.json" );
-
-   })(jQuery);
-});
+   // Initialize demo table
+   jQuery(document).on('ready',function($) {
+       (function($) {
+           // Also activates the tooltipster used for the
+           // "entry modified by" tooltips bets/obs
+           $('.data.changed-status').tooltipster({
+             delay: 100, contentAsHTML: true, position: 'bottom'
+           });
+       })(jQuery);
+   });
 </script>
+<?php
 
-<style>
-#wt-mosforecasts-navigation {
-   display: block;
-}
-#wt-mosdata-navigation desc {
-   display: inline-block;
-   width: 300px;
-   font-weight: bold;
-}
-#wt-mosdata-navigation select {
-   display: inline-block;
-   width: 300px;
-   font-weight: bold;
-}
-#wt-mosdata-data table {
-   margin-top: 20px;
-}
-#wt-mosdata-data table tr th {
-   text-align: center;
-}
-#wt-mosdata-data table tr:hover,
-#wt-mosdata-data table tr:hover td {
-   background-color: #d4e0ec;
-}
+$show_locked_info = true;
+$showday = 1;
+foreach ( $showdays as $showday ) {
 
-#wt-mosdata-data table tr:hover td.shaded {
-   background-color: #c2d5e7;
-}
-#wt-mosdata-data table tr th.mosname,
-#wt-mosdata-data table tr td.column-right {
-   border-right: 3px solid black;
-}
-#wt-mosdata-data table tr th.mosname:last-child,
-#wt-mosdata-data table tr td.column-right:last-child {
-   border-right: none;
-}
+   $current = $WTuser->current_tournament(0,false,0,true);
+   if ( $WTuser->check_allowed_to_display_betdata($current->tdate,$show_locked_info) )
+   {
+      // First day shows header, the rest doesn't
+      if ( $showday == 1 || is_bool($showday) ) { ?>
+         <div class="wt-twocolumn wrapper">
+            <div class="wt-twocolumn column-left" style="width: 65%;">
+               <?php
+               printf("<h3>%s: <b>%s, %s</b><h3>\n",__('Current tournament','wpwt'),
+                      $current->weekday,$current->readable);
+               //TODO: only show buttons if tournament is finished?>
+               <form method="post" action="<?php print $WTuser->curPageURL(); ?>">
+                  <input class="button" type="submit" name="values" value="<?php _e("Show Values","wpwt"); ?>" />
+                  <input class="button" type="submit" name="points" value="<?php _e("Show Points","wpwt"); ?>" />
+               </form>
+            </div>
+            <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
+               <?php $WTuser->archive_show_colorlegend(TRUE); ?>
+            </div>
+            <div style="clear: both;" class="wt-twocolumn footer"></div>
+         </div>
+      <?php }
+      // run selection (does not work yet)
+      /**
+      foreach( array("21z","3z","9z") as $i ) {
+         if ( array_key_exists($i, $_REQUEST) )  {  $run  = $i;  } else { $run = "9z"; }
+      }
+      */
+      //echo $run;
+      if ( array_key_exists('points',$_REQUEST) )  {  $points  = true;  } else { $points = false; }
+      // Using a special method of archive_show() to only show MOS forecasts
+      $WTuser->archive_show( 'mos', $current->tdate, $points, $showday );
+   } else { $show_locked_info = false; } // Set flag to false
 
-#wt-mosdata-data table td.param {
-   font-weight: bold;
-   text-align: left;
 }
-#wt-mosdata-data table td.data {
-   text-align: right
-}
-#wt-mosdata-data .shaded {
-   background-color: #eef0f2;
-}
-
-</style>
-
-
-<div id='wt-mosforecasts-container'><div>
-
+?>

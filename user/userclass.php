@@ -1245,8 +1245,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         global $WTuser;
 
         // Just exit if input is wrong.
-        if ( $type != 'bets' & $type != 'obs' ) {
-            die('WRONG INPUT ON archive_show IN archive.php');
+        if ( ! in_array($type, array("obs", "bets", "mos")) ) {
+            die('WRONG INPUT ON archive_show() in userclass.php');
         }
 
         // Getting city information
@@ -1354,20 +1354,25 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                printf("%s.<br>\n%s\n",
                      __('Sorry, no bet data available','wpwt'),
                      __('There is probably something going wrong?','wpwt'));
-            } else {
+            } else if ( $type == "bets" ) {
                printf("%s.<br>\n%s.\n",
                      __('Sorry, currently no observations available','wpwt'),
+                     __('They will be displayed as soon as they are available','wpwt'));
+            } else {
+               printf("%s.<br>\n%s.\n",
+                     __('Sorry, currently no MOS forecasts available','wpwt'),
                      __('They will be displayed as soon as they are available','wpwt'));
             }
             echo "</div>\n";
 
         } else {
-
+            
             // Custom table styling via settings page
             $wttable_style = get_user_option("wt_wttable_style");
             $wttable_style = (is_bool($wttable_style) ? "" : $wttable_style);
 
             // Open table output
+            if ( $type == "mos" ) { $type = "bets"; }
             if ( is_bool($showday) ) { $tableid = sprintf("wttable-show-%s",$type); }
             else { $tableid = sprintf("wttable-show-%s%d",$type,$showday); }
             echo "<table id=\"".$tableid."\" class=\"wttable-show-".$type." wttable-show tablesorter ".$wttable_style."\">\n"

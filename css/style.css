@@ -244,7 +244,11 @@ table.tablesorter tbody td {
 .wttable-show * td.automat             { border-left: 5px solid black;   }
 .wttable-show * td.mitteltip           { border-left: 5px solid #FF6600; }
 .wttable-show * td.referenz            { border-left: 5px solid #3864a0; }
-.wttable-show * td.sleepy             { border-left: 5px solid #BDBDBD; }
+.wttable-show * td.sleepy              { border-left: 5px solid #BDBDBD; }
+.wttable-show * td.EZ                  { border-left: 5px solid skyblue;   }
+.wttable-show * td.GFS                 { border-left: 5px solid red;   }
+.wttable-show * td.ICON                { border-left: 5px solid green; }
+.wttable-show * td.MIX                 { border-left: 5px solid darkviolet; }
 .wttable-show * td.sleepy span {
    display: block;
    float: right;
@@ -368,7 +372,11 @@ table.tablesorter tbody td {
 .colorlegend-wrapper ul li.automat   input[type="submit"] { background-color: black;   }
 .colorlegend-wrapper ul li.mitteltip input[type="submit"] { background-color: #FF6600; }
 .colorlegend-wrapper ul li.referenz  input[type="submit"] { background-color: #3864a0; }
-.colorlegend-wrapper ul li.sleepy   input[type="submit"] { background-color: #BDBDBD; }
+.colorlegend-wrapper ul li.sleepy    input[type="submit"] { background-color: #BDBDBD; }
+.colorlegend-wrapper ul li.EZ        input[type="submit"] { background-color: skyblue;   }
+.colorlegend-wrapper ul li.GFS       input[type="submit"] { background-color: red;   }
+.colorlegend-wrapper ul li.ICON      input[type="submit"] { background-color: green; }
+.colorlegend-wrapper ul li.MIX       input[type="submit"] { background-color: darkviolet; }
 .colorlegend-wrapper ul li input[type="submit"].inactive {
    background-image: url("../images/wetterturnier_X.svg");
    background-size: 100% 100%;   
