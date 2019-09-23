@@ -76,15 +76,15 @@ class wetterturnier_rankingObject {
        $this->cache      = $cache;
 
        $this->dict = new stdClass();
-       $this->dict->older        = "Older"; ##__("Older", "wpwt");
-       $this->dict->newer        = "Newer"; ##__("Newer", "wpwt");
-       $this->dict->points       = "Points"; ##__("Points", "wpwt");
-       $this->dict->trend        = "+/-"; ##__("+/-", "wpwt");
-       $this->dict->played       = "Participations"; ##__("Participations", "wpwt");
-       $this->dict->difference   = "Diff"; ##__("Diff", "wpwt");
-       $this->dict->rank         = "Rank"; ##__("Rank", "wpwt");
-       $this->dict->user         = "User"; ##__("User", "wpwt");
-       $this->dict->points_max   = "The maximum score (total) for the ranking is"; ##"; ##__("The maximum score (total) for the ranking is", "wpwt");
+       $this->dict->older        = __("Older", "wpwt");
+       $this->dict->newer        = __("Newer", "wpwt");
+       $this->dict->points       = __("Points", "wpwt");
+       $this->dict->trend        = "+/-";
+       $this->dict->played       = __("Participations", "wpwt");
+       $this->dict->difference   = __("Diff", "wpwt");
+       $this->dict->rank         = __("Rank", "wpwt");
+       $this->dict->user         = __("User", "wpwt");
+       $this->dict->points_max   = __("The maximum score (total) for the ranking is","wpwt");
 
     }
 
@@ -242,7 +242,7 @@ class wetterturnier_rankingObject {
         # Create SQL command
         $sql = array();
         array_push($sql, sprintf("SELECT b.tdate, %s", $usercol));
-        array_push($sql, " SUM(b.points) AS points,");
+        array_push($sql, " SUM(b.points) AS points,"); //points_d1/d2
         array_push($sql, " COUNT(*) AS played");
         array_push($sql, sprintf("FROM %susers AS u RIGHT OUTER JOIN", $this->wpdb->prefix));
         array_push($sql, sprintf("%swetterturnier_betstat AS b", $this->wpdb->prefix));
@@ -661,7 +661,8 @@ class wetterturnier_rankingObject {
 
             // Getting profile link
             $final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
-            $final->$user->avatar_link = sprintf("/forums/users/%s/", $tmp->user_login);
+            $final->$user->avatar_link = sprintf(bbp_get_user_profile_url($userObj->ID));
+                                         //sprintf("/forums/users/%s/", $tmp->user_login);
         }
 
         unset($ranking);

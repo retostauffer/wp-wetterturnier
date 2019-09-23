@@ -9,7 +9,7 @@ jQuery(document).on('ready',function() {
    $.fn.wtsynopsymbols = function(stations,args) {
 
       // Looping "tmax" hours back in time now
-      if ( "show" in args ) { var show = args.show; } else { var show = 5; }
+      if ( "show" in args ) { var show = args.show; } else { var show = 6; }
 
       // Save stations to object
       $(this).data("stations",stations)
@@ -17,7 +17,7 @@ jQuery(document).on('ready',function() {
       // Show buttons where the user can choose to see more than
       // the default amount of images.
       var target = $(this)
-      $.each( [5,12,24,48], function(key,value)  {
+      $.each( [6,12,24,48], function(key,value)  {
          $(target).append("<input type=\"button\" name=\"wt-synopsymbol-show\" "
                        +"value=\"Show "+value+"\"></input>");
       });

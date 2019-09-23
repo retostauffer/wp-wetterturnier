@@ -224,8 +224,11 @@ print("\n");
 $WTbetclass->write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=$admin, $whoami);
 // maybe not needed but only to make sure, that tdate argument is 100% reset.
 $data->tdate=NULL;
-// TODO: force rerunrequest afterwards if an old tournament data was updated!
-// BUG: "modified by" of regular submissions gets changed after some time and only for some parameters...
 
+// TODO: force rerunrequest afterwards if an old tournament data was updated!
+
+// Save a rerun flag into the database such that we can re-run the computation of the requred tournaments as the observations changed.
+// $rerun = array('userID'=>get_current_user_id(),'cityID'=>$city->ID, 'tdate'=>$selected_tdate);
+// $wpdb->insert(sprintf("%swetterturnier_rerunrequest",$wpdb->prefix),$rerun);
 
 ?>

@@ -1,3 +1,4 @@
+ 
 // ------------------------------------------------------------------
 /// @file wetterturnier.googlecharts.js
 /// @author Reto Stauffer
@@ -220,4 +221,3 @@ jQuery(document).on('ready',function() {
 
    })(jQuery);
 });
-

@@ -126,7 +126,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_shortcode( 'wetterturnier_mosforecasts',     array($this,'shortcode_wetterturnier_mosforecasts') );
         add_shortcode( 'wetterturnier_stationinfo',      array($this,'shortcode_wetterturnier_stationinfo') );
         add_shortcode( 'wetterturnier_stationparamdisabled', array($this,'shortcode_wetterturnier_stationparamdisabled') );
-
+        add_shortcode( 'wetterturnier_mosescoefs', array($this,'shortcode_wetterturnier_mosescoefs') );
 // WINDY
 	add_shortcode( 'wetterturnier_windy', array($this,'shortcode_wetterturnier_windy') );
 
@@ -624,6 +624,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     function shortcode_wetterturnier_mosforecasts() {
         return($this->shortcode_include("views/mosforecasts.php"));
     }
+    function shortcode_wetterturnier_mosescoefs() {
+        return($this->shortcode_include("views/mosescoefs.php"));
+    }
+
 
     // Windy Plugin
     function shortcode_wetterturnier_windy( $args ) {
@@ -1050,8 +1054,36 @@ class wetterturnier_userclass extends wetterturnier_generalclass
      * a certain type of players (e.g., mitteltips or automaten).
      * Is a bit static, however, works.
      */
-    function archive_show_colorlegend() { ?>
+    function archive_show_colorlegend( $mos=FALSE ) { ?>
                <?php
+               if ($mos) {
+               printf("<b>%s</b><br>\n",__("MOS type selection:","wpwt"));
+               _e("Just click on the buttons to show/hide a certain type in the tables below!","wpwt");
+               ?><br>
+               <ul>
+                  <li class="EZ">
+                     <span><input class="settings-button" type="submit" name="EZ" value="" /></span>
+                     <?php _e("EZ","wpwt"); ?>
+                  </li>
+                  <li class="GFS">
+                     <span><input class="settings-button" type="submit" name="GFS" value="" /></span>
+                     <?php _e("GFS","wpwt"); ?>
+                  </li>
+                  <li class="ICON">
+                     <span><input class="settings-button" type="submit" name="ICON" value="" /></span>
+                     <?php _e("ICON","wpwt"); ?>
+                  </li>
+                  <li class="MIX">
+                     <span><input class="settings-button" type="submit" name="MIX" value="" /></span>
+                     <?php _e("MIX","wpwt"); ?>
+                  </li>
+                  <li class="mitteltip">
+                     <span><input class="settings-button" type="submit" name="mitteltip" value="" /></span>
+                     <?php _e("Mean/Max/Min","wpwt"); ?>
+                  </li>
+               </ul>
+               <?php
+               } else {
                printf("<b>%s</b><br>\n",__("Color legend:","wpwt"));
                _e("Shows the color coding of the different player classes. Just click on the buttons to show/hide a certain type in the tables below!","wpwt");
                ?><br>
@@ -1078,6 +1110,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                   </li>
                </ul>
     <?php }
+   }
 
     /** Show total points for a given weekend with additional link to
      * the archive to see the single parameter points if somewone is
@@ -1206,7 +1239,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     /** Show archive and/or current data
      * If input $pionts is true, loading points from database.
      */
-    function archive_show( $type, $tdate, $points = false, $showday = False ) {
+    function archive_show( $type, $tdate, $points = FALSE, $showday = FALSE, $mos = FALSE ) {
 
         global $wpdb;
         global $WTuser;
@@ -1263,9 +1296,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             }
 
         // ----------------------------------------------------------
-        // If type != 'bets' we are showing the observations.
+        // If type == 'obs' we are showing the observations.
         // ----------------------------------------------------------
-        } else {
+        } else if ( $type == "obs" ) {
             // If $showday is false: show all bet days 
             // Number of forecast days defined by wetterturnier_betdays setting.
             $betdays = $WTuser->init_options()->wetterturnier_betdays;
@@ -1286,6 +1319,30 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                     $this->date_format((int)$tdate+$showday,"%A"),
                     $this->date_format((int)$tdate+$showday),
                     __("Observation data","wpwt"));
+            }
+        // else type="mos" -> show only MOS bets 
+        } else {
+            $mos = TRUE;
+            $betdays = $WTuser->init_options()->wetterturnier_betdays;
+            for ( $day=1; $day<=$betdays; $day++ ) {
+               if ( is_numeric($showday) && $day != $showday ) { continue; }
+               $hash = sprintf("day_%d",$day);
+               $data->$hash = $this->get_bet_values($cityObj->get('ID'),$tdate,$day,$points,$userID=NULL,$mos);
+               $data->counter += count( (array) $data->$hash->data );
+            }
+
+            $nameth = "      <th class=\"user-name filter-match\" data-placeholder=\""
+                      .__("Name filter","wpwt")."\">".__("User","wpwt")."</th>\n";
+
+            // Title of the table
+            if ( is_bool($showday) ) {
+               printf("<h2>%s, %s</h2>\n",$this->date_format($tdate),__("MOS bets","wpwt"));
+            } else {
+               $tmp = (int)($tdate+$showday)*86400.;
+               $tmp = sprintf("%s %s",$this->date_format((int)$tdate+$showday,"%A"),
+                                      $this->date_format((int)$tdate+$showday));
+               echo "<h2>".sprintf(__("Day %d","wpwt"),$showday)
+                    .": ".$tmp.", ".__("MOS bets","wpwt")."</h2>\n";
             }
         }
 
@@ -1316,8 +1373,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             echo "<table id=\"".$tableid."\" class=\"wttable-show-".$type." wttable-show tablesorter ".$wttable_style."\">\n"
                 ."  <thead>\n"
                 ."    <tr>\n"
-                .$nameth;
-                //."      <th class=\"param-day filter-false align-center\">".__("Day","wpwt")."</th>";
+                .$nameth//;
+                //re
+                ."      <th class=\"param-day filter-false align-center\">".__("Day","wpwt")."</th>";
+                //re
                 // Adding header (parameter names)
                 if ( ! $showday ) {                        $params = $data->day_1->params; }
                 else { $hash = sprintf("day_%d",$showday); $params = $data->$hash->params; }
@@ -1335,7 +1394,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             foreach ( $data as $key=>$val ) {
                if ( preg_match('/^day_[0-9]{1,}/',$key) ) {
                   $day = (int)str_replace("day_","",$key);
-                  $this->show_bet_data_rows($data->$key,$day,$type,$points,$editable,$tdate);
+                  $this->show_bet_data_rows($data->$key,$day,$type,$points,$editable,$tdate,$mos);
                }
             }
 
@@ -1348,7 +1407,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
     /** Show archive and/or current data */
-    function show_bet_data_rows($data,$number,$type,$points=false,$editable=false,$tdate) {
+    function show_bet_data_rows($data,$number,$type,$points=false,$editable=false,$tdate,$mos=FALSE) {
 
         // Do I have to display observations?
         if ( strcmp($data->what,'obs') === 0 ) {
@@ -1364,8 +1423,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         $cityObj = $this->get_current_cityObj();
 
         // Convert $bet->betdate into "SAT/SUN" whatever
-        // $day = strftime('%a',$data->betdate * 86400 );
-
+        // re
+        $day = strftime('%a',$data->betdate * 86400 );
+        // re
 
         // Create all the rows
         foreach ( $data->data as $rec ) {
@@ -1392,9 +1452,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                $rec->userclass = "obs";
                $user_detail = $rec->user_login;
             } else {
-               $user = $this->get_user_display_class_and_name($rec->userID, $rec);
+               $user = $this->get_user_display_class_and_name($rec->userID, $rec, $mos);
                $rec->userclass = $user->userclass;
-               $user_detail = $this->get_user_profile_link( $rec );
+               $user_detail = $this->get_user_profile_link( $user );
             }
 
             // Create edit button for administrators
@@ -1404,8 +1464,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             // Show row
             printf("    <tr class='day-%d %s' userid='%d'>\n"
                   ."      <td class='username %s'>%s%s</td>\n"
+                  //re
+                  ."      <td class='day'>%s</td>\n"
+                  //re
                   ,$number,$rec->userclass,$rec->userID,
-                  $rec->userclass,$edit_button,$user_detail);
+                  //re $rec->userclass,$edit_button,$user_detail);
+                  $rec->userclass,$edit_button,$user_detail,$day);
 
             // Adding values
             foreach ( $data->params as $param ) {
@@ -1576,9 +1640,6 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       switch( $type ) {
          case "mean":
             $res = $this->mean($points);
-            if ($res === 0) {
-               return("N/A");
-            }
          break;
          case "median":
             $res = $this->median($points);
@@ -1595,6 +1656,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
          case "min":
             $res = min($points);
          break;
+      }
+      if ($res === 0) { 
+         return("N/A"); 
       }
       return $this->number_format( $res, 1 );
    }
@@ -1718,7 +1782,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        }
 
        # Parsing cities
-       if ( in_array($_REQUEST["type"], array("cities", "seasoncities")) ) {
+       if ( in_array($_REQUEST["type"], array("cities", "seasoncities")) || in_array($_REQUEST["type"], array("cities", "yearlycities")) ) {
           $cityObj = array();
           foreach ( explode(",", $_REQUEST["cities"]) as $cityID ) {
              array_push($cityObj, new wetterturnier_cityObject( (int)$cityID ));
@@ -2167,15 +2231,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                         }
                         $rec->rank = $rank;
                         // Display name/login_name
-                        if ( strlen($rec->display_name) > 0 ) {
-                           $rec->user_login = $rec->display_name;
-                        }
                         // Replace GRP_ hash
-                        $rec->user_login = preg_replace("/GRP_/","Gruppe: ",$rec->user_login);
+                        $rec->display_name = preg_replace("/GRP_/","",$rec->display_name);
                         ?>
                         <tr>
                            <td class="wt-leading-position"><?php print $rec->rank; ?></td>
-                           <td class="wt-leading-user"><darkblue><?php print $rec->user_login; ?></darkblue></td>
+                           <td class="wt-leading-user"><darkblue><?php print $rec->display_name; ?></darkblue></td>
                            <td class="wt-leading-points">
                               <?php print $this->number_format($rec->points,2); ?>
                            </td>
@@ -2216,8 +2277,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                if ( ! $hold_points )                   { $hold_points = $rec->points; }
                else if ( $hold_points > $rec->points ) { $hold_points = $rec->points; $rank = $rank+1; }
 
-               if ( strlen($rec->display_name) > 0 ) { $rec->user_login = $rec->display_name; }
-               $rec->user_login = preg_replace("/GRP_/","Gruppe: ",$rec->user_login);
+               $rec->display_name = preg_replace("/GRP_/","",$rec->display_name);
                // Rank string
                if ( $rank == 2 ) {
                   $rec->rank_string = sprintf("%d%s %s",$rank,__("nd","wpwt"),__("place","wpwt"));
@@ -2250,7 +2310,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                      <?php
                      printf("<info>%s</info><br>\n",$rec->rank_string);
                      print  "<bar></bar>";
-                     printf("<info class='color'>%s</info><br>",$rec->user_login);
+                     printf("<info class='color'>%s</info><br>", preg_replace("/GRP_/", "", $rec->display_name));
                      printf("<info class='color big'>%s</info>&nbsp;",$this->number_format($rec->points,2));
                      printf("<info class='color'>%s</info><br>",__("points","wpwt"));
 

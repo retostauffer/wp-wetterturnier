@@ -84,6 +84,7 @@ jQuery(document).on('ready',function() {
       // Loading selected values
       var sel_timestamp = $("#wt-mosdata-init").val()
       var sel_location  = $("#wt-mosdata-location").val()
+      //var sel_location  = city
       console.log(sel_timestamp)
       console.log(sel_location)
 
@@ -110,7 +111,7 @@ jQuery(document).on('ready',function() {
          });
       });
 /**
-      // Show links to raw flies below
+      // Show links to raw files below
       $(target).append("<div id=\"wt-mosforecasts-rawfiles\"><b>Raw files used:</b><ul></ul></div>")
       console.log( $(container).data().rawfiles )
       $.each( $(container).data().rawfiles, function(k,rawfile) {

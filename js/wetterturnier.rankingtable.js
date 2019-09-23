@@ -211,7 +211,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
                       // TODO: english translation
                       + "        <info>" + rec.rank_now + ". Platz</info><br>\n"
                       + "        <bar></bar>\n"
-                      + "        <info class=\"color\">" + idx + "</info><br>\n"
+                      + "        <info class=\"color\">" + idx.replace("GRP_", "") + "</info><br>\n"
                       + "        <info class=\"color big\">" + rec.points_now + "</info>&nbsp;\n"
                       + "        <info class=\"color\">points</info><br>\n"
                       + "        <bar></bar><info class=\"small\">" + data.meta.city + "&nbsp;" + data.meta.to + "</info><br>\n"

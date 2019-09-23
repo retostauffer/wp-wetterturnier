@@ -650,7 +650,6 @@ class wetterturnier_generalclass
         return( $this->next_tournament(1,false,$tdate,$backwards=false) );
     }
     
-
     /** We allow the user to enter and save the forecasts
      * partially. As soon as all required fields are provided (all
      * forecasts filled in and submitted) the wetterturnier plugin
@@ -692,7 +691,6 @@ class wetterturnier_generalclass
 
     }
 
-
     /** Checks whether the current user is in a specific group
      * or not (is group member).
      * @param $userID. Integer, numeric ID of the user.
@@ -711,6 +709,30 @@ class wetterturnier_generalclass
         if ( ! $res ) { return false; }
         if ( ! $res->active == 1 ) { return false; }
         return true;
+    }
+
+    /** Returns members of a group given by its groupName or ID.
+     *
+     * @param $groupName. String, actual name of group
+     * @parma $groupID. Integer, numeric groupID like in database.
+     *
+     * @return Returns `false` if the group does not exist or has no (active) members
+     *   else an array of the group members' userIDs is returned.
+     */
+
+    public function get_users_in_group( $groupName, $groupID=NULL, $active = FALSE ) {
+       global $wpdb;
+       if ( ! isset($groupID) ) {
+          $groupID = $wpdb->get_row(sprintf('SELECT groupID FROM %swetterturnier_groups WHERE groupName = \'%s\'', $wpdb->prefix, $groupName))->groupID;
+       }
+       $tmp = $wpdb->get_results(sprintf('SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d', $wpdb->prefix, $groupID));
+       $res = array();
+       foreach ( $tmp as $i ) {
+          array_push( $res, $i->userID );
+       }
+
+       if ( ! $res ) { return false; }
+       return $res;
     }
 
     /** Returns names of the groups the user is a member of.
@@ -771,7 +793,6 @@ class wetterturnier_generalclass
         return $res;
     }
 
-
     /** Sometimes I have to add a special userclass to some elements
      * to display them as I want. Therefore there is a small method
      * returning the userclass based on the uderID and the user_login
@@ -788,33 +809,41 @@ class wetterturnier_generalclass
      * the main class (automat, referenz, mitteltip, or Sleepy), 
      * `username` the modified username.
      */
-    public function get_user_display_class_and_name($userID,$usr) {
+    public function get_user_display_class_and_name($userID,$usr,$mos = FALSE) {
        if ( ! isset($usr->display_name) ) {
           $username = $usr->user_login;
        } else {
           $username = $usr->display_name;
        }
+       if ($mos) {
+          if ( strpos($usr->user_login, 'EZ') ) {
+            $userclass = "EZ";
+          } else if ( strpos($usr->user_login, 'GFS') ) {
+            $userclass = "GFS";
+          } else if ( strpos($usr->user_login, 'ICON') ) {
+            $userclass = "ICON";
+          } else if ( strpos($usr->user_login, 'MIX') || strpos($usr->user_login, 'Mix') || $usr->user_login == "Ms.Os" ) {
+            $userclass = "MIX";
+          }
+       } else {
        // Check if user is Automat or mix or so
        if      ( $this->check_user_is_in_group($userID, 'Automaten') ) {
           $userclass = 'automat';
        } else if      ( $this->check_user_is_in_group($userID, 'Referenztipps') ) {
           $userclass = 'referenz';
-          /*
-       } else if ( substr($usr->user_login,0,4) == 'GRP_' ) {
-          $userclass = 'mitteltip';
-          $username  = str_replace('GRP_','',$usr->user_login).' '.__('[group]','wpwt');
-          **/
-       } else if ( substr($usr->user_login,0,4) == 'GRP_' ) {
-          $userclass = 'mitteltip';
-          $username  = str_replace('GRP_', '', $usr->user_login);
        } else if ( $username == 'Sleepy' ) {
           $userclass = 'sleepy';
           $username  = sprintf('%s <span></span>',$usr->user_login);
        } else { $userclass = 'player'; }
+       } if ( substr($usr->user_login,0,4) == 'GRP_' ) {
+          $userclass = 'mitteltip';
+          $username  = str_replace('GRP_','',$usr->user_login).' '.__('[group]','wpwt');
+       }
        $res = new stdClass();
        $res->userclass    = $userclass;
        $res->display_name = $username;
        $res->user_login   = $usr->user_login;
+       $res->ID           = $userID;
        return( $res );
     }
 
@@ -824,12 +853,13 @@ class wetterturnier_generalclass
      * user profile (currently to bbpress /forum/users/<username>).
      */
     public function get_user_profile_link( $usr ) {
+       $userlink=bbp_get_user_profile_url($usr->ID);
        if ( ! isset($usr->display_name) ) {
-          $link = sprintf("<a href=\"/forums/users/%s/\" target=\"_self\">%s</a>",
-                          $usr->user_login, str_replace('GRP_', '', $usr->user_login));
+          $link = sprintf("<a href=\"%s\" target=\"_self\">%s</a>",
+                          $userlink, str_replace('GRP_', '', $usr->user_login));
        } else {
-         $link = sprintf("<a href=\"/forums/users/%s/\" target=\"_self\">%s</a>",
-         $usr->user_login, str_replace('GRP_', '', $usr->display_name));
+         $link = sprintf("<a href=\"%s\" target=\"_self\">%s</a>",
+         $userlink, str_replace('GRP_', '', $usr->display_name));
        }
        return( $link );
     }
@@ -1420,7 +1450,7 @@ class wetterturnier_generalclass
      * cityID, tdate and betdate (integer, +1/+2)
      * If input $pionts is true, loading points from database.
      */
-    function get_bet_values($city,$tdate,$betday,$points,$userID = NULL) {
+    function get_bet_values($city,$tdate,$betday,$points,$userID = NULL,$mos = FALSE) {
 
         global $wpdb;
 
@@ -1456,8 +1486,26 @@ class wetterturnier_generalclass
                ." WHERE b.cityID = %d "
                ." AND b.tdate = %d "
                ." AND b.betdate = %d ";
-        if ( isset($userID) ) { $sql .= "AND u.ID = ".$userID." "; }
-        $sql .= " ORDER BY u.user_nicename";
+           if ( $mos ) {
+              $mosIDs = $this->get_users_in_group("Automaten");
+              $mosSTR = "";
+              foreach ($mosIDs as $i) {
+                 $mosSTR .= sprintf("%s,", $i); 
+              }
+              $MOS = array("MOS", "MOS-Max","MOS-Min");
+              $MOSstats = "";
+              foreach ($MOS as $i ) {
+                 $MOSstats .= "\"GRP_"."$i"."\",";
+              }
+              $MOSstats = substr($MOSstats, 0, -1); 
+              foreach ($MOS as $i) {
+                $mosSTR .= sprintf("%s,", $this->get_user_ID($i, $type="group"));
+              }
+              //remove the last comma
+              $mosSTR = substr($mosSTR, 0, -1); 
+              $sql .= "AND u.ID IN(".$mosSTR.") ORDER BY IF(user_login IN(".$MOSstats."), 1, 0), u.user_nicename";
+           } else if ( isset($userID) ) { $sql .= "AND u.ID = ".$userID." ";
+           } else { $sql .= " ORDER BY u.user_nicename"; }
 
         // Getting data and initialize stdClass to store the
         // information necessary for displaying them.

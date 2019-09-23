@@ -86,11 +86,11 @@ function get_city_stats( $cityID, $userID ) {
       array_push($return, sprintf("<b>%d</b> %s %s %s %s %s",
                           $res->count,__("participations","wpwt"),__("between","wpwt"),
                           $first, __("and","wpwt"), $last) );
-array_push($return, sprintf("<table><tr><td>Average points:</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
-array_push($return, sprintf("<tr><td>Median points:</td><td><b>%s</b></td><tr>", number_format($pmed,1) ) );
-array_push($return, sprintf("<tr><td>Max points:</td><td><b>%s</b></td><tr>", number_format($pmax,1) ) );
-array_push($return, sprintf("<tr><td>Min points:</td><td><b>%s</b></td><tr>", number_format($pmin,1) ) );
-array_push($return, sprintf("<tr><td>Standard deviation:</td><td><b>%s</b></td><tr></table>", number_format($pstd,1) ) );
+array_push($return, sprintf(__("<table><tr><td>Average points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pavg,1) ) );
+array_push($return, sprintf(__("<tr><td>Median points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmed,1) ) );
+array_push($return, sprintf(__("<tr><td>Max points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmax,1) ) );
+array_push($return, sprintf(__("<tr><td>Min points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmin,1) ) );
+array_push($return, sprintf(__("<tr><td>Standard deviation:</td><td><b>%s</b></td><tr></table>","wpwt"), number_format($pstd,1) ) );
 
       return( join("\n",$return) );
 
