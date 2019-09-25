@@ -31,40 +31,36 @@ for ($day=1;$day<=$betdays;$day++) { array_push($showdays,$day);}
 $show_locked_info = true;
 $showday = 1;
 foreach ( $showdays as $showday ) {
-
+   //get current tournament object
    $current = $WTuser->current_tournament(0,false,0,true);
-   if ( $WTuser->check_allowed_to_display_betdata($current->tdate,$show_locked_info) )
-   {
-      // First day shows header, the rest doesn't
-      if ( $showday == 1 || is_bool($showday) ) { ?>
-         <div class="wt-twocolumn wrapper">
-            <div class="wt-twocolumn column-left" style="width: 65%;">
-               <?php
-               printf("<h3>%s: <b>%s, %s</b><h3>\n",__('Current tournament','wpwt'),
-                      $current->weekday,$current->readable);
-               //TODO: only show buttons if tournament is finished?>
-               <form method="post" action="<?php print $WTuser->curPageURL(); ?>">
-                  <input class="button" type="submit" name="values" value="<?php _e("Show Values","wpwt"); ?>" />
-                  <input class="button" type="submit" name="points" value="<?php _e("Show Points","wpwt"); ?>" />
-               </form>
-            </div>
-            <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
-               <?php $WTuser->archive_show_colorlegend(TRUE); ?>
-            </div>
-            <div style="clear: both;" class="wt-twocolumn footer"></div>
+   // First day shows header, the rest doesn't
+   if ( $showday == 1 || is_bool($showday) ) { ?>
+      <div class="wt-twocolumn wrapper">
+         <div class="wt-twocolumn column-left" style="width: 65%;">
+            <?php
+            printf("<h3>%s: <b>%s, %s</b><h3>\n",__('Current tournament','wpwt'),
+                   $current->weekday,$current->readable);
+            //TODO: only show buttons if tournament is finished?>
+            <form method="post" action="<?php print $WTuser->curPageURL(); ?>">
+               <input class="button" type="submit" name="values" value="<?php _e("Show Values","wpwt"); ?>" />
+               <input class="button" type="submit" name="points" value="<?php _e("Show Points","wpwt"); ?>" />
+            </form>
          </div>
-      <?php }
-      // run selection (does not work yet)
-      /**
-      foreach( array("21z","3z","9z") as $i ) {
-         if ( array_key_exists($i, $_REQUEST) )  {  $run  = $i;  } else { $run = "9z"; }
-      }
-      */
-      //echo $run;
-      if ( array_key_exists('points',$_REQUEST) )  {  $points  = true;  } else { $points = false; }
-      // Using a special method of archive_show() to only show MOS forecasts
-      $WTuser->archive_show( 'mos', $current->tdate, $points, $showday );
-   } else { $show_locked_info = false; } // Set flag to false
-
+         <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
+            <?php $WTuser->archive_show_colorlegend(TRUE); ?>
+         </div>
+         <div style="clear: both;" class="wt-twocolumn footer"></div>
+      </div>
+   <?php }
+   // run selection (does not work yet)
+   /**
+   foreach( array("21z","3z","9z") as $i ) {
+      if ( array_key_exists($i, $_REQUEST) )  {  $run  = $i;  } else { $run = "9z"; }
+   }
+   */
+   //echo $run;
+   if ( array_key_exists('points',$_REQUEST) )  {  $points  = true;  } else { $points = false; }
+   // Using a special method of archive_show() to only show MOS forecasts
+   $WTuser->archive_show( 'mos', $current->tdate, $points, $showday );
 }
 ?>
