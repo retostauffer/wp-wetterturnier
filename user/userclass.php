@@ -1354,7 +1354,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                printf("%s.<br>\n%s\n",
                      __('Sorry, no bet data available','wpwt'),
                      __('There is probably something going wrong?','wpwt'));
-            } else if ( $type == "bets" ) {
+            } else if ( $type == "obs" ) {
                printf("%s.<br>\n%s.\n",
                      __('Sorry, currently no observations available','wpwt'),
                      __('They will be displayed as soon as they are available','wpwt'));
