@@ -1005,7 +1005,7 @@ class wetterturnier_betclass
             }
             #wetterturnier-bet-form.landscape div title {
                float: left;
-               width: 10%;
+               width: 2.5%;
                overflow: hidden;
             }
             #wetterturnier-bet-form div ul {
@@ -1021,7 +1021,7 @@ class wetterturnier_betclass
             }
             #wetterturnier-bet-form.landscape div ul li {
                float: left;
-               width: 70px;
+               width: 65px;
                padding: 0;
             }
             #wetterturnier-bet-form.landscape div ul li long  { display: none;   }
@@ -1093,7 +1093,7 @@ class wetterturnier_betclass
       // ------------------------------------------------------------
       // Looping over all necessary forecast days
       // ------------------------------------------------------------
-      print "<h3 style=\"display: inline;\">BET FORM</h3>\n";
+      print "<h3 style=\"display: inline;\">".__("BET FORM","wpwt")."</h3>\n";
       printf("<span class=\"orientation\" orientation=\"%s\">[%s]</span><br>",
             $obj->defaultview,__("Switch orientation","wpwt"));
       printf("<form action='%s' method='post' class='%s' id='wetterturnier-bet-form'>\n",
@@ -1101,7 +1101,7 @@ class wetterturnier_betclass
    
       // Adding parameter description
       printf("<div id=\"wt-betform-parameter-wrapper\" class=\"wt-betform %s\">\n",$obj->defaultview);
-      printf("<title>%s</title>\n",__("Parameter","wpwt"));
+      printf("<title>&nbsp;</title>\n\r");//,__("Parameter","wpwt"));
       print "<ul>\n";
 
       // Adding one list element per parameter
@@ -1116,7 +1116,7 @@ class wetterturnier_betclass
       // Adding data ul's
       for ( $day=1; $day <= $obj->betdays; $day++ ) {
          $data = $WTuser->get_user_bets_from_db($cityObj,$userID,$tournament,$day);
-         $day_string = $WTuser->date_format( (int)$tournament->tdate + $day, "%A" ); 
+         $day_string = $WTuser->date_format( (int)$tournament->tdate + $day, "%a" ); 
          printf("<div id=\"wt-betform-%d-wrapper\" class=\"wt-betform %s\">\n",$day,$obj->defaultview);
          printf("<title>%s</title>\n",$day_string);
          print "<ul>\n";

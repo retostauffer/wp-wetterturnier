@@ -60,22 +60,22 @@ if ( empty( $_GET['tdate'] ) ) {
                <br style="clear: both;">
                <?php if ( is_object($older) ) { ?>
                <form style='float: left; padding-right: 3px;' method='post' action='<?php echo $aurl.'?tdate='.$older->tdate; ?>'>
-                   <input class="button" type="submit" value="<< <?php _e("older"); ?>">
+                   <input class="button" type="submit" value="<< <?php _e("older","wpwt"); ?>">
                </form>
                <?php } ?>
                <form style='float: left;' method="post" action="<?php print $WTuser->curPageURL(); ?>">
-                   <input class="button" type="submit" name="values" value="<?php _e("Show Values","wpwt"); ?>">
-                   <input class="button" type="submit" name="points" value="<?php _e("Show Points","wpwt"); ?>">
+                   <input class="button" type="submit" name="values" value="<?php _e("Values","wpwt"); ?>">
+                   <input class="button" type="submit" name="points" value="<?php _e("Points","wpwt"); ?>">
                </form>
                <?php if ( is_object($newer) ) { ?>
                <form style='float: left; padding-left: 3px;' method='post' action='<?php echo $aurl.'?tdate='.$newer->tdate; ?>'>
-                   <input class="button" type="submit" value="<?php _e("newer"); ?> >>">
+                   <input class="button" type="submit" value="<?php _e("newer","wpwt"); ?> >>">
                </form>
                <?php } ?>
                 
                <br><br>
-               <b><?php _e("Statistics","wpwt"); ?></b><br>
-               <table class="wttable-groups" style="min-width: 200px; width: 400px;">
+               <b><?php _e("Statistics (without Sleepy and Reference Tips)","wpwt"); ?></b><br>
+               <table style="min-width: 100px; width: 200px;">
 
                   <tr>
                      <td>
@@ -84,12 +84,13 @@ if ( empty( $_GET['tdate'] ) ) {
                      <td>
                         <?php print _e("Points","wpwt"); ?>
                   </tr>
+
                   <tr>
                      <td>
                         <desc><?php _e("Mean:","wpwt"); ?></desc>
                      </td>
                      <td>
-                        <?php print $WTuser->get_average_points($cityID, $tdate); ?>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "mean", False); ?>
                      </td>
                   </tr>
 
@@ -98,7 +99,7 @@ if ( empty( $_GET['tdate'] ) ) {
                         <desc><?php _e("Median:","wpwt"); ?></desc>
                      </td>
                      <td>
-                        <?php print $WTuser->get_average_points($cityID, $tdate, "median"); ?>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "median", False); ?>
                     </td>
                   </tr>
 
@@ -108,7 +109,7 @@ if ( empty( $_GET['tdate'] ) ) {
                         <desc><?php _e("Max:","wpwt"); ?></desc>
                      </td>
                      <td>
-                        <?php print $WTuser->get_average_points($cityID, $tdate, "max"); ?>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "max", False); ?>
                     </td>
                   </tr>
 
@@ -117,7 +118,7 @@ if ( empty( $_GET['tdate'] ) ) {
                         <desc><?php _e("Min:","wpwt"); ?></desc>
                      </td>
                      <td>
-                        <?php print $WTuser->get_average_points($cityID, $tdate, "min"); ?>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "min", False); ?>
                      </td>
                   </tr>
 
@@ -126,7 +127,7 @@ if ( empty( $_GET['tdate'] ) ) {
                         <desc><?php _e("Range:","wpwt"); ?></desc>
                      </td>
                      <td>
-                        <?php print $WTuser->get_average_points($cityID, $tdate, "spread"); ?>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "spread", False); ?>
                      </td>
                   </tr>
 
@@ -135,19 +136,29 @@ if ( empty( $_GET['tdate'] ) ) {
                         <desc><?php _e("Standard deviation:","wpwt"); ?></desc>
                      </td>
                      <td>
-                        <?php print $WTuser->get_average_points($cityID, $tdate, "sd"); ?>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "sd", False); ?>
                      </td>
                   </tr>
 
 
                   <tr>
                      <td>
-                        <desc><?php _e("Sleepy:","wpwt"); ?></desc>
+                        <desc><?php _e("Sleepy ranking:","wpwt"); ?></desc>
                      </td>
                      <td>
                         <?php print $WTuser->get_sleepy_points($cityID, $tdate); ?>
                      </td>
                   </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Participants:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "part", False); ?>
+                     </td>
+                  </tr>
+
                </table>
 
            </div>

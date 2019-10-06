@@ -852,8 +852,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
      * city (based on the bets, not on the obs. Should change that
      * probably).
      */
-    function archive_show_bet_data() {
-    
+    function archive_show_bet_data($type="tdate") {
+        //types: tdate, year, season
         global $wpdb;
     
         // Getting city information
@@ -1320,7 +1320,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                     $this->date_format((int)$tdate+$showday),
                     __("Observation data","wpwt"));
             }
-        // else type="mos" -> show only MOS bets 
+        // else show only MOS bets 
         } else {
             $mos = TRUE;
             $betdays = $WTuser->init_options()->wetterturnier_betdays;
@@ -1600,7 +1600,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
     // function to calculate the standard deviation 
     // of array elements 
-    public function sd( $arr ) {
+    public function sd( $arr, $bessel=1 ) {
         $variance = 0.0;
 
         foreach($arr as $i)
@@ -1610,16 +1610,17 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             $variance += pow(( $i - $this->mean($arr) ), 2);
         }
         if ( count($arr) != 0 ) {
-           return (float)sqrt( $variance / count($arr) );
+           return (float)sqrt( $variance / count($arr) - $bessel );
         } else {
            return(0);
         }
     }
 
    /** Loading average points from database */
-   public function get_average_points( $cityID=False, $tdate=False, $type="mean" ) {
+   public function get_average_points( $cityID=False, $tdate=False, $type="mean", $live=True ) {
 
       global $wpdb;
+      global $WTuser;
 
       // Take current cityID if missing input
       if ( ! $cityID ) {
@@ -1631,48 +1632,91 @@ class wetterturnier_userclass extends wetterturnier_generalclass
          $current = $this->current_tournament(0,false,0,true);
          $tdate   = $current->tdate;
       }
-      $sleepy = $this->get_user_by_username('Sleepy');
-      // Generate SQL statement
-      $sql = sprintf("SELECT points AS points FROM %swetterturnier_betstat WHERE tdate=%d "
-                    ."AND cityID=%d AND userID != %d",$wpdb->prefix,
-                     $tdate,$cityID,$sleepy->ID);
-      $res = $wpdb->get_results( $sql );
-      // print_r($res);
-      $points = array();
-      foreach ( $res as $i ) {
-         array_push($points, $i->points);
+      if ($live) {
+         $exclude = $this->get_users_in_group("Referenztipps");
+         $sleepy  = $this->get_user_by_username('Sleepy')->ID;
+         array_push( $exclude, $sleepy );
+         $exclude = "(".join(",", $exclude).")";
+
+         // Generate SQL statement
+         $sql = sprintf("SELECT points AS points FROM %swetterturnier_betstat WHERE tdate=%d "
+                    ."AND cityID=%d AND userID NOT IN %s",$wpdb->prefix,
+                     $tdate, $cityID, $exclude);
+
+	 $res = $wpdb->get_results( $sql );
+	 // print_r($res);
+	 $points = array();
+	 foreach ( $res as $i ) {
+	    array_push($points, $i->points);
+	 }
+         if (count($points) == 0) {
+            return "N/A";
+         }
+	 switch( $type ) {
+	    case "mean":
+	       $res = $this->mean($points);
+	    break;
+	    case "median":
+	       $res = $this->median($points);
+	    break;
+	    case "spread":
+	       $res = $this->spread($points);
+	    break;
+	    case "sd":
+	       $res = $this->sd($points);
+	    break;
+	    case "max":
+	       $res = max($points);
+	    break;
+	    case "min":
+	       $res = min($points);
+            break;
+            case "part":
+               return count($points);
+	    break;
+	 }
+	 return $this->number_format( $res, 1 );
+      } else {
+         // Generate SQL statement
+         $sql = sprintf("SELECT * FROM %swetterturnier_tdatestats WHERE tdate=%d "
+                       ."AND cityID=%d",$wpdb->prefix,$tdate,$cityID);
+         $res = $wpdb->get_results( $sql )[0];
+         switch( $type ) {
+            case "mean":
+               $res = $res->mean;
+            break;
+            case "median":
+               $res = $res->median;
+            break;
+            case "spread":
+               $res = $res->max - $res->min;
+            break;
+            case "sd":
+               $res = $res->sd;
+            break;
+            case "max":
+               $res = $res->max;
+            break;
+            case "min":
+               $res = $res->min;
+            break;
+            case "part":
+               return $res->part;
+            break;
+         }
+         if ($res === NULL) {
+            return("N/A");
+         }
+         return $this->number_format( $res, 1 );
+
       }
-      switch( $type ) {
-         case "mean":
-            $res = $this->mean($points);
-         break;
-         case "median":
-            $res = $this->median($points);
-         break;
-         case "spread":
-            $res = $this->spread($points);
-         break;
-         case "sd":
-            $res = $this->sd($points);
-         break;
-         case "max":
-            $res = max($points);
-         break;
-         case "min":
-            $res = min($points);
-         break;
-      }
-      if ($res === 0) { 
-         return("N/A"); 
-      }
-      return $this->number_format( $res, 1 );
    }
 
    /** Loading current sleepy points */
    public function get_sleepy_points( $cityID=False, $tdate=False ) {
       
       global $wpdb;
-
+      global $WTuser;
       // Take current cityID if missing input
       if ( ! $cityID ) {
          $cityID  = $this->get_current_city_id();
@@ -1684,6 +1728,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
          $tdate   = $current->tdate;
       } 
       $sleepy = $this->get_user_by_username('Sleepy');
+
       // Generate SQL statement
       $sql = sprintf("SELECT points FROM %swetterturnier_betstat WHERE tdate=%d "
                     ."AND cityID=%d AND userID = %d",$wpdb->prefix,

@@ -47,6 +47,8 @@ $show_locked_info = true;
 foreach ( $showdays as $showday ) {
 
    $current = $WTuser->current_tournament(0,false,0,true);
+   $tdate   = $current->tdate;
+   $cityID  = $WTuser->get_current_city_id();
    if ( $WTuser->check_allowed_to_display_betdata($current->tdate,$show_locked_info) )
    {
       // First day shows header, the rest doesn't
@@ -62,28 +64,93 @@ foreach ( $showdays as $showday ) {
                   <input class="button" type="submit" name="points" value="<?php _e("Show Points","wpwt"); ?>" />
                </form>
 
-               <b><?php _e("Current point status:","wpwt"); ?></b><br>
-               <table style="min-width: 200px; width: 400px;">
+               <b><?php _e("Preliminary Statistics:","wpwt"); ?></b><br>
+               <table style="min-width: 100px; width: 200px;">
+
                   <tr>
                      <td>
-                        <desc><?php _e("Average points this weekend:","wpwt"); ?></desc>
+                        <?php print _e("Measure","wpwt"); ?>
                      </td>
                      <td>
-                        <?php print $WTuser->get_average_points(); ?>
-                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
-                     </td>
+                        <?php print _e("Points","wpwt"); ?>
                   </tr>
+
                   <tr>
                      <td>
-                        <desc><?php _e("Judging for people without attendance:","wpwt"); ?></desc>
+                        <desc><?php _e("Mean:","wpwt"); ?></desc>
                      </td>
                      <td>
-                        <?php print $WTuser->get_sleepy_points(); ?>
-                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
-                     </td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate); ?>
                      </td>
                   </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Median:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "median"); ?>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Max:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "max"); ?>
+                    </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Min:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "min"); ?>
+                     </td>
+                  </tr>
+
+                 <tr>
+                     <td>
+                        <desc><?php _e("Range:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "spread"); ?>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Standard deviation:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "sd"); ?>
+                     </td>
+                  </tr>
+
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Sleepy:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_sleepy_points($cityID, $tdate); ?>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Participants:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "part"); ?>
+                     </td>
+                  </tr>
+
                </table>
+
             </div>
             <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
                <?php $WTuser->archive_show_colorlegend(); ?>
