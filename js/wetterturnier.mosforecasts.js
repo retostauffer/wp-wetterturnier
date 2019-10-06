@@ -109,7 +109,7 @@ jQuery(document).on('ready',function() {
                   .append("<td class=\"data column-right\">"+val[param][1]+"</td>")
          });
       });
-
+/**
       // Show links to raw flies below
       $(target).append("<div id=\"wt-mosforecasts-rawfiles\"><b>Raw files used:</b><ul></ul></div>")
       console.log( $(container).data().rawfiles )
@@ -117,6 +117,7 @@ jQuery(document).on('ready',function() {
          $("div#wt-mosforecasts-rawfiles > ul")
             .append("<li><a href=\""+rawfile+"\" target=\"_blank\">"+rawfile+"</a></li>");
       });
+**/
    }
 
    })(jQuery);

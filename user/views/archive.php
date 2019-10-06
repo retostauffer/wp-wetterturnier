@@ -45,14 +45,17 @@ if ( empty( $_GET['tdate'] ) ) {
         $newer = $WTuser->newer_tournament($_GET['tdate']);
         $aurl = explode('?', $_SERVER['REQUEST_URI'], 2);
         $aurl = 'http://'.$_SERVER['HTTP_HOST'].$aurl[0];
+        $cityID = $WTuser->get_current_cityObj()->get('ID');
+        $tdate  = $_GET['tdate'];
         ?>
 
          <div class="wt-twocolumn wrapper">
             <div class="wt-twocolumn column-left" style="width: 65%;">
                <?php
-               printf("%s: <b>%s, %s</b>\n",__('Current tournament','wpwt'),
+               printf("%s: <b>%s, %s (tdate=%s)</b>\n",__('Current tournament','wpwt'),
                     $WTuser->date_format($_GET['tdate'],'%A'),
-                    $WTuser->date_format($_GET['tdate']));
+                    $WTuser->date_format($_GET['tdate']),
+                    $_GET['tdate']);
                ?>
                <br style="clear: both;">
                <?php if ( is_object($older) ) { ?>
@@ -69,6 +72,81 @@ if ( empty( $_GET['tdate'] ) ) {
                    <input class="button" type="submit" value="<?php _e("newer"); ?> >>">
                </form>
                <?php } ?>
+               <br><br>
+               <b><?php _e("Statistics","wpwt"); ?></b><br>
+               <table style="min-width: 50px; width: 50px;">
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Mean:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate); ?>
+                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Max:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "max"); ?>
+                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Min:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "min"); ?>
+                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Median:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "median"); ?>
+                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("Spread:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "spread"); ?>
+                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td>
+                        <desc><?php _e("SD:","wpwt"); ?></desc>
+                     </td>
+                     <td>
+                        <?php print $WTuser->get_average_points($cityID, $tdate, "sd"); ?>
+                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
+                     </td>
+                  </tr>
+
+
+		  <tr>
+	             <td>
+		        <desc><?php _e("Sleepy:","wpwt"); ?></desc>
+	             </td>
+                     <td>
+                        <?php print $WTuser->get_sleepy_points($cityID, $tdate); ?>
+                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
+                     </td>
+                  </tr>
+               </table>
            </div>
            <div class="wt-twocolumn column-right colorlegend-wrapper" style="width: 33%;">
                <?php $WTuser->archive_show_colorlegend(); ?>

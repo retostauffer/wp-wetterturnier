@@ -335,7 +335,7 @@ break;
 
    // ---------------------------------------------------------------
    case "total":
-
+      // 15 weeks ranking
       // Need the last $args->weeks tournament weekends for this ranking
       // type. 
       $sql = array();
@@ -361,6 +361,35 @@ break;
       // Generate the title, using meta-info from the $ranking object
       $title = sprintf("%s %s %s %s %s",
                __("Total ranking for","wpwt"),$cityObj->get('name'),
+               $WTuser->date_format($tdates->from),__("to","wpwt"),
+               $WTuser->date_format($tdates->to));
+
+      break;
+
+   case "alltime":
+      $sql = array();
+      array_push($sql,sprintf("SELECT tdate FROM %swetterturnier_betstat", $wpdb->prefix));
+      array_push($sql,sprintf("WHERE cityID = %d AND tdate <= %d", $cityObj->get('ID'), $args->tdate));
+      array_push($sql,sprintf("GROUP BY tdate DESC"));
+
+      $dates = $wpdb->get_results(join(" ",$sql));
+      $dates = array(end($dates)->tdate,$args->tdate);
+
+      $tdates->from      = $dates[0];
+      $tdates->to        = $dates[1];
+      $tdates->from_prev = $dates[0];
+      $tdates->to_prev   = $WTuser->older_tournament($dates[1])->tdate;
+
+      # For navigation
+      $tdates->older     = $tdates->to_prev;
+      $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
+      if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
+
+      // Loading the data set
+      //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
+      // Generate the title, using meta-info from the $ranking object
+      $title = sprintf("%s %s %s %s %s",
+               __("Alltime ranking for","wpwt"),$cityObj->get('name'),
                $WTuser->date_format($tdates->from),__("to","wpwt"),
                $WTuser->date_format($tdates->to));
 

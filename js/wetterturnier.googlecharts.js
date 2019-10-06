@@ -136,7 +136,7 @@ jQuery(document).on('ready',function() {
 
 
       // ------------------------------------------------------------
-      // Returns points (weekend sum points) for one or multiple users.
+      // Returns number of participants over all tournament dates.
       // ------------------------------------------------------------
       function participants_counts( ajaxurl, target, inputs ) {
 

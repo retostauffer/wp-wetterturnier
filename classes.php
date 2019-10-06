@@ -379,7 +379,7 @@ class wetterturnier_paramObject {
       $this->data = $wpdb->get_row($sql);
 
       // Check for which stations the parameter is active for the current
-      // time stamp anf for which it isnt.
+      // time stamp and for which it isnt.
       $until = ( is_null($tdate) ) ? date("Y-m-d H:i:s") :
                strftime("%Y-%m-%d %H:%M:%S",(int)($tdate+1)*86400);
       $since = ( is_null($tdate) ) ? date("Y-m-d H:i:s") :
@@ -927,7 +927,7 @@ class wetterturnier_latestobsObject {
     /** Create and return json array.
      *
      * @param $encode. Default true, can be set to false, only for
-     * development purposes, du not use it in your code.
+     * development purposes, do not use it in your code.
      *
      * @return If `$encode` is set to `false`
      *   the array will be returned which will be converted to a 

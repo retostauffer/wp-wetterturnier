@@ -16,16 +16,17 @@
       <time>39</time>
       <time>42</time>
       <time>45</time>
+      <time>48</time>
    </times>
 
   <stations>
       <station>
-         <name>Coming soon!</name>
-         <imgname>Tegel</imgname>
+         <name>Overview Charts</name>
+         <imgname>wxdbz_D2_</imgname>
       </station>
       <station>
-         <name>Coming soon!</name>
-         <imgname>Schonefeld</imgname>
+         <name>Surface Pressure and Rain</name>
+         <imgname>surface_</imgname>
       </station>
     </stations>
 

@@ -3,6 +3,9 @@
 global $wpdb;
 global $WTuser;
 
+$cityObj = $WTuser->get_current_cityObj();
+$city    = $cityObj->get('name');
+
 // Access only for logged in users
 if ( $WTuser->access_denied() ) { return; }
 

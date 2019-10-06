@@ -120,17 +120,20 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
      * new messages or not.
      */
     function show_bbpmessages() {
-
+         /***
          function is_plugin_active( $plugin ) {
              return in_array( $plugin, (array) get_option( 'active_plugins', array() ) );
          }
+         
          if ( ! is_plugin_active('bbp-messages/index.php') ) { ?>
             <div class="wetterturnier-info error">
                This plugin relies on bbp-messages. The
                bbp-messages plugin is either not installed or not active
                on this system.
             </div>
+           
          <?php } else {
+         **/
             // Show message count and link to message platform
             $msg_count = (int)do_shortcode("[bbpm-unread-count]");
             $msg_link  = do_shortcode("[bbpm-messages-link]");
@@ -198,7 +201,7 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
 
     }
 
-}
+
 
 // Add widget to wordpress
 add_action('widgets_init', function() { register_widget("WP_wetterturnier_widget_bbpmessages"); });

@@ -46,7 +46,8 @@ if ( ! $inputs->daybyday ) {
 $show_locked_info = true;
 foreach ( $showdays as $showday ) {
 
-   $current = $WTuser->current_tournament(0,false,0,true);
+	$current = $WTuser->current_tournament(0,false,0,true);
+	// check whether tournament is closed yet, else show locked info.
    if ( $WTuser->check_allowed_to_display_betdata($current->tdate,$show_locked_info) )
    {
       // First day shows header, the rest doesn't
@@ -61,9 +62,7 @@ foreach ( $showdays as $showday ) {
                   <input class="button" type="submit" name="values" value="<?php _e("Show Values","wpwt"); ?>" />
                   <input class="button" type="submit" name="points" value="<?php _e("Show Points","wpwt"); ?>" />
                </form>
-
-               <b><?php _e("Current point status:","wpwt"); ?></b><br>
-               <table style="min-width: 200px; width: 400px;">
+                  <table style="min-width: 100px; width: 200px;">
                   <tr>
                      <td>
                         <desc><?php _e("Average points this weekend:","wpwt"); ?></desc>

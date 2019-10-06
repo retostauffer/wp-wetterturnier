@@ -184,7 +184,7 @@ jQuery(document).on('ready',function() {
          var station = $("#wt-cosmo-navigation .stations   ul li.selected").attr("station")
          var time    = $("#wt-cosmo-timeline               ul li.selected").attr("time")
          var image = "https://userpage.fu-berlin.de/mammatus95/cosmo/00/charts/"
-                   + "wxdbz_D2_"+time+".png"
+                   + station + time + ".png"
          $("#wt-cosmo-image").attr("src",image).error( function() {
             $(this).attr("src","/referrerdata/soundings_missing_image.png");
          });

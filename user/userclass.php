@@ -112,25 +112,25 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_shortcode( 'wetterturnier_bet',              array($this,'shortcode_wetterturnier_bet')           );
         add_shortcode( 'wetterturnier_applygroup',       array($this,'shortcode_wetterturnier_applygroup')    );
         add_shortcode( 'wetterturnier_groups',           array($this,'shortcode_wetterturnier_groups')        );
-
         add_shortcode( 'wetterturnier_ranking',          array($this,'shortcode_wetterturnier_ranking')   );
-        //add_shortcode( 'wetterturnier_leaderboard',      array($this,'shortcode_wetterturnier_leaderboard')   );
+        add_shortcode( 'wetterturnier_leaderboard',      array($this,'shortcode_wetterturnier_leaderboard')   );
         add_shortcode( 'wetterturnier_exportobsarchive', array($this,'shortcode_wetterturnier_exportobsarchive'));
         add_shortcode( 'wetterturnier_exportobslive',    array($this,'shortcode_wetterturnier_exportobslive')   );
 
-        add_shortcode( 'wetterturnier_googlecharts',       array($this,'shortcode_wetterturnier_googlecharts'));
+        add_shortcode( 'wetterturnier_googlecharts',     array($this,'shortcode_wetterturnier_googlecharts'));
         add_shortcode( 'wetterturnier_obsimages',        array($this,'shortcode_wetterturnier_obsimages') );
         add_shortcode( 'wetterturnier_obstable',         array($this,'shortcode_wetterturnier_obstable')  );
         add_shortcode( 'wetterturnier_meteogram',        array($this,'shortcode_wetterturnier_meteogram') );
         add_shortcode( 'wetterturnier_meteogramdata',    array($this,'shortcode_wetterturnier_meteogramdata') );
         add_shortcode( 'wetterturnier_mosforecasts',     array($this,'shortcode_wetterturnier_mosforecasts') );
+        add_shortcode( 'wetterturnier_mos',              array($this,'shortcode_wetterturnier_mos') );
         add_shortcode( 'wetterturnier_stationinfo',      array($this,'shortcode_wetterturnier_stationinfo') );
         add_shortcode( 'wetterturnier_stationparamdisabled', array($this,'shortcode_wetterturnier_stationparamdisabled') );
 
 // WINDY
 	add_shortcode( 'wetterturnier_windy', array($this,'shortcode_wetterturnier_windy') );
 
-
+// TODO: coefficients ranking
 // wetterturnier_moses
 
         add_shortcode( 'wc', array($this,'shortcode_wtcode') );
@@ -288,15 +288,25 @@ class wetterturnier_userclass extends wetterturnier_generalclass
      */
     function is_admin() { return( $this->is_admin ); }
 
+
+
+// TODO: check doesnt work, possible to add group application?
+
+
+
+    
    /** Append terms and conditions flag during registration */
    function wetterturnier_registration_form() {
       ?>
       <input type="checkbox" name="wt_accept"></input>
       <?php
-      printf("%s %s: <a href='%s' target='_blank'>%s</a>",__("They can be found here","wpwt"),
-             __("Before the registration you have to read and accept our terms and conditions!","wpwt"),
-             $this->get_terms_link(),__("Terms and Conditions","wpwt"));
-   }
+      printf("Before the registration you have to read and accept our terms and conditions!
+      They can be found here: <a href='%s' target='_blank'>%s</a>",
+             $this->get_terms_link(),__("(Terms and Conditions)","wpwt"));
+      printf(". Additionally, you have to enter your first and last names because we only want real people with their real names to participate in Wetterturnier. Thank you for your understanding!");
+    }
+
+
 
    /* ---------------------------------------------------------------
    /** Extends the bbpress profile page (see above,
@@ -548,6 +558,18 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         return($this->shortcode_include("views/bet.php"));
     }
 
+
+    // testing leaderboard
+    function shortcode_wetterturnier_leaderboard( $args ) {
+        $args = shortcode_atts( array('tdate'=>Null,
+                                      'city'=>false,
+                                      'style'=>"wide",
+                                      'number'=>5), $args );
+        if ( ! $args["city"] ) { $args["city"] = $this->get_current_cityObj()->get("ID"); }
+        return($this->shortcode_include("views/leaderboard.php", $args));
+    }
+    
+    
     /** The wetterturnier has different ranking tables like
      * daily rankings, seasonal ranking, total ranking,
      * and some more. This is a function including differnt ranking
@@ -570,6 +592,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // header=>true,        Hide header title and stuff
         // $args are the user-args, will be combined with de defaults.
         $args = shortcode_atts( array('type'=>'weekend',
+        // TODO: type=>'alltime' ranking
                                       'tdate'=>Null,
                                       'limit'=>false,
                                       'city'=>false,
@@ -581,7 +604,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         foreach ( array("slim", "hidebuttons", "header") as $key ) {
             $args[$key] = ( $args[$key] === "true" ) ? true : false;
         }
-        if ( ! in_array($args['type'], array('weekend','total','season','seasoncities','cities','yearly')) ) {
+        if ( ! in_array($args['type'], array('weekend','total','season','seasoncities','cities','yearly','alltime')) ) {
             return(sprintf("<div class=\"wetterturnier-info error\">%s</div>",
                 sprintf("Sorry, ranking of <b>type='%s'</b> unknown. Option wrong.",$args['type'])));
         }
@@ -622,6 +645,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
     function shortcode_wetterturnier_mosforecasts() {
         return($this->shortcode_include("views/mosforecasts.php"));
+    }
+    function shortcode_wetterturnier_mos() {
+        return($this->shortcode_include("views/mos.php"));
     }
 
     // Windy Plugin
@@ -884,7 +910,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         $date_sql = array();
         array_push($date_sql,'  SELECT tdate, COUNT(userID) AS players,');
         array_push($date_sql,'  MIN(points) AS pmin, MAX(points) AS pmax,');
-        array_push($date_sql,'  AVG(points) AS pavg');
+        array_push($date_sql,'  AVG(points) AS pavg, median(points) AS pmed');
         array_push($date_sql,'  FROM %swetterturnier_betstat');
         array_push($date_sql,'  WHERE cityID = %d AND tdate <= %d');
         array_push($date_sql,'  GROUP BY tdate');
@@ -923,7 +949,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         array_push($sql,'SELECT u.user_login AS user_login, u.ID AS userID,');
         array_push($sql,'d.tdate AS tdate, d.players AS players,');
         array_push($sql,'p.points AS points, d.pmin AS pmin, d.pmax AS pmax,');
-        array_push($sql,'d.pavg AS pavg FROM');
+        array_push($sql,'d.pavg AS pavg, d.pmed AS pmed FROM');
         array_push($sql,'(%s) AS d');
         array_push($sql,'LEFT OUTER JOIN');
         array_push($sql,'(%s) AS p');
@@ -981,11 +1007,14 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                 ."    <th>".__('Players','wpwt')."</th>\n"
                 ."    <th>".__('Winner','wpwt')."</th>\n"
                 ."    <th>".__('Points','wpwt')."</th>\n"
+                ."    <th>".__('Median','wpwt')."</th>\n"
                 ."    <th>".__('Stats','wpwt')."</th>\n"
                 ."  </tr>\n";
 
+            // TODO: column mean/median
+
             // Width of the points status bar
-            $max_width = 190;
+            $max_width = 300;
             foreach ( $data as $rec ) {
                 
                // Create link to the archive page
@@ -996,11 +1025,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                }
 
                $user  = $WTuser->get_user_display_class_and_name($rec->userID, $rec);
-               if ( $user->userclass == "mitteltip" ) {
-                  $user_name = $user->display_name;
-               } else {
-                  $user_name = $WTuser->get_user_profile_link( $user );
-               }
+               $user_name = $WTuser->get_user_profile_link( $user );
 
                // Create the status bar (max is 200)
                $w1 = max(0,(int)floor((float)$rec->points / 200. * (float)$max_width)); # last number is max width 
@@ -1025,7 +1050,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                     .$this->date_format($rec->tdate)."</a></td>\n";
                echo "    <td>".$rec->players."</td>\n";
                echo "    <td>".$user_name."</td>\n";
-               echo "    <td>".$this->number_format($rec->points,1)."/200</td>\n";
+               echo "    <td>".$this->number_format($rec->points,1)."</td>\n";
+               echo "    <td>".$this->number_format($rec->pmed,1)."\n";
                echo "    <td>".$sbar."</td>\n";
                echo "  </tr>\n";
             
@@ -1041,8 +1067,36 @@ class wetterturnier_userclass extends wetterturnier_generalclass
      * a certain type of players (e.g., mitteltips or automaten).
      * Is a bit static, however, works.
      */
-    function archive_show_colorlegend() { ?>
+    function archive_show_colorlegend( $mos=FALSE ) { ?>
                <?php
+               if ($mos) {
+               printf("<b>%s</b><br>\n",__("MOS type selection:","wpwt"));
+               _e("Just click on the buttons to show/hide a certain type in the tables below!","wpwt");
+               ?><br>
+               <ul>
+                  <li class="EZ">
+                     <span><input class="settings-button" type="submit" name="EZ" value="" /></span>
+                     <?php _e("EZ","wpwt"); ?>
+                  </li>
+                  <li class="GFS">
+                     <span><input class="settings-button" type="submit" name="GFS" value="" /></span>
+                     <?php _e("GFS","wpwt"); ?>
+                  </li>
+                  <li class="ICON">
+                     <span><input class="settings-button" type="submit" name="ICON" value="" /></span>
+                     <?php _e("ICON","wpwt"); ?>
+                  </li>
+                  <li class="MIX">
+                     <span><input class="settings-button" type="submit" name="MIX" value="" /></span>
+                     <?php _e("MIX","wpwt"); ?>
+                  </li>
+                  <li class="mitteltip">
+                     <span><input class="settings-button" type="submit" name="mitteltip" value="" /></span>
+                     <?php _e("Mean/Max/Min","wpwt"); ?>
+                  </li>
+               </ul>
+               <?php
+               } else {
                printf("<b>%s</b><br>\n",__("Color legend:","wpwt"));
                _e("Shows the color coding of the different player classes. Just click on the buttons to show/hide a certain type in the tables below!","wpwt");
                ?><br>
@@ -1069,6 +1123,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                   </li>
                </ul>
     <?php }
+	}
 
     /** Show total points for a given weekend with additional link to
      * the archive to see the single parameter points if somewone is
@@ -1195,16 +1250,16 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
 
     /** Show archive and/or current data
-     * If input $pionts is true, loading points from database.
+     * If input $points is true, loading points from database.
      */
-    function archive_show( $type, $tdate, $points = false, $showday = False ) {
+    function archive_show( $type, $tdate, $points = false, $showday = False, $mos = FALSE ) {
 
         global $wpdb;
         global $WTuser;
 
         // Just exit if input is wrong.
-        if ( $type != 'bets' & $type != 'obs' ) {
-            die('WRONG INPUT ON archive_show IN archive.php');
+        if ( ! in_array($type, array("obs", "bets", "mos")) ) {
+            die('WRONG INPUT ON archive_show() in userclass.php');
         }
 
         // Getting city information
@@ -1256,7 +1311,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // ----------------------------------------------------------
         // If type != 'bets' we are showing the observations.
         // ----------------------------------------------------------
-        } else {
+        } else if ( $type == "obs" ) {
             // If $showday is false: show all bet days 
             // Number of forecast days defined by wetterturnier_betdays setting.
             $betdays = $WTuser->init_options()->wetterturnier_betdays;
@@ -1278,7 +1333,33 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                     $this->date_format((int)$tdate+$showday),
                     __("Observation data","wpwt"));
             }
+
+        // else type="mos" -> show only MOS bets 
+		  } else {
+			  $mos = TRUE;
+            $betdays = $WTuser->init_options()->wetterturnier_betdays;
+            for ( $day=1; $day<=$betdays; $day++ ) {
+               if ( is_numeric($showday) && $day != $showday ) { continue; }
+               $hash = sprintf("day_%d",$day);
+               $data->$hash = $this->get_bet_values($cityObj->get('ID'),$tdate,$day,$points,$userID=NULL,$mos);
+               $data->counter += count( (array) $data->$hash->data );
+            }
+
+            $nameth = "      <th class=\"user-name filter-match\" data-placeholder=\""
+                      .__("Name filter","wpwt")."\">".__("User","wpwt")."</th>\n";
+
+            // Title of the table
+            if ( is_bool($showday) ) {
+               printf("<h2>%s, %s</h2>\n",$this->date_format($tdate),__("MOS bets","wpwt"));
+            } else {
+               $tmp = (int)($tdate+$showday)*86400.;
+               $tmp = sprintf("%s %s",$this->date_format((int)$tdate+$showday,"%A"),
+                                      $this->date_format((int)$tdate+$showday));
+               echo "<h2>".sprintf(__("Day %d","wpwt"),$showday)
+                    .": ".$tmp.", ".__("MOS bets","wpwt")."</h2>\n";
+            }
         }
+ 
 
         // If nothing is available, just show message
         if ( $data->counter == 0 ) { 
@@ -1288,9 +1369,13 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                printf("%s.<br>\n%s\n",
                      __('Sorry, no bet data available','wpwt'),
                      __('There is probably something going wrong?','wpwt'));
-            } else {
+            } else if ( $type == "obs" ) {
                printf("%s.<br>\n%s.\n",
                      __('Sorry, currently no observations available','wpwt'),
+                     __('They will be displayed as soon as they are available','wpwt'));
+            } else {
+            	printf("%s.<br>\n%s.\n",
+                     __('Sorry, currently no MOS forecasts available','wpwt'),
                      __('They will be displayed as soon as they are available','wpwt'));
             }
             echo "</div>\n";
@@ -1302,13 +1387,14 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             $wttable_style = (is_bool($wttable_style) ? "" : $wttable_style);
 
             // Open table output
+            if ( $type == "mos" ) { $type = "bets"; }
             if ( is_bool($showday) ) { $tableid = sprintf("wttable-show-%s",$type); }
             else { $tableid = sprintf("wttable-show-%s%d",$type,$showday); }
             echo "<table id=\"".$tableid."\" class=\"wttable-show-".$type." wttable-show tablesorter ".$wttable_style."\">\n"
                 ."  <thead>\n"
                 ."    <tr>\n"
-                .$nameth
-                ."      <th class=\"param-day filter-false align-center\">".__("Day","wpwt")."</th>";
+                .$nameth;
+                //."      <th class=\"param-day filter-false align-center\">".__("Day","wpwt")."</th>";
                 // Adding header (parameter names)
                 if ( ! $showday ) {                        $params = $data->day_1->params; }
                 else { $hash = sprintf("day_%d",$showday); $params = $data->$hash->params; }
@@ -1326,7 +1412,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             foreach ( $data as $key=>$val ) {
                if ( preg_match('/^day_[0-9]{1,}/',$key) ) {
                   $day = (int)str_replace("day_","",$key);
-                  $this->show_bet_data_rows($data->$key,$day,$type,$points,$editable,$tdate);
+                  $this->show_bet_data_rows($data->$key,$day,$type,$points,$editable,$tdate,$mos);
                }
             }
 
@@ -1339,7 +1425,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
     /** Show archive and/or current data */
-    function show_bet_data_rows($data,$number,$type,$points=false,$editable=false,$tdate) {
+    function show_bet_data_rows($data,$number,$type,$points=false,$editable=false,$tdate,$mos=FALSE) {
 
         // Do I have to display observations?
         if ( strcmp($data->what,'obs') === 0 ) {
@@ -1355,7 +1441,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         $cityObj = $this->get_current_cityObj();
 
         // Convert $bet->betdate into "SAT/SUN" whatever
-        $day = strftime('%a',$data->betdate * 86400 );
+        //$day = strftime('%a',$data->betdate * 86400 );
 
 
         // Create all the rows
@@ -1383,13 +1469,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                $rec->userclass = "obs";
                $user_detail = $rec->user_login;
             } else {
-               $user = $this->get_user_display_class_and_name($rec->userID, $rec);
+               $user = $this->get_user_display_class_and_name($rec->userID, $rec, $mos);
                $rec->userclass = $user->userclass;
-               if ( strcmp($user->userclass,"mitteltip") !== 0 ) {
-                  $user_detail = $this->get_user_profile_link( $rec );
-               } else {
-                  $user_detail = $user->display_name;
-               }
+               $user_detail = $this->get_user_profile_link( $rec );
             }
 
             // Create edit button for administrators
@@ -1399,8 +1481,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             // Show row
             printf("    <tr class='day-%d %s' userid='%d'>\n"
                   ."      <td class='username %s'>%s%s</td>\n"
-                  ."      <td class='day'>%s</td>\n",$number,$rec->userclass,$rec->userID,
-                  $rec->userclass,$edit_button,$user_detail,$day);
+                  ,$number,$rec->userclass,$rec->userID,
+                  $rec->userclass,$edit_button,$user_detail);
 
             // Adding values
             foreach ( $data->params as $param ) {
@@ -1494,9 +1576,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    }
 
    /** Loading average points from database */
-   public function get_average_points( $cityID=False, $tdate=False ) {
+   public function get_average_points( $cityID=False, $tdate=False, $type="mean" ) {
       
       global $wpdb;
+      global $WTuser;
 
       // Take current cityID if missing input
       if ( ! $cityID ) {
@@ -1507,15 +1590,97 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       if ( ! $tdate ) {
          $current = $this->current_tournament(0,false,0,true);
          $tdate   = $current->tdate;
-      } 
-      $sleepy = $this->get_user_by_username('Sleepy');
+      }
+      $exclude = $this->get_users_in_group("Referenztipps");
+      $sleepy  = $this->get_user_by_username('Sleepy')->ID;
+      array_push( $exclude, $sleepy );
+      $exclude = "(".join(",", $exclude).")";
+
       // Generate SQL statement
-      $sql = sprintf("SELECT AVG(points) AS points FROM %swetterturnier_betstat WHERE tdate=%d "
-                    ."AND cityID=%d AND userID != %d",$wpdb->prefix,
-                     $tdate,$cityID,$sleepy->ID);
-      $res = $wpdb->get_row( $sql );
-      return $this->number_format($res->points,1);
+      $sql = sprintf("SELECT points AS points FROM %swetterturnier_betstat WHERE tdate=%d "
+                    ."AND cityID=%d AND userID NOT IN %s",$wpdb->prefix,
+                     $tdate, $cityID, $exclude);
+      $res = $wpdb->get_results( $sql );
+      // print_r($res);
+      $points = array();
+      foreach ( $res as $i ) {
+         array_push($points, $i->points);
+      }
+      if (count($points) == 0) {
+         return "N/A";
+      }
+      switch( $type ) {
+         case "mean":
+            $res = $this->mean($points);
+         break;
+         case "median":
+            $res = $this->median($points);
+         break;
+         case "spread":
+            $res = $this->spread($points);
+         break;
+         case "sd":
+            $res = $this->sd($points);
+         break;
+         case "max":
+            $res = max($points);
+         break;
+         case "min":
+            $res = min($points);
+         break;
+      }
+      return $this->number_format( $res, 1 );
    }
+   
+   public function median( $arr ) {
+    sort($arr);
+    $count = count($arr);
+    $middleval = floor(($count-1)/2);
+    if ($count % 2) {
+        $median = $arr[$middleval];
+    } else {
+        $low = $arr[$middleval];
+        $high = $arr[$middleval+1];
+        $median = (($low+$high)/2);
+    }
+    return $median;
+}
+
+   public function spread( $arr ) {
+         sort($arr); 
+         $sml = $arr[0]; 
+         rsort($arr); 
+         $lrg = $arr[0]; 
+         $total = $lrg - $sml;
+      return( $total );
+    }
+
+    public function mean( $arr ) {
+         if ( count($arr) != 0 ) {
+            return( array_sum($arr) / count($arr) );
+         } else {
+            return(0);
+       }
+    }
+
+    // function to calculate the standard deviation 
+    // of array elements 
+    public function sd( $arr ) {   
+        $variance = 0.0; 
+          
+        foreach($arr as $i) 
+        { 
+            // sum of squares of differences between  
+                        // all numbers and means. 
+            $variance += pow(( $i - $this->mean($arr) ), 2); 
+        } 
+        if ( count($arr) != 0 ) {  
+           return (float)sqrt( $variance / count($arr) );
+        } else {
+           return(0);
+        } 
+    } 
+
 
    /** Loading current sleepy points */
    public function get_sleepy_points( $cityID=False, $tdate=False ) {
@@ -1994,20 +2159,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
        // Show login form
        printf("<h1 class='entry-title'>%s</h1>",__("Login form","wpwt"));
-       printf("<div id=\"login-restricted\">\n");
-       _e("Due to the European general data protection regulation (GDPR) we kindly "
-          ."ask you to accept our privacy policy before you login. "
-          ."As soon as you agree (click the button above) the login form will "
-          ."be shown.", "wpwt");
-       wp_login_form(array(
-           "remember"    => true,
-           "form_id"     => "restricted-login",
-           "id_username" => "restricted-user_login",
-           "id_password" => "restricted-user_pass",
-           "id_remember" => "restricted-rememberme",
-           "id_submit"   => "restricted-wp-submit"
-       ));
-       printf("</div>\n");
+       wp_login_form();
 
        return(True);
     }
@@ -2048,6 +2200,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       if ( ! $scored ) {
          $current = $this->older_tournament( $current->tdate );
       }
+      
+      // TODO: this function does not exist? ask RETO about it!
       $ranking = $this->get_ranking_data($cityObj,(int)$current->tdate);
 
       //// If the length of $res is equal to zero (or $res equals false)
@@ -2150,10 +2304,17 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                if ( strlen($rec->display_name) > 0 ) { $rec->user_login = $rec->display_name; }
                $rec->user_login = preg_replace("/GRP_/","Gruppe: ",$rec->user_login);
                // Rank string
-               if ( $rank == 2 ) {
-                  $rec->rank_string = sprintf("%d%s %s",$rank,__("nd","wpwt"),__("place","wpwt"));
-               } else {
-                  $rec->rank_string = sprintf("%d%s %s",$rank,__("th","wpwt"),__("place","wpwt"));
+               switch ( $rank ) {
+                  case 1:
+                     $th = "st"; break;
+                  case 2:
+                     $th = "nd"; break;
+                  case 3:
+                     $th = "rd"; break;
+                  default:
+                     $th = "th";
+                  break;
+                  $rec->rank_string = sprintf("%d%s %s",$rank,__($th,"wpwt"),__("place","wpwt"));
                }
 
                // Different classes for the widget and the front page (style=wide)

@@ -140,8 +140,8 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
 
         // Looping over all active cites
         if ( $reachable ) {
-            // Maximum age of the observations: 12 hours here
-            $nhours = 12;
+            // Maximum age of the observations: 3 hours here
+            $nhours = 3;
             $maxage = (int)date('U') - $nhours*3600;
             ?>
 
@@ -178,7 +178,10 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
 
             <?php
             // Show latest synop symbols
-            foreach ( $WTuser->get_current_cityObj()->stations() as $stnObj ) {
+	    foreach ( $WTuser->get_current_cityObj()->stations() as $stnObj ) {
+	
+               if ( $stnObj->get("active") != 1 ) { continue; }
+
                $image = sprintf("/referrerdata/SynopSymbols/synop_current_%d.png",$stnObj->get('wmo'));
                printf("<div class='wpwt-synopsymbol'>%s<br><img src=\"%s\"></img></div>\n",
                       $stnObj->get('wmo'), $image);
@@ -194,8 +197,11 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
 
             // Looping over all stations, print value/date/title
             // for the frontend
-            foreach ( $WTuser->get_current_cityObj()->stations() as $stnObj ) {
-                printf("<h3>%s [%d]</h3>",$stnObj->get('name'),$stnObj->get('wmo'));
+	    foreach ( $WTuser->get_current_cityObj()->stations() as $stnObj ) {
+		    
+		if ( $stnObj->get("active") != 1 ) { continue; }
+
+        	printf("<h3>%s [%d]</h3>",$stnObj->get('name'),$stnObj->get('wmo'));
                 $count = 0;
 
                 // Loading data from database
@@ -210,7 +216,7 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
                 }
 
                 $time = sprintf("%04d",$latestobsObj->get_value("stdmin"));
-                $time = sprintf("%02d:%02d",substr($time,0,2),substr($time,3,2));
+                $time = sprintf("%02d:%02d",substr($time,0,2),substr($time,2,4));
 
                 // Dry air temperature
                 $value = $latestobsObj->get_value( "t", Null, "%.1f" );

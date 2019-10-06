@@ -21,10 +21,12 @@ global $wpdb;
 global $WTuser;
 $args = (object)$args;
 
+$args->city = $this->get_current_cityObj()->get("ID");
+
 // Devel: show all php errors
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+print_r($args);
 $WTuser->show_leading((int)$args->city,(int)$args->tdate,
                       (int)$args->number,$args->style);
 ?>

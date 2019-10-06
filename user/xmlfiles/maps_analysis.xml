@@ -94,4 +94,17 @@
 
    </metoffice>
 
+   <!-- knmi surface analysis maps -->
+   <knmi>
+     <name>KNMI</name>
+     <atlantic>
+       <name>Atlantik</name>
+
+       <fronts>
+         <name>Frontenanalyse</name>
+         <interval>6</interval>
+       </fronts>
+
+     </atlantic>
+   </knmi>
 </analysis>

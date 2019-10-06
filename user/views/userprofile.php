@@ -56,6 +56,10 @@ function get_city_stats( $cityID, $userID ) {
       $tmp = sprintf("rank_%d",$rec->rank);
       $rankhistory->$tmp = $rec->count;
    }
+   
+   $sql  = sprintf("SELECT AVG(points) AS pavg FROM `wp_wetterturnier_betstat` WHERE userID=%s AND cityID=%s", $userID, $cityID);
+   $tmp = $wpdb->get_row($sql);
+   $pavg=$tmp->pavg;
    // Return string
    if ( $res->count > 0 ) {
       $return = array();
@@ -66,6 +70,7 @@ function get_city_stats( $cityID, $userID ) {
       array_push($return, sprintf("In total <b>%d</b> %s %s %s %s %s",
                           $res->count,__("participations","wpwt"),__("between","wpwt"),
                           $first, __("and","wpwt"), $last) );
+      array_push($return, sprintf("<br>Average points: <b>%s</b>", number_format($pavg,1) ) );
 
       return( join("\n",$return) );
 
@@ -96,12 +101,12 @@ global $WTuser;
 // Some user infos
 show_row(__("Username","wpwt"),         $user->display_name);
 show_row(__("Name","wpwt"),             $user->real_name);
-show_row(__("Registered since","wpwt"), $user->user_registered);
+show_row(__("Registered since","wpwt"), date("d. m. Y", strtotime($user->user_registered)));
 
 // Loading user bio for the current language
 $user_lang = $WTuser->get_user_language("slug");
 // Try to load user description based on user language
-$bio = get_user_meta($userID,sprintf("sescription_%s",$user_lang),true);
+$bio = get_user_meta($userID,sprintf("description_%s",$user_lang),true);
 if ( strlen($bio) == 0 ) {
    $bio = get_user_meta($userID,"description",true);
 }
