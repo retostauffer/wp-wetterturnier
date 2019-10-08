@@ -725,12 +725,13 @@ class wetterturnier_generalclass
        if ( ! isset($groupID) ) {
           $groupID = $wpdb->get_row(sprintf('SELECT groupID FROM %swetterturnier_groups WHERE groupName = \'%s\'', $wpdb->prefix, $groupName))->groupID;
        }
-       $tmp = $wpdb->get_results(sprintf('SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d', $wpdb->prefix, $groupID));
+       $sql = sprintf('SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d', $wpdb->prefix, $groupID);
+       if ($active) { $sql += " AND active=1"; }
+       $tmp = $wpdb->get_results( $sql );
        $res = array();
        foreach ( $tmp as $i ) {
           array_push( $res, $i->userID );
        }
-
        if ( ! $res ) { return false; }
        return $res;
     }

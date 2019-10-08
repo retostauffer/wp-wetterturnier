@@ -208,6 +208,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
         <?php // Getting user options first to set the 'selected' options.
         $wt_bo = get_user_option("wt_betform_orientation",$user->ID);
+        $wt_mo = get_user_option("wt_betform_mos",$user->ID);
         $wt_ts = get_user_option("wt_wttable_style",$user->ID);
         ?>
     
@@ -226,6 +227,25 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                       </option>
                    </select>
                    <span class="description"><?php printf("%s.",__("Select your default orientation","wpwt")); ?></span>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="wt_betform_mos">
+                <?php printf("%s:",_e("MOS forecasts on betform","wpwt")); ?>
+                </label></th>
+                <td>
+                   <select id="wt_betform_mos" name="wt_betform_mos">
+                      <option value="default" <?php print ((is_bool($wt_mo) | $wt_mo === "default") ? "selected" : ""); ?>>
+                         <?php _e("default","wpwt"); ?>
+                      </option>
+                      <option value="above" <?php print ($wt_mo === "above" ? "selected" : ""); ?>>
+                         <?php _e("above","wpwt"); ?>
+                      </option>
+                      <option value="below" <?php print ($wt_mo === "below" ? "selected" : ""); ?>>
+                         <?php _e("below","wpwt"); ?>
+                      </option>
+                   </select>
+                   <span class="description"><?php printf("%s.",__("Select if MOS forecasts should be shown on betform page (default=false)","wpwt")); ?></span>
                 </td>
             </tr>
             <tr>
@@ -263,13 +283,13 @@ class wetterturnier_userclass extends wetterturnier_generalclass
           return false;
     
        // Try to update. If update fails (entry did not exist): add
-       $check = update_user_meta( $user_id, 'wt_betform_orientation', $_POST['wt_betform_orientation'] );
-       if ( ! $check ) {
-          add_user_meta( $user_id, 'wt_betform_orientation', $_POST['wt_betform_orientation'], true );
-       }
-       $check = update_user_meta( $user_id, 'wt_wttable_style', $_POST['wt_wttable_style'] );
-       if ( ! $check ) {
-          add_user_meta( $user_id, 'wt_wttable_style', $_POST['wt_wttable_style'], true );
+       // TODO: foreach loop
+       $options = array( 'wt_betform_orientation', 'wt_betform_mos', 'wt_wttable_style', );
+       foreach($options as $o) {
+          $check = update_user_meta( $user_id, $o, $_POST[$o] );
+          if ( ! $check ) {
+             add_user_meta( $user_id, $o, $_POST[$o], true );
+          }
        }
     }
 
@@ -1633,7 +1653,15 @@ class wetterturnier_userclass extends wetterturnier_generalclass
          $tdate   = $current->tdate;
       }
       if ($live) {
+         // only include automatons NOT mitteltips and referenz in stats
+         $include = $this->get_users_in_group("Automaten");
+         $sql = sprintf("SELECT ID FROM %susers WHERE user_login LIKE \"%s\" AND ID NOT IN%s", $wpdb->prefix, "GRP_%", "(".join(",", $include).")");
+         $res = $wpdb->get_results( $sql );
+         //exclude all other in-group users
          $exclude = $this->get_users_in_group("Referenztipps");
+         foreach($res as $i) {
+            array_push($exclude, $i->ID);
+         }
          $sleepy  = $this->get_user_by_username('Sleepy')->ID;
          array_push( $exclude, $sleepy );
          $exclude = "(".join(",", $exclude).")";

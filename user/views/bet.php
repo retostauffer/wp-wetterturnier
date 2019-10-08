@@ -28,6 +28,9 @@ if ( ! is_user_logged_in() ) {
    wp_login_form( );
 } else {
 
+   if (get_user_option("wt_betform_mos") === "above") {
+      require_once( "mosforecasts.php" );
+   }
    // - Loading bet-class class
    require_once( sprintf("%s/../../betclass.php",dirname(__FILE__)) );
  
@@ -40,5 +43,10 @@ if ( ! is_user_logged_in() ) {
    }
    // - Looping over all groups
    $WTbetclass->print_form();
+
+   if (get_user_option("wt_betform_mos") === "below") {
+      require_once( "mosforecasts.php" );
+   }
+
 }
 ?>

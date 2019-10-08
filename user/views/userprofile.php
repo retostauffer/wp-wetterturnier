@@ -59,23 +59,20 @@ function get_city_stats( $cityID, $userID ) {
    }
    
    $tmp=array();
-   $measures=array("AVG(points) AS pavg", "median(points) AS pmed", "MAX(points) AS pmax", "MIN(points) AS pmin", "STDDEV(points) AS pstd");
-   foreach ($measures as $measure) {
-   $sql  = sprintf("SELECT %s FROM `wp_wetterturnier_betstat` WHERE userID=%s AND cityID=%s AND tdate < %d", $measure, $userID, $cityID, $tdatebefore);
-   /**
    $measures=array("mean AS pavg", "median AS pmed", "max AS pmax", "min AS pmin", "sd AS pstd");
    foreach ($measures as $measure) {
-   $sql  = sprintf("SELECT %s FROM `wp_wetterturnier_userstats` WHERE userID=%s AND cityID=%s", $measure, $userID, $cityID);
-   */
-   array_push($tmp, $wpdb->get_row($sql));
-   //$tmp = $wpdb->get_row($sql);
+      $sql  = sprintf("SELECT %s FROM `wp_wetterturnier_userstats` WHERE userID=%d AND cityID=%d", $measure, $userID, $cityID, $tdatebefore);
+      array_push($tmp, $wpdb->get_row($sql));
    }
-   $pavg=$tmp[0]->pavg;
-   $pmed=$tmp[1]->pmed;
-   $pmax=$tmp[2]->pmax;
-   $pmin=$tmp[3]->pmin;
-   $pstd=$tmp[4]->pstd;
-
+   if (!isset($tmp[0])) {
+      $pvag = $pmed = $pmax = $pmin = $pstd = NULL; 
+   } else {
+      $pavg = $tmp[0]->pavg;
+      $pmed = $tmp[1]->pmed;
+      $pmax = $tmp[2]->pmax;
+      $pmin = $tmp[3]->pmin;
+      $pstd = $tmp[4]->pstd;
+   }
    // Return string
    if ( $res->count > 0 ) {
       $return = array();
@@ -86,7 +83,7 @@ function get_city_stats( $cityID, $userID ) {
       array_push($return, sprintf("<b>%d</b> %s %s %s %s %s",
                           $res->count,__("participations","wpwt"),__("between","wpwt"),
                           $first, __("and","wpwt"), $last) );
-array_push($return, sprintf(__("<table><tr><td>Average points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pavg,1) ) );
+array_push($return, sprintf("<table style=\"width:200px;\"><tr><td>".__("Average points:","wpwt")."</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
 array_push($return, sprintf(__("<tr><td>Median points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmed,1) ) );
 array_push($return, sprintf(__("<tr><td>Max points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmax,1) ) );
 array_push($return, sprintf(__("<tr><td>Min points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmin,1) ) );
