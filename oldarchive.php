@@ -32,7 +32,7 @@ if ( is_null($cityObj) ) {
 }
 
 if ( ! preg_match("/^[0-9]{6}$/",$args->date) ) {
-	die("Sorry, could not understande date input.");
+	die("Sorry, could not understand date input.");
 }
 
 # Convert date if possible

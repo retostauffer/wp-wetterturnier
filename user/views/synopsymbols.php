@@ -58,7 +58,7 @@ div.wt-synopsymbol img {
 <script>
 jQuery(document).on('ready',function() {
    $ = jQuery
-   $("#wt-synsymb-container").wtsynopsymbols(<?php printf("[%s]",join(",",$stations)); ?>,{"show":5});
+   $("#wt-synsymb-container").wtsynopsymbols(<?php printf("[%s]",join(",",$stations)); ?>,{"show":6});
 });
 </script>
 

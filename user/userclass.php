@@ -245,7 +245,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                          <?php _e("below","wpwt"); ?>
                       </option>
                    </select>
-                   <span class="description"><?php printf("%s.",__("Select if MOS forecasts should be shown on betform page (default=false)","wpwt")); ?></span>
+                   <span class="description"><?php printf("%s.",__("Select if (and where) MOS forecasts should be shown on betform page (default=false)","wpwt")); ?></span>
                 </td>
             </tr>
             <tr>
@@ -284,7 +284,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     
        // Try to update. If update fails (entry did not exist): add
        // TODO: foreach loop
-       $options = array( 'wt_betform_orientation', 'wt_betform_mos', 'wt_wttable_style', );
+       $options = array( 'wt_betform_orientation', 'wt_betform_mos', 'wt_wttable_style' );
        foreach($options as $o) {
           $check = update_user_meta( $user_id, $o, $_POST[$o] );
           if ( ! $check ) {
@@ -1654,14 +1654,14 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       }
       if ($live) {
          // only include automatons NOT mitteltips and referenz in stats
-         $include = $this->get_users_in_group("Automaten");
-         $sql = sprintf("SELECT ID FROM %susers WHERE user_login LIKE \"%s\" AND ID NOT IN%s", $wpdb->prefix, "GRP_%", "(".join(",", $include).")");
-         $res = $wpdb->get_results( $sql );
-         //exclude all other in-group users
+         //$include = $this->get_users_in_group("Automaten");
+         //$sql = sprintf("SELECT ID FROM %susers WHERE user_login LIKE \"%s\" AND ID NOT IN%s", $wpdb->prefix, "GRP_%", "(".join(",", $include).")");
+         //$res = $wpdb->get_results( $sql );
+         //exclude Referenztipps (Moses, Petrus, Persistenzen)
          $exclude = $this->get_users_in_group("Referenztipps");
-         foreach($res as $i) {
-            array_push($exclude, $i->ID);
-         }
+         //foreach($res as $i) {
+         //   array_push($exclude, $i->ID);
+         //}
          $sleepy  = $this->get_user_by_username('Sleepy')->ID;
          array_push( $exclude, $sleepy );
          $exclude = "(".join(",", $exclude).")";
@@ -1708,7 +1708,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
          // Generate SQL statement
          $sql = sprintf("SELECT * FROM %swetterturnier_tdatestats WHERE tdate=%d "
                        ."AND cityID=%d",$wpdb->prefix,$tdate,$cityID);
-         $res = $wpdb->get_results( $sql )[0];
+         $res = $wpdb->get_results( $sql );
+         if ( empty($res) ) {
+            return("N/A");
+         } else {
+            $res = $res[0];
+         }
          switch( $type ) {
             case "mean":
                $res = $res->mean;

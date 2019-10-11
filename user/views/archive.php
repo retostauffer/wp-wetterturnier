@@ -74,7 +74,7 @@ if ( empty( $_GET['tdate'] ) ) {
                <?php } ?>
                 
                <br><br>
-               <b><?php _e("Statistics (without Sleepy, Group- and Reference Tips)","wpwt"); ?></b><br>
+               <b><?php _e("Statistics (without Sleepy and Reference Tips)","wpwt"); ?></b><br>
                <table style="min-width: 100px; width: 200px;">
 
                   <tr>
