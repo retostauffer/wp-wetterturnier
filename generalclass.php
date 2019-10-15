@@ -1306,14 +1306,15 @@ class wetterturnier_generalclass
      *
      * @see get_station_by_wmo
      */
-    function get_station_wmo_for_city( $cityID ) {
+    function get_station_wmo_for_city( $cityID, $betdate=NULL ) {
         global $wpdb;
-        $res = $wpdb->get_results(sprintf("SELECT wmo FROM %swetterturnier_stations "
-                            ." WHERE cityID = %d",$wpdb->prefix,$cityID));
+        $sql = "SELECT wmo FROM %swetterturnier_stations WHERE cityID = %d";
+        if (isset($betdate)) { $sql .= " AND (since <= ". $betdate ." OR since = 0) AND (until >= ". $betdate ." OR until = 0)"; }
+        $res = $wpdb->get_results(sprintf( $sql, $wpdb->prefix, $cityID ));
         return( $res );
     }
 
-    /** Loading observation data for a given cityID (both stations)
+    /** Loading station data for a given cityID (all stations)
      *
      * @param $cityID. Integer city ID.
      *
@@ -1323,10 +1324,11 @@ class wetterturnier_generalclass
      * @see get_station_wmo_for_city
      * @see get_station_by_wmo
      */
-    function get_station_data_for_city( $cityID ) {
+    function get_station_data_for_city( $cityID, $betdate=NULL ) {
         global $wpdb;
-        $res = $wpdb->get_results(sprintf("SELECT * FROM %swetterturnier_stations "
-                            ." WHERE cityID = %d",$wpdb->prefix,$cityID));
+        $sql = "SELECT * FROM %swetterturnier_stations WHERE cityID = %d";
+        if (isset($betdate)) { $sql .= " AND (since <= ". $betdate ." OR since = 0) AND (until >= ". $betdate ." OR until = 0)"; }
+        $res = $wpdb->get_results(sprintf( $sql, $wpdb->prefix, $cityID ));
         return( $res );
     }
 
@@ -1671,7 +1673,7 @@ class wetterturnier_generalclass
 
         global $wpdb;
 
-        $stations = $this->get_station_data_for_city( $city );
+        $stations = $this->get_station_data_for_city( $city, $betdate );
 
         $res       = new stdClass();
         $res->data = new stdClass();

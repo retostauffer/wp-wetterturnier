@@ -1560,7 +1560,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                    }
                 }
             }
-            // - If "points=true" we have summed up the points
+            // - If "points==true" we have summed up the points
             //   and show them in the last column of the table.
             if ( $points ) {
                echo "      <td class='data'>".$this->number_format($sumpoints,1)."</td>\n";
@@ -1620,14 +1620,15 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
     // function to calculate the standard deviation 
     // of array elements 
-    public function sd( $arr, $bessel=1 ) {
+    public function sd( $arr, $bessel=0 ) {
         $variance = 0.0;
+        $mean_arr = $this->mean($arr);
 
         foreach($arr as $i)
         {
             // sum of squares of differences between  
                         // all numbers and means. 
-            $variance += pow(( $i - $this->mean($arr) ), 2);
+            $variance += pow( $i - $mean_arr, 2);
         }
         if ( count($arr) != 0 ) {
            return (float)sqrt( $variance / count($arr) - $bessel );
@@ -2043,7 +2044,8 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       // Adding observations
       $ndays    = (int)$this->options->wetterturnier_betdays;
       $params   = $this->get_param_names();
-      $stations = $this->get_station_data_for_city( (int)$args->cityID );
+      $tdate    = $this->current_tournament()->tdate;
+      $stations = $this->get_station_data_for_city( (int)$args->cityID, $tdate );
       $uhash    = sprintf("uid_%d",(int)$args->userID); // property name userID
 
       // Looping over all forecast bet days
