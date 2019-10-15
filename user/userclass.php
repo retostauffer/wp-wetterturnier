@@ -1990,6 +1990,16 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       die();
 }
 
+
+//little debug helper-function, testing purposes only
+public function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output)) {
+        $output = implode(',', $output);
+    }
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+}
+
    /** Used for the ranking-frontend: display details of a certain
     * user. Dynamically loaded via an ajax call.
     */
@@ -2044,8 +2054,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       // Adding observations
       $ndays    = (int)$this->options->wetterturnier_betdays;
       $params   = $this->get_param_names();
-      $tdate    = $this->current_tournament()->tdate;
-      $stations = $this->get_station_data_for_city( (int)$args->cityID, $tdate );
+      $stations = $this->get_station_data_for_city( (int)$args->cityID, (int)$args->tdate );
+                  //$this->debug_to_console($stations);
+ 
       $uhash    = sprintf("uid_%d",(int)$args->userID); // property name userID
 
       // Looping over all forecast bet days
@@ -2082,19 +2093,21 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             array_push( $return, sprintf("  <tr>\n    <td>%s</td>\n", $rec->paramName) );
 
             // Adding user forecast
-            $user_forecast  = $data->$phash->value;
-            array_push( $return, sprintf("    <td>%s</td>\n",
-               $this->number_format($user_forecast,$obs->params->$phash->decimals)) );
+            if ( property_exists( $data, $phash ) and ! is_null($data->$phash->value) ) {
+               $user_forecast = $data->$phash->value;
+               array_push( $return, sprintf("    <td>%s</td>\n",
+               $this->number_format($user_forecast, $obs->params->$phash->decimals)) );
+            } else { $user_forecast  = "---"; array_push( $return, sprintf("    <td>%s</td>\n", $user_forecast)); }
 
             // Adding observations
             $user_deviation = array();
             foreach ( $stations as $stn ) {
-               $stnhash = sprintf("wmo_%d",$stn->wmo);
+               $stnhash = sprintf("wmo_%d", $stn->wmo);
                // Station has no data yet: property does not exist (add ---)
-               if ( ! property_exists($obs->data,$stnhash) ) {
+               if ( ! property_exists($obs->data, $stnhash) ) {
                   $value = "---";
                // This parameter has no observation yet (add ---)
-               } else if ( ! property_exists($obs->data->$stnhash,$phash) ) {
+               } else if ( ! property_exists($obs->data->$stnhash, $phash) ) {
                   $value = "---";
                } else {
                   $obs_value = $obs->data->$stnhash->$phash->value;
@@ -2117,7 +2130,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             }
 
             // Adding points
-            if ( ! is_null($points->$phash->value) ) {
+            if ( isset($points->$phash->value) ) {
                $value = $this->number_format($points->$phash->value,1);
             } else { $value = "---"; }
             array_push( $return, sprintf("    <td>%s</td>\n",$value) );

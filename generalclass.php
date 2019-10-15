@@ -519,9 +519,9 @@ class wetterturnier_generalclass
         }
 
         // Loading next tournament row
-        // NOTE there are two modes. Default is backwards == false menas that the system
+        // NOTE there are two modes. Default is backwards == false means that the system
         // is searching for the tournaments in the future. If backwards
-        // is true (actually only ued by current_tournament method) searches
+        // is true (actually only used by current_tournament method) searches
         // backwards in time.
         if ( ! $backwards ) {
             $sql = sprintf("SELECT tdate FROM %swetterturnier_dates "
@@ -546,7 +546,9 @@ class wetterturnier_generalclass
         }
 
         // Else take row with offset, if set
-        $row = $rows[$row_offset];
+        if ( array_key_exists($row_offset, $rows)) {
+           $row = $rows[$row_offset];
+        } else { $row = $rows[0]; }
 
         // Generate return object
         $next = new stdClass();
@@ -1556,7 +1558,7 @@ class wetterturnier_generalclass
                $dec  = $res->params->$hash->decimals;
                $unit = $res->params->$hash->unit;
                // Create propper value
-               $res->data->$uhash->$phash->value = (float)$rec->value/10.; 
+               $res->data->$uhash->$phash->value = (float)$rec->value/10.;
             }
             // If placedby is bigger than 0 (if it is, it is a userID) 
             if ( ! empty($rec->placedby) && $rec->placedby > 0 )
