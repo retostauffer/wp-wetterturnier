@@ -283,10 +283,15 @@ table.tablesorter tbody td {
    margin: 0px;
    cursor: pointer;
 }
+.wttable-show span.button.sleepy {
+   padding: 1px 3px;
+   margin: 0px;
+   background-image: url('../images/wetterturnier_sleepy.svg');
+}
 
+.wttable-show span.button.sleepy,
 .wttable-show span.button.small.detail,
-.wttable-show span.button.small.edit,
-.wttable-show span.button.small.blank {
+.wttable-show span.button.small.edit {
    background-position: center;
    background-repeat: no-repeat;
    min-width: 13px;
@@ -296,15 +301,13 @@ table.tablesorter tbody td {
    float: left;
    margin-right: 5px;
 }
+
 .wttable-show span.button.small.detail {
    background-image: url('../images/wetterturnier_detail.svg');
 }
 .wttable-show span.button.small.edit   {
    background-image: url('../images/wetterturnier_edit.svg');
    background-color: #0e9311;
-   float: right;
-}
-.wttable-show span.button.small.blank  {
    float: right;
 }
 .wttable-show span.button.small.detail:hover {

@@ -30,6 +30,6 @@ function file_get_contents_utf8($fn) {
 
 $date = date_create_from_format( "ymd", $date )->format("d.m.Y");
 
-echo nl2br("Datum: ".$date."\r\n\r\n");
+echo nl2br(__("Date: ","wpwt").$date."\r\n\r\n");
 echo nl2br( file_get_contents_utf8( $mosesfile.$c."pw" ) ); // get the contents, and echo it out.
 ?>

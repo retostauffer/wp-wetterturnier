@@ -366,8 +366,8 @@ class wetterturnier_rankingObject {
      */
     private function _get_detail_button( $userObj ) {
         if ( $userObj->display_name === "Sleepy" ) {
-           return( sprintf("%s",str_repeat("&nbsp;", 9))); }
-           // return( sprintf("<span class=\"button small blank\"") ); }
+           //return( sprintf("%s",str_repeat("&nbsp;", 9))); }
+           return( sprintf("<span class=\"button sleepy\"></span>") ); }
         else {
         return sprintf("<span class=\"button small detail\" userid=\"%d\" "
                       ."cityid=\"%d\" tdate=\"%d\"></span>",
