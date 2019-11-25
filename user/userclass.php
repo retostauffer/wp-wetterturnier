@@ -595,14 +595,14 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                                       'city'=>false,
                                       'cities'=>"1,2,3",
                                       'slim'=>false,
-                                      'weeks'=>15,
+                                      'weeks'=>false,
                                       'header'=>true,
                                       'hidebuttons'=>false,
                                       'legend'=>true), $args );
         foreach ( array("slim", "hidebuttons", "header") as $key ) {
             $args[$key] = ( $args[$key] === "true" ) ? true : false;
         }
-        if ( ! in_array($args['type'], array('weekend','total','season','seasoncities','yearlycities','cities','yearly','alltime')) ) {
+        if ( ! in_array($args['type'], array('weekend','total','season','seasoncities','yearlycities','cities','yearly')) ) {
             return(sprintf("<div class=\"wetterturnier-info error\">%s</div>",
                 sprintf("Sorry, ranking of <b>type='%s'</b> unknown. Option wrong.",$args['type'])));
         }
