@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 00:13+0000\n"
-"PO-Revision-Date: 2019-11-08 00:14+0000\n"
+"POT-Creation-Date: 2019-11-20 00:02+0000\n"
+"PO-Revision-Date: 2019-11-20 00:02+0000\n"
 "Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.1; wp-5.2.4"
+"X-Loco-Version: 2.3.1; wp-5.3"
 
 #: classes.php:600 user/userclass.php:809 admin/classes/webcams_list.php:49 admin/classes/api_list.php:72
 msgid "Description"
@@ -274,23 +274,31 @@ msgstr "Neuer"
 msgid "Points"
 msgstr "Punkte"
 
+#: rankingclass.php:82
+msgid "Sa"
+msgstr "Sa"
+
 #: rankingclass.php:83
+msgid "Su"
+msgstr "So"
+
+#: rankingclass.php:85
 msgid "Participations"
 msgstr "Teilnahmen"
 
-#: rankingclass.php:84
+#: rankingclass.php:86
 msgid "Diff"
 msgstr "Diff"
 
-#: rankingclass.php:85 user/userclass.php:1213 user/userclass.php:2051
+#: rankingclass.php:87 user/userclass.php:1213 user/userclass.php:2051
 msgid "Rank"
 msgstr "Rang"
 
-#: rankingclass.php:86 user/userclass.php:1305 user/userclass.php:1355 user/userclass.php:2317 admin/classes/bets_list.php:51
+#: rankingclass.php:88 user/userclass.php:1305 user/userclass.php:1355 user/userclass.php:2317 admin/classes/bets_list.php:51
 msgid "User"
 msgstr "Benutzername"
 
-#: rankingclass.php:87
+#: rankingclass.php:89
 msgid "The maximum score (total) for the ranking is"
 msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
 

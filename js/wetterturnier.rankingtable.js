@@ -1,4 +1,3 @@
-
 // Simply write jQuery to $
 $ = jQuery;
  
@@ -107,6 +106,8 @@ $.fn.show_ranking = function(ajaxurl, input) {
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                .append("<th class=\"points difference\">"+data.dict.difference+"</th>")
                .append("<th class=\"points\">"+data.dict.points+"</th>")
+//               .append("<th class=\"points\">"+data.dict.points_d1+"</th>")
+//               .append("<th class=\"points\">"+data.dict.points_d2+"</th>")
                .append("<th class=\"statusbar\"></th>");
 
       counter = 0;
@@ -137,6 +138,8 @@ $.fn.show_ranking = function(ajaxurl, input) {
                       rec.profile_link + "</td>")
                    .append("<td class=\"points difference\">"+rec.points_diff+"</td>")
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
+//                   .append("<td class=\"points\">"+rec.points_d1+"</td>")
+//                   .append("<td class=\"points\">"+rec.points_d2+"</td>")
                    .append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
 
           // Increase loop counter
@@ -247,5 +250,3 @@ $(document).on('ready',function() {
         $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
     });
 });
-
-

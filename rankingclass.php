@@ -79,6 +79,8 @@ class wetterturnier_rankingObject {
        $this->dict->older        = __("Older", "wpwt");
        $this->dict->newer        = __("Newer", "wpwt");
        $this->dict->points       = __("Points", "wpwt");
+//       $this->dict->points_d1    = __("Sa","wpwt");
+//       $this->dict->points_d2    = __("Su","wpwt");
        $this->dict->trend        = "+/-";
        $this->dict->played       = __("Participations", "wpwt");
        $this->dict->difference   = __("Diff", "wpwt");
@@ -242,7 +244,14 @@ class wetterturnier_rankingObject {
         # Create SQL command
         $sql = array();
         array_push($sql, sprintf("SELECT b.tdate, %s", $usercol));
-        array_push($sql, " SUM(b.points) AS points,"); //points_d1/d2
+        array_push($sql, " SUM(b.points) AS points,");
+/**
+        # sleepy has no points for d1/d2
+        if ( ! $deadmean ) {
+           array_push($sql, " SUM(b.points_d1) AS points_d1,");
+           array_push($sql, " SUM(b.points_d2) AS points_d2,");
+        }
+*/
         array_push($sql, " COUNT(*) AS played");
         array_push($sql, sprintf("FROM %susers AS u RIGHT OUTER JOIN", $this->wpdb->prefix));
         array_push($sql, sprintf("%swetterturnier_betstat AS b", $this->wpdb->prefix));
@@ -283,9 +292,11 @@ class wetterturnier_rankingObject {
                 $uhash = $rec->user_login;
                 if ( ! property_exists($res->data,$uhash) ) { $res->data->$uhash = new stdClass(); }
 
-                # Append tourmanet date to city
+                # Append tournament date to city
                 $thash = sprintf("tdate_%d",$rec->tdate);
-                $res->data->$uhash->$thash = $rec->points;
+                $res->data->$uhash->$thash    = $rec->points;
+//                $res->data->$uhash->$thash->points_d1 = $rec->points_d1;
+//                $res->data->$uhash->$thash->points_d2 = $rec->points_d2;                
                 $res->data->$uhash->userID = $rec->ID;
             }
         }
@@ -440,7 +451,7 @@ class wetterturnier_rankingObject {
         ///}
 
         # If caching is enabled: check if we can load the
-        # data from disc to ont re-calculate the ranking again.
+        # data from disc to avoid re-calculating the ranking.
         if ( $this->cache ) {
             $cache_file  = $this->_get_cache_file_name();
             if ( file_exists($cache_file) ) {
@@ -490,12 +501,15 @@ class wetterturnier_rankingObject {
 
                 # Default: 0 points
                 $points = 0;
+//                $points_d1 = 0; $points_d2 = 0;
                 # And not participated (default)
                 $played = 0;
 
                 # If user got points: use user points 
                 if ( property_exists($data, $thash) ) {
                     $points = $data->$thash;
+//                    $points_d1 = $data->$thash->points_d1;
+//                    $points_d2 = $data->$thash->points_d2;
                     $played = 1;
                 # Else check if deadman exists and has points for this
                 # specific tournament date ($thash).
@@ -524,12 +538,16 @@ class wetterturnier_rankingObject {
                     if ( $tdate >= $this->tdates->from_prev &&
                          $tdate <= $this->tdates->to_prev ) {
                         $ranking->pre->$user->points += $points;
+//                        $ranking->pre->$user->points_d1 += $points_d1;
+//                        $ranking->pre->$user->points_d2 += $points_d2;
                         $ranking->pre->$user->played += $played;
                     }
                 }
                 if ( $tdate >= $this->tdates->from &&
                      $tdate <= $this->tdates->to ) {
                     $ranking->now->$user->points += $points;
+//                    $ranking->now->$user->points_d1 += $points_d1;
+//                    $ranking->now->$user->points_d2 += $points_d2;
                     $ranking->now->$user->played += $played;
                 }
 
@@ -628,6 +646,9 @@ class wetterturnier_rankingObject {
             $final->$user = new stdClass();
             $final->$user->rank_now    = $rank->now[$idx];
             $final->$user->points_now  = $this->WTuser->number_format($ranking->now->$user->points,1);
+//            $final->$user->points_d1   = $this->WTuser->number_format($ranking->now->$user->points_d1,1);
+//            $final->$user->points_d2   = $this->WTuser->number_format($ranking->now->$user->points_d2,1);
+
             $final->$user->played_now  = $ranking->now->$user->played;
             $final->$user->points_relative = $ranking->now->$user->points / $points_max;
             $final->$user->points_diff = $this->WTuser->number_format($points_winner
