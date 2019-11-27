@@ -81,6 +81,7 @@ class wetterturnier_rankingObject {
        $this->dict->points       = __("Points", "wpwt");
 //       $this->dict->points_d1    = __("Sa","wpwt");
 //       $this->dict->points_d2    = __("Su","wpwt");
+//       $this->dict->points_adj   = __("Inflation-adjusted", "wpwt");
        $this->dict->trend        = "+/-";
        $this->dict->played       = __("Participations", "wpwt");
        $this->dict->difference   = __("Diff", "wpwt");
@@ -210,7 +211,7 @@ class wetterturnier_rankingObject {
      * >>>        )
      * >>>  )
      */
-    private function _get_data_object( $deadman = false ) {
+    private function _get_data_object( $deadman = false, $d1d2=false, $adj=false ) {
 
         # If $deadman is set to true: only fetch deadman data
         if ( $deadman ) {
@@ -246,8 +247,8 @@ class wetterturnier_rankingObject {
         array_push($sql, sprintf("SELECT b.tdate, %s", $usercol));
         array_push($sql, " SUM(b.points) AS points,");
 /**
-        # sleepy has no points for d1/d2
-        if ( ! $deadmean ) {
+        #carefull, sleepy has no points for d1/d2 and no points_adj!
+        if ( $d1d2 and ! $deadman ) {
            array_push($sql, " SUM(b.points_d1) AS points_d1,");
            array_push($sql, " SUM(b.points_d2) AS points_d2,");
         }

@@ -284,7 +284,8 @@ if( class_exists('WP_wetterturnier') )
                    "user/widgets/webcams",
                    "user/widgets/leading",
                    "user/widgets/latestobs",
-                   "user/widgets/bbpmessages");
+                   "user/widgets/bbpmessages",
+                   "user/widgets/windy");
     foreach( $files as $file ) {
         if ( ! defined(sprintf("included_%s",$file)) ) {
             require_once(sprintf("%s/%s.php", dirname(__FILE__),$file));

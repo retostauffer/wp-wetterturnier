@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-20 00:02+0000\n"
-"PO-Revision-Date: 2019-11-20 00:02+0000\n"
+"POT-Creation-Date: 2019-11-25 15:15+0000\n"
+"PO-Revision-Date: 2019-11-25 15:18+0000\n"
 "Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -273,14 +273,6 @@ msgstr "Neuer"
 #: user/userclass.php:2318 user/views/archive.php:68 user/views/archive.php:85 user/views/current.php:75
 msgid "Points"
 msgstr "Punkte"
-
-#: rankingclass.php:82
-msgid "Sa"
-msgstr "Sa"
-
-#: rankingclass.php:83
-msgid "Su"
-msgstr "So"
 
 #: rankingclass.php:85
 msgid "Participations"
@@ -806,7 +798,7 @@ msgstr "Werte anzeigen"
 msgid "Show Points"
 msgstr "Punkte anzeigen"
 
-#: user/views/archive.php:63 user/views/ranking.php:487
+#: user/views/archive.php:63 user/views/ranking.php:462
 msgid "older"
 msgstr "älter"
 
@@ -814,13 +806,13 @@ msgstr "älter"
 msgid "Values"
 msgstr "Werte"
 
-#: user/views/archive.php:72 user/views/ranking.php:492
+#: user/views/archive.php:72 user/views/ranking.php:467
 msgid "newer"
 msgstr "neuer"
 
 #: user/views/archive.php:77
-msgid "Statistics (without Sleepy and Reference Tips)"
-msgstr "Statistik (ohne Sleepy und Referenztipps)"
+msgid "Statistics"
+msgstr "Statistiken"
 
 #: user/views/archive.php:82 user/views/current.php:72
 msgid "Measure"
@@ -1127,8 +1119,7 @@ msgstr "Jahreszeitenwertung für"
 msgid "tournaments from"
 msgstr "Turniere vom"
 
-#: user/views/ranking.php:216 user/views/ranking.php:292 user/views/ranking.php:347 user/views/ranking.php:419
-#: user/views/ranking.php:449
+#: user/views/ranking.php:216 user/views/ranking.php:292 user/views/ranking.php:347 user/views/ranking.php:425
 msgid "to"
 msgstr "bis"
 
@@ -1148,19 +1139,19 @@ msgstr "Jahreswertung für"
 msgid "Ranking for"
 msgstr "Wertung für"
 
-#: user/views/ranking.php:418
-msgid "Total ranking for"
-msgstr "Gesamtwertung für"
+#: user/views/ranking.php:401
+msgid " weeks ranking for"
+msgstr "-Wochen-Wertung für"
 
-#: user/views/ranking.php:448
+#: user/views/ranking.php:404
 msgid "Alltime ranking for"
 msgstr "Allzeitwertung für"
 
-#: user/views/ranking.php:460
+#: user/views/ranking.php:435
 msgid "Sorry, cannot understand input 'type' for"
 msgstr "Sorry, Input 'type' nicht erkannt"
 
-#: user/views/ranking.php:528
+#: user/views/ranking.php:503
 msgid "Loading data ..."
 msgstr "Lade Daten ..."
 
