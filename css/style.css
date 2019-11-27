@@ -125,7 +125,7 @@ input[type="submit"].settings-button:hover {
 }
 
 /* Tables where the bets are displayed, e,g. archive */
-.wttable-show                          { min-width: 500px; table-layout: auto; }
+.wttable-show                          { table-layout: auto; }
 .wttable-show * td                     { font-size: 1.0em; }
 .wttable-show.small * td               { font-size: 1.0em; padding: 1px 5px; }
 /*.wttable-show * td.username            { font-weight: bold; }*/
@@ -425,7 +425,7 @@ div.wt-twocolumn.wrapper {
    height: auto;
 }
 
-/* Statusbar for singe playes (ranking paes) */
+/* Statusbar for single players (ranking pages) */
 span.ranking-statusbar {
    display: block;
    height: 15px;

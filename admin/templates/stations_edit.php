@@ -24,10 +24,10 @@ if ( $stnObj->get('cityID') > 0 ) {
 } else { $cityObj = NULL; }
 
 $REQ_URL = explode("?",$_SERVER['REQUEST_URI'],2);
-$CURRENT = sprintf("http://%s%s?page=%s",$_SERVER['HTTP_HOST'],$REQ_URL[0],$_REQUEST['page']);
-#$CURRENT = 'http://' . $_SERVER['HTTP_HOST'] . $REQ_URL[0]
+$CURRENT = sprintf("https://%s%s?page=%s",$_SERVER['HTTP_HOST'],$REQ_URL[0],$_REQUEST['page']);
+#$CURRENT = 'https://' . $_SERVER['HTTP_HOST'] . $REQ_URL[0]
 #          .'?page='.$_REQUEST['page']; 
-$CURRENT = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$CURRENT = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 ?>
 
 

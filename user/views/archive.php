@@ -44,7 +44,7 @@ if ( empty( $_GET['tdate'] ) ) {
         $older = $WTuser->older_tournament($_GET['tdate']);
         $newer = $WTuser->newer_tournament($_GET['tdate']);
         $aurl = explode('?', $_SERVER['REQUEST_URI'], 2);
-        $aurl = 'http://'.$_SERVER['HTTP_HOST'].$aurl[0];
+        $aurl = 'https://'.$_SERVER['HTTP_HOST'].$aurl[0];
         $cityID = $WTuser->get_current_cityObj()->get('ID');
         $tdate  = $_GET['tdate'];
 

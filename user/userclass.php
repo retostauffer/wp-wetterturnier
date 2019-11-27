@@ -1192,7 +1192,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             $older = $this->older_tournament($_GET['tdate']);
             $newer = $this->newer_tournament($_GET['tdate']);
             $aurl = explode('?', $_SERVER['REQUEST_URI'], 2);
-            $aurl = 'http://'.$_SERVER['HTTP_HOST'].$aurl[0];
+            $aurl = 'https://'.$_SERVER['HTTP_HOST'].$aurl[0];
             if ( ! in_array(strtolower($this->REQUEST_CHECK('wetterturnier_hidebuttons')),array('false')) ) { ?>
                 <form style='float: left; padding-right: 3px;' method='post' action='<?php echo $aurl.'?tdate='.$older->tdate; ?>'>
                     <input class="button" type="submit" value="<< <?php _e("older"); ?>">
