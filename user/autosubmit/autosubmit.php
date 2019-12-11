@@ -42,13 +42,13 @@ ini_set('display_errors', 0);
 // Including wp-config to have access to the WT plugin functions
 // and wordpress database. 
 require_once('../../../../../wp-config.php');
-// require_once('../../generalclass.php');
+require_once('../../generalclass.php');
 
 //TODO: this is nasty, better import fuction from generalclass! But it does'nt work somehow...
 // require( sprintf("../../generalclass.php") );
 function convert_tdate( $tdate, $fmt = "Y-m-d" ) {
     return( date( $fmt, (int)$tdate*86400 ) );
-    }
+}
 
 // Load betclass file if not yet loaded, initialize  WTbetclass
 if ( ! defined("loaded_betclass") ) {
@@ -120,7 +120,7 @@ printf( "Hello, %s!\n", $user->data->user_login );
 
 // Check if current user can place bets as admin, if tournament is actually closed already.
 
-$is_admin = isset( $user->allcaps["wetterturnier_admin"] );
+$is_admin = isset( $user->allcaps["wetterturnier_admin"] ) or check_user_is_in_group($user->ID, 'Automaten');
 
 if ( $is_admin ) {
    print "Admin mode enabled\n";
@@ -156,7 +156,6 @@ printf("%s\n",str_repeat("=",strlen($msg)));
 
 // If a tdate exists in $data use this torunament date instead of next_tournament(0,true)
 // Check via database query whether the submitted "tdate" was REALLY a tournament date.
-// TODO: Plus maybe check whether user is automaton/MOS to only allow MOS to do such dirty little things...
 
 
 if ( property_exists ( $data, 'tdate' ) ) {
@@ -172,6 +171,7 @@ if ( property_exists ( $data, 'tdate' ) ) {
       print "You sent a tdate argument which is actually the current tournament, not needed but OK!\n";
    }
    else if ( $is_admin ) {
+      $rerun = True;
       $next = $WTuser->next_tournament(0,true);
       if ( strcmp($tdate, $next->tdate) == 0 ) {
          print "No admin mode needed since given tdate == current tournament. Back to user mode\n";
@@ -222,13 +222,15 @@ print("\n");
 */
 
 $WTbetclass->write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=$admin, $whoami);
+
+// Save a rerun flag into the database such that we can re-run the computation of the requred tournaments as the observations changed.
+if ( isset($rerun) ) {
+   $rerun = array('userID'=>$user->ID,'cityID'=>$data->cityObj->get('ID'), 'tdate'=>$data->tdate);
+   $wpdb->insert(sprintf("%swetterturnier_rerunrequest",$wpdb->prefix), $rerun);
+}
+
 // maybe not needed but only to make sure, that tdate argument is 100% reset.
 $data->tdate=NULL;
 
-// TODO: force rerunrequest afterwards if an old tournament data was updated!
-
-// Save a rerun flag into the database such that we can re-run the computation of the requred tournaments as the observations changed.
-// $rerun = array('userID'=>get_current_user_id(),'cityID'=>$city->ID, 'tdate'=>$selected_tdate);
-// $wpdb->insert(sprintf("%swetterturnier_rerunrequest",$wpdb->prefix),$rerun);
 
 ?>
