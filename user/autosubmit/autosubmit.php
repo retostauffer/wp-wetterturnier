@@ -50,6 +50,20 @@ function convert_tdate( $tdate, $fmt = "Y-m-d" ) {
     return( date( $fmt, (int)$tdate*86400 ) );
 }
 
+function check_user_is_in_group( $userID, $groupName ) {
+     global $wpdb;
+     $res = $wpdb->get_row(
+                sprintf("SELECT gu.active FROM %swetterturnier_groups AS g "
+                       ."LEFT OUTER JOIN %swetterturnier_groupusers AS gu "
+                       ."ON g.groupID = gu.groupID "
+                       ."WHERE g.groupName = '%s' AND gu.userID = %d",
+                        $wpdb->prefix,$wpdb->prefix,$groupName,$userID));
+
+     if ( ! $res ) { return false; }
+     if ( ! $res->active == 1 ) { return false; }
+     return true;
+}
+
 // Load betclass file if not yet loaded, initialize  WTbetclass
 if ( ! defined("loaded_betclass") ) {
     require_once( sprintf("../../betclass.php") );
@@ -119,8 +133,8 @@ $user = wp_signon( $creds, false );
 printf( "Hello, %s!\n", $user->data->user_login );
 
 // Check if current user can place bets as admin, if tournament is actually closed already.
-
-$is_admin = isset( $user->allcaps["wetterturnier_admin"] ) or check_user_is_in_group($user->ID, 'Automaten');
+#$is_admin = isset( $user->allcaps["wetterturnier_admin"] ) or check_user_is_in_group($user->ID, 'Automaten');
+$is_admin = isset( $user->allcaps["wetterturnier_admin"] );
 
 if ( $is_admin ) {
    print "Admin mode enabled\n";

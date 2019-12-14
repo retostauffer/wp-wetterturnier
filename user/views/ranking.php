@@ -201,7 +201,7 @@ switch ( $args->type ) {
       $tdates->from_prev = $dates[0];
       $tdates->to_prev   = $WTuser->older_tournament(min($tdates->latest,$dates[1]))->tdate;
 
-      // Hide trend if season has lies in the past
+      // Hide trend if season lies in the past
       if ( $tdates->to < $WTuser->newer_tournament($tdates->latest)->tdate ) {
           $tdates->from_prev = $tdates->to_prev = Null;
       }
@@ -215,7 +215,8 @@ switch ( $args->type ) {
                __("tournaments from","wpwt"),
                $WTuser->date_format($tdates->from),__("to","wpwt"),
                $WTuser->date_format($tdates->to));
-break;
+      break;
+
 
    // ---------------------------------------------------------------
    // Specific settings for "seasoncities"

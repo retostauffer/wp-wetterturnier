@@ -158,7 +158,7 @@ class wetterturnier_rankingObject {
                                      $this->tdates->from_prev, $this->tdates->to_prev);
             $this->tdates->max = max($this->tdates->from, $this->tdates->to,
                                      $this->tdates->from_prev, $this->tdates->to_prev);
-            $this->calc_trend = true;
+            $this->calc_trend = false;
         }
 
         // If 'max' > 'latest':
@@ -295,7 +295,7 @@ class wetterturnier_rankingObject {
 
                 # Append tournament date to city
                 $thash = sprintf("tdate_%d",$rec->tdate);
-                $res->data->$uhash->$thash    = $rec->points;
+                $res->data->$uhash->$thash = $rec->points;
 //                $res->data->$uhash->$thash->points_d1 = $rec->points_d1;
 //                $res->data->$uhash->$thash->points_d2 = $rec->points_d2;                
                 $res->data->$uhash->userID = $rec->ID;
@@ -519,7 +519,6 @@ class wetterturnier_rankingObject {
                         $points = $deadman->$thash;
                     }
                 }
-
                 # Adding points
                 # We have to check whether the points fall in the
                 # previous time period (from_prev, to_prev) or/and
@@ -553,9 +552,13 @@ class wetterturnier_rankingObject {
                 }
 
             }
+            #drop players who not participated at all in the ranking, workaround for strange bug
+            #TODO: investigate on this quirk, if clause should not be neccesary (actually)!
+            if ( $ranking->now->$user->played == 0 )
+               { unset($ranking->now->$user); }
         }
-
-        # If tdates->from == tdates-> to (only one weekend)
+        
+        # If tdates->from == tdates->to (only one weekend)
         # we drop the players which have _not_ participated
         # on this specific weekend. Else they would show up
         # getting the sleepy-points.

@@ -125,7 +125,7 @@ input[type="submit"].settings-button:hover {
 }
 
 /* Tables where the bets are displayed, e,g. archive */
-.wttable-show                          { table-layout: auto; }
+.wttable-show                          { table-layout: auto; display: table; width: 100%; }
 .wttable-show * td                     { font-size: 1.0em; }
 .wttable-show.small * td               { font-size: 1.0em; padding: 1px 5px; }
 /*.wttable-show * td.username            { font-weight: bold; }*/
