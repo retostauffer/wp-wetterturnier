@@ -58,10 +58,8 @@ function check_user_is_in_group( $userID, $groupName ) {
                        ."ON g.groupID = gu.groupID "
                        ."WHERE g.groupName = '%s' AND gu.userID = %d",
                         $wpdb->prefix,$wpdb->prefix,$groupName,$userID));
-
-     if ( ! $res ) { return false; }
-     if ( ! $res->active == 1 ) { return false; }
-     return true;
+     if ( $res->active == 1 ) { return True; }
+     else { return False; }
 }
 
 // Load betclass file if not yet loaded, initialize  WTbetclass
@@ -133,8 +131,7 @@ $user = wp_signon( $creds, false );
 printf( "Hello, %s!\n", $user->data->user_login );
 
 // Check if current user can place bets as admin, if tournament is actually closed already.
-#$is_admin = isset( $user->allcaps["wetterturnier_admin"] ) or check_user_is_in_group($user->ID, 'Automaten');
-$is_admin = isset( $user->allcaps["wetterturnier_admin"] );
+$is_admin = isset( $user->allcaps["wetterturnier_admin"] ) || check_user_is_in_group($user->ID, 'Automaten');
 
 if ( $is_admin ) {
    print "Admin mode enabled\n";
