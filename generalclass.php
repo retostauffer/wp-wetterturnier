@@ -671,16 +671,21 @@ class wetterturnier_generalclass
 
         global $wpdb;
         $return = new stdClass();
-        $return->submitted = NULL;
+        $return->submitted = false;
         $return->placed    = NULL;
         // Check if we have received full bet (all fine)
-        $res = $wpdb->get_row( sprintf("SELECT submitted FROM %swetterturnier_betstat "
+        $res = $wpdb->get_row( sprintf("SELECT COUNT(value) AS vals FROM %swetterturnier_bets "
                ." WHERE userID = %d AND cityID = %d AND tdate = %d",
                $wpdb->prefix, $userID, $cityObj->get('ID'), $tdate));
-        if ( ! $res )                                 { $return->submitted = false; }
-        else if ( ! $res->submitted )                 { $return->submitted = false; }
-        else if ( strtotime( $res->submitted ) < 0 )  { $return->submitted = false; }
-        else                                          { $return->submitted = $res->submitted; }
+
+        //"24" should rather be defined by a variable, TODO: so ndays
+
+        $params = $wpdb->get_row( sprintf("SELECT paramconfig AS params FROM %swetterturnier_cities "
+                ."WHERE ID = %d", $wpdb->prefix, $cityObj->get('ID')) )->params;
+        $nparams = count( explode(",", substr($params, 1, -1) ) );
+
+        //if ( $res->vals == 24 )                        { $return->submitted = true; }
+        if ( $res->vals == $nparams*2 )                  { $return->submitted = true; }
 
         // Else check when the last submission was (bets table)
         $res = $wpdb->get_row( sprintf("SELECT max(placed) AS placed FROM %swetterturnier_bets "

@@ -42,7 +42,9 @@ ini_set('display_errors', 0);
 // Including wp-config to have access to the WT plugin functions
 // and wordpress database. 
 require_once('../../../../../wp-config.php');
-require_once('../../generalclass.php');
+//require_once('../../generalclass.php');
+require_once( sprintf("%s/../../generalclass.php", dirname(__FILE__)) );
+
 
 //TODO: this is nasty, better import fuction from generalclass! But it does'nt work somehow...
 // require( sprintf("../../generalclass.php") );
