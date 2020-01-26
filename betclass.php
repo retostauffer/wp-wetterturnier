@@ -418,7 +418,7 @@ class wetterturnier_betclass
             $key = sprintf("%s_%s",$hash,$param);
             if ( property_exists($cval,'error') ) { 
                $data->checknotes[$key] = sprintf("Value check ERROR:   %s",$cval->error);
-               $val = NULL; 
+               $val = $cval->value;
                //unset($data->$hash->$param); continue;
             } else if ( property_exists($cval,'warning') ) { 
                $data->checknotes[$key] = sprintf("Value check WARNING: %s",$cval->warning);

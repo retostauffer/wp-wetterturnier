@@ -13,7 +13,8 @@ $WTuser->include_js_script("wetterturnier.synopsymbols");
 $res = $wpdb->get_results(sprintf("SELECT wmo FROM %swetterturnier_stations "
 //               ."WHERE cityID = %d AND active = 1 ORDER BY wmo ASC", 
                ."WHERE active = 1 ORDER BY wmo ASC",
-               $wpdb->prefix, $cityObj->get("ID")));
+//               $wpdb->prefix, $cityObj->get("ID")));
+               $wpdb->prefix));
 $stations = array();
 foreach ( $res as $rec ) { array_push($stations,$rec->wmo); }
 ?>

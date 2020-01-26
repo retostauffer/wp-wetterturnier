@@ -26,10 +26,10 @@ function show_row($key,$value) {
 function get_city_stats( $cityID, $userID ) {
 
    global $WTuser, $wpdb;
-   // Do not show results for today - number of bet days
+   // Do not show results for today - number of bet days - 1 (until Tuesday in wetterturnier)
    // To show only fully finished tournaments in this 'stats'
    $tdatebefore    = (int)$WTuser->options->wetterturnier_betdays;
-   $tdatebefore    = (int)(time()/86400) - $tdatebefore;
+   $tdatebefore    = (int)(time()/86400) - $tdatebefore - 1;
  
    $sql  = "SELECT min(tdate) AS min, max(tdate) AS max, count(tdate) AS count";
    $sql .= sprintf(" FROM %swetterturnier_betstat",$wpdb->prefix);

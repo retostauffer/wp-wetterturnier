@@ -156,14 +156,15 @@ class wetterturnier_cityObject {
     * method loads the stations and stores them into the array
     * $this->stations. Executed everytime a :php:class:`wetterturnier_cityObject`
     * object is initialized.
-    * 
+    * if $activeonly == true (default) only active stations are loaded
+    *  
     * @return The method has no return, writes the results into an `array` on the
     *   attribute `stations` of the this object.
     */
-   private function _load_stations() {
+   private function _load_stations($activeonly = true) {
 
-      $sql = sprintf("SELECT ID FROM %swetterturnier_stations WHERE cityID = %d;",
-                     $this->wpdb->prefix,$this->get('ID'));
+      $sql = sprintf("SELECT ID FROM %swetterturnier_stations WHERE cityID = %d%s;",
+                     $this->wpdb->prefix,$this->get('ID'), ($activeonly ? " AND active = 1" : "") );
       $res = $this->wpdb->get_results($sql);
 
       // Loading station information

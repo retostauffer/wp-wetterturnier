@@ -716,7 +716,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
      */
     function shortcode_wetterturnier_stationinfo( ) {
        $res = array("<ul>");
-       foreach ( $this->get_all_cityObj() as $cityObj ) {
+       foreach ( $this->get_all_cityObj($activeonly = true) as $cityObj ) {
           // Fetching stations
           $stations = array();
           foreach ( $cityObj->stations() as $stnObj ) {
@@ -2231,10 +2231,7 @@ public function debug_to_console($data) {
        // Else the user is not logged in, show message and return True
        printf("<h1>%s</h1>\n",__("Access denied","wpwt"));
        printf("<div class=\"wetterturnier-info error\">%s</div>",
-             __("The access for some pages is restricted to registered and "
-               ."logged in users only. You are not logged in at the moment. "
-               ."To see the content of this specific page, please login first. "
-               ."Thank you four your understanding.","wpwt") ); 
+             __("The access for some pages is restricted to registered and logged in users only. You are not logged in at the moment! To see the content of this specific page, please login first. Thank you four your understanding.","wpwt") ); 
 
        // Show login form
        printf("<h1 class='entry-title'>%s</h1>",__("Login form","wpwt"));

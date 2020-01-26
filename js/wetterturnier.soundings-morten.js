@@ -144,7 +144,7 @@ jQuery(document).on('ready',function() {
             $(target).find("ul")
                .append("<li station='"+val.imgname+"'>" + val.name + "</li>")
             // If match:
-            // alert(val.imgname)
+            //alert(val.imgname)
             if ( selected == val.imgname ) { $(target).find("ul li").last().addClass("selected") } 
          });
          // Appending interactive functionality

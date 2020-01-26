@@ -563,7 +563,7 @@ class wetterturnier_generalclass
         // call check_view_is_closed because this will
         // crash (loop inside the class)
         if ( $row_offset == 0 & $check_access ) {
-            $next->closed = $this->check_view_is_closed( $row->tdate, $next );
+            $next->closed = $this->check_view_is_closed( $row->tdate, $next ); //next ???
         } else if ( $row_offset > 0 ) {
             $next->closed = true;
         } else {
@@ -1281,12 +1281,13 @@ class wetterturnier_generalclass
      *
      * @see wetterturnier_stationObject
      */
-    public function get_all_stationObj( $cityID = NULL ) {
+    public function get_all_stationObj( $cityID = NULL, $activeonly = true ) {
         global $wpdb;
         $sql = array();
-        array_push($sql,sprintf("SELECT ID FROM %swetterturnier_stations ",$wpdb->prefix));
+        $active = ($activeonly == true ? 1 : 0);
+        array_push($sql,sprintf("SELECT ID FROM %swetterturnier_stations WHERE active = %d ", $wpdb->prefix, $active));
         if ( ! is_null($cityID) & is_numeric($cityID) ) {
-           array_push($sql,sprintf("WHERE cityID = %d",$cityID));
+           array_push($sql,sprintf("AND cityID = %d",$cityID));
         }
         // Fetching data from database
         $res = $wpdb->get_results( join(" ",$sql) );
