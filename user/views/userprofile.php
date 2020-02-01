@@ -73,6 +73,7 @@ function get_city_stats( $cityID, $userID ) {
       $pmin = $tmp[3]->pmin;
       $pstd = $tmp[4]->pstd;
    }
+
    // Return string
    if ( $res->count > 0 ) {
       $return = array();
@@ -83,12 +84,14 @@ function get_city_stats( $cityID, $userID ) {
       array_push($return, sprintf("<b>%d</b> %s %s %s %s %s",
                           $res->count,__("participations","wpwt"),__("between","wpwt"),
                           $first, __("and","wpwt"), $last) );
-array_push($return, sprintf("<table style=\"width:200px;\"><tr><td>".__("Average points:","wpwt")."</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
-array_push($return, sprintf(__("<tr><td>Median points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmed,1) ) );
-array_push($return, sprintf(__("<tr><td>Max points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmax,1) ) );
-array_push($return, sprintf(__("<tr><td>Min points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmin,1) ) );
-array_push($return, sprintf(__("<tr><td>Standard deviation:</td><td><b>%s</b></td><tr></table>","wpwt"), number_format($pstd,1) ) );
 
+      if ($pavg !== NULL) {
+         array_push($return, sprintf("<table style=\"width:200px;\"><tr><td>".__("Average points:","wpwt")."</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
+         array_push($return, sprintf(__("<tr><td>Median points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmed,1) ) );
+         array_push($return, sprintf(__("<tr><td>Max points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmax,1) ) );
+         array_push($return, sprintf(__("<tr><td>Min points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmin,1) ) );
+         array_push($return, sprintf(__("<tr><td>Standard deviation:</td><td><b>%s</b></td><tr></table>","wpwt"), number_format($pstd,1) ) );
+      }
       return( join("\n",$return) );
 
    } else {

@@ -177,7 +177,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          <option value="" selected>Select a plot type first</option>
          <option value="timeseries_user_points">Timeseries Points</option>
          <!--<option value="timeseries_user_points">Timeseries Parameter Points</option>-->
-         <option value="participants_counts">Participants counts</option>
+         <!--<option value="participants_counts">Participants counts</option>-->
       </select>
    </div>
    <div id="paramID">
