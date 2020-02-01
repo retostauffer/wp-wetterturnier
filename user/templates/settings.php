@@ -32,14 +32,14 @@
             switch ( $status ) {
                 case 'free':
                     echo '<span style="color: red;">NOTHING SET IN '
-                        .'TURNAMENT CALENDAR!!!</span>';
+                        .'TOURNAMENT CALENDAR!!!</span>';
                     break;
                 case 'changeover':
-                    echo 'Next weekend is a turnament weekend.';
+                    echo 'Next weekend is a tournament weekend.';
                     break;
                 case 'booked':
                     echo 'Next weekend is <span style="color: red;">NO '
-                        .'turnament weekend.</span>';
+                        .'tournament weekend.</span>';
                     break;
                 default:
                     echo 'Undefined status ['.$status.']';

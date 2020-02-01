@@ -7,7 +7,7 @@
 ///        uninstalled from the wordpress installation.
 ///
 /// @details At the moment there is no uninstall procedure. 
-/// @todo Should ask the use wheter he is sure to uninstall the
+/// @todo Should ask the use whether he is sure to uninstall the
 ///   plugin. If 'yes': drop data from database and delete the
 ///   wordpress plugin options.
 // ------------------------------------------------------------------
@@ -18,7 +18,7 @@
 
    global $wpdb;
 
-   $sql     = sprintf("select option_name from %soptions where option_name like \"wetterturnier_%\"",
+   $sql     = sprintf("SELECT option_name FROM %soptions WHERE option_name LIKE \"wetterturnier_%\"",
                       $wpdb->prefix);
    // Fetch all option name wetterturnier_*
    $options = $wpdb->get_results( $sql );

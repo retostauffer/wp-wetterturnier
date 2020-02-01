@@ -94,6 +94,7 @@ class wetterturnier_chartHandler {
       array_push($sql,join(",\n",$playerdata));
       array_push($sql,"FROM");
       array_push($sql,sprintf("  (SELECT tdate, %s AS points FROM %swetterturnier_betstat",$args->column,$this->wpdb->prefix));
+      #TODO get sleepy ID!
       array_push($sql,sprintf("   WHERE userID = 1130 and cityID = %d ) AS dead",$args->cityID));
 
       for ( $i=0; $i < count($users); $i++ ) { 

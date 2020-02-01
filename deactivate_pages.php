@@ -25,7 +25,7 @@ function wp_wetterturnier_remove_the_page($lang) {
 
 }
 
-// If the polylang plugin is active we have to add the pages
+// If the polylang plugin is active we have to remove the pages
 // for EACH of the languages!
 if ( add_action('is_plugin_active','polylang') ) {
     foreach ( pll_languages_list() as $lang ) {

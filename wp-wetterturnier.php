@@ -103,7 +103,7 @@ if(!class_exists('WP_wetterturnier'))
           add_option(   "wetterturnier_bet_closingtime", "1500","","yes");
           
           delete_option("wetterturnier_bet_closingoffset");
-          add_option(   "wetterturnier_bet_closingoffset", "5","","yes");
+          add_option(   "wetterturnier_bet_closingoffset", "1","","yes");
 
           delete_option('wetterturnier_calendar_ndays');
           add_option(   'wetterturnier_calendar_ndays', 50, '', 'yes');
@@ -116,69 +116,21 @@ if(!class_exists('WP_wetterturnier'))
           // THE PLUGIN INSERTS SOME
           // SAMPLE DATA IF THE TABLES DO NOT EXIST
           // Create wetterturnier data table if not existing!
-          $table = $wpdb->prefix . "wetterturnier_bets";
-          if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
-              $sql = file_get_contents(sprintf('%s/demodb/bets.sql',dirname(__FILE__)));
-              $sql = explode(";",str_replace("%table%",$table,$sql));
-              foreach ( $sql as $cmd ) {
-                  $wpdb->query($cmd);
-              }
-          }
-          // Create wetterturnier groups table 
-          $table = $wpdb->prefix . "wetterturnier_groups";
-          if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
-              $sql = file_get_contents(sprintf('%s/demodb/groups.sql',dirname(__FILE__)));
-              $sql = explode(";",str_replace("%table%",$table,$sql));
-              foreach ( $sql as $cmd ) {
-                  $wpdb->query($cmd);
-              }
-          }
-          // Create wetterturnier groupusers table (which user in which group) 
-          $table = $wpdb->prefix . "wetterturnier_groupusers";
-          if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
-              $sql = file_get_contents(sprintf('%s/demodb/groupusers.sql',dirname(__FILE__)));
-              $sql = explode(";",str_replace("%table%",$table,$sql));
-              foreach ( $sql as $cmd ) {
-                  $wpdb->query($cmd);
-              }
-          }
-          // Create wetterturnier parameter table
-          $table = $wpdb->prefix . "wetterturnier_param";
-          if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
-              $sql = file_get_contents(sprintf('%s/demodb/parameter.sql',dirname(__FILE__)));
-              $sql = explode(";",str_replace("%table%",$table,$sql));
-              foreach ( $sql as $cmd ) {
-                  $wpdb->query($cmd);
-              }
-          }
-          // Create cities table 
-          $table = $wpdb->prefix . "wetterturnier_cities";
-          if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
-              $sql = file_get_contents(sprintf('%s/demodb/cities.sql',dirname(__FILE__)));
-              $sql = explode(";",str_replace("%table%",$table,$sql));
-              foreach ( $sql as $cmd ) {
-                  $wpdb->query($cmd);
-              }
-          }
-          // Create obs table 
-          $table = $wpdb->prefix . "wetterturnier_obs";
-          if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
-              $sql = file_get_contents(sprintf('%s/demodb/obs.sql',dirname(__FILE__)));
-              $sql = explode(";",str_replace("%table%",$table,$sql));
-              foreach ( $sql as $cmd ) {
-                  $wpdb->query($cmd);
-              }
-          }
-          // Create stations table 
-          $table = $wpdb->prefix . "wetterturnier_stations";
-          if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
-              $sql = file_get_contents(sprintf('%s/demodb/stations.sql',dirname(__FILE__)));
-              $sql = explode(";",str_replace("%table%",$table,$sql));
-              foreach ( $sql as $cmd ) {
-                  $wpdb->query($cmd);
-              }
+          $tables = array("api", "bets", "betstat", "cities", "citystats", "coefs", "groups", "dates", "groups", "groupsusers", "obs", "param", "rerunrequest", "stationparams", "stations", "tdatestats", "userstats", "webcams");
+
+          foreach ($tables as $table) {
+	     $table = $wpdb->prefix . "wetterturnier_".$table;
+	     if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
+		 $sql = file_get_contents(sprintf("%s/demodb/".$table.".sql", dirname(__FILE__)));
+		 $sql = explode(";",str_replace("%table%",$table,$sql));
+		 foreach ( $sql as $cmd ) {
+		     $wpdb->query($cmd);
+		 }
+	     }
           }
 
+
+/***
           // Getting user list content
           $demo_users = explode(';',file_get_contents(sprintf('%s/demodb/demo.users.list',dirname(__FILE__))));
           foreach ( $demo_users as $demo_user ) {
@@ -201,6 +153,7 @@ if(!class_exists('WP_wetterturnier'))
                   }
               }
           }
+***/
 
           // Create new pages, use activate_pages.php
           require_once(sprintf('%s/activate_pages.php',dirname(__FILE__)));
@@ -223,6 +176,7 @@ if(!class_exists('WP_wetterturnier'))
           // Remove some options stored while activating the plugin
           delete_option('wetterturnier_cities_menu_css');
 
+/***
           // Getting user list content
           $demo_users = explode(';',file_get_contents(sprintf('%s/demodb/demo.users.list',dirname(__FILE__))));
           foreach ( $demo_users as $demo_user ) {
@@ -241,6 +195,7 @@ if(!class_exists('WP_wetterturnier'))
                   wp_delete_user($uid->ID); 
               }
           }
+***/
 
       } // END public static function deactivate
 
