@@ -7,10 +7,10 @@ if ( $WTuser->access_denied() ) { return; }
 
 // Including the forecast map jquery plus required xml2json script here
 $WTuser->include_js_script("jquery.xml2json");
-$WTuser->include_js_script("wetterturnier.iconeps-morten");
+$WTuser->include_js_script("wetterturnier.soundings-icon");
 
 // Location of the xml file containing the 'available soundings'
-$xml_file = sprintf("%s/user/xmlfiles/iconeps-morten.xml",
+$xml_file = sprintf("%s/user/xmlfiles/soundings-icon.xml",
                     plugins_url("wp-wetterturnier"));
 ?>
 
@@ -108,12 +108,12 @@ jQuery(document).on('ready',function() {
       var width = (width > 1200) ? 1200 : width;
       $( "#wt-map-image" ).width( width );
    }
-   $("#wt-sounding-container").wticonepsmorten("<?php print $xml_file; ?>",setImageWidth);
+   $("#wt-sounding-container").wtsoundingsicon("<?php print $xml_file; ?>",setImageWidth);
    $(window).resize(function(){ setImageWidth(); });
 });
 </script>
 
 <!-- Container will be filled by jQuery function later -->
 <div id="wt-sounding-container"></div>
-<a href="https://userpage.fu-berlin.de/mammatus95/icon/iconeu_eps00.html">Source: Mammatus95 Userpage</a>
+<a href="https://userpage.fu-berlin.de/mammatus95/temps/temps.html">Source: Mammatus95 Userpage</a>
 <br>

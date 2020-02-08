@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soundingsicon>
+
+   <!-- times for which the forecasts are availbale -->
+   <times>
+      <time>12</time>
+      <time>18</time>
+      <time>24</time>
+      <time>30</time>
+      <time>36</time>
+      <time>42</time>
+      <time>48</time>
+      <time>54</time>
+      <time>60</time>
+      <time>66</time>
+      <time>72</time>
+      <time>78</time>
+      <time>84</time>
+      <time>90</time>
+      <time>96</time>
+      <time>102</time>
+      <time>108</time>
+      <time>114</time>
+      <time>120</time>
+   </times>
+
+   <!-- dwd surface analysis maps -->
+   <stations>
+      <station>
+         <name>Berlin</name>
+         <imgname>Berlin</imgname>
+      </station>
+      <station>
+         <name>Wien</name>
+         <imgname>Wien</imgname>
+      </station>
+      <station>
+         <name>Zurich</name>
+         <imgname>Zurich</imgname>
+      </station>
+      <station>
+         <name>Innsbruck</name>
+         <imgname>Innsbruck</imgname>
+      </station>
+      <station>
+         <name>Leipzig</name>
+         <imgname>Leipzig</imgname>
+      </station>
+   </stations>
+
+</soundingsicon>

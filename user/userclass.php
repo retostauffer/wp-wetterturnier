@@ -104,8 +104,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
         add_shortcode( 'wetterturnier_mapsforecasts',    array($this,'shortcode_wetterturnier_mapsforecasts') );
         add_shortcode( 'wetterturnier_mapsanalysis',     array($this,'shortcode_wetterturnier_mapsanalysis')  );
-        add_shortcode( 'wetterturnier_soundingsmorten',  array($this,'shortcode_wetterturnier_soundingsmorten')  );
+        add_shortcode( 'wetterturnier_soundingscosmo',  array($this,'shortcode_wetterturnier_soundingscosmo')  );
+        add_shortcode( 'wetterturnier_soundingsicon',  array($this,'shortcode_wetterturnier_soundingsicon')  );
         add_shortcode( 'wetterturnier_cosmomorten',      array($this,'shortcode_wetterturnier_cosmomorten')  );
+        add_shortcode( 'wetterturnier_iconmorten',    array($this,'shortcode_wetterturnier_iconmorten')  );
         add_shortcode( 'wetterturnier_iconepsmorten',    array($this,'shortcode_wetterturnier_iconepsmorten')  );
         add_shortcode( 'wetterturnier_synopsymbols',     array($this,'shortcode_wetterturnier_synopsymbols')  );
         add_shortcode( 'wetterturnier_archive',          array($this,'shortcode_wetterturnier_archive')       );
@@ -127,8 +129,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_shortcode( 'wetterturnier_stationinfo',      array($this,'shortcode_wetterturnier_stationinfo') );
         add_shortcode( 'wetterturnier_stationparamdisabled', array($this,'shortcode_wetterturnier_stationparamdisabled') );
         add_shortcode( 'wetterturnier_mosescoefs', array($this,'shortcode_wetterturnier_mosescoefs') );
-// WINDY
-	add_shortcode( 'wetterturnier_windy', array($this,'shortcode_wetterturnier_windy') );
+        // WINDY
+	     add_shortcode( 'wetterturnier_windy', array($this,'shortcode_wetterturnier_windy') );
+        // gdocs wetterturnier organisations
+      add_shortcode( 'wetterturnier_gdocs', array($this,'shortcode_wetterturnier_gdocs') );
 
 
 // wetterturnier_moses
@@ -513,11 +517,17 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     function shortcode_wetterturnier_mapsanalysis() {
         return($this->shortcode_include("views/maps-analysis.php"));
     }
-    function shortcode_wetterturnier_soundingsmorten() {
-        return($this->shortcode_include("views/soundings-morten.php"));
+    function shortcode_wetterturnier_soundingscosmo() {
+        return($this->shortcode_include("views/soundings-cosmo.php"));
+    }
+    function shortcode_wetterturnier_soundingsicon() {
+        return($this->shortcode_include("views/soundings-icon.php"));
     }
     function shortcode_wetterturnier_cosmomorten() {
         return($this->shortcode_include("views/cosmo-morten.php"));
+    }
+    function shortcode_wetterturnier_iconmorten() {
+        return($this->shortcode_include("views/icon-morten.php"));
     }
     function shortcode_wetterturnier_iconepsmorten() {
         return($this->shortcode_include("views/iconeps-morten.php"));
@@ -705,6 +715,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         }
         return( '' ); 
     }
+
+
+    function shortcode_wetterturnier_gdocs() {
+        return($this->shortcode_include("views/gdocs.php"));
+    }
+
 
     /** Frontend */
     function shortcode_wtcode( $args, $content ) {

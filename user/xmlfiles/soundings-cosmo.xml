@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<soundingsmorten>
+<soundingscosmo>
 
    <!-- times for which the forecasts are availbale -->
    <times>
@@ -47,4 +47,4 @@
       </station>
    </stations>
 
-</soundingsmorten>
+</soundingscosmo>

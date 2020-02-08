@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iconmorten>
+
+   <!-- times for which the forecasts are availbale -->
+   <times>
+      <time>12</time>
+      <time>18</time>
+      <time>24</time>
+      <time>30</time>
+      <time>36</time>
+      <time>42</time>
+      <time>48</time>
+      <time>54</time>
+      <time>60</time>
+      <time>66</time>
+      <time>72</time>
+      <time>78</time>
+      <time>84</time>
+      <time>90</time>
+      <time>96</time>
+      <time>102</time>
+      <time>108</time>
+      <time>114</time>
+      <time>120</time>
+   </times>
+
+   <!-- dwd surface analysis maps -->
+   <stations>
+      <station>
+         <name>Relative topography 1000-500 hPa</name>
+         <imgname>schicht_1000</imgname>
+      </station>
+      <station>
+         <name>300 hPa wind speed</name>
+         <imgname>300_eu</imgname>
+      </station>
+      <station>
+         <name>Eady Growth Rate</name>
+         <imgname>eady_eu</imgname>
+      </station>
+      <station>
+         <name>Pressure tendency</name>
+         <imgname>tendenz_eu</imgname>
+      </station>
+      <station>
+         <name>850 hPa Theta E</name>
+         <imgname>eth_850_eu</imgname>
+      </station>
+      <station>
+         <name>850 hPa temperature</name>
+         <imgname>T850_eu</imgname>
+      </station>
+      <station>
+         <name>850 hPa temperature advection</name>
+         <imgname>adv_eu_850</imgname>
+      </station>
+      <station>
+         <name>700 hPa temperature advection</name>
+         <imgname>adv_eu_700</imgname>
+      </station>
+      <station>
+         <name>700 hPa relative humidity</name>
+         <imgname>700rel_eu</imgname>
+      </station>
+      <station>
+         <name>500 hPa temperature</name>
+         <imgname>T500_eu</imgname>
+      </station>
+      <station>
+         <name>Lapse rates + moisture</name>
+         <imgname>moist_eu_850</imgname>
+      </station>
+      <station>
+         <name>Bulk shear 0-6km</name>
+         <imgname>shear_eu</imgname>
+      </station>
+      <station>
+         <name>ML WXSHEAR</name>
+         <imgname>wxshear_eu</imgname>
+      </station>
+      <station>
+         <name>Precipitable water</name>
+         <imgname>pw_eu</imgname>
+      </station>
+      <station>
+         <name>Cross section 52.6 degrees NL</name>
+         <imgname>cross_lon</imgname>
+      </station>
+      <station>
+         <name>Zonal mean u wind</name>
+         <imgname>zm_u</imgname>
+      </station>
+      <station>
+         <name>Zonal mean temperature</name>
+         <imgname>zm_temp</imgname>
+      </station>
+      <station>
+         <name>Zonal mean heat flux</name>
+         <imgname>zm_vt</imgname>
+      </station>
+      <station>
+         <name>Central Europe 12 hour precipitation</name>
+         <imgname>rr_ce</imgname>
+      </station>
+      <station>
+         <name>Central Europe ML WXSHEAR</name>
+         <imgname>wxshear_ce</imgname>
+      </station>
+   </stations>
+
+</iconmorten>

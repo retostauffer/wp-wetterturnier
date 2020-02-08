@@ -3,6 +3,9 @@ global $wpdb;
 global $WTuser;
 $args = (object)$args;
 
+// Access only for logged in users
+if ( $WTuser->access_denied() ) { return; }
+
 // ------------------------------------------------------------------
 // If no city input is set: using current city as default
 // In this case we can load the pre-fetched city (active or current city)

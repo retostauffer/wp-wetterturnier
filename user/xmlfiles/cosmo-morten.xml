@@ -16,17 +16,40 @@
       <time>39</time>
       <time>42</time>
       <time>45</time>
+      <time>48</time>
    </times>
 
   <stations>
       <station>
-         <name>Coming soon!</name>
-         <imgname>Tegel</imgname>
+         <name>Synoptic overview</name>
+         <imgname>wxdbz_D2</imgname>
+         <run>00</run>
       </station>
       <station>
-         <name>Coming soon!</name>
-         <imgname>Schonefeld</imgname>
+         <name>Max dBZ EPS</name>
+         <imgname>dbz_D2_eps</imgname>
+         <run>03</run>
       </station>
-    </stations>
+      <station>
+         <name>Max wind gusts 6h EPS</name>
+         <imgname>vmax_D2_wt</imgname>
+         <run>03</run>
+      </station>
+      <station>
+         <name>ML CAPE EPS</name>
+         <imgname>cape_D2_eps</imgname>
+         <run>03</run>
+      </station>
+      <station>
+         <name>Low level clouds EPS</name>
+         <imgname>clcl_D2_eps</imgname>
+         <run>03</run>
+      </station>
+      <station>
+         <name>Cluster analysis</name>
+         <imgname>cluster_D2_eps</imgname>
+         <run>00</run>
+      </station>
+  </stations>
 
 </cosmomorten>

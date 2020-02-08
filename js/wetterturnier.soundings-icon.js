@@ -6,7 +6,7 @@ jQuery(document).on('ready',function() {
    // Copy jQuery to $
    $ = jQuery
 
-   $.fn.wtsoundingsmorten = function( xmlfile, callback = null ) {
+   $.fn.wtsoundingsicon = function( xmlfile, callback = null ) {
 
       var target = $(this)
 
@@ -137,7 +137,7 @@ jQuery(document).on('ready',function() {
 
          // Append available stations to navigation
          var target = $("#wt-sounding-navigation").find(".stations").first();
-         $(target).empty().append("<h1>Station</h1><ul></ul>")
+         $(target).empty().append("<h1>City</h1><ul></ul>")
          $.each(data.stations.station, function(key, val) {
             // Default: take first one if input unset
             if ( selected == undefined ) { selected = val.imgname; }
@@ -184,7 +184,7 @@ jQuery(document).on('ready',function() {
          // Load key of current selected model
          var station = $("#wt-sounding-navigation .stations   ul li.selected").attr("station")
          var time    = $("#wt-sounding-timeline               ul li.selected").attr("time")
-         var image = "https://userpage.fu-berlin.de/mammatus95/cosmo/00/soundings/"
+         var image = "https://userpage.fu-berlin.de/mammatus95/icon/00/karten/"
                    + "stuve_"+station+"_"+time+".png"
          $("#wt-sounding-image").attr("src",image).error( function() {
             $(this).attr("src","/referrerdata/soundings_missing_image.png");

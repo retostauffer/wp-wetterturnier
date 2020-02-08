@@ -7,10 +7,10 @@ if ( $WTuser->access_denied() ) { return; }
 
 // Including the forecast map jquery plus required xml2json script here
 $WTuser->include_js_script("jquery.xml2json");
-$WTuser->include_js_script("wetterturnier.soundings-morten");
+$WTuser->include_js_script("wetterturnier.icon-morten");
 
-// Location of the xml file containing the 'available soundings'
-$xml_file = sprintf("%s/user/xmlfiles/soundings-morten.xml",
+// Location of the xml file containing the 'available icon charts'
+$xml_file = sprintf("%s/user/xmlfiles/icon-morten.xml",
                     plugins_url("wp-wetterturnier"));
 ?>
 
@@ -31,7 +31,7 @@ $xml_file = sprintf("%s/user/xmlfiles/soundings-morten.xml",
 #wt-sounding-navigation .stations {
    display: block;
    top: 0px;
-   width: 200px;
+   width: max-width;
    margin-right: 10px;
    position: relative;
    float: left;
@@ -108,10 +108,12 @@ jQuery(document).on('ready',function() {
       var width = (width > 1200) ? 1200 : width;
       $( "#wt-map-image" ).width( width );
    }
-   $("#wt-sounding-container").wtsoundingsmorten("<?php print $xml_file; ?>",setImageWidth);
+   $("#wt-sounding-container").wticonmorten("<?php print $xml_file; ?>",setImageWidth);
    $(window).resize(function(){ setImageWidth(); });
 });
 </script>
 
 <!-- Container will be filled by jQuery function later -->
 <div id="wt-sounding-container"></div>
+<a href="https://userpage.fu-berlin.de/mammatus95/icon/icon.html">Source: Mammatus95 Userpage</a>
+<br>
