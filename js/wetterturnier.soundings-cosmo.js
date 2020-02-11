@@ -142,7 +142,7 @@ jQuery(document).on('ready',function() {
                    $("#wt-sounding-navigation .stations ul li:nth-child("+(current+1)+")").addClass("selected")
                 }
                 showImage(); // Update image
-            } else if ( e.keyCode == 84) || (e.keyCode == 66 ) { //t or b
+            } else if ( e.keyCode == 84 || e.keyCode == 66 ) { //t or b
                 e.preventDefault()
                 // Remove current selection
                 $("#wt-sounding-navigation .stations ul li.selected").removeClass("selected")
