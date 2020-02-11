@@ -31,7 +31,7 @@
          <run>03</run>
       </station>
       <station>
-         <name>Max wind gusts 6h EPS</name>
+         <name>Max wind gusts 3h EPS</name>
          <imgname>vmax_D2_wt</imgname>
          <run>03</run>
       </station>

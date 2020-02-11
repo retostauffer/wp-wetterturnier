@@ -19,6 +19,7 @@ $xml_file = sprintf("%s/user/xmlfiles/maps_analysis.xml",
  * model, region, and product selection */
 #wt-maps-navigation h1 {
    border-bottom: 3px solid #000;
+   width: 200px;
    color: #2b2b2b;
    font-size: 14px;
    font-weight: 900;
@@ -32,7 +33,7 @@ $xml_file = sprintf("%s/user/xmlfiles/maps_analysis.xml",
 #wt-maps-navigation .products {
    display: block;
    top: 0px;
-   width: 200px;
+   width: max-width;
    margin-right: 10px;
    position: relative;
    float: left;

@@ -34,23 +34,23 @@
 
    <charts>
       <chart>
-         <name>Ensemble mean + spead of Geopotential height (gpdam) 500hPa</name>
+         <name>Ensemble mean + spead of geopotential height (gpdam) 500hPa</name>
          <imgname>geo</imgname>
       </chart>
       <chart>
-         <name>Ensemble mean + spread of PRessure reduced to MSL</name>
+         <name>Ensemble mean + spread of pressure reduced to MSL</name>
          <imgname>pmsl</imgname>
       </chart>
       <chart>
-         <name>Probability of 24h Total precipitation over 1mm</name>
+         <name>Probability of 24h total precipitation over 1mm</name>
          <imgname>rr1</imgname>
       </chart>
       <chart>
-         <name>Probability of 24h Total precipitation over 5mm</name>
+         <name>Probability of 24h total precipitation over 5mm</name>
          <imgname>rr5</imgname>
       </chart>
       <chart>
-         <name>Probability of 24h Total precipitation over 10mm</name>
+         <name>Probability of 24h total precipitation over 10mm</name>
          <imgname>rr10</imgname>
       </chart>
     </charts>

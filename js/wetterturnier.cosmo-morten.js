@@ -30,13 +30,12 @@ jQuery(document).on('ready',function() {
 
       // Jumping one time step forwards. If active is the last one,
       // jumping to the first one.
-      function timestep_forward() {
-
+      function timestep_forwards(steps=1) {
          // Check which time list element is the selected element:
          var total   = $("#wt-cosmo-timeline ul li").length
-         var current = $("#wt-cosmo-timeline ul li.selected").index() + 1
+         var current = $("#wt-cosmo-timeline ul li.selected").index() + steps
          // Change selection
-         if ( (current+1) < total ) {
+         if ( (current+1) < (total) ) {
             $("#wt-cosmo-timeline ul li.selected").removeClass('selected')
             $("#wt-cosmo-timeline ul li:nth-child("+(current+1)+")").addClass("selected")
          // Else jumping back to the first one!
@@ -50,14 +49,29 @@ jQuery(document).on('ready',function() {
 
       // Jumping one time step backwards. If active is the firstone,
       // jumping to the last timestep.
-      function timestep_backwards() {
-
+      function timestep_backwards(steps=1) {
          // Check which time list element is the selected element:
          var total   = $("#wt-cosmo-timeline ul li").length
          var current = $("#wt-cosmo-timeline ul li.selected").index() + 1
-         if ( current > 2 ) { 
+         if ( current > (steps+1) ) {
             $("#wt-cosmo-timeline ul li.selected").removeClass('selected')
-            $("#wt-cosmo-timeline ul li:nth-child("+(current-1)+")").addClass('selected')
+            $("#wt-cosmo-timeline ul li:nth-child("+(current-steps)+")").addClass('selected')
+         // Else jumping to the last entry
+         } else {
+            $("#wt-cosmo-timeline ul li.selected").removeClass('selected')
+            $("#wt-cosmo-timeline ul li:nth-child("+(total-steps)+")").addClass('selected')
+         }
+         showImage()
+
+      }
+
+      //jumping to a certain position (e.g. first/last)
+      //last step can be triggered by step=0
+      function timestep(step) {
+         var total   = $("#wt-cosmo-timeline ul li").length
+         if ( step > 0 ) {
+            $("#wt-cosmo-timeline ul li.selected").removeClass('selected')
+            $("#wt-cosmo-timeline ul li:nth-child("+(step+1)+")").addClass('selected')
          // Else jumping to the last entry
          } else {
             $("#wt-cosmo-timeline ul li.selected").removeClass('selected')
@@ -69,7 +83,7 @@ jQuery(document).on('ready',function() {
 
       // Change time step function.
       function change_time(to) {
-          if      ( to == "+" ) { timestep_forward(); }
+          if      ( to == "+" ) { timestep_forwards(); }
           else if ( to == "-" ) { timestep_backwards(); }
           else {
               $("#wt-cosmo-timeline ul li.selected").removeClass("selected")
@@ -92,13 +106,17 @@ jQuery(document).on('ready',function() {
          $("#wt-cosmo-navigation").append("<div class='clear'></div>")
 
          // Add functionality that each click onto the image itself
-         // will act like a "go forward in time by one time step"
-         $("#wt-cosmo-container").on("click","img",function() { timestep_forward(); });
+         // will act like a "go forwards in time by one time step"
+         $("#wt-cosmo-container").on("click","img",function() { timestep_forwards(); });
 
          // Adding keyboard navigation functionality
          $("body").on("keydown",function(e){
-            if      ( e.keyCode == 39 ) { timestep_forward(); }
+            if      ( e.keyCode == 39 ) { timestep_forwards(); }
+            else if ( e.keyCode == 34 ) { e.preventDefault(); timestep_forwards(steps=2); }
             else if ( e.keyCode == 37 ) { timestep_backwards(); }
+            else if ( e.keyCode == 33 ) { e.preventDefault(); timestep_backwards(steps=2); }
+            else if ( e.keyCode == 35 ) { e.preventDefault(); timestep(0); } //end -> last step 
+            else if ( e.keyCode == 36 ) { e.preventDefault(); timestep(1); } //pos1 -> first step
             else if ( e.keyCode == 38 ) {
                 e.preventDefault()
                 var current = $("#wt-cosmo-navigation .stations ul li.selected").index()+1

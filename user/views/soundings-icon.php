@@ -36,6 +36,14 @@ $xml_file = sprintf("%s/user/xmlfiles/soundings-icon.xml",
    position: relative;
    float: left;
 }
+#wt-sounding-navigation .types {
+   display: block;
+   top: 0px;
+   width: 200px;
+   margin-right: 10px;
+   position: right;
+   float: left;
+}
 #wt-sounding-navigation ul li {
    border-radius: 2px;
    border: none;

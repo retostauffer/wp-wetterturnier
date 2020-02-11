@@ -3,25 +3,30 @@
 
    <!-- times for which the forecasts are availbale -->
    <times>
+      <time>9</time>
       <time>12</time>
+      <time>15</time>
       <time>18</time>
+      <time>21</time>
       <time>24</time>
+      <time>27</time>
       <time>30</time>
+      <time>33</time>
       <time>36</time>
+      <time>39</time>
       <time>42</time>
+      <time>45</time>
       <time>48</time>
+      <time>51</time>
       <time>54</time>
+      <time>57</time>
       <time>60</time>
+      <time>63</time>
       <time>66</time>
+      <time>69</time>
       <time>72</time>
+      <time>75</time>
       <time>78</time>
-      <time>84</time>
-      <time>90</time>
-      <time>96</time>
-      <time>102</time>
-      <time>108</time>
-      <time>114</time>
-      <time>120</time>
    </times>
 
    <!-- dwd surface analysis maps -->
@@ -47,5 +52,20 @@
          <imgname>Leipzig</imgname>
       </station>
    </stations>
+
+   <types>
+      <type>
+         <name>Stuve [s]</name>
+         <imgname>stuve</imgname>
+      </type>
+      <type>
+         <name>Skew-T [t]</name>
+         <imgname>skewT</imgname>
+      </type>
+      <type>
+         <name>Hodograph [h]</name>
+         <imgname>hodo</imgname>
+      </type>
+   </types>
 
 </soundingsicon>

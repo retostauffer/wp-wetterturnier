@@ -1,6 +1,10 @@
 <?php
 
 global $WTuser;
+
+// Access only for logged in users
+if ( $WTuser->access_denied() ) { return; }
+
 global $wpdb;
 
 $table    = "archive";

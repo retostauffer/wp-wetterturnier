@@ -30,20 +30,20 @@
          <imgname>Schonefeld</imgname>
       </station>
       <station>
-         <name>Leipzig Schkeuditz</name>
-         <imgname>Schkeuditz</imgname>
-      </station>
-      <station>
-         <name>Innsbruck</name>
-         <imgname>Innsbruck</imgname>
+         <name>Wien Schwechat</name>
+         <imgname>Schwechat</imgname>
       </station>
       <station>
          <name>Zurich Kloten</name>
          <imgname>Kloten</imgname>
       </station>
       <station>
-         <name>Wien Schwechat</name>
-         <imgname>Schwechat</imgname>
+         <name>Innsbruck</name>
+         <imgname>Innsbruck</imgname>
+      </station>
+      <station>
+         <name>Leipzig Schkeuditz</name>
+         <imgname>Schkeuditz</imgname>
       </station>
    </stations>
 
