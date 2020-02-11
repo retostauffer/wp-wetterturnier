@@ -142,8 +142,57 @@ jQuery(document).on('ready',function() {
                    $("#wt-sounding-navigation .stations ul li:nth-child("+(current+1)+")").addClass("selected")
                 }
                 showImage(); // Update image
+            } else if ( e.keyCode == 84) || (e.keyCode == 66 ) { //t or b
+                e.preventDefault()
+                // Remove current selection
+                $("#wt-sounding-navigation .stations ul li.selected").removeClass("selected")
+                // Add new selection
+                $("#wt-sounding-navigation .stations ul li:nth-child(1)").addClass("selected")
+                $("#wt-sounding-navigation .types ul li.selected").attr("station", "tegel")
+                showImage(); // Update image
+            } else if ( e.keyCode == 83 ) { //s
+                e.preventDefault()
+                // Remove current selection
+                $("#wt-sounding-navigation .stations ul li.selected").removeClass("selected")
+                // Add new selection
+                $("#wt-sounding-navigation .stations ul li:nth-child(2)").addClass("selected")
+                $("#wt-sounding-navigation .types ul li.selected").attr("station", "schonefeld")
+                showImage(); // Update image
+            } else if ( e.keyCode == 87 ) { //w
+                e.preventDefault()
+                // Remove current selection
+                $("#wt-sounding-navigation .stations ul li.selected").removeClass("selected")
+                // Add new selection
+                $("#wt-sounding-navigation .stations ul li:nth-child(3)").addClass("selected")
+                $("#wt-sounding-navigation .types ul li.selected").attr("station", "wien")
+                showImage(); // Update image
+            } else if ( e.keyCode == 90 || e.keyCode == 75 ) { //z or k
+                e.preventDefault()
+                // Remove current selection
+                $("#wt-sounding-navigation .stations ul li.selected").removeClass("selected")
+                // Add new selection
+                $("#wt-sounding-navigation .stations ul li:nth-child(4)").addClass("selected")
+                $("#wt-sounding-navigation .types ul li.selected").attr("station", "zurich")
+                showImage(); // Update image
+            } else if ( e.keyCode == 73 ) { //i
+                e.preventDefault()
+                // Remove current selection
+                $("#wt-sounding-navigation .stations ul li.selected").removeClass("selected")
+                // Add new selection
+                $("#wt-sounding-navigation .stations ul li:nth-child(5)").addClass("selected")
+                $("#wt-sounding-navigation .types ul li.selected").attr("station", "innsbruck")
+                showImage(); // Update image
+            } else if ( e.keyCode == 76 ) { //l
+                e.preventDefault()
+                // Remove current selection
+                $("#wt-sounding-navigation .stations ul li.selected").removeClass("selected")
+                // Add new selection
+                $("#wt-sounding-navigation .stations ul li:nth-child(6)").addClass("selected")
+                $("#wt-sounding-navigation .types ul li.selected").attr("station", "leipzig")
+                showImage(); // Update image
             }
          });
+
 
          // Appending models
          showSounding(data, undefined)
