@@ -4,6 +4,7 @@
  * mobile page, which probably occured because the shortcode in the HTML
  * widget cannot be executed with ZERO width -> OpenGL error
  * Maybe there is another way 2 prevent this sucky error?
+ * workaround: display widgets below rst of page on mobile devices (actually default)
  */
 class WP_wetterturnier_widget_windy extends WP_Widget
 {
@@ -95,16 +96,22 @@ class WP_wetterturnier_widget_windy extends WP_Widget
         // Display the widget if no mobile device. Maybe use mobile detect in the future
         // http://mobiledetect.net/
         //$width = (int)$_get['width'];
+        //echo $window_width = "<script>document.write(window_width);</script>";
+
+        if(isset($_COOKIE["window_width"])){ 
+           $window_width = (int)$_COOKIE["window_width"]; 
+        } else{ 
+           $window_width = 0;
+        } 
 
         //see "fully working example"
         //https://stackoverflow.com/questions/1504459/getting-the-screen-resolution-using-php        
+        if ( ($window_width > 320) and !($this->isMobileDevice() or wp_is_mobile()) ) {
+            echo '<div class="widget-text wp_widget_plugin_box">';
 
-        if ( ! $this->isMobileDevice() or ! wp_is_mobile() ) {
-		echo '<div class="widget-text wp_widget_plugin_box">';
-
-		// Check if title is set
-		if ( $title ) { echo $before_title . $title . $after_title; }
-		echo "  <div id=\"wtwidget_windy\" class=\"ll-skin-nigran\"></div>\n";
+		      // Check if title is set
+		      if ( $title ) { echo $before_title . $title . $after_title; }
+		         echo "  <div id=\"wtwidget_windy\" class=\"ll-skin-nigran\"></div>\n";
 
 		#global $WTUser;
 		// Show data first (before the description)
@@ -126,13 +133,13 @@ class WP_wetterturnier_widget_windy extends WP_Widget
 					      'detail'=>NULL,
 					      'city'=>false) );
 		*/
-		// Check if textarea is set
-		if( $textarea ) { echo '<br><p class="wp_widget_plugin_textarea">'.$textarea.'</p>'; }
+		      // Check if textarea is set
+		      if( $textarea ) { echo '<br><p class="wp_widget_plugin_textarea">'.$textarea.'</p>'; }
 
-		$this->show_windy();
-
-		echo "</div>";
+		      $this->show_windy();
+		      echo "</div>";
         }
+
         echo $after_widget;
     }
     
@@ -240,5 +247,3 @@ class WP_wetterturnier_widget_windy extends WP_Widget
 
 // Add widget to wordpress
 add_action('widgets_init', function() { register_widget("WP_wetterturnier_widget_windy"); });
-
-?>

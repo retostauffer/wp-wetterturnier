@@ -486,10 +486,10 @@ class wetterturnier_webcamObject {
    }
 
    /** Prints html to display the webcam image. */
-   function display_webcam() {
+   function display_webcam($width=300) {
       print("<div class='wtwebcam'>\n");
       printf("   <a href=\"%s\" target=\"_blank\">", $this->get("source"));
-      printf("      <img src=\"%s\" alt=\"%s\"></img><br>\n", $this->get("uri"), $this->get("source"));
+      printf("      <img style=\"width: %dpx; height: auto\" src=\"%s\" alt=\"%s\"></img><br>\n", $width, $this->get("uri"), $this->get("source"));
       printf("      <span class=\"wtwebcam-source\">%s</span>\n", $this->get("desc"));
       print("   </a>\n");
       print("</div>\n");

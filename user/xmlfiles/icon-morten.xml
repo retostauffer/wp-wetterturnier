@@ -84,6 +84,10 @@
          <imgname>wxshear_eu</imgname>
       </station>
       <station>
+         <name>KO-Index</name>
+         <imgname>ko_eu</imgname>
+      </station>
+      <station>
          <name>Precipitable water</name>
          <imgname>pw_eu</imgname>
       </station>
@@ -102,6 +106,10 @@
       <station>
          <name>Zonal mean heat flux</name>
          <imgname>zm_vt</imgname>
+      </station>
+      <station>
+         <name>Central Europe sea level pressure and dewpoint</name>
+         <imgname>dewpoint_ce</imgname>
       </station>
       <station>
          <name>Central Europe ML WXSHEAR</name>

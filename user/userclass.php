@@ -128,14 +128,14 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_shortcode( 'wetterturnier_mosforecasts',     array($this,'shortcode_wetterturnier_mosforecasts') );
         add_shortcode( 'wetterturnier_stationinfo',      array($this,'shortcode_wetterturnier_stationinfo') );
         add_shortcode( 'wetterturnier_stationparamdisabled', array($this,'shortcode_wetterturnier_stationparamdisabled') );
+        // TODO: wetterturnier_moses in wetterturnier-themed table style
         add_shortcode( 'wetterturnier_mosescoefs', array($this,'shortcode_wetterturnier_mosescoefs') );
-        // WINDY
-	     add_shortcode( 'wetterturnier_windy', array($this,'shortcode_wetterturnier_windy') );
-        // gdocs wetterturnier organisations
-      add_shortcode( 'wetterturnier_gdocs', array($this,'shortcode_wetterturnier_gdocs') );
-
-
-// wetterturnier_moses
+        // WINDY page
+        add_shortcode( 'wetterturnier_windy', array($this,'shortcode_wetterturnier_windy') );
+        // all webcams in one single view
+        add_shortcode( 'wetterturnier_webcams', array($this, 'shortcode_wetterturnier_webcams') );
+        // gdocs wetterturnier orga stuff
+        add_shortcode( 'wetterturnier_gdocs', array($this,'shortcode_wetterturnier_gdocs') );
 
         add_shortcode( 'wc', array($this,'shortcode_wtcode') );
 
@@ -725,6 +725,11 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     /** Frontend */
     function shortcode_wtcode( $args, $content ) {
       return( "<span class='wtcode'>".$content."</span>" );
+    }
+
+    /** show all available webcams **/
+    function shortcode_wetterturnier_webcams() {
+       return($this->shortcode_include("views/webcams.php"));
     }
 
     /** List of cities/stations and the corresponding stations.
@@ -2246,8 +2251,8 @@ public function debug_to_console($data) {
        if ( is_user_logged_in() ) { return(False); }
        // Else the user is not logged in, show message and return True
        printf("<h1>%s</h1>\n",__("Access denied","wpwt"));
-       printf("<div class=\"wetterturnier-info error\">%s</div>",
-             __("The access for some pages is restricted to registered and logged in users only. You are not logged in at the moment! To see the content of this specific page, please login first. Thank you four your understanding.","wpwt") ); 
+       printf("<div class=\"wetterturnier-info error\">%s%s%s%s%s</div>",
+          __("The access for some pages is restricted to ","wpwt"), "<a href=\"/wp-login.php?action=register\" target=\"_self\">", __("registered","wpwt"), "</a>", __("and logged in users only. You are not logged in at the moment! To see the content of this specific page, please login first. Thank you for your understanding.","wpwt") ); 
 
        // Show login form
        printf("<h1 class='entry-title'>%s</h1>",__("Login form","wpwt"));

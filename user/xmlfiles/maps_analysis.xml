@@ -2,6 +2,7 @@
 <analysis>
 
    <!-- ICON model analysis -->
+   <!--
    <icon>
       <name>ICON</name>
 
@@ -51,13 +52,13 @@
       </hemisphere>
 
    </icon>
-
+   -->
    <!-- dwd surface analysis maps -->
    <dwd>
       <name>DWD</name>
 
       <atlantic>
-         <name>Atlantik</name>
+         <name>Europa + Nordatlantik</name>
 
          <fronts>
             <name>Frontenanalyse</name>
@@ -67,7 +68,7 @@
       </atlantic>
 
       <europe>
-         <name>Europa</name>
+         <name>Westeuropa</name>
 
          <fronts>
             <name>Frontenanalyse</name>
@@ -83,7 +84,7 @@
       <name>UK Metoffice</name>
 
       <atlantic>
-         <name>Atlantik</name>
+         <name>Europa + Nordatlanti</name>
 
          <fronts>
             <name>Frontenanalyse</name>

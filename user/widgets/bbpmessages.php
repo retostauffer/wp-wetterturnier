@@ -135,13 +135,17 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
             // Show message count and link to message platform
             $msg_count = (int)do_shortcode("[bbpm-unread-count]");
             $msg_link  = do_shortcode("[bbpm-messages-link]");
+            $msg_new   = $msg_link . "new/";
 
             // No new messages
             if ( $msg_count === 0 ) {
                print "<div class='message-info'>\n";
                _e("No unread messages in your inbox.","wpwt");
-               print "</div>\n";
-               printf("<a href='%s' target='_self'>%s</a>",$msg_link,__("Open Messenger","wpwt"));
+               print "</div>\n<br>\n";
+               print "<table style=\"border-collapse: collapse; border-style: hidden; width: 100%; table-layout: fixed;\"><tr>";
+               printf("<th style=\"text-align: left; border-style: hidden;\"><a href='%s' target='_self'>%s</a></td>",$msg_link,__("Open Messenger","wpwt"));
+               printf("<th style=\"text-align: right; border-style: hidden;\"><a href='%s' target='_self'>%s</a></td>",$msg_new,__("New Message","wpwt"));
+               print "</tr></table>\n";
             // New messages
             } else {
                ?>

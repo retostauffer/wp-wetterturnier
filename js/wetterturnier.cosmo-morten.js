@@ -59,7 +59,7 @@ jQuery(document).on('ready',function() {
          // Else jumping to the last entry
          } else {
             $("#wt-cosmo-timeline ul li.selected").removeClass('selected')
-            $("#wt-cosmo-timeline ul li:nth-child("+(total-steps)+")").addClass('selected')
+            $("#wt-cosmo-timeline ul li:nth-child("+(total-1)+")").addClass('selected')
          }
          showImage()
 

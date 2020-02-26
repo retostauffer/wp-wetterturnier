@@ -75,8 +75,8 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
          if      ( num == 1 ) {
             var username = thisul.find("li").first().html()
             var userID   = thisul.find("li").first().attr("userid")
-console.log( " ----------- " + username )
-console.log( " ----------- " + userID )
+            //console.log( " ----------- " + username )
+            //console.log( " ----------- " + userID )
             $(this).find("input[name='user-search']").attr( "value",  username )
             $(this).find("input[name='user-search']").attr( "userid", userID )
             thisul.hide()
