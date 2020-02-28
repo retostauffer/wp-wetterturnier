@@ -120,10 +120,7 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
      * new messages or not.
      */
     function show_bbpmessages() {
-         /**
-         function is_plugin_active( $plugin ) {
-             return in_array( $plugin, (array) get_option( 'active_plugins', array() ) );
-         }
+         
          if ( ! is_plugin_active('bbp-messages/index.php') ) { ?>
             <div class="wetterturnier-info error">
                This plugin relies on bbp-messages. The
@@ -131,7 +128,7 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
                on this system.
             </div>
          <?php } else {
-         	*/
+         	
             // Show message count and link to message platform
             $msg_count = (int)do_shortcode("[bbpm-unread-count]");
             $msg_link  = do_shortcode("[bbpm-messages-link]");
@@ -142,16 +139,24 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
                print "<div class='message-info'>\n";
                _e("No unread messages in your inbox.","wpwt");
                print "</div>\n<br>\n";
-               print "<table style=\"border-collapse: collapse; border-style: hidden; width: 100%; table-layout: fixed;\"><tr>";
-               printf("<th style=\"text-align: left; border-style: hidden;\"><a href='%s' target='_self'>%s</a></td>",$msg_link,__("Open Messenger","wpwt"));
-               printf("<th style=\"text-align: right; border-style: hidden;\"><a href='%s' target='_self'>%s</a></td>",$msg_new,__("New Message","wpwt"));
+               print "<table style=\"border-collapse: collapse; border-style: hidden; width: 100%; table-layout: fixed !important;\"><tr>";
+               printf("<th style=\"text-align: left !important; border-style: hidden !important;\"><a href='%s' target='_self'>%s</a></td>",
+                  $msg_link, __("Open Messenger","wpwt"));
+               printf("<th style=\"text-align: right !important; border-style: hidden !important;\"><a href='%s' target='_self'>%s</a></td>",
+                  $msg_new, __("New Message","wpwt"));
                print "</tr></table>\n";
             // New messages
             } else {
                ?>
                <style>
+               @media screen and (max-width: 700px) {
+                      table {
+                       display: center !important;
+                       overflow: auto;
+                   }
+               }
                .widget_wtwidget_bbpmessages div.wt-messages-count {
-                  display: block;
+                  display: center !important;
                   text-align: center;
                   width: 33%;
                   float: left;
@@ -173,7 +178,7 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
                   font-size: 1.5em;
                }
                .widget_wtwidget_bbpmessages bar {
-                  display: block;
+                  display: center !important;
                   padding: none;
                   width: 100%;
                   height: 3px;
@@ -203,9 +208,7 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
 
     }
 
-
+}
 
 // Add widget to wordpress
 add_action('widgets_init', function() { register_widget("WP_wetterturnier_widget_bbpmessages"); });
-
-?>

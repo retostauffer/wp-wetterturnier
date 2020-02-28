@@ -19,7 +19,6 @@
                     ." WHERE cityID = %d;", $wpdb->prefix, (int)$city->get("ID")) );
          if ( count($webcams) == 0 ) {
             print __("No webcams defined for","wpwt")." ".$city->get("name").".";
-            return;
          }
          
          // Load webcam objects

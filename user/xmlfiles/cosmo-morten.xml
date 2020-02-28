@@ -43,7 +43,7 @@
       <station>
          <name>Low level clouds EPS</name>
          <imgname>clcl_D2_eps</imgname>
-         <run>03</run>
+         <run>00</run>
       </station>
       <station>
          <name>Cluster analysis</name>
