@@ -48,7 +48,19 @@ require_once('../../generalclass.php');
 // require( sprintf("../../generalclass.php") );
 function convert_tdate( $tdate, $fmt = "Y-m-d" ) {
     return( date( $fmt, (int)$tdate*86400 ) );
-    }
+}
+
+function check_user_is_in_group( $userID, $groupName ) {
+     global $wpdb;
+     $res = $wpdb->get_row(
+                sprintf("SELECT gu.active FROM %swetterturnier_groups AS g "
+                       ."LEFT OUTER JOIN %swetterturnier_groupusers AS gu "
+                       ."ON g.groupID = gu.groupID "
+                       ."WHERE g.groupName = '%s' AND gu.userID = %d",
+                        $wpdb->prefix,$wpdb->prefix,$groupName,$userID));
+     if ( $res->active == 1 ) { return True; }
+     else { return False; }
+}
 
 // Load betclass file if not yet loaded, initialize  WTbetclass
 if ( ! defined("loaded_betclass") ) {
@@ -119,8 +131,7 @@ $user = wp_signon( $creds, false );
 printf( "Hello, %s!\n", $user->data->user_login );
 
 // Check if current user can place bets as admin, if tournament is actually closed already.
-
-$is_admin = isset( $user->allcaps["wetterturnier_admin"] );
+$is_admin = isset( $user->allcaps["wetterturnier_admin"] ) || check_user_is_in_group($user->ID, 'Automaten');
 
 if ( $is_admin ) {
    print "Admin mode enabled\n";
@@ -156,9 +167,8 @@ printf("%s\n",str_repeat("=",strlen($msg)));
 
 // If a tdate exists in $data use this torunament date instead of next_tournament(0,true)
 // Check via database query whether the submitted "tdate" was REALLY a tournament date.
-// TODO: Plus maybe check whether user is automaton/MOS to only allow MOS to do such dirty little things...
 
-print $user->ID;
+
 if ( property_exists ( $data, 'tdate' ) ) {
    $tdate = $data->tdate;
    $result = $wpdb->get_results("SELECT * FROM  `wp_wetterturnier_dates` WHERE `tdate` = $tdate AND  `status` = 1");
@@ -171,10 +181,11 @@ if ( property_exists ( $data, 'tdate' ) ) {
    if ( strcmp($tdate, $next->tdate) == 0 ) {
       print "You sent a tdate argument which is actually the current tournament, not needed but OK!\n";
    }
-   else if ( $is_admin or check_user_is_in_group($user->ID, 'Automaten') ) {
-      $next = $WTuser->next_tournament(0,true);
+   else if ( $is_admin ) {
+      $rerun = True;
+      $next = $WTuser->next_tournament(0,true,$is_admin=True);
       if ( strcmp($tdate, $next->tdate) == 0 ) {
-         print "No admin mode needed since given tdate == current tournament. Back to user mode\n";
+         print "tdate == current tournament\n";
       }
       else {
          // The handy function next_tournament() allows us to trick the system by inserting the custom tournament date for our belated submission :D
@@ -184,7 +195,7 @@ if ( property_exists ( $data, 'tdate' ) ) {
          else {
             printf("You're pretty early my dear friend ;) Anyway, choosing %s as future tournament date...\n", convert_tdate($tdate));
             }
-         $next = $WTuser->next_tournament($row_offset=0, $check_access=false,$tdate);
+         $next = $WTuser->next_tournament($row_offset=0, $check_access=false,$tdate,$is_admin=True);
          $admin = $user;
          $whoami = $admin->ID;    
       }
@@ -222,10 +233,15 @@ print("\n");
 */
 
 $WTbetclass->write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=$admin, $whoami);
+
+// Save a rerun flag into the database such that we can re-run the computation of the requred tournaments as the observations changed.
+if ( isset($rerun) ) {
+   $rerun = array('userID'=>$user->ID,'cityID'=>$data->cityObj->get('ID'), 'tdate'=>$data->tdate);
+   $wpdb->insert(sprintf("%swetterturnier_rerunrequest",$wpdb->prefix), $rerun);
+}
+
 // maybe not needed but only to make sure, that tdate argument is 100% reset.
 $data->tdate=NULL;
-// TODO: force rerunrequest afterwards if an old tournament data was updated!
-// BUG: "modified by" of regular submissions gets changed after some time and only for some parameters...
 
 
 ?>

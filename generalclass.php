@@ -318,7 +318,7 @@ class wetterturnier_generalclass
      * Return format is `%Y-%m-%d %H:%M:%S`
      *
      * @return Returns string with the date in the format specified.
-     */
+     */    
     public function convert_tdate( $tdate, $fmt = "%Y-%m-%d %H:%M:%S" ) {
         return( date( $fmt, (int)$tdate*86400 ) );
     }
@@ -502,7 +502,7 @@ class wetterturnier_generalclass
      * @see older_tournament
      * @see newer_tournament
      */
-    public function next_tournament($row_offset=0,$check_access=true,$dayoffset=0,$backwards=false) { 
+    public function next_tournament($row_offset=0,$check_access=true,$dayoffset=0,$backwards=false,$is_admin=false) { 
 
         //printf("<br>Calling next_tournament with row_offset = %d,  check_access = %s,   dayoffset = %d,  and backwars = %s<br>\n",
         //       $row_offset,($check_access ? 'true' : 'false'), $dayoffset, ($backwards ? 'true' : 'false'));
@@ -561,7 +561,7 @@ class wetterturnier_generalclass
         // call check_view_is_closed because this will
         // crash (loop inside the class)
         if ( $row_offset == 0 & $check_access ) {
-            $next->closed = $this->check_view_is_closed( $row->tdate, $next );
+            $next->closed = $this->check_view_is_closed( $row->tdate, $is_admin );
         } else if ( $row_offset > 0 ) {
             $next->closed = true;
         } else {
@@ -670,26 +670,45 @@ class wetterturnier_generalclass
 
         global $wpdb;
         $return = new stdClass();
-        $return->submitted = NULL;
+        $return->submitted = false;
         $return->placed    = NULL;
         // Check if we have received full bet (all fine)
-        $res = $wpdb->get_row( sprintf("SELECT submitted FROM %swetterturnier_betstat "
-               ." WHERE userID = %d AND cityID = %d AND tdate = %d",
+        $res = $wpdb->get_row( sprintf("SELECT COUNT(value) AS vals FROM %swetterturnier_bets "
+               ."WHERE userID = %d AND cityID = %d AND tdate = %d",
                $wpdb->prefix, $userID, $cityObj->get('ID'), $tdate));
-        if ( ! $res )                                 { $return->submitted = false; }
-        else if ( ! $res->submitted )                 { $return->submitted = false; }
-        else if ( strtotime( $res->submitted ) < 0 )  { $return->submitted = false; }
-        else                                          { $return->submitted = $res->submitted; }
+
+        //"24" should rather be defined by a variable, TODO: so ndays
+
+        $params = $wpdb->get_row( sprintf("SELECT paramconfig AS params FROM %swetterturnier_cities "
+                ."WHERE ID = %d", $wpdb->prefix, $cityObj->get('ID')) )->params;
+        $nparams = count( explode(",", substr($params, 1, -1) ) );
+
+        //if ( $res->vals == 24 )                        { $return->submitted = true; }
+        if ( $res->vals == $nparams*2 )                  { $return->submitted = true; }
 
         // Else check when the last submission was (bets table)
         $res = $wpdb->get_row( sprintf("SELECT max(placed) AS placed FROM %swetterturnier_bets "
-                   ." WHERE userID = %d AND cityID = %d AND tdate = %d",
+                   ."WHERE userID = %d AND cityID = %d AND tdate = %d",
                    $wpdb->prefix, $userID, $cityObj->get('ID'), $tdate));
         if ( ! $res )                                 { $return->placed = false; }
         else if ( strtotime( $res->placed ) < 0 )     { $return->placed = false; }
         else                                          { $return->placed = $res->placed; }
         return( $return );
 
+    }
+
+
+    public function delete_bet( $userID, $cityID, $tdate ) {
+       global $wpdb;
+       //$sql = "DELETE FROM wp_wetterturnier_bets WHERE userID=%d AND cityID=%d AND tdate=%d"
+       $wpdb->delete("wp_wetteturnier_bets", array("userID"=>$userID, "cityID"=>$cityID, "tdate"=>$tdate) );
+       // debug, maybe remove following code later:
+       $wpdb->get_results("SELECT * FROM wp_wetterturnier_bets WHERE userID = ".$userID." AND cityID = ".$cityID." AND tdate = ".$tdate);
+       if ( $wpdb->num_rows === 0) {
+          echo "Bet succesfully deleted!";
+       } else {
+          echo "EPIC FAIL! Could not delete bet!";
+       }
     }
 
 
@@ -712,6 +731,7 @@ class wetterturnier_generalclass
         if ( ! $res->active == 1 ) { return false; }
         return true;
     }
+
 
     /** Returns members of a group given by its groupName or ID.
      *
@@ -884,9 +904,10 @@ class wetterturnier_generalclass
      *
      * @see check_allowed_to_display_betdata
     */
-    function check_view_is_closed($tdate) {
+    function check_view_is_closed($tdate, $is_admin=False) {
 
-    
+        // don't show this hint for belated (MOS) submissions
+        if ($is_admin) { return( False ); } 
         // STOP if user should not see these data!
         $today = (int)floor(gmdate('U')/86400.);
         $tdate_string =  strftime('%Y-%m-%d',$tdate*86400);

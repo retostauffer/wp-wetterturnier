@@ -1174,14 +1174,14 @@ msgstr "Abweichung"
 msgid "Access denied"
 msgstr "Zugriff verweigert"
 
-#: user/userclass.php:1893
+#: user/userclass.php:2187
 msgid ""
 "The access for some pages is restricted to registered and logged in users "
 "only. You are not logged in at the moment. To see the content of this "
-"specific page, please login first. Thank you four your understanding."
+"specific page, please login first. Thank you for your understanding."
 msgstr ""
-"Gewisse Inhalte sind nur für registrierte und eingeloggte Benutzer einsehbar."
-" Bitte logge dich ein um den gewünschten Inhalt angezeigt zu bekommen. "
+"Gewisse Inhalte sind nur für registrierte und eingeloggte Benutzer einsehbar. "
+"Bitte logge dich ein um den gewünschten Inhalt angezeigt zu bekommen. "
 "Besten Dank für dein Verständnis."
 
 #: user/userclass.php:1899 user/views/bet.php:27

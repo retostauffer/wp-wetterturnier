@@ -82,7 +82,6 @@ if ( empty( $_GET['tdate'] ) ) {
                      </td>
                      <td>
                         <?php print $WTuser->get_average_points($cityID, $tdate); ?>
-                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
                      </td>
                   </tr>
 
@@ -92,7 +91,6 @@ if ( empty( $_GET['tdate'] ) ) {
                      </td>
                      <td>
                         <?php print $WTuser->get_average_points($cityID, $tdate, "max"); ?>
-                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
                      </td>
                   </tr>
 
@@ -102,7 +100,6 @@ if ( empty( $_GET['tdate'] ) ) {
                      </td>
                      <td>
                         <?php print $WTuser->get_average_points($cityID, $tdate, "min"); ?>
-                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
                      </td>
                   </tr>
 
@@ -112,7 +109,6 @@ if ( empty( $_GET['tdate'] ) ) {
                      </td>
                      <td>
                         <?php print $WTuser->get_average_points($cityID, $tdate, "median"); ?>
-                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
                      </td>
                   </tr>
 
@@ -122,7 +118,6 @@ if ( empty( $_GET['tdate'] ) ) {
                      </td>
                      <td>
                         <?php print $WTuser->get_average_points($cityID, $tdate, "spread"); ?>
-                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
                      </td>
                   </tr>
 
@@ -132,7 +127,6 @@ if ( empty( $_GET['tdate'] ) ) {
                      </td>
                      <td>
                         <?php print $WTuser->get_average_points($cityID, $tdate, "sd"); ?>
-                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
                      </td>
                   </tr>
 
@@ -143,7 +137,6 @@ if ( empty( $_GET['tdate'] ) ) {
 	             </td>
                      <td>
                         <?php print $WTuser->get_sleepy_points($cityID, $tdate); ?>
-                        &nbsp;&nbsp;<?php _e("Points","wpwt"); ?>
                      </td>
                   </tr>
                </table>

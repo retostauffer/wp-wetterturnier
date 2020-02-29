@@ -418,7 +418,7 @@ class wetterturnier_betclass
             $key = sprintf("%s_%s",$hash,$param);
             if ( property_exists($cval,'error') ) { 
                $data->checknotes[$key] = sprintf("Value check ERROR:   %s",$cval->error);
-               $val = $cval->value; 
+               $val = $cval->value;
                //unset($data->$hash->$param); continue;
             } else if ( property_exists($cval,'warning') ) { 
                $data->checknotes[$key] = sprintf("Value check WARNING: %s",$cval->warning);
@@ -468,12 +468,12 @@ class wetterturnier_betclass
        // Else return this object but round it first, if neccesary because of ruling defined in valpre (0,-1,-2 decimal places).
        if ( $pre != 1 && $value%10**(-$pre) != 0 ) {
 
-       // Round the entered value mathematically:
-       $value = round($value, $pconfig->valpre, PHP_ROUND_HALF_EVEN );
-       
-       $res->error = sprintf("Your invalid value for %s has been rounded to %.1f!", $param, $value/10);
-       $res->value = $value/10;
-}
+          // Round the entered value mathematically:
+          $value = round($value, $pconfig->valpre, PHP_ROUND_HALF_EVEN ); 
+          $res->error = sprintf("Your invalid value for %s has been rounded to %.1f!", $param, $value/10);
+          $res->value = $value/10;
+
+       }
        return( $res );
    }
 
@@ -828,7 +828,7 @@ class wetterturnier_betclass
          if ( ! $admin_mode && ! $isstation ) {
 
             //$city = $WTuser->get_current_city();
-            $check = $WTuser->check_bet_is_submitted($userID,$cityObj,$tournament->tdate);
+            //$check = $WTuser->check_bet_is_submitted($userID,$cityObj,$tournament->tdate);
 
             // Info closing time
             $ct = strptime(sprintf("%s %04d UTC",$WTuser->date_format($tournament->tdate,"%Y-%m-%d"),
@@ -848,6 +848,8 @@ class wetterturnier_betclass
                   __("Form closes","wpwt"),$WTuser->date_format($tournament->tdate,"%A"),
                   $WTuser->date_format($ct/86400),
                   $WTuser->datetime_format($ct,"%H:%M %Z"),__("Server time","wpwt"));
+
+            $check = $WTuser->check_bet_is_submitted($userID,$cityObj,$tournament->tdate);
 
             // submitted or not?
             if ( $check->submitted ) {
@@ -1040,9 +1042,8 @@ class wetterturnier_betclass
 					font-weight: bold;
             }
             <?php
-            // If bets placed or (or submitted but this should never happen)
-            // and there are missing values, add color border.
-            if ( $check->placed | $check->submitted ) { ?>
+            // If there are missing values, add color border.
+            if ( $check->placed and ! $check->submitted ) { ?>
             #wetterturnier-bet-form div ul li input.missing {
                border-color: red;
             }

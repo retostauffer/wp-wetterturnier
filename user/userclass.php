@@ -46,9 +46,12 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         $this->options = $this->init_options();
 
         // Loading cities from database.
-        call_user_func(array($this,'initialize_cities_menu'));
+	     //call_user_func(array($this,'initialize_cities_menu'));
+        $this->initialize_cities_menu();
         // Everytime!
-        call_user_func(array($this,'city_check'));
+		  //call_user_func(array($this,'city_check'));
+		  //$userID = get_current_user_id();
+        $this->city_check();
 
         //unused//add_action('pll_language_defined', array($this,'load_locale'));
         add_action('pll_language_defined', array($this,'load_float_format'));
@@ -207,11 +210,37 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         <h3>Wetterturnier Options</h3>
 
         <?php // Getting user options first to set the 'selected' options.
+        $wt_dc = get_user_option("wt_default_city",$user->ID);
         $wt_bo = get_user_option("wt_betform_orientation",$user->ID);
-        $wt_ts = get_user_option("wt_wttable_style",$user->ID);
+		  $wt_ts = get_user_option("wt_wttable_style",$user->ID);
+		  $wt_mo = get_user_option("wt_betform_mos",$user->ID);
+		  $wt_wi = get_user_option("wt_windy",$user->ID);
         ?>
     
         <table class="form-table">
+            <tr> 
+                <th><label for="wt_default_city">
+                <?php printf("%s:",_e("Default city","wpwt")); ?>
+                </label></th>
+                <td>
+				       <select id="wt_default_city" name="wt_default_city">
+                      <?php
+                         $first = true;
+		                   foreach ($this->get_all_cityObj() as $elem) {
+                            if ($first) {
+										 $selected = (is_bool($wt_dc) | $wt_dc === 1) ? "selected" : "";
+										 $first = false;
+								    } else {
+                               $selected = ($wt_dc === $elem->get("ID")) ? "selected" : "";
+								    }
+							       printf("<option value=\"%d\" %s>", $elem->get("ID"), $selected);
+								    print($elem->get("name") . "</option>");
+						       }
+                      ?>
+                   </select>
+                   <span class="description"><?php printf("%s.",__("Choose your main city which will be active after login.","wpwt")); ?></span>
+                </td>
+            </tr>
             <tr>
                 <th><label for="wt_betform_orientation">
                 <?php printf("%s:",_e("Bet-form orientation","wpwt")); ?>
@@ -226,6 +255,25 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                       </option>
                    </select>
                    <span class="description"><?php printf("%s.",__("Select your default orientation","wpwt")); ?></span>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="wt_betform_mos">
+                <?php printf("%s:",_e("MOS forecasts on betform","wpwt")); ?>
+                </label></th>
+                <td>
+                   <select id="wt_betform_mos" name="wt_betform_mos">
+                      <option value="default" <?php print ((is_bool($wt_mo) | $wt_mo === "default") ? "selected" : ""); ?>>
+                         <?php _e("no","wpwt"); ?>
+                      </option>
+                      <option value="above" <?php print ($wt_mo === "above" ? "selected" : ""); ?>>
+                         <?php _e("above","wpwt"); ?>
+                      </option>
+                      <option value="below" <?php print ($wt_mo === "below" ? "selected" : ""); ?>>
+                         <?php _e("below","wpwt"); ?>
+                      </option>
+                   </select>
+                   <span class="description"><?php printf("%s.",__("Select if/where MOS forecasts should be shown on betform page","wpwt")); ?></span>
                 </td>
             </tr>
             <tr>
@@ -246,6 +294,22 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                    </select>
                    <span class="description"><?php printf("%s.",__("Select your preferred table styling","wpwt")); ?></span>
                 </td>
+				</tr>
+            <tr>
+                <th><label for="wt_windy">
+                <?php printf("%s:",_e("Windy Widget","wpwt")); ?>
+                </label></th>
+                <td>
+                   <select id="wt_windy" name="wt_windy">
+                      <option value="on" <?php print ((is_bool($wt_wi) | $wt_wi === "on") ? "selected" : ""); ?>>
+                         <?php _e("on","wpwt"); ?>
+                      </option>
+                      <option value="off" <?php print ($wt_wi === "off" ? "selected" : ""); ?>>
+                         <?php _e("off","wpwt"); ?>
+                      </option>
+                   </select>
+                   <span class="description"><?php printf("%s.",__("Turn the windy radar widget on/off","wpwt")); ?></span> 
+                </td>
             </tr>
         </table>
     <?php }
@@ -258,19 +322,19 @@ class wetterturnier_userclass extends wetterturnier_generalclass
      */
     function wt_save_custom_user_options( $user_id ) {
     
-       // Securety
+       // Security
        if ( !current_user_can( 'edit_user', $user_id ) )
           return false;
     
        // Try to update. If update fails (entry did not exist): add
-       $check = update_user_meta( $user_id, 'wt_betform_orientation', $_POST['wt_betform_orientation'] );
-       if ( ! $check ) {
-          add_user_meta( $user_id, 'wt_betform_orientation', $_POST['wt_betform_orientation'], true );
+       $options = array( 'wt_betform_orientation', 'wt_betform_mos', 'wt_wttable_style', 'wt_default_city', 'wt_windy' );
+       foreach($options as $o) {
+          $check = update_user_meta( $user_id, $o, $_POST[$o] );
+          if ( ! $check ) {
+             add_user_meta( $user_id, $o, $_POST[$o], true );
+          }
        }
-       $check = update_user_meta( $user_id, 'wt_wttable_style', $_POST['wt_wttable_style'] );
-       if ( ! $check ) {
-          add_user_meta( $user_id, 'wt_wttable_style', $_POST['wt_wttable_style'], true );
-       }
+
     }
 
     /** Function which will be executed as soon as wordpress is loaded.
@@ -433,41 +497,34 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     
     /** Check which city is choosen */
     function city_check() {
+		 if ( ! function_exists('wp_get_userdata') ) {
+			     include(ABSPATH."wp-includes/pluggable.php");
+		 }
 
         // If $_GET argument ['wetterturnier_city'] is set,
         // take this as new session variable.
-        if ( ! empty($_GET) ) {
-            if ( ! empty($_GET['wetterturnier_city'] ) )
-            {
-                // Setting to session for non-logged-in users
-                $_SESSION['wetterturnier_city'] = $_GET['wetterturnier_city'];
-                // Store to options for logged-in users. The system 
-                // remembers what the user was looking at.
-                if ( add_action('init',array($this,'logincheck')) ) { 
-                    add_option('wt_city_userid_'.(string)get_current_user_id(),
-                        $_SESSION['wetterturnier_city'], '', 'yes');
-                }
-            }
+        if ( isset($_GET['wetterturnier_city'] ) ) {
+           // Setting to session for non-logged-in users
+           $_SESSION['wetterturnier_city'] = $_GET['wetterturnier_city'];
         }
 
         // If there is NO entry in session class: default city
         if ( empty($_SESSION['wetterturnier_city']) ) {
-            // Register this in the user session
-            if ( add_action('init',array($this,'logincheck')) ) { 
-                $last = get_option('wt_city_userid_'.(string)get_current_user_id());
-                // oh, a new user
-                if ( ! $last ) { 
-                    $cities = $this->get_all_cityObj();
-                    $_SESSION['wetterturnier_city'] = $cities[0]->get('hash');
-                } else {
-                    $_SESSION['wetterturnier_city'] = $last; 
-                }
-            } else {
-                $cities = $this->get_all_cityObj();
-                $_SESSION['wetterturnier_city'] = $cities[0]->get('hash');
-            }
-        }
+		      // Register this in the user session
+            // index of the default city chosen by user. counting from 0
+            // we always choose the first city from left if nothing else is defined by user
+            // see theme->functions.php->login_actions()
+            $cities = $this->get_all_cityObj($activeonly = False);
 
+            // set to user option default_city else 0 
+            $default_city = $this->logincheck() ? get_user_option("wt_default_city") : 0;
+            
+            if ($default_city != 0) {
+               $default_city -= 1;
+            }
+            
+            $_SESSION['wetterturnier_city'] = $cities[$default_city]->get('hash');
+		  }
     }
 
     /** workaround function, only call it after init!
@@ -1011,8 +1068,6 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                 ."    <th>".__('Stats','wpwt')."</th>\n"
                 ."  </tr>\n";
 
-            // TODO: column mean/median
-
             // Width of the points status bar
             $max_width = 300;
             foreach ( $data as $rec ) {
@@ -1309,7 +1364,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             }
 
         // ----------------------------------------------------------
-        // If type != 'bets' we are showing the observations.
+        // If type == 'obs' we are showing the observations.
         // ----------------------------------------------------------
         } else if ( $type == "obs" ) {
             // If $showday is false: show all bet days 
@@ -1334,9 +1389,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                     __("Observation data","wpwt"));
             }
 
-        // else type="mos" -> show only MOS bets 
-		  } else {
-			  $mos = TRUE;
+        // else type=="mos" -> show only MOS bets 
+	} else {
+	    $mos = TRUE;
             $betdays = $WTuser->init_options()->wetterturnier_betdays;
             for ( $day=1; $day<=$betdays; $day++ ) {
                if ( is_numeric($showday) && $day != $showday ) { continue; }
@@ -1576,7 +1631,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    }
 
    /** Loading average points from database */
-   public function get_average_points( $cityID=False, $tdate=False, $type="mean" ) {
+   public function get_average_points( $cityID=False, $tdate=False, $type="mean", $referenz=False ) {
       
       global $wpdb;
       global $WTuser;
@@ -1591,10 +1646,13 @@ class wetterturnier_userclass extends wetterturnier_generalclass
          $current = $this->current_tournament(0,false,0,true);
          $tdate   = $current->tdate;
       }
-      $exclude = $this->get_users_in_group("Referenztipps");
+
       $sleepy  = $this->get_user_by_username('Sleepy')->ID;
-      array_push( $exclude, $sleepy );
-      $exclude = "(".join(",", $exclude).")";
+      if ($referenz) {
+         $exclude = $this->get_users_in_group("Referenztipps");
+         array_push( $exclude, $sleepy );
+         $exclude = "(".join(",", $exclude).")";
+      } else { $exclude = $sleepy; }
 
       // Generate SQL statement
       $sql = sprintf("SELECT points AS points FROM %swetterturnier_betstat WHERE tdate=%d "
@@ -2256,7 +2314,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                            $rec->user_login = $rec->display_name;
                         }
                         // Replace GRP_ hash
-                        $rec->user_login = preg_replace("/GRP_/","Gruppe: ",$rec->user_login);
+                        $rec->user_login = preg_replace("/GRP_/","",$rec->user_login);
                         ?>
                         <tr>
                            <td class="wt-leading-position"><?php print $rec->rank; ?></td>
@@ -2404,7 +2462,6 @@ class wetterturnier_userclass extends wetterturnier_generalclass
       return( $data );
 
    }
-
 
 } // End of class!
 

@@ -145,7 +145,8 @@
 				if (typeof console !== "undefined" && typeof console.log !== "undefined") {
 					console[ /error/i.test(a) ? 'error' : /warn/i.test(a) ? 'warn' : 'log' ](s);
 				} else {
-					alert(s);
+					//alert(s);
+					console.log(s)
 				}
 			}
 
