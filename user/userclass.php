@@ -211,12 +211,37 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         <h3>Wetterturnier Options</h3>
 
         <?php // Getting user options first to set the 'selected' options.
+        $wt_dc = get_user_option("wt_default_city",$user->ID);
         $wt_bo = get_user_option("wt_betform_orientation",$user->ID);
-        $wt_mo = get_user_option("wt_betform_mos",$user->ID);
         $wt_ts = get_user_option("wt_wttable_style",$user->ID);
+        $wt_mo = get_user_option("wt_betform_mos",$user->ID);
+        $wt_wi = get_user_option("wt_windy",$user->ID);
         ?>
-    
+
         <table class="form-table">
+            <tr>
+                <th><label for="wt_default_city">
+                <?php printf("%s:",_e("Default city","wpwt")); ?>
+                </label></th>
+                <td>
+                   <select id="wt_default_city" name="wt_default_city">
+                      <?php
+                         $first = true;
+                         foreach ($this->get_all_cityObj() as $elem) {
+                            if ($first) {
+                               $selected = (is_bool($wt_dc) | $wt_dc === 1) ? "selected" : "";
+                               $first = false;
+                            } else {
+                               $selected = ($wt_dc === $elem->get("ID")) ? "selected" : "";
+                            }
+                            printf("<option value=\"%d\" %s>", $elem->get("ID"), $selected);
+                            print($elem->get("name") . "</option>");
+                         }
+                      ?>
+                   </select>
+                   <span class="description"><?php printf("%s.",__("Choose your main city which will be active after login.","wpwt")); ?></span>
+                </td>
+            </tr>
             <tr>
                 <th><label for="wt_betform_orientation">
                 <?php printf("%s:",_e("Bet-form orientation","wpwt")); ?>
@@ -240,7 +265,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                 <td>
                    <select id="wt_betform_mos" name="wt_betform_mos">
                       <option value="default" <?php print ((is_bool($wt_mo) | $wt_mo === "default") ? "selected" : ""); ?>>
-                         <?php _e("default","wpwt"); ?>
+                         <?php _e("no","wpwt"); ?>
                       </option>
                       <option value="above" <?php print ($wt_mo === "above" ? "selected" : ""); ?>>
                          <?php _e("above","wpwt"); ?>
@@ -249,7 +274,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                          <?php _e("below","wpwt"); ?>
                       </option>
                    </select>
-                   <span class="description"><?php printf("%s.",__("Select if (and where) MOS forecasts should be shown on betform page (default=false)","wpwt")); ?></span>
+                   <span class="description"><?php printf("%s.",__("Select if/where MOS forecasts should be shown on betform page","wpwt")); ?></span>
                 </td>
             </tr>
             <tr>
@@ -271,6 +296,22 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                    <span class="description"><?php printf("%s.",__("Select your preferred table styling","wpwt")); ?></span>
                 </td>
             </tr>
+            <tr>
+                <th><label for="wt_windy">
+                <?php printf("%s:",_e("Windy Widget","wpwt")); ?>
+                </label></th>
+                <td>
+                   <select id="wt_windy" name="wt_windy">
+                      <option value="on" <?php print ((is_bool($wt_wi) | $wt_wi === "on") ? "selected" : ""); ?>>
+                         <?php _e("on","wpwt"); ?>
+                      </option>
+                      <option value="off" <?php print ($wt_wi === "off" ? "selected" : ""); ?>>
+                         <?php _e("off","wpwt"); ?>
+                      </option>
+                   </select>
+                   <span class="description"><?php printf("%s.",__("Turn the windy radar widget on/off","wpwt")); ?></span>
+                </td>
+            </tr>
         </table>
     <?php }
 
@@ -281,20 +322,20 @@ class wetterturnier_userclass extends wetterturnier_generalclass
      * @param $user_id. Integer user ID of the active user.
      */
     function wt_save_custom_user_options( $user_id ) {
-    
-       // Securety
+
+       // Security
        if ( !current_user_can( 'edit_user', $user_id ) )
           return false;
-    
+
        // Try to update. If update fails (entry did not exist): add
-       // TODO: foreach loop
-       $options = array( 'wt_betform_orientation', 'wt_betform_mos', 'wt_wttable_style' );
+       $options = array( 'wt_betform_orientation', 'wt_betform_mos', 'wt_wttable_style', 'wt_default_city', 'wt_windy' );
        foreach($options as $o) {
           $check = update_user_meta( $user_id, $o, $_POST[$o] );
           if ( ! $check ) {
              add_user_meta( $user_id, $o, $_POST[$o], true );
           }
        }
+
     }
 
     /** Function which will be executed as soon as wordpress is loaded.
@@ -447,41 +488,32 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     
     /** Check which city is choosen */
     function city_check() {
+       if ( ! function_exists('wp_get_userdata') ) {
+              include(ABSPATH."wp-includes/pluggable.php");
+       }
 
         // If $_GET argument ['wetterturnier_city'] is set,
         // take this as new session variable.
-        if ( ! empty($_GET) ) {
-            if ( ! empty($_GET['wetterturnier_city'] ) )
-            {
-                // Setting to session for non-logged-in users
-                $_SESSION['wetterturnier_city'] = $_GET['wetterturnier_city'];
-                // Store to options for logged-in users. The system 
-                // remembers what the user was looking at.
-                if ( add_action('init',array($this,'logincheck')) ) { 
-                    add_option('wt_city_userid_'.(string)get_current_user_id(),
-                        $_SESSION['wetterturnier_city'], '', 'yes');
-                }
-            }
+        if ( isset($_GET['wetterturnier_city'] ) ) {
+           // Setting to session for non-logged-in users
+           $_SESSION['wetterturnier_city'] = $_GET['wetterturnier_city'];
         }
 
         // If there is NO entry in session class: default city
         if ( empty($_SESSION['wetterturnier_city']) ) {
             // Register this in the user session
-            if ( add_action('init',array($this,'logincheck')) ) { 
-                $last = get_option('wt_city_userid_'.(string)get_current_user_id());
-                // oh, a new user
-                if ( ! $last ) { 
-                    $cities = $this->get_all_cityObj();
-                    $_SESSION['wetterturnier_city'] = $cities[0]->get('hash');
-                } else {
-                    $_SESSION['wetterturnier_city'] = $last; 
-                }
-            } else {
-                $cities = $this->get_all_cityObj();
-                $_SESSION['wetterturnier_city'] = $cities[0]->get('hash');
-            }
-        }
+            $cities = $this->get_all_cityObj($activeonly = False);
 
+            // set to user option default_city else 0 
+            $default_city = $this->logincheck() ? get_user_option("wt_default_city") : 0;
+
+            // index of the default city chosen by user. counting from 0
+            // we always choose the first city from left if nothing else is defined by user
+            // see theme->functions.php->login_actions()
+            if ($default_city != 0) { $default_city -= 1; }
+
+            $_SESSION['wetterturnier_city'] = $cities[$default_city]->get('hash');
+        }
     }
 
     /** workaround function, only call it after init!

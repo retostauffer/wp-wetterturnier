@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-25 14:08+0000\n"
-"PO-Revision-Date: 2020-02-25 14:09+0000\n"
+"POT-Creation-Date: 2020-03-01 00:30+0000\n"
+"PO-Revision-Date: 2020-03-01 00:34+0000\n"
 "Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.3.1; wp-5.3.2"
 
-#: classes.php:601 user/userclass.php:830 admin/classes/webcams_list.php:49 admin/classes/api_list.php:72
+#: classes.php:601 user/userclass.php:862 admin/classes/webcams_list.php:49 admin/classes/api_list.php:72
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -30,27 +30,27 @@ msgstr "Diese Gruppe ist zur Zeit inaktiv und wird beim Turnier nicht berücksic
 msgid "Show inactive"
 msgstr "Zeige inaktive Benutzer"
 
-#: classes.php:616 user/userclass.php:851
+#: classes.php:616 user/userclass.php:883
 msgid "User name"
 msgstr "Benutzername"
 
-#: classes.php:617 user/userclass.php:852
+#: classes.php:617 user/userclass.php:884
 msgid "since"
 msgstr "Seit"
 
-#: classes.php:618 user/userclass.php:853
+#: classes.php:618 user/userclass.php:885
 msgid "until"
 msgstr "bis"
 
-#: classes.php:619 user/userclass.php:854
+#: classes.php:619 user/userclass.php:886
 msgid "Show user profile"
 msgstr "Zum User-Profil"
 
-#: classes.php:639 user/userclass.php:841 user/userclass.php:863
+#: classes.php:639 user/userclass.php:873 user/userclass.php:895
 msgid "Not available"
 msgstr "Nicht verfügbar"
 
-#: classes.php:640 user/userclass.php:867
+#: classes.php:640 user/userclass.php:899
 msgid "Show profile"
 msgstr "Zum Profil"
 
@@ -245,7 +245,7 @@ msgstr "Überprüfen & Senden"
 msgid "for"
 msgstr "für"
 
-#: betclass.php:1182 user/userclass.php:2101 admin/adminclass.php:208 admin/adminclass.php:208 admin/classes/cities_list.php:33
+#: betclass.php:1182 user/userclass.php:2133 admin/adminclass.php:208 admin/adminclass.php:208 admin/classes/cities_list.php:33
 msgid "Parameter"
 msgstr "Parameter"
 
@@ -269,8 +269,8 @@ msgstr "Älter"
 msgid "Newer"
 msgstr "Neuer"
 
-#: rankingclass.php:81 chartclass.php:133 user/userclass.php:2064 user/userclass.php:2067 user/userclass.php:2106
-#: user/userclass.php:2336 user/views/archive.php:68 user/views/archive.php:85 user/views/current.php:75
+#: rankingclass.php:81 chartclass.php:133 user/userclass.php:2096 user/userclass.php:2099 user/userclass.php:2138
+#: user/userclass.php:2368 user/views/archive.php:68 user/views/archive.php:85 user/views/current.php:75
 msgid "Points"
 msgstr "Punkte"
 
@@ -282,11 +282,11 @@ msgstr "Teilnahmen"
 msgid "Diff"
 msgstr "Diff"
 
-#: rankingclass.php:88 user/userclass.php:1234 user/userclass.php:2072
+#: rankingclass.php:88 user/userclass.php:1266 user/userclass.php:2104
 msgid "Rank"
 msgstr "Rang"
 
-#: rankingclass.php:89 user/userclass.php:1326 user/userclass.php:1376 user/userclass.php:2335 admin/classes/bets_list.php:51
+#: rankingclass.php:89 user/userclass.php:1358 user/userclass.php:1408 user/userclass.php:2367 admin/classes/bets_list.php:51
 msgid "User"
 msgstr "Benutzername"
 
@@ -294,7 +294,7 @@ msgstr "Benutzername"
 msgid "The maximum score (total) for the ranking is"
 msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
 
-#: chartclass.php:134 chartclass.php:224 user/userclass.php:1034
+#: chartclass.php:134 chartclass.php:224 user/userclass.php:1066
 msgid "Date"
 msgstr "Datum"
 
@@ -310,171 +310,199 @@ msgstr "Teilnehmer"
 msgid "Number of participants"
 msgstr "Anzahl Teilnehmer"
 
-#: user/userclass.php:222
+#: user/userclass.php:224
+msgid "Default city"
+msgstr "Lieblingsstadt"
+
+#: user/userclass.php:242
+msgid "Choose your main city which will be active after login."
+msgstr "Welche Stadt soll direkt nach dem Login aktiviert werden?"
+
+#: user/userclass.php:247
 msgid "Bet-form orientation"
 msgstr "Abgabeformular Ausrichtung"
 
-#: user/userclass.php:227
+#: user/userclass.php:252
 msgid "portrait"
 msgstr "Hochformat"
 
-#: user/userclass.php:230
+#: user/userclass.php:255
 msgid "landscape"
 msgstr "Querformat"
 
-#: user/userclass.php:233
+#: user/userclass.php:258
 msgid "Select your default orientation"
 msgstr "Wähle deine Standard-Ausrichtung"
 
-#: user/userclass.php:238
+#: user/userclass.php:263
 msgid "MOS forecasts on betform"
 msgstr "Mosvorhersagen im Abgageformular"
 
-#: user/userclass.php:243 user/userclass.php:262
-msgid "default"
-msgstr "Standard"
+#: user/userclass.php:268
+msgid "no"
+msgstr "nein"
 
-#: user/userclass.php:246
+#: user/userclass.php:271
 msgid "above"
 msgstr "darüber"
 
-#: user/userclass.php:249
+#: user/userclass.php:274
 msgid "below"
 msgstr "darunter"
 
-#: user/userclass.php:252
-msgid "Select if (and where) MOS forecasts should be shown on betform page (default=false)"
-msgstr "Sollen die MOS-Vorhersagen auf der Tippabgabe-Seite dargestellt werden? Wenn ja wo? (Standard=Nein)"
+#: user/userclass.php:277
+msgid "Select if/where MOS forecasts should be shown on betform page"
+msgstr "Sollen die MOS Vorhersagen auf der Tippabgabe-Seite gezeigt werden? Wenn ja wo?"
 
-#: user/userclass.php:257
+#: user/userclass.php:282
 msgid "Table styling"
 msgstr "Tabellen-Styling"
 
-#: user/userclass.php:265
+#: user/userclass.php:287
+msgid "default"
+msgstr "Standard"
+
+#: user/userclass.php:290
 msgid "contrast"
 msgstr "Kontrastreich"
 
-#: user/userclass.php:268
+#: user/userclass.php:293
 msgid "orange-blue"
 msgstr "Orange-Blau"
 
-#: user/userclass.php:271
+#: user/userclass.php:296
 msgid "Select your preferred table styling"
 msgstr "Wähle dein präferiertes Tabellen-Styling"
 
-#: user/userclass.php:320
+#: user/userclass.php:301
+msgid "Windy Widget"
+msgstr "Windy-Radar"
+
+#: user/userclass.php:306
+msgid "on"
+msgstr "an"
+
+#: user/userclass.php:309
+msgid "off"
+msgstr "aus"
+
+#: user/userclass.php:312
+msgid "Turn the windy radar widget on/off"
+msgstr "Schalte das Windy-Radar Widget an oder aus."
+
+#: user/userclass.php:361
 msgid "They can be found here"
 msgstr "Diese findest du hier"
 
-#: user/userclass.php:321
+#: user/userclass.php:362
 msgid "Before the registration you have to read and accept our terms and conditions!"
 msgstr "Bevor du dich registrieren kannst lies und akzeptiere unsere Nutzungsbedingungen!"
 
-#: user/userclass.php:322
+#: user/userclass.php:363
 msgid "Terms and Conditions"
 msgstr "Nutzungsbedingungen"
 
-#: user/userclass.php:352
+#: user/userclass.php:393
 msgid "Home"
 msgstr "Home"
 
-#: user/userclass.php:392
+#: user/userclass.php:433
 msgid "Help"
 msgstr "Hilfe"
 
-#: user/userclass.php:439
+#: user/userclass.php:480
 msgid "First day"
 msgstr "Tag 1"
 
-#: user/userclass.php:440
+#: user/userclass.php:481
 msgid "Second day"
 msgstr "Tag 2"
 
-#: user/userclass.php:713
+#: user/userclass.php:745
 msgid "Profile"
 msgstr "Profil"
 
-#: user/userclass.php:767
+#: user/userclass.php:799
 msgid "will not be considered"
 msgstr "werden nicht berücksichtigt"
 
-#: user/userclass.php:832
+#: user/userclass.php:864
 msgid "Currently no users in this group"
 msgstr "Im Moment befinden sich keine Teilnehmer in dieser Gruppe."
 
-#: user/userclass.php:871
+#: user/userclass.php:903
 msgid "active"
 msgstr "aktiv"
 
-#: user/userclass.php:1002
+#: user/userclass.php:1034
 msgid " of our administrators. Thanks."
 msgstr "von unseren Admins. Danke."
 
-#: user/userclass.php:1013 user/userclass.php:1017 user/userclass.php:1021
+#: user/userclass.php:1045 user/userclass.php:1049 user/userclass.php:1053
 msgid "Show"
 msgstr "Anzeigen"
 
-#: user/userclass.php:1025
+#: user/userclass.php:1057
 msgid "Show All"
 msgstr "Alle anzeigen"
 
-#: user/userclass.php:1035
+#: user/userclass.php:1067
 msgid "Players"
 msgstr "Teilnehmer"
 
-#: user/userclass.php:1036
+#: user/userclass.php:1068
 msgid "Winner"
 msgstr "Gewinner"
 
-#: user/userclass.php:1037
+#: user/userclass.php:1069
 msgid "Max"
 msgstr "Maximum"
 
-#: user/userclass.php:1038
+#: user/userclass.php:1070
 msgid "Mean"
 msgstr "Mittel"
 
-#: user/userclass.php:1039
+#: user/userclass.php:1071
 msgid "Median"
 msgstr "Median"
 
-#: user/userclass.php:1040
+#: user/userclass.php:1072
 msgid "Status bar"
 msgstr "Statusbar"
 
-#: user/userclass.php:1101
+#: user/userclass.php:1133
 msgid "MOS type selection:"
 msgstr "MOS Auswahl:"
 
-#: user/userclass.php:1102
+#: user/userclass.php:1134
 msgid "Just click on the buttons to show/hide a certain type in the tables below!"
 msgstr "Durch Anklicken der Buttons kannst du einzelne Typen aus- und wieder einblenden!"
 
-#: user/userclass.php:1107
+#: user/userclass.php:1139
 msgid "EZ"
 msgstr "EZ"
 
-#: user/userclass.php:1111
+#: user/userclass.php:1143
 msgid "GFS"
 msgstr "GFS"
 
-#: user/userclass.php:1115
+#: user/userclass.php:1147
 msgid "ICON"
 msgstr "ICON"
 
-#: user/userclass.php:1119
+#: user/userclass.php:1151
 msgid "MIX"
 msgstr "MIX"
 
-#: user/userclass.php:1123
+#: user/userclass.php:1155
 msgid "Mean/Max/Min"
 msgstr "Mittel/Max/Min"
 
-#: user/userclass.php:1128
+#: user/userclass.php:1160
 msgid "Color legend:"
 msgstr "Farblegende:"
 
-#: user/userclass.php:1129
+#: user/userclass.php:1161
 msgid ""
 "Shows the color coding of the different player classes. Just click on the buttons to show/hide a certain type in the tables "
 "below!"
@@ -482,136 +510,136 @@ msgstr ""
 "Diese Legende zeigt die Farbkodierung der verschiedenen Teilnehmer-Typen. Durch Anklicken der Buttons kannst du einzelne "
 "Typen aus- und wieder einblenden!"
 
-#: user/userclass.php:1134
+#: user/userclass.php:1166
 msgid "Human player"
 msgstr "Menschlicher Spieler"
 
-#: user/userclass.php:1138
+#: user/userclass.php:1170
 msgid "Group"
 msgstr "Gruppe"
 
-#: user/userclass.php:1142
+#: user/userclass.php:1174
 msgid "Automated forecast"
 msgstr "Automatische Vorhersage"
 
-#: user/userclass.php:1146
+#: user/userclass.php:1178
 msgid "Reference method"
 msgstr "Referenzmethode"
 
-#: user/userclass.php:1150
+#: user/userclass.php:1182
 msgid "Sleepy"
 msgstr "Sleepy"
 
-#: user/userclass.php:1205
+#: user/userclass.php:1237
 msgid " points yet because of missing observations."
 msgstr "Punkte wegen fehlenden Obsen."
 
-#: user/userclass.php:1227
+#: user/userclass.php:1259
 msgid "Weekend ranking for"
 msgstr "Wochenendwertung f&uum;r"
 
-#: user/userclass.php:1235
+#: user/userclass.php:1267
 msgid "Player"
 msgstr "Teilnehmer"
 
-#: user/userclass.php:1236 user/userclass.php:2064
+#: user/userclass.php:1268 user/userclass.php:2096
 msgid "Saturday"
 msgstr "Samstag"
 
-#: user/userclass.php:1237 user/userclass.php:2067
+#: user/userclass.php:1269 user/userclass.php:2099
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: user/userclass.php:1238
+#: user/userclass.php:1270
 msgid "Total"
 msgstr "Total"
 
-#: user/userclass.php:1239 admin/classes/groupusers_list.php:74
+#: user/userclass.php:1271 admin/classes/groupusers_list.php:74
 msgid "Status"
 msgstr "Status"
 
-#: user/userclass.php:1326 user/userclass.php:1376
+#: user/userclass.php:1358 user/userclass.php:1408
 msgid "Name filter"
 msgstr "Namensfilter"
 
-#: user/userclass.php:1330 user/userclass.php:1336
+#: user/userclass.php:1362 user/userclass.php:1368
 msgid "User bets"
 msgstr "Spieler-Tipps"
 
-#: user/userclass.php:1335 user/userclass.php:1385
+#: user/userclass.php:1367 user/userclass.php:1417
 #, php-format
 msgid "Day %d"
 msgstr "Tag %d"
 
-#: user/userclass.php:1352 user/views/export-obsarchive.php:45 user/views/export-obslive.php:45
+#: user/userclass.php:1384 user/views/export-obsarchive.php:45 user/views/export-obslive.php:45
 msgid "Station"
 msgstr "Station"
 
-#: user/userclass.php:1356 user/userclass.php:1362
+#: user/userclass.php:1388 user/userclass.php:1394
 msgid "Observation data"
 msgstr "Beobachtungsdaten"
 
-#: user/userclass.php:1359 user/userclass.php:1424
+#: user/userclass.php:1391 user/userclass.php:1456
 msgid "Day"
 msgstr "Tag"
 
-#: user/userclass.php:1380 user/userclass.php:1386
+#: user/userclass.php:1412 user/userclass.php:1418
 msgid "MOS bets"
 msgstr "MOS Tipps"
 
-#: user/userclass.php:1396
+#: user/userclass.php:1428
 msgid "Sorry, no bet data available"
 msgstr "Sorry, keine abgegebenen Tipps vorhanden"
 
-#: user/userclass.php:1397
+#: user/userclass.php:1429
 msgid "There is probably something going wrong?"
 msgstr "Läuft da eventuell etwas schief?"
 
-#: user/userclass.php:1400
+#: user/userclass.php:1432
 msgid "Sorry, currently no observations available"
 msgstr "Im Moment sind leider keine Beobachtungen vorhanden"
 
-#: user/userclass.php:1401 user/userclass.php:1405
+#: user/userclass.php:1433 user/userclass.php:1437
 msgid "They will be displayed as soon as they are available"
 msgstr "Diese werden hier angezeigt, sobald diese zur Verfügung stehen"
 
-#: user/userclass.php:1404
+#: user/userclass.php:1436
 msgid "Sorry, currently no MOS forecasts available"
 msgstr "Im Moment sind keine MOS-Vorhersagen verfügbar"
 
-#: user/userclass.php:1434
+#: user/userclass.php:1466
 msgid "Sum"
 msgstr "Summe"
 
-#: user/userclass.php:1554
+#: user/userclass.php:1586
 msgid "Modified by"
 msgstr "Modifiziert durch"
 
-#: user/userclass.php:2070
+#: user/userclass.php:2102
 msgid "Points total"
 msgstr "Gesamtpunkte"
 
-#: user/userclass.php:2101
+#: user/userclass.php:2133
 msgid "Forecast"
 msgstr "Vorhersage"
 
-#: user/userclass.php:2106
+#: user/userclass.php:2138
 msgid "Deviation"
 msgstr "Abweichung"
 
-#: user/userclass.php:2253
+#: user/userclass.php:2285
 msgid "Access denied"
 msgstr "Zugriff verweigert"
 
-#: user/userclass.php:2255
+#: user/userclass.php:2287
 msgid "The access for some pages is restricted to "
 msgstr "Der Zugriff auf einige Seiten ist nur für "
 
-#: user/userclass.php:2255
+#: user/userclass.php:2287
 msgid "registered"
 msgstr "registrierte"
 
-#: user/userclass.php:2255
+#: user/userclass.php:2287
 msgid ""
 "and logged in users only. You are not logged in at the moment! To see the content of this specific page, please login first. "
 "Thank you for your understanding."
@@ -619,27 +647,27 @@ msgstr ""
 " und eingeloggte User freigeschaltet. Um den Inhalt dieser Seite zu sehen, logge dich bitte ein. Vielen Dank für dein "
 "Verständnis."
 
-#: user/userclass.php:2258 user/views/bet.php:27
+#: user/userclass.php:2290 user/views/bet.php:27
 msgid "Login form"
 msgstr "Login-Formular"
 
-#: user/userclass.php:2377
+#: user/userclass.php:2409
 msgid "Leaderboard"
 msgstr "Bestenliste"
 
-#: user/userclass.php:2399
+#: user/userclass.php:2431
 msgid "nd"
 msgstr "."
 
-#: user/userclass.php:2399 user/userclass.php:2401
+#: user/userclass.php:2431 user/userclass.php:2433
 msgid "place"
 msgstr "Platz"
 
-#: user/userclass.php:2401
+#: user/userclass.php:2433
 msgid "th"
 msgstr "."
 
-#: user/userclass.php:2431
+#: user/userclass.php:2463
 msgid "points"
 msgstr "Punkte"
 
@@ -754,27 +782,27 @@ msgstr "Zahlen: teilweise abgegebene Tipps, vollständige Tipps, und Gruppentipp
 msgid "are submitted to the wetterturnier."
 msgstr "werden zum Wetterturnier übermittelt."
 
-#: user/widgets/bbpmessages.php:143
+#: user/widgets/bbpmessages.php:140
 msgid "No unread messages in your inbox."
 msgstr "Keine ungelesene Mitteilung im Posteingang."
 
-#: user/widgets/bbpmessages.php:146 user/widgets/bbpmessages.php:197
+#: user/widgets/bbpmessages.php:144 user/widgets/bbpmessages.php:202
 msgid "Open Messenger"
 msgstr "Messenger öffnen"
 
-#: user/widgets/bbpmessages.php:147
+#: user/widgets/bbpmessages.php:146
 msgid "New Message"
 msgstr "Neue Nachricht"
 
-#: user/widgets/bbpmessages.php:189
+#: user/widgets/bbpmessages.php:194
 msgid "You have"
 msgstr "Du hast"
 
-#: user/widgets/bbpmessages.php:193
+#: user/widgets/bbpmessages.php:198
 msgid "Unread message"
 msgstr "Nachricht"
 
-#: user/widgets/bbpmessages.php:193
+#: user/widgets/bbpmessages.php:198
 msgid "Unread messages"
 msgstr "Nachrichten"
 
