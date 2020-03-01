@@ -85,7 +85,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
       $(e).hide().empty();
 
       // Short information about the maximum number of points possible
-      if ( input.header ) {
+      if ( input.header && data.meta.ntournaments <= 52 ) {
           $(e).append("<div class=\"wttable-show-points-max\">" +
               data.dict.points_max + " <b>" + data.meta.points_max + "</b>." +
               "</div>");

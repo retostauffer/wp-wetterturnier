@@ -1451,9 +1451,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             echo "<table id=\"".$tableid."\" class=\"wttable-show-".$type." wttable-show tablesorter ".$wttable_style."\">\n"
                 ."  <thead>\n"
                 ."    <tr>\n"
-                .$nameth//;
+                .$nameth;
                 //re
-                ."      <th class=\"param-day filter-false align-center\">".__("Day","wpwt")."</th>";
+                //."      <th class=\"param-day filter-false align-center\">".__("Day","wpwt")."</th>";
                 //re
                 // Adding header (parameter names)
                 if ( ! $showday ) {                        $params = $data->day_1->params; }
@@ -1543,11 +1543,11 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             printf("    <tr class='day-%d %s' userid='%d'>\n"
                   ."      <td class='username %s'>%s%s</td>\n"
                   //re
-                  ."      <td class='day'>%s</td>\n"
+                  //."      <td class='day'>%s</td>\n"
                   //re
                   ,$number,$rec->userclass,$rec->userID,
-                  //re $rec->userclass,$edit_button,$user_detail);
-                  $rec->userclass,$edit_button,$user_detail,$day);
+                  $rec->userclass,$edit_button,$user_detail);
+                  //$rec->userclass,$edit_button,$user_detail,$day);
 
             // Adding values
             foreach ( $data->params as $param ) {
