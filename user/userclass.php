@@ -1590,7 +1590,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                     } else {
                         // Sleepy  should never be shown - but just in case :) 
                         if ( $sleepy ) {
-                           printf("      <td class=\"data\">----</td>\n");
+                           printf("      <td class=\"data\">--</td>\n");
                         // Show cell "normal", unmodified
                         } else {
                            printf("      <td class=\"data\">%s</td>\n",
@@ -1604,7 +1604,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                 // a '---' instead of a 'n' or a value.
                 } else {
                     // Show "empy" cell
-                    echo "      <td class='data'>----</td>\n";
+                    echo "      <td class='data'>--</td>\n";
                 }
                 // Sum points for this player
                 if ( isset($rec->$phash) ) {

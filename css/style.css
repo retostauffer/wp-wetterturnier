@@ -125,7 +125,7 @@ input[type="submit"].settings-button:hover {
 }
 
 /* Tables where the bets are displayed, e,g. archive */
-.wttable-show                          { table-layout: auto; display: table; width: 100%; }
+.wttable-show                          { table-layout: auto; display: table; width: 100% !important; }
 .wttable-show * td                     { font-size: 1.0em; }
 .wttable-show.small * td               { font-size: 1.0em; padding: 1px 5px; }
 /*.wttable-show * td.username            { font-weight: bold; }*/
@@ -267,17 +267,17 @@ table.tablesorter tbody td {
 .wttable-show * th.statusbar,  .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
 .wttable-show * td.difference                                 { color: gray; }
 
-.wttable-show-bets,                   .wttable-show-obs    { table-layout: auto; }
+.wttable-show-bets,   .wttable-show-obs    { table-layout: auto; min-width: 100%; }
 .wttable-show-bets th,                .wttable-show-obs th { text-align: left; }
 .wttable-show-bets th.align-center,   .wttable-show-obs th.align-center  { text-align: center; }
 .wttable-show-bets th.align-right,    .wttable-show-obs th.align-right   { text-align: right; }
-.wttable-show-bets th.param-col,      .wttable-show-obs th.param-col     { width: 60px; }
-.wttable-show-bets th.param-col-N,    .wttable-show-obs th.param-col-N   { width: 40px; }
-.wttable-show-bets th.param-col-Wv,   .wttable-show-obs th.param-col-Wv  { width: 40px; }
-.wttable-show-bets th.param-col-Wn,   .wttable-show-obs th.param-col-Wn  { width: 40px; }
-.wttable-show-bets th.param-col-PPP,  .wttable-show-obs th.param-col-PPP { width: 80px; }
-.wttable-show-bets th.param-col-RR,  .wttable-show-obs th.param-col-RR  { width: 70px; }
-.wttable-show-bets th.user-name,      .wttable-show-obs  th.user-name    { min-width: 220px; }
+.wttable-show-bets th.param-col,      .wttable-show-obs th.param-col     { width: 60px; min-width: 24px }
+.wttable-show-bets th.param-col-N,    .wttable-show-obs th.param-col-N   { width: 40px; min-width: 8px }
+.wttable-show-bets th.param-col-Wv,   .wttable-show-obs th.param-col-Wv  { width: 40px; min-width: 16px }
+.wttable-show-bets th.param-col-Wn,   .wttable-show-obs th.param-col-Wn  { width: 40px; min-width: 16px }
+.wttable-show-bets th.param-col-PPP,  .wttable-show-obs th.param-col-PPP { width: 80px; min-width: 40px }
+.wttable-show-bets th.param-col-RR,   .wttable-show-obs th.param-col-RR  { width: 70px; min-width: 28px }
+.wttable-show-bets th.user-name,      .wttable-show-obs th.user-name     { min-width: 180px; }
 .wttable-show span.button.small {
    padding: 1px 3px;
    margin: 0px;
