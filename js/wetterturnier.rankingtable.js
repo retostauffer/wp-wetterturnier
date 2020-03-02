@@ -21,15 +21,8 @@ $.fn.show_ranking = function(ajaxurl, input ) {
   $.ajax({
     url: ajaxurl, dataType: 'json', type: 'post', data: input,
     success: function(results, hxr, settings) {
-	if ( results.error != undefined ) {
-           $(elem).html("<div class=\"wetterturnier-info error\">" +
-                        results.error + "</div>");
-        } else {
-           $(elem).html( "<div class=\"wetterturnier-info\">Data loaded, waiting for js to display it.</div>" );
-           data = results;
-        }
         display_ranking($(elem), results, input);
-
+        data = results;
     },
     error: function(hxr, ajaxOptions, thrownError) {
         console.log('errorlog'); console.log(thrownError);
@@ -106,7 +99,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                .append("<th class=\"points difference\">"+data.dict.difference+"</th>")
                .append("<th class=\"points\">"+data.dict.points+"</th>")
-               if ( data.meta.ntournaments == 1 ) {
+               if ( ["weekend","cities"].includes( input.type ) ) {
                     $(head).append("<th class=\"points\">"+data.dict.points_d1+"</th>")
                            .append("<th class=\"points\">"+data.dict.points_d2+"</th>")
                } else if ( input.type === "eternal" ) {
@@ -125,7 +118,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
           input.limit = data.data.length;
       }
       $.each( data.data, function(idx, rec) {
-	 console.log(rec);
+	     console.log(rec);
          // If input.type === "seasoncities": colorize the guys who have
          // not played all games.
          if ( input.type === "seasoncities" && rec.played_now < data.meta.ntournaments )
@@ -150,8 +143,8 @@ $.fn.show_ranking = function(ajaxurl, input ) {
                    .append("<td class=\"points difference\">"+rec.points_diff+"</td>")
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
 
-                   // if only 1 tournament: show points_d1/d2
-                   if ( data.meta.ntournaments === 1 ) {
+                   // if only single tournament: show points_d1/d2
+                   if ( ["weekend","cities"].includes( input.type ) ) {
                        $(tr).append("<td class=\"points\">"+rec.points_d1 +"</td>")
                             .append("<td class=\"points\">"+rec.points_d2+ "</td>")
                    } else if ( input.type === "eternal" ) {
