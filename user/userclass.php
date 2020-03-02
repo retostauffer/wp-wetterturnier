@@ -510,18 +510,16 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
         // If there is NO entry in session class: default city
         if ( empty($_SESSION['wetterturnier_city']) ) {
-		      // Register this in the user session
-            // index of the default city chosen by user. counting from 0
-            // we always choose the first city from left if nothing else is defined by user
-            // see theme->functions.php->login_actions()
+            // Register this in the user session
             $cities = $this->get_all_cityObj($activeonly = False);
 
             // set to user option default_city else 0 
             $default_city = $this->logincheck() ? get_user_option("wt_default_city") : 0;
-            
-            if ($default_city != 0) {
-               $default_city -= 1;
-            }
+
+            // index of the default city chosen by user. counting from 0
+            // we always choose the first city from left if nothing else is defined by user
+            // see theme->functions.php->login_actions()
+            if ($default_city != 0) { $default_city -= 1; }
             
             $_SESSION['wetterturnier_city'] = $cities[$default_city]->get('hash');
 		  }
@@ -649,19 +647,19 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // header=>true,        Hide header title and stuff
         // $args are the user-args, will be combined with de defaults.
         $args = shortcode_atts( array('type'=>'weekend',
-        // TODO: type=>'alltime' ranking
                                       'tdate'=>Null,
                                       'limit'=>false,
                                       'city'=>false,
                                       'cities'=>"1,2,3",
                                       'slim'=>false,
-                                      'weeks'=>15,
+                                      'weeks'=>false,
                                       'header'=>true,
+                                      'legend'=>true,
                                       'hidebuttons'=>false), $args );
         foreach ( array("slim", "hidebuttons", "header") as $key ) {
             $args[$key] = ( $args[$key] === "true" ) ? true : false;
         }
-        if ( ! in_array($args['type'], array('weekend','total','season','seasoncities','cities','yearly','alltime')) ) {
+        if ( ! in_array($args['type'], array('weekend','total','season','seasoncities','cities','yearly','alltime','eternal')) ) {
             return(sprintf("<div class=\"wetterturnier-info error\">%s</div>",
                 sprintf("Sorry, ranking of <b>type='%s'</b> unknown. Option wrong.",$args['type'])));
         }
@@ -756,7 +754,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         if ( function_exists('bbp_get_user_profile_url') ) {
             global $wpdb;
             $user = $wpdb->get_row(sprintf("SELECT ID FROM %s WHERE user_login = '%s'",$wpdb->users,$args->user));
-            if ( count($user) > 0 ) {
+            if ( count(array($user)) > 0 ) {
                 $bbprofile = bbp_get_user_profile_url($user->ID);
                 return( ',&nbsp;<a href='.$bbprofile.' target=\"_self\">'.__('Profile','wpwt').'</a>' ); 
             }
@@ -1828,8 +1826,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     * Returns json array. If user is allready an active member of this group,
     * return value 'got' is 'ismember'.
     */
-   public function ranking_ajax() {
+   public function ranking_ajax( ) {
 
+       //TODO user option trend calc
+       $calc_trend = false;
        global $wpdb;
        if ( empty($_REQUEST["city"]) || empty($_REQUEST["tdates"]) ) {
            print json_encode(array("error"=>"Error by ajax interface function: wrong inputs."));
@@ -1875,12 +1875,15 @@ class wetterturnier_userclass extends wetterturnier_generalclass
           }
        }
 
+       // only if weekend ranking: show d1/d2 points
+       $d1d2 = (in_array( $_REQUEST["type"], array( "weekend", "cities") ) ) ? True : False;
+
        # Loading ranking
        $rankingObj = new wetterturnier_rankingObject();
        $rankingObj->set_cities($cityObj);
-       $rankingObj->set_tdates($tdates);
+       $rankingObj->set_tdates($tdates, $calc_trend=$calc_trend);
        $rankingObj->set_cachehash($_REQUEST["type"]);
-       $rankingObj->prepare_ranking();
+       $rankingObj->prepare_ranking($d1d2, $calc_trend=$calc_trend, $type=$_REQUEST["type"]);
        print $rankingObj->return_json();
        die(0);
    }

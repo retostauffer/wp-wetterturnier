@@ -135,13 +135,14 @@ class WP_wetterturnier_widget_leading extends WP_Widget
                                "from_prev" => Null, "to_prev" => Null,
                                "older"     => Null, "newer" => Null,
                                "userinfo"  => true));
-        printf("<div class=\"wt-leaderboard\" args=\"%s\"></div>", 
-               htmlspecialchars(json_encode($args)));
+        printf("<div class=\"wt-leaderboard\" args=\"%s\">%s</div>", 
+            htmlspecialchars(json_encode($args)), __("Loading data ...","wpwt") );
+        ?>
+        <div id="leading_loading" style="display: none;"></div>
+        <?php
     }
 
 }
 
 // Add widget to wordpress
 add_action('widgets_init', function() { register_widget("WP_wetterturnier_widget_leading"); });
-
-?>

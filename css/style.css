@@ -325,8 +325,8 @@ table.tablesorter tbody td {
 }
 
 @media screen and (max-width: 1200px) {
-   #content .wttable-show-ranking th:nth-last-child(3),
-   #content .wttable-show-ranking td:nth-last-child(3) {
+   #content .wttable-show-ranking th:nth-last-child(7),
+   /* #content .wttable-show-ranking td:nth-last-child(7) */ {
        display: none;
    }
 }

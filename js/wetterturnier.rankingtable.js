@@ -1,11 +1,10 @@
-
 // Simply write jQuery to $
 $ = jQuery;
- 
+
 // ------------------------------------------------------------------
 // Load and display the ranking table.
 // ------------------------------------------------------------------
-$.fn.show_ranking = function(ajaxurl, input) {
+$.fn.show_ranking = function(ajaxurl, input ) {
 
   // Element where we have to store the data to
   var elem = $(this)
@@ -16,31 +15,29 @@ $.fn.show_ranking = function(ajaxurl, input) {
       if ( ! input.hasOwnProperty(key) ) { input[key] = val; }
   });
 
-  // Check if file exists. If it exists, just display.
-  // If not existing, start Rscript to create the image.
-  // Ajaxing the calculation miniscript
-  input["action"] = "ranking_ajax";
+  // Triggering ajax request "ranking_ajax" (registered wordpress action)
+  // to load the data. On success the ranking will be displayed.
+  input["action"] = "ranking_ajax"
   $.ajax({
-     url: ajaxurl, dataType: 'json', type: 'post', data: input,
-     success: function(results, hxr, settings) {
+    url: ajaxurl, dataType: 'json', type: 'post', data: input,
+    success: function(results, hxr, settings) {
+	if ( results.error != undefined ) {
+           $(elem).html("<div class=\"wetterturnier-info error\">" +
+                        results.error + "</div>");
+        } else {
+           $(elem).html( "<div class=\"wetterturnier-info\">Data loaded, waiting for js to display it.</div>" );
+           data = results;
+        }
+        display_ranking($(elem), results, input);
 
-         if ( results.error != undefined ) {
-            $(elem).html("<div class=\"wetterturnier-info error\">" +
-                         results.error + "</div>");
-         } else {
-            $(elem).html( "<div class=\"wetterturnier-info\">Data loaded, waiting for js to display it.</div>" );
-            data = results;
-         }
-         display_ranking($(elem), results, input);
-     },
-     error: function(hxr, ajaxOptions, thrownError) {
-        //$error = e; console.log('errorlog'); console.log(e);
+    },
+    error: function(hxr, ajaxOptions, thrownError) {
+        console.log('errorlog'); console.log(thrownError);
         $(this).html("Problems loading ranking data.<br><br>\n" + hxr.responseText + "\n" + thrownError );
         data = false;
-     }
+    }
 
   });
-
 
   // Show status bar (return status bar html)
   function statusbar(rel, width) {
@@ -81,14 +78,14 @@ $.fn.show_ranking = function(ajaxurl, input) {
   }
 
   function display_ranking( e, data, input ) {
-
+      console.log(data.data);
       // Clear content of the div
       $(e).hide().empty();
 
       // Short information about the maximum number of points possible
-      if ( input.header ) {
+      if ( input.header && data.meta.ntournaments <= 52 && input.type != "eternal" ) {
           $(e).append("<div class=\"wttable-show-points-max\">" +
-              data.dict.points_max + " <b>" + data.meta.points_max + "</b>." +
+              data.dict.max_points + " <b>" + data.meta.max_points + "</b>." +
               "</div>");
       }
 
@@ -103,20 +100,32 @@ $.fn.show_ranking = function(ajaxurl, input) {
           $( head ).append("<th class=\"trend\">"+data.dict.trend+"</th>");
       }
       // Only show number of played games if begin/end date differ
-      if ( data.meta.ntournaments > 1 ) { $( head ).append("<th class=\"played\">"+data.dict.played+"</th>"); }
+      if ( data.meta.ntournaments > 1 || input.type === "eternal" ) {
+	$( head ).append("<th class=\"played\">"+data.dict.played+"</th>");
+      }
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                .append("<th class=\"points difference\">"+data.dict.difference+"</th>")
                .append("<th class=\"points\">"+data.dict.points+"</th>")
-               .append("<th class=\"points\">"+data.dict.points1+"</th>")
-               .append("<th class=\"points\">"+data.dict.points2+"</th>")
-               .append("<th class=\"statusbar\"></th>");
+               if ( data.meta.ntournaments == 1 ) {
+                    $(head).append("<th class=\"points\">"+data.dict.points_d1+"</th>")
+                           .append("<th class=\"points\">"+data.dict.points_d2+"</th>")
+               } else if ( input.type === "eternal" ) {
+                    $(head).append("<th class=\"points\">"+data.dict.sd_ind+      "</th>")
+                           .append("<th class=\"points\">"+data.dict.points_max+  "</th>")
+                           .append("<th class=\"points\">"+data.dict.points_mean+ "</th>")
+                           //.append("<th class=\"points\">"+data.dict.points_med+  "</th>")
+                           //.append("<th class=\"points\">"+data.dict.won_weekends+"</th>") // in %
+                           //.append("<th class=\"points\">"+data.dict.won_seasons +"</th>") // in %
+                           //.append("<th class=\"points\">"+data.dict.parts       +"</th>")
+               }
+               $(head).append("<th class=\"statusbar\">"+data.dict.statusbar+"</th>");
 
       counter = 0;
       if ( typeof(input.limit) == undefined | typeof(input.limit) === "boolean" ) {
           input.limit = data.data.length;
       }
-      $.each( data.data, function(idx,rec) {
-
+      $.each( data.data, function(idx, rec) {
+	 console.log(rec);
          // If input.type === "seasoncities": colorize the guys who have
          // not played all games.
          if ( input.type === "seasoncities" && rec.played_now < data.meta.ntournaments )
@@ -133,15 +142,26 @@ $.fn.show_ranking = function(ajaxurl, input) {
          }
          // Only show number of played games if begin/end date differ
          if ( data.meta.ntournaments > 1 ) { $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.ntournaments+"</td>"); }
+         else if ( input.type === "eternal" ) { $(tr).append("<td class=\"played\">"+rec.played_now+"</td>"); }
          $(tr).append("<td>" +
                       (( rec.detail_button != undefined && data.meta.ntournaments === 1 ) ? rec.detail_button : "") + 
                       (( rec.edit_button != undefined ) ? rec.edit_button : "") +
                       rec.profile_link + "</td>")
                    .append("<td class=\"points difference\">"+rec.points_diff+"</td>")
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
-                   .append("<td class=\"points\">"+rec.points_d1+"</td>")
-                   .append("<td class=\"points\">"+rec.points_d2+"</td>")
-                   .append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
+
+                   // if only 1 tournament: show points_d1/d2
+                   if ( data.meta.ntournaments === 1 ) {
+                       $(tr).append("<td class=\"points\">"+rec.points_d1 +"</td>")
+                            .append("<td class=\"points\">"+rec.points_d2+ "</td>")
+                   } else if ( input.type === "eternal" ) {
+                       $(tr).append("<td class=\"points\">"+rec.sd_ind+      "</td>")
+                            .append("<td class=\"points\">"+rec.points_max+  "</td>")
+                            .append("<td class=\"points\">"+rec.points_mean+ "</td>")
+                            //.append("<td class=\"points\">"+rec.won_weekends+"</td>")
+                            //.append("<td class=\"points\">"+rec.won_seasons+ "</td>")
+                   }
+                   $(tr).append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
 
           // Increase loop counter
           counter++;
@@ -149,7 +169,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
 
       });
 
-      $(e).fadeIn("slow");
+      $(e).fadeIn("fast");
 
   };
 
@@ -176,20 +196,12 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     $.ajax({
        url: ajaxurl, dataType: 'json', type: 'post', data: input,
        success: function( results, hxr, settings ) {
-  
-           if ( results.error != undefined ) {
-              $(elem).html("<div class=\"wetterturnier-info error\">" +
-                           results.error + "</div>");
-           } else {
-              $(elem).html( "<div class=\"wetterturnier-info\">Data loaded, waiting for js to display it.</div>" );
-              data = results;
-           }
            display_leaders($(elem), results, input);
+	       data = results;
        },
        error: function( hxr, ajaxOptions, thrownError ) {
-          //$error = e; console.log('errorlog'); console.log(e);
-          $(this).html("Problems loading ranking data.<br><br>\n" +
-              hxr.responseText + "\n" + thrownError );
+          console.log('errorlog'); console.log(thrownError);
+          //$(this).html("Problems loading ranking data.<br><br>\n" + hxr.responseText + "\n" + thrownError );
           data = false
        }
   
@@ -203,7 +215,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     
         counter = 1
         $.each( data.data, function(idx,rec) {
-        //console.log(rec)
+        console.log(rec)
     
             $(e).append("<div class=\"wt-leaderboard\">\n"
                       + "    <div class=\"wt-leaderboard-avatar\" style=\"width: 33%;\">\n"
@@ -225,12 +237,16 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
             if ( counter >= input.limit ) { return(false); }; counter++;
         });
 
-        $(e).fadeIn("slow");
-
+        $(e).fadeIn("fast");
 
     };
 
 };
+
+
+function Sleep(milliseconds) {
+   return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
 
  
 // ------------------------------------------------------------------
@@ -240,14 +256,62 @@ $(document).on('ready',function() {
     // Looking for wt-ranking-container divs and call the show_ranking
     // plugin on each of these to load/display ranking data.
     $("div.wt-ranking-container").each(function() {
+        
+        // workaround next level shit - calling show_ranking twice seems to fix the problem; still a bit nasty though :D
+        // TODO try to catch the JSON syntax error in AJAX call and redo the call if the error occurs
         $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
+ 
+        // wait 1 sec
+        Sleep(1000);
+        
+        // look for the hidden <div> element with id="ranking_loading."
+        var div = document.getElementById("ranking_loading");
+
+        // if present, reload
+        if (div) { $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args"))) };
     });
 
-    // Looking for wt-ranking-container divs and call the show_ranking
+    // Looking for wt-ranking-leaderboard divs and call the show_leaderboard
     // plugin on each of these to load/display ranking data.
     $("div.wt-leaderboard").each(function() {
         $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
+
+        // wait 0.5 sec
+        Sleep(500);
+        
+        // look for the hidden <div> element with id="leading_loading"
+        var div = document.getElementById('leading_loading');
+       
+        // if present, reload
+        if (div) { $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args"))) };
+
     });
+
 });
 
-
+// possible but hacky as FUCK!
+// bug workaround: reload page just after that, otherwise sometimes tables with d1/d2 are not loading...
+// https://stackoverflow.com/questions/6985507/one-time-page-refresh-after-first-page-load
+// https://stackoverflow.com/questions/570015/how-do-i-reload-a-page-without-a-postdata-warning-in-javascript
+//      form submission dialog shows in firefox, but disappears by itself during reloading. chrome is fine
+//      does work but is ugly as fuck plus users would get confused
+/*
+window.onload = function() {
+    if(!window.location.hash) {
+        window.location = window.location.href.split("#")[0];
+        window.location = window.location + '#loaded';
+        // these lines cause a reload loop in chrome:
+        // window.location.href = window.location.protocol +'//'+ window.location.host + window.location.pathname + window.location.search;
+        // window.location.assign(document.URL);
+        
+        // shows repost warning in firefox:
+        window.location.reload();
+        // firefox reload loop...
+        // window.location=window.location;
+        // window.opener.location.href = window.opener.location;
+        setTimeout (function () {
+            window.location.reload(true);
+        },0);
+    }
+}
+*/

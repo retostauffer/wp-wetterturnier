@@ -118,6 +118,8 @@ class WP_wetterturnier_widget_tournaments extends WP_Widget
 
         // Check if title is set
         if ( $title ) { echo $before_title . $title . $after_title; }
+
+        // display the calendar
         echo "  <div id=\"wtwidget_tournaments\" class=\"ll-skin-nigran\"></div>\n";
 
         // Small legend
