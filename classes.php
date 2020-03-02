@@ -134,7 +134,7 @@ class wetterturnier_cityObject {
     */
    public function get( $key ) {
       if ( is_null($this->data) ) { print("wetterturnier_cityObject data=NULL!"); }
-      if ( property_exists($this->data,$key) ) {
+      if ( property_exists($this->data, $key) ) {
          return $this->data->$key;
       } else { return(false); }
    }

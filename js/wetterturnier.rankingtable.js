@@ -71,7 +71,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
   }
 
   function display_ranking( e, data, input ) {
-      console.log(data.data);
+      //console.log(data.data);
       // Clear content of the div
       $(e).hide().empty();
 
@@ -118,7 +118,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
           input.limit = data.data.length;
       }
       $.each( data.data, function(idx, rec) {
-	     console.log(rec);
+	     //console.log(rec);
          // If input.type === "seasoncities": colorize the guys who have
          // not played all games.
          if ( input.type === "seasoncities" && rec.played_now < data.meta.ntournaments )
@@ -145,12 +145,13 @@ $.fn.show_ranking = function(ajaxurl, input ) {
 
                    // if only single tournament: show points_d1/d2
                    if ( ["weekend","cities"].includes( input.type ) ) {
-                       $(tr).append("<td class=\"points\">"+rec.points_d1 +"</td>")
-                            .append("<td class=\"points\">"+rec.points_d2+ "</td>")
+                       $(tr).append("<td class=\"points\">"+rec.points_d1+  "</td>")
+                            .append("<td class=\"points\">"+rec.points_d2+  "</td>")
                    } else if ( input.type === "eternal" ) {
-                       $(tr).append("<td class=\"points\">"+rec.sd_ind+      "</td>")
-                            .append("<td class=\"points\">"+rec.points_max+  "</td>")
-                            .append("<td class=\"points\">"+rec.points_mean+ "</td>")
+                       console.log(rec.points_max);
+                       $(tr).append("<td class=\"points\">"+rec.sd_ind+     "</td>")
+                            .append("<td class=\"points\">"+rec.points_max+ "</td>")
+                            .append("<td class=\"points\">"+rec.points_mean+"</td>")
                             //.append("<td class=\"points\">"+rec.won_weekends+"</td>")
                             //.append("<td class=\"points\">"+rec.won_seasons+ "</td>")
                    }
@@ -208,7 +209,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     
         counter = 1
         $.each( data.data, function(idx,rec) {
-        console.log(rec)
+        //console.log(rec)
     
             $(e).append("<div class=\"wt-leaderboard\">\n"
                       + "    <div class=\"wt-leaderboard-avatar\" style=\"width: 33%;\">\n"

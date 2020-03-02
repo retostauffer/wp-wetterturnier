@@ -137,8 +137,9 @@ class wetterturnier_generalclass
      *
      * @return Returns a string containing the formatted number.
      */
-    function number_format($value,$decimals=2) {
-        return number_format((float)$value,$decimals,$this->float_format->dsep,$this->float_format->tsep);
+    function number_format( $value, $decimals = 2 ) {
+        return number_format( (float)$value, $decimals,
+               $this->float_format->dsep, $this->float_format->tsep);
     }
 
     /** Adding css files (array) to the head of the wordpress theme.

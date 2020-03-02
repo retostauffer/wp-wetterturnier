@@ -1859,7 +1859,18 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        }
 
        # Parsing cities
-       if ( in_array($_REQUEST["type"], array("cities", "seasoncities")) ) {
+       // give me all cities you have for the eternal all-city ranking!
+       /*
+       if ($_REQUEST["cities"] === "all" and $_REQUEST["type"] === "eternal" ) {
+          $cityObj = array();
+          $tmp = $WTuser->get_all_cityObj();
+          foreach ( $tmp as $elem ) {
+              $cityID = $elem->get('ID');
+              array_push($cityObj, new wetterturnier_cityObject( (int)$cityID) );
+          }
+       } else 
+       */   
+        if ( in_array($_REQUEST["type"], array("cities", "seasoncities")) ) {
           $cityObj = array();
           foreach ( explode(",", $_REQUEST["cities"]) as $cityID ) {
              array_push($cityObj, new wetterturnier_cityObject( (int)$cityID ));
@@ -1875,7 +1886,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
           }
        }
 
-       // only if weekend ranking: show d1/d2 points
+       // only if weekend/cities ranking: show d1/d2 points
        $d1d2 = (in_array( $_REQUEST["type"], array( "weekend", "cities") ) ) ? True : False;
 
        # Loading ranking
