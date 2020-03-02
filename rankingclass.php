@@ -766,7 +766,4 @@ class wetterturnier_rankingObject {
     }
 
 }
-
-
-
 ?>

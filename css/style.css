@@ -125,7 +125,7 @@ input[type="submit"].settings-button:hover {
 }
 
 /* Tables where the bets are displayed, e,g. archive */
-.wttable-show                          { table-layout: auto; display: table; width: 100% !important; }
+.wttable-show                          { table-layout: auto; display: table; }
 .wttable-show * td                     { font-size: 1.0em; }
 .wttable-show.small * td               { font-size: 1.0em; padding: 1px 5px; }
 /*.wttable-show * td.username            { font-weight: bold; }*/
@@ -267,7 +267,7 @@ table.tablesorter tbody td {
 .wttable-show * th.statusbar,  .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
 .wttable-show * td.difference                                 { color: gray; }
 
-.wttable-show-bets,   .wttable-show-obs    { table-layout: auto; min-width: 100%; }
+.wttable-show-bets,   .wttable-show-obs    { table-layout: auto; }
 .wttable-show-bets th,                .wttable-show-obs th { text-align: left; }
 .wttable-show-bets th.align-center,   .wttable-show-obs th.align-center  { text-align: center; }
 .wttable-show-bets th.align-right,    .wttable-show-obs th.align-right   { text-align: right; }

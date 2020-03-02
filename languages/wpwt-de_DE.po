@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-01 00:30+0000\n"
-"PO-Revision-Date: 2020-03-01 00:34+0000\n"
+"POT-Creation-Date: 2020-03-01 13:23+0000\n"
+"PO-Revision-Date: 2020-03-01 13:24+0000\n"
 "Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -310,6 +310,10 @@ msgstr "Teilnehmer"
 msgid "Number of participants"
 msgstr "Anzahl Teilnehmer"
 
+#: user/userclass.php:211
+msgid "Wetterturnier Options"
+msgstr "Wetterturnier Optionen"
+
 #: user/userclass.php:224
 msgid "Default city"
 msgstr "Lieblingsstadt"
@@ -579,7 +583,7 @@ msgstr "Station"
 msgid "Observation data"
 msgstr "Beobachtungsdaten"
 
-#: user/userclass.php:1391 user/userclass.php:1456
+#: user/userclass.php:1391
 msgid "Day"
 msgstr "Tag"
 

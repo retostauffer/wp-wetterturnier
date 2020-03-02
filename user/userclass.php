@@ -207,10 +207,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
      *
      * @param $user is a stdClass object containing the user Information.
      */
-    function wt_custom_user_options( $user ) { ?>
-        <h3>Wetterturnier Options</h3>
+    function wt_custom_user_options( $user ) {
+         print( "<h3>" . __("Wetterturnier Options","wpwt") . "</h3>");
 
-        <?php // Getting user options first to set the 'selected' options.
+        // Getting user options first to set the 'selected' options.
         $wt_dc = get_user_option("wt_default_city",$user->ID);
         $wt_bo = get_user_option("wt_betform_orientation",$user->ID);
         $wt_ts = get_user_option("wt_wttable_style",$user->ID);
