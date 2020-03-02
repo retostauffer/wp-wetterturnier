@@ -42,6 +42,7 @@ function get_city_stats( $cityID, $userID ) {
    $last  = $WTuser->date_format($res->max);
 
    // Checking if on first three ranks
+   /*
    $sql = array();
    array_push($sql,sprintf("SELECT rank, count(rank) AS count"));
    array_push($sql,sprintf("FROM %swetterturnier_betstat",$wpdb->prefix));
@@ -49,15 +50,30 @@ function get_city_stats( $cityID, $userID ) {
    array_push($sql,sprintf(" AND tdate < %d",$tdatebefore));
    array_push($sql,sprintf("GROUP BY rank ORDER BY rank"));
    //$rank_res = $wpdb->get_results(join("\n",$sql));
+   //*/
+   $sql = "SELECT ranks_weekend AS medals FROM ".$wpdb->prefix."wetterturnier_userstats\n".
+          "WHERE userID = ".$userID." AND cityID = ".$cityID;
    $rankhistory = new stdClass();
    $rankhistory->rank_1 = 0;
    $rankhistory->rank_2 = 0;
    $rankhistory->rank_3 = 0;
+   /*
    foreach ( $wpdb->get_results(join("\n",$sql)) as $rec ) {
       $tmp = sprintf("rank_%d",$rec->rank);
       $rankhistory->$tmp = $rec->count;
    }
-   
+    */
+   $ranks = $wpdb->get_row($sql)->medals;
+   if ( isset($ranks) ) {
+      $ranks = explode(",", $ranks);
+      $i=1;
+      foreach ( $ranks as $rank ) {
+         $tmp = sprintf("rank_%d", $i);
+         $rankhistory->$tmp = $rank;
+         $i++;
+      }
+   }
+
    $tmp=array();
    $measures=array("mean AS pavg", "median AS pmed", "max AS pmax", "min AS pmin", "sd AS pstd");
    foreach ($measures as $measure) {
