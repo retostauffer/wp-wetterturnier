@@ -497,9 +497,9 @@ $containerID = $WTuser->random_string(10, "wt-ranking-container");
 <div id="<?php print $WTuser->random_string(10, "wt-ranking-container"); ?>"
      class="wt-ranking-container"
      args="<?php print htmlspecialchars(json_encode($args)); ?>">
-<?php _e("Loading data ...","wpwt"); ?>
+    <?php _e("Loading data ...","wpwt"); ?>
+    <div id="ranking_loading" style="display: none;"></div>
 </div>
-<div id="ranking_loading" style="display: none;"></div>
 
 <?php
 // Print dates in a ugly way

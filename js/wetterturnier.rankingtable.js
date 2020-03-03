@@ -254,8 +254,8 @@ $(document).on('ready',function() {
         // TODO try to catch the JSON syntax error in AJAX call and redo the call if the error occurs
         $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
  
-        // wait 1 sec
-        Sleep(1000);
+        // wait 3 sec
+        Sleep(3000);
         
         // look for the hidden <div> element with id="ranking_loading."
         var div = document.getElementById("ranking_loading");
@@ -269,8 +269,8 @@ $(document).on('ready',function() {
     $("div.wt-leaderboard").each(function() {
         $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
 
-        // wait 0.5 sec
-        Sleep(500);
+        // wait 3 sec
+        Sleep(3000);
         
         // look for the hidden <div> element with id="leading_loading"
         var div = document.getElementById('leading_loading');
