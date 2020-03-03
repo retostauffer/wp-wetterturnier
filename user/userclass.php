@@ -1870,20 +1870,20 @@ class wetterturnier_userclass extends wetterturnier_generalclass
           }
        } else 
        */   
-        if ( in_array($_REQUEST["type"], array("cities", "seasoncities")) ) {
-          $cityObj = array();
-          foreach ( explode(",", $_REQUEST["cities"]) as $cityID ) {
-             array_push($cityObj, new wetterturnier_cityObject( (int)$cityID ));
-          }
-        } else {
-          if ( is_numeric($_REQUEST["city"]) ) {
-             $cityObj = new wetterturnier_cityObject( (int)$_REQUEST["city"] );
-          } else {
-             $cityObj = array();
-             foreach ( explode( ":", $_REQUEST["city"] ) as $cityID ) {
-                 array_push( $cityObj, new wetterturnier_cityObject( (int)$cityID ) );
-             }
-          }
+       if ( in_array($_REQUEST["type"], array("cities", "seasoncities")) ) {
+           $cityObj = array();
+           foreach ( explode(",", $_REQUEST["cities"]) as $cityID ) {
+               array_push($cityObj, new wetterturnier_cityObject( (int)$cityID ));
+           }
+       } else {
+           if ( is_numeric($_REQUEST["city"]) ) {
+               $cityObj = new wetterturnier_cityObject( (int)$_REQUEST["city"] );
+           } else {
+               $cityObj = array();
+               foreach ( explode( ":", $_REQUEST["city"] ) as $cityID ) {
+                   array_push( $cityObj, new wetterturnier_cityObject( (int)$cityID ) );
+               }
+           }
        }
        // only if weekend/cities ranking: show d1/d2 points
        $d1d2 = (in_array( $_REQUEST["type"], array( "weekend", "cities") ) ) ? True : False;

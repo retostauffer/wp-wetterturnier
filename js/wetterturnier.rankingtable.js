@@ -1,3 +1,5 @@
+
+
 // Simply write jQuery to $
 $ = jQuery;
 
@@ -71,6 +73,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
   }
 
   function display_ranking( e, data, input ) {
+
       //console.log(data.data);
       // Clear content of the div
       $(e).hide().empty();
@@ -216,11 +219,11 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
                       + rec.avatar + "</a>\n"
                       + "    </div>\n"
                       + "    <div class=\"wt-leaderboard-info\">\n"
-                      + "        <info>" + rec.rank_now + "th place</info><br>\n"
+                      + "        <info>" + rec.rank_now + data.dict.place + "</info><br>\n"
                       + "        <bar></bar>\n"
                       + "        <info class=\"color\">" + idx + "</info><br>\n"
                       + "        <info class=\"color big\">" + rec.points_now + "</info>&nbsp;\n"
-                      + "        <info class=\"color\">points</info><br>\n"
+                      + "        <info class=\"color\">"+ data.dict.points + "</info><br>\n"
                       + "        <bar></bar><info class=\"small\">" + data.meta.city + "&nbsp;" + data.meta.to + "</info><br>\n"
                       + "    </div>"
                       + "</div>");
@@ -245,39 +248,45 @@ function Sleep(milliseconds) {
 // ------------------------------------------------------------------
 // Initialization function
 // ------------------------------------------------------------------
-$(document).on('ready',function() {
+$(document).on('ready', function() {
     // Looking for wt-ranking-container divs and call the show_ranking
     // plugin on each of these to load/display ranking data.
     $("div.wt-ranking-container").each(function() {
-        
-        // workaround next level shit - calling show_ranking twice seems to fix the problem; still a bit nasty though :D
-        // TODO try to catch the JSON syntax error in AJAX call and redo the call if the error occurs
+       
+        Sleep(1000);
         $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
- 
-        // wait 3 sec
-        Sleep(3000);
-        
-        // look for the hidden <div> element with id="ranking_loading."
-        var div = document.getElementById("ranking_loading");
 
-        // if present, reload
-        if (div) { $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args"))) };
+        // wait 1 sec
+        Sleep(1000);
+
+        // look for the hidden <div> element with id="leading_loading"
+        var div = document.getElementById('ranking_loading');
+
+        // if present, remove it & reload
+        if (div) {
+            div.remove();
+            $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")))
+        };
     });
 
     // Looking for wt-ranking-leaderboard divs and call the show_leaderboard
     // plugin on each of these to load/display ranking data.
     $("div.wt-leaderboard").each(function() {
+        
+        Sleep(1000);
         $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
 
-        // wait 3 sec
-        Sleep(3000);
+        // wait 1 sec
+        Sleep(1000);
         
         // look for the hidden <div> element with id="leading_loading"
         var div = document.getElementById('leading_loading');
-       
-        // if present, reload
-        if (div) { $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args"))) };
-
+      
+        // if present, remove it & reload
+        if (div) {
+            div.remove();
+            $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")))
+        };
     });
 
 });

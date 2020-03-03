@@ -101,6 +101,9 @@ class wetterturnier_rankingObject {
        $this->dict->won_weekends = __("Wins (%)","wpwt");
        $this->dict->won_seasons  = __("Seasons (x/N)","wpwt");
 
+       //for leaderboard
+       $this->dict->place        = __("th Place","wpwt");
+
     }
 
 
@@ -742,12 +745,14 @@ class wetterturnier_rankingObject {
                 $final->$user->detail_button = $this->_get_detail_button( $userObj );
             }
 
-            # Loading additional information
-            $final->$user->avatar = get_wp_user_avatar($userObj->ID, 96);
+            # Loading additional information only for leaderboard
+            if ($type == "leading") {
+                $final->$user->avatar = get_wp_user_avatar($userObj->ID, 96);
+                $final->$user->avatar_link = sprintf(bbp_get_user_profile_url($userObj->ID));
+            }
 
             // Getting profile link
             $final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
-            $final->$user->avatar_link = sprintf(bbp_get_user_profile_url($userObj->ID));
         }
 
         unset($ranking);
