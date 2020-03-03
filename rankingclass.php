@@ -86,7 +86,7 @@ class wetterturnier_rankingObject {
        $this->dict->points_d2    = __("Sun","wpwt");
        
        $this->dict->trend        = "+/-";
-       $this->dict->played       = __("Participations", "wpwt");
+       $this->dict->played       = __("Part", "wpwt");
        $this->dict->difference   = __("Diff", "wpwt");
        $this->dict->rank         = __("Rank", "wpwt");
        $this->dict->user         = __("User", "wpwt");
@@ -98,8 +98,8 @@ class wetterturnier_rankingObject {
        $this->dict->points_max   = __("Max","wpwt");
        $this->dict->points_mean  = __("Mean","wpwt");
        $this->dict->sd_ind       = __("PSD","wpwt");
-       $this->dict->won_weekends = __("Won Weekends (%)","wpwt");
-       $this->dict->won_seasons  = __("Won Seasons (x/N)","wpwt");
+       $this->dict->won_weekends = __("Wins (%)","wpwt");
+       $this->dict->won_seasons  = __("Seasons (x/N)","wpwt");
 
     }
 
@@ -237,7 +237,7 @@ class wetterturnier_rankingObject {
             $cityID = ( $this->cities > 1 ) ? 0 : $this->cityObj->get("ID");
 
             // get ranking from userstats
-            $sql = sprintf("SELECT u.ID, u.user_login, s.points_adj AS points, " . 
+            $sql = sprintf("SELECT u.ID, u.user_login, s.points_adj AS points, s.ranks_weekend AS ranks_weekend,\n" . 
             "s.sd_ind AS sd_ind, s.max AS points_max, s.mean AS points_mean, s.part AS played\n" .
             "FROM %susers AS u RIGHT OUTER JOIN %swetterturnier_userstats AS s ON u.ID = s.userID\n".
             "WHERE cityID = %d AND ID NOT LIKE \"NULL\" AND s.points_adj != 0 GROUP BY u.ID",
@@ -325,25 +325,27 @@ class wetterturnier_rankingObject {
                 $uhash = $rec->user_login;
                 if ( ! property_exists($res->data, $uhash) ) { $res->data->$uhash = new stdClass(); }
 
-                $res->data->$uhash->userID                  = $rec->ID;
+                $res->data->$uhash->userID = $rec->ID;
 
                 if ( $type != "eternal" ) {
                     # Append tournament date to city
                     $thash = sprintf("tdate_%d", $rec->tdate);
-                    $res->data->$uhash->$thash->points          = $rec->points;
+                    $res->data->$uhash->$thash->points = $rec->points;
                     
                     if ($d1d2) {
                         $res->data->$uhash->$thash->points_d1   = $rec->points_d1;
                         $res->data->$uhash->$thash->points_d2   = $rec->points_d2;
                     } 
                 } else {
+                    $ranks = $rec->ranks_weekend;
+                    $res->data->$uhash->won_weekends = explode( ",", $ranks )[0];
                     $res->data->$uhash->points       = $rec->points;
                     $res->data->$uhash->played       = $rec->played;
                     $res->data->$uhash->sd_ind       = $rec->sd_ind;
                     $res->data->$uhash->points_max   = $rec->points_max;
                     $res->data->$uhash->points_mean  = $rec->points_mean;
-                    //$res->data->$uhash->won_weekends = $rec->won_weekends;
                     //$res->data->$uhash->won_seasons  = $rec->won_seasons;
+                    //$res->data->$uhash->played_seasons = $rec->played_seasons;
                 }
             }
         }
@@ -629,10 +631,10 @@ class wetterturnier_rankingObject {
             if ( $type === "eternal" ) {
                 $ranking->now->$user->points       = $data->points;
                 $ranking->now->$user->played       = $data->played;
+                $ranking->now->$user->won_weekends = (int)$data->won_weekends;
                 $ranking->now->$user->sd_ind       = $data->sd_ind;
                 $ranking->now->$user->points_max   = $data->points_max;
                 $ranking->now->$user->points_mean  = $data->points_mean;
-                //$ranking->now->$user->won_weekends = $data->won_weekends;
                 //$ranking->now->$user->won_seasons  = $data->won_seasons;
             }
 
@@ -702,6 +704,12 @@ class wetterturnier_rankingObject {
             $final->$user = new stdClass();
             $final->$user->rank_now    = $rank->now[$idx];
             $final->$user->points_now  = $this->WTuser->number_format($ranking->now->$user->points,1);
+            $final->$user->played_now  = (int)$ranking->now->$user->played;
+            $final->$user->points_relative = ($max_points != 0) ? $ranking->now->$user->points
+                                                / $max_points : 0;
+            $final->$user->points_diff = $this->WTuser->number_format($points_winner
+                                                - $ranking->now->$user->points, 1);
+
             if ( $d1d2 ) {
                 $final->$user->points_d1    = $this->WTuser->number_format($ranking->now->$user->points_d1,1);
                 $final->$user->points_d2    = $this->WTuser->number_format($ranking->now->$user->points_d2,1);
@@ -709,15 +717,9 @@ class wetterturnier_rankingObject {
                 $final->$user->sd_ind       = $this->WTuser->number_format($ranking->now->$user->sd_ind,1);
                 $final->$user->points_max   = $this->WTuser->number_format($ranking->now->$user->points_max,1);
                 $final->$user->points_mean  = $this->WTuser->number_format($ranking->now->$user->points_mean,1);
-                //$final->$user->won_weekends = $this->WTuser->number_format($ranking->now->$user->won_weekends);
+                $final->$user->won_weekends = round( 100 * ($ranking->now->$user->won_weekends / $final->$user->played_now), 1 );
                 //$final->$user->won_seasons = $this->WTuser->number_format($ranking->now->$user->won_seasons);
             }
-
-            $final->$user->played_now  = $ranking->now->$user->played;
-            $final->$user->points_relative = ($max_points != 0) ? $ranking->now->$user->points
-                                                / $max_points : 0;
-            $final->$user->points_diff = $this->WTuser->number_format($points_winner
-                                                - $ranking->now->$user->points, 1);
 
             if ( $this->calc_trend ) {
                 $final->$user->rank_pre = $rank->pre[$idx];

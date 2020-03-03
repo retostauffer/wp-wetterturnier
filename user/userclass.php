@@ -650,7 +650,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                                       'tdate'=>Null,
                                       'limit'=>false,
                                       'city'=>false,
-                                      'cities'=>"1,2,3",
+                                      'cities'=>false,
                                       'slim'=>false,
                                       'weeks'=>false,
                                       'header'=>true,
@@ -1875,7 +1875,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
           foreach ( explode(",", $_REQUEST["cities"]) as $cityID ) {
              array_push($cityObj, new wetterturnier_cityObject( (int)$cityID ));
           }
-       } else {
+        } else {
           if ( is_numeric($_REQUEST["city"]) ) {
              $cityObj = new wetterturnier_cityObject( (int)$_REQUEST["city"] );
           } else {
@@ -1885,7 +1885,6 @@ class wetterturnier_userclass extends wetterturnier_generalclass
              }
           }
        }
-
        // only if weekend/cities ranking: show d1/d2 points
        $d1d2 = (in_array( $_REQUEST["type"], array( "weekend", "cities") ) ) ? True : False;
 

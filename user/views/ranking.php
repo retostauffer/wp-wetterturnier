@@ -365,6 +365,7 @@ switch ( $args->type ) {
    case "total":
    case "alltime":
    case "eternal":
+       /*
       // give me all cities you have for the eternal all-city ranking!
       if ($args->cities === "all" and $args->type === "eternal" ) {
           $cityObj = array();
@@ -376,6 +377,17 @@ switch ( $args->type ) {
               }
           }
       }
+        */
+      if ($args->cities != false ) {
+        $tmp = explode(",", $args->cities);
+        $cityObj = array();
+        foreach ( $tmp as $elem ) {
+           if (is_numeric($elem)) {
+               array_push($cityObj, new wetterturnier_cityObject((int)$elem));
+           }
+         }
+      }
+
       $cityID = ( is_countable($cityObj) ) ? 1 : $cityObj->get('ID');
       $sql = array();
       array_push($sql,sprintf("SELECT tdate FROM %swetterturnier_betstat", $wpdb->prefix));

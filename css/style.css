@@ -262,7 +262,7 @@ table.tablesorter tbody td {
 .wttable-show * th { padding: 0 2px; }
 .wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 45px; }
 .wttable-show * th.trend,      .wttable-show * td.trend       { text-align: center; width: 45px; }
-.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 120px; }
+.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 60px; }
 .wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 60px; }
 .wttable-show * th.statusbar,  .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
 .wttable-show * td.difference                                 { color: gray; }
@@ -310,12 +310,6 @@ table.tablesorter tbody td {
 .entry-content table.wttable-show a {
    text-decoration: none;
 }
-
-/* Hide the "played n/N tournaments" for weekend and city rankings */
-/*
-.wttable-show.ranking-weekend .played { display: none; }
-.wttable-show.ranking-cities  .played { display: none; }
-*/
 
 /* Show 'sleepy marker', a gray asterisk */
 .wttable-show-sleepymarker {
