@@ -76,6 +76,9 @@ class wetterturnier_rankingObject {
        $this->max_points = $max_points;
        $this->cache      = $cache;
 
+       //default: one city
+       $this->cities = 1;
+
        $this->dict = new stdClass();
        $this->dict->older        = __("Older", "wpwt");
        $this->dict->newer        = __("Newer", "wpwt");
@@ -294,7 +297,7 @@ class wetterturnier_rankingObject {
 
             # If calculating the ranking for multiple
             # cities we have to capsule the statement above: 
-            if ( $cities > 1 ) {
+            if ( $this->cities > 1 ) {
                 $sql = sprintf("SELECT * FROM (\n%s\n) AS X WHERE X.played = %d",
                                $sql, $cities );
             }
@@ -316,6 +319,7 @@ class wetterturnier_rankingObject {
         } else {
             $res = (object)array("data"=>new stdClass(), "users"=>array(), "tdates"=>array());
             foreach ( $dbres as $rec ) {
+
                 # Append user names and tournament dates
                 if ( ! in_array($rec->user_login, $res->users) ) {
                     array_push($res->users, $rec->user_login);
@@ -333,6 +337,7 @@ class wetterturnier_rankingObject {
                 if ( $type != "eternal" ) {
                     # Append tournament date to city
                     $thash = sprintf("tdate_%d", $rec->tdate);
+                    if (!isset($res->data->$uhash->$thash)) $res->data->$uhash->$thash = new stdClass();
                     $res->data->$uhash->$thash->points = $rec->points;
                     
                     if ($d1d2) {
@@ -564,8 +569,10 @@ class wetterturnier_rankingObject {
             if ( ! property_exists($ranking->pre, $user) ) {
                 if ( $this->calc_trend ) {
                     $ranking->pre->$user = (object)array( "played"=>0, "points"=>0 );
+                    if ($d1d2) { $ranking->pre->$user->points_d1 = 0; $ranking->pre->$user->points_d2 = 0; }
                 }
                 $ranking->now->$user     = (object)array( "played"=>0, "points"=>0 );
+                if ($d1d2) { $ranking->now->$user->points_d1 = 0; $ranking->now->$user->points_d2 = 0; }
             }
 
             # Looping over the tournament dates

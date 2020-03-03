@@ -1,5 +1,3 @@
-
-
 // Simply write jQuery to $
 $ = jQuery;
 
@@ -20,7 +18,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
   // Triggering ajax request "ranking_ajax" (registered wordpress action)
   // to load the data. On success the ranking will be displayed.
   input["action"] = "ranking_ajax"
-  $.ajax({
+    test = $.ajax({
     url: ajaxurl, dataType: 'json', type: 'post', data: input,
     success: function(results, hxr, settings) {
         display_ranking($(elem), results, input);
@@ -33,6 +31,8 @@ $.fn.show_ranking = function(ajaxurl, input ) {
     }
 
   });
+
+  console.log(test);
 
   // Show status bar (return status bar html)
   function statusbar(rel, width) {
@@ -97,7 +97,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
       }
       // Only show number of played games if begin/end date differ
       if ( data.meta.ntournaments > 1 || input.type === "eternal" ) {
-	$( head ).append("<th class=\"played\">"+data.dict.played+"</th>");
+          $( head ).append("<th class=\"played\">"+data.dict.played+"</th>");
       }
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                .append("<th class=\"points difference\">"+data.dict.difference+"</th>")
@@ -111,7 +111,9 @@ $.fn.show_ranking = function(ajaxurl, input ) {
                            .append("<th class=\"points\">"+data.dict.points_mean+ "</th>")
                            //.append("<th class=\"points\">"+data.dict.points_med+  "</th>")
                            .append("<th class=\"points\">"+data.dict.won_weekends+"</th>") // in %
-                           //.append("<th class=\"points\">"+data.dict.won_seasons +"</th>") // (x/N)
+                           //.append("<th class=\"points\">"+data.dict.won_seasons +"</th>")
+                           //.append("<th class=\"points\">"+data.dict.played_seasons +"</th>")
+
                }
                $(head).append("<th class=\"statusbar\">"+data.dict.statusbar+"</th>");
 
@@ -120,7 +122,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
           input.limit = data.data.length;
       }
       $.each( data.data, function(idx, rec) {
-	     //console.log(rec);
+         //console.log(rec);
          // If input.type === "seasoncities": colorize the guys who have
          // not played all games.
          if ( input.type === "seasoncities" && rec.played_now < data.meta.ntournaments )
@@ -156,6 +158,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
                             .append("<td class=\"points\">"+rec.points_mean+"</td>")
                             .append("<td class=\"points\">"+rec.won_weekends+"</td>")
                             //.append("<td class=\"points\">"+rec.won_seasons+ "</td>")
+                            //.append("<td class=\"points\">"+rec.played_seasons+"</td>")
                    }
                    $(tr).append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
 
@@ -189,11 +192,11 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     // Triggering ajax request "ranking_ajax" (registered wordpress action)
     // to load the data. On success the leaderboard will be displayed.
     input["action"] = "ranking_ajax"
-    $.ajax({
+       test = $.ajax({
        url: ajaxurl, dataType: 'json', type: 'post', data: input,
        success: function( results, hxr, settings ) {
            display_leaders($(elem), results, input);
-	       data = results;
+           data = results;
        },
        error: function( hxr, ajaxOptions, thrownError ) {
           console.log('errorlog'); console.log(thrownError);
@@ -202,6 +205,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
        }
   
     });
+    console.log(test)
   
     // Creates the frontend output
     function display_leaders( e, data, input ) {
@@ -253,40 +257,44 @@ $(document).on('ready', function() {
     // plugin on each of these to load/display ranking data.
     $("div.wt-ranking-container").each(function() {
        
-        Sleep(1000);
+        //Sleep(1000);
         $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
 
         // wait 1 sec
-        Sleep(1000);
+        //Sleep(1000);
 
         // look for the hidden <div> element with id="leading_loading"
-        var div = document.getElementById('ranking_loading');
+        //var div = document.getElementById('ranking_loading');
 
         // if present, remove it & reload
+        /*
         if (div) {
             div.remove();
-            $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")))
+            //$(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")))
         };
+        */
     });
 
     // Looking for wt-ranking-leaderboard divs and call the show_leaderboard
     // plugin on each of these to load/display ranking data.
     $("div.wt-leaderboard").each(function() {
         
-        Sleep(1000);
+        //Sleep(1000);
         $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
 
         // wait 1 sec
-        Sleep(1000);
+        //Sleep(1000);
         
         // look for the hidden <div> element with id="leading_loading"
-        var div = document.getElementById('leading_loading');
+        //var div = document.getElementById('leading_loading');
       
         // if present, remove it & reload
+        /*
         if (div) {
             div.remove();
             $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")))
         };
+        */
     });
 
 });

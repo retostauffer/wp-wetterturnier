@@ -330,38 +330,6 @@ switch ( $args->type ) {
 
       break;
 
-   // ---------------------------------------------------------------
-   case "total":
-      // 15 weeks ranking
-      // Need the last $args->weeks tournament weekends for this ranking
-      // type. 
-      $sql = array();
-      array_push($sql,sprintf("SELECT tdate FROM %swetterturnier_betstat", $wpdb->prefix));
-      array_push($sql,sprintf("WHERE cityID = %d AND tdate <= %d", $cityObj->get('ID'), $args->tdate));
-      array_push($sql,sprintf("GROUP BY tdate DESC LIMIT %d", $args->weeks));
-
-      $dates = $wpdb->get_results(join(" ",$sql));
-      $dates = array(end($dates)->tdate,$args->tdate);
-
-      $tdates->from      = $dates[0];
-      $tdates->to        = $dates[1];
-      $tdates->from_prev = $dates[0];
-      $tdates->to_prev   = $WTuser->older_tournament($dates[1])->tdate;
-
-      # For navigation
-      $tdates->older     = $tdates->to_prev;
-      $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
-      if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
-
-      // Loading the data set
-      //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
-      // Generate the title, using meta-info from the $ranking object
-      $title = sprintf("%s %s %s %s %s",
-               __("Total ranking for","wpwt"),$cityObj->get('name'),
-               $WTuser->date_format($tdates->from),__("to","wpwt"),
-               $WTuser->date_format($tdates->to));
-
-      break;
 
    case "total":
    case "alltime":
@@ -396,6 +364,11 @@ switch ( $args->type ) {
       if ($args->weeks) {
          array_push($sql,sprintf("GROUP BY tdate DESC LIMIT %d", $args->weeks));
          $ranking = (string)$args->weeks . __(" weeks ranking for","wpwt");
+        # For navigation
+        $tdates->older     = $tdates->to_prev;
+        $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
+        if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
+
       } else {
          array_push($sql,sprintf("GROUP BY tdate DESC"));
          $ranking = ucfirst($args->type) . __("ranking for","wpwt");
@@ -408,11 +381,6 @@ switch ( $args->type ) {
       $tdates->to        = $dates[1];
       $tdates->from_prev = $dates[0];
       $tdates->to_prev   = $WTuser->older_tournament($dates[1])->tdate;
-
-      # For navigation
-      $tdates->older     = $tdates->to_prev;
-      $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
-      if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
 
       // Loading the data set
       //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
@@ -455,12 +423,12 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
          ?>
 
          <div style="min-height: 30px;">
-            <?php if ( ! is_null($tdates->older) ) { ?>
+            <?php if ( isset($tdates->older) ) { ?>
             <form style="float: left; padding-right: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->older); ?>">
                 <input class="button" type="submit" value="<< <?php _e("older","wpwt"); ?>" />
             </form> 
             <?php } ?>
-            <?php if ( ! is_null($tdates->newer) ) { ?>
+            <?php if ( isset($tdates->newer) ) { ?>
             <form style="float: left; padding-left: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->newer); ?>">
                 <input class="button" type="submit" value="<?php _e("newer","wpwt"); ?> >>" />
             </form> 
