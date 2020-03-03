@@ -717,7 +717,7 @@ class wetterturnier_rankingObject {
                 $final->$user->sd_ind       = $this->WTuser->number_format($ranking->now->$user->sd_ind,1);
                 $final->$user->points_max   = $this->WTuser->number_format($ranking->now->$user->points_max,1);
                 $final->$user->points_mean  = $this->WTuser->number_format($ranking->now->$user->points_mean,1);
-                $final->$user->won_weekends = round( 100 * ($ranking->now->$user->won_weekends / $final->$user->played_now), 1 );
+                $final->$user->won_weekends = $this->WTuser->number_format(round( 100 * ($ranking->now->$user->won_weekends / $final->$user->played_now),1 ),1);
                 //$final->$user->won_seasons = $this->WTuser->number_format($ranking->now->$user->won_seasons);
             }
 
