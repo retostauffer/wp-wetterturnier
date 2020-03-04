@@ -345,12 +345,14 @@ table.tablesorter tbody td {
 }
 
 /*Hide trends*/
+/*
 @media screen and (max-width: 1000px) {
    #content .wttable-show-ranking th:nth-child(2),
    #content .wttable-show-ranking td:nth-child(2) {
        display: none;
    }
 }
+*/
 
 /* Hide statusbar*/
 @media screen and (max-width: 1400px) {

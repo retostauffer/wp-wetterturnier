@@ -145,7 +145,7 @@ class wetterturnier_rankingObject {
      *
      * See also :php:meth:`set_tdates`.
      */
-    public function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null, $type = "ranking", $calc_trend = true) {
+    public function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null, $type = "ranking", $calc_trend = false) {
 
         if (in_array($type, array("season","yearly","seasoncities","yearlycities")))
             { $calc_trend = true; }
