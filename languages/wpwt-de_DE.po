@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-04 17:01+0000\n"
-"PO-Revision-Date: 2020-03-04 17:24+0000\n"
+"POT-Creation-Date: 2020-03-04 23:15+0000\n"
+"PO-Revision-Date: 2020-03-04 23:16+0000\n"
 "Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -307,8 +307,8 @@ msgid "Sun"
 msgstr "Son"
 
 #: rankingclass.php:88
-msgid "Participations"
-msgstr "Teilnahmen"
+msgid "Part"
+msgstr "Teiln"
 
 #: rankingclass.php:89
 msgid "Diff"

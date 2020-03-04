@@ -332,7 +332,7 @@ table.tablesorter tbody td {
 }
 
 /* Hide Sat/Sun on very small screens */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 639px) {
    #content .wttable-show * th.points.d1,     .wttable-show * td.points.d1 { display: none; }
    #content .wttable-show * th.points.d2,     .wttable-show * td.points.d2 { display: none; }
    /*
