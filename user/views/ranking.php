@@ -75,6 +75,7 @@ switch ( $args->type ) {
    // Weekend ranking
    // ---------------------------------------------------------------
    case "weekend":
+   case "leading":
       // Title of the ranking table
       $title = $cityObj->get('name').": ".__("This is the weekend ranking for the weekend around","wpwt")
                  .sprintf(" %s.",$WTuser->date_format($args->tdate));

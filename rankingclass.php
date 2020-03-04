@@ -79,9 +79,8 @@ class wetterturnier_rankingObject {
        $this->dict->older        = __("Older", "wpwt");
        $this->dict->newer        = __("Newer", "wpwt");
        $this->dict->points       = __("Points", "wpwt");
-//       $this->dict->points_d1    = __("Sa","wpwt");
-//       $this->dict->points_d2    = __("Su","wpwt");
-//       $this->dict->points_adj   = __("Inflation-adjusted", "wpwt");
+       $this->dict->points_d1    = __("Sat","wpwt");
+       $this->dict->points_d2    = __("Sun","wpwt");
        $this->dict->trend        = "+/-";
        $this->dict->played       = __("Participations", "wpwt");
        $this->dict->difference   = __("Diff", "wpwt");
@@ -143,7 +142,11 @@ class wetterturnier_rankingObject {
      *
      * See also :php:meth:`set_tdates`.
      */
-    public function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null) {
+    public function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null, $type = "ranking", $calc_trend = false) {
+
+        if (in_array($type, array("season","yearly","seasoncities","yearlycities")))
+            { $calc_trend = true; }
+        
         if ( ! is_object($from) ) {
             $this->tdates = (object) array("from"      => $from,      "to"      => $to,
                                            "from_prev" => $from_prev, "to_prev" => $to_prev);
@@ -158,7 +161,7 @@ class wetterturnier_rankingObject {
                                      $this->tdates->from_prev, $this->tdates->to_prev);
             $this->tdates->max = max($this->tdates->from, $this->tdates->to,
                                      $this->tdates->from_prev, $this->tdates->to_prev);
-            $this->calc_trend = false;
+            $this->calc_trend = $calc_trend;
         }
 
         // If 'max' > 'latest':
@@ -211,7 +214,7 @@ class wetterturnier_rankingObject {
      * >>>        )
      * >>>  )
      */
-    private function _get_data_object( $deadman = false, $d1d2=false, $adj=false ) {
+    private function _get_data_object( $deadman = false, $d1d2=false, $type = "ranking" ) {
 
         # If $deadman is set to true: only fetch deadman data
         if ( $deadman ) {
@@ -246,13 +249,11 @@ class wetterturnier_rankingObject {
         $sql = array();
         array_push($sql, sprintf("SELECT b.tdate, %s", $usercol));
         array_push($sql, " SUM(b.points) AS points,");
-/**
         #carefull, sleepy has no points for d1/d2 and no points_adj!
-        if ( $d1d2 and ! $deadman ) {
+        if ( $d1d2 ) {
            array_push($sql, " SUM(b.points_d1) AS points_d1,");
            array_push($sql, " SUM(b.points_d2) AS points_d2,");
         }
-*/
         array_push($sql, " COUNT(*) AS played");
         array_push($sql, sprintf("FROM %susers AS u RIGHT OUTER JOIN", $this->wpdb->prefix));
         array_push($sql, sprintf("%swetterturnier_betstat AS b", $this->wpdb->prefix));
@@ -295,9 +296,13 @@ class wetterturnier_rankingObject {
 
                 # Append tournament date to city
                 $thash = sprintf("tdate_%d",$rec->tdate);
-                $res->data->$uhash->$thash = $rec->points;
-//                $res->data->$uhash->$thash->points_d1 = $rec->points_d1;
-//                $res->data->$uhash->$thash->points_d2 = $rec->points_d2;                
+                $res->data->$uhash->$thash->points = $rec->points;
+                if ($d1d2) {
+                    if (is_null($rec->points_d1)) $rec->points_d1 = 0;
+                    if (is_null($rec->points_d2)) $rec->points_d2 = 0;
+                    $res->data->$uhash->$thash->points_d1 = $rec->points_d1;
+                    $res->data->$uhash->$thash->points_d2 = $rec->points_d2;                
+                } 
                 $res->data->$uhash->userID = $rec->ID;
             }
         }
@@ -413,6 +418,43 @@ class wetterturnier_rankingObject {
                        $this->cachehash, $tdate_hash, $city_hash));
     }
 
+     /* Assign rank to each value of the array $in. 
+     * Pretty cool function I wrote, I think :).
+     *
+     * Args:
+     *   in (array): Array containing as set of numeric values.
+     *
+     * Returns:
+     *   Returns an array of the same length with ranks. Highest
+     *   values of $in get rank 1, lower values get higher ranks.
+     *   The same values are attributed to the same ranks.
+     *   Ranks are re-used. Some ranks may not appear if some
+     *   elements in $in do have the same value!
+     */
+    private function _array_rank( $in ) {
+        # Keep input array "x" and replace values with rank.
+        # This preserves the order. Working on a copy called $x
+        # to set the ranks.
+        $x = $in; arsort($x);
+        # Initival values
+        $rank       = 0;
+        $hiddenrank = 0;
+        $hold = null;
+        foreach ( $x as $key=>$val ) {
+            # Always increade hidden rank
+            $hiddenrank += 1;
+            # If current value is lower than previous:
+            # set new hold, and set rank to hiddenrank.
+            if ( is_null($hold) || $val < $hold ) {
+                $rank = $hiddenrank; $hold = $val;
+            }
+            # Set rank $rank for $in[$key]
+            $in[$key] = $rank;
+        }
+        return $in;
+    }
+
+
     /* Prepares a ranking object based on the class attributes 'tdate' and
      * 'cityObj' (also allowed for time periods and multiple cities at the
      * same time). This function loads the data from the database and creates
@@ -437,7 +479,10 @@ class wetterturnier_rankingObject {
      *
      * .. todo:: Explain caching.
      */
-    public function prepare_ranking() {
+    public function prepare_ranking( $type = "ranking", $d1d2=false ) {
+        
+        // only if weekend/cities ranking: show d1/d2 points
+        $d1d2 = (in_array( $type, array( "weekend", "cities") ) ) ? True : False;
 
         if ( is_null($this->tdates) || is_null($this->cityObj) ) {
             //echo "Sorry, cannot prepare ranking, tdate or cityObject not set!";
@@ -466,10 +511,10 @@ class wetterturnier_rankingObject {
 
         # Loading deadman points. Whenever a player did not participate he/she
         # will get these points. May return "0" if the deadman is not defined.
-        $deadman = $this->_get_data_object(true);
+        $deadman = $this->_get_data_object(true, false);
 
         # Loading user data
-        $userdata = $this->_get_data_object(false);
+        $userdata = $this->_get_data_object(false, $d1d2=true, $type=$type);
 
         $ranking = (object)array("pre"=>new stdClass(), "now"=>new stdClass());
 
@@ -487,8 +532,10 @@ class wetterturnier_rankingObject {
             if ( ! property_exists($ranking->pre,$user) ) {
                 if ( $this->calc_trend ) {
                     $ranking->pre->$user = (object)array("played"=>0,"points"=>0);
+                    if ($d1d2) { $ranking->pre->$user->points_d1 = 0; $ranking->pre->$user->points_d2 = 0; }
                 }
                 $ranking->now->$user = (object)array("played"=>0,"points"=>0);
+                if ($d1d2) { $ranking->now->$user->points_d1 = 0; $ranking->now->$user->points_d2 = 0; }
             }
 
             # Looping over the tournament dates
@@ -502,22 +549,22 @@ class wetterturnier_rankingObject {
 
                 # Default: 0 points
                 $points = 0;
-//                $points_d1 = 0; $points_d2 = 0;
                 # And not participated (default)
                 $played = 0;
+                if ($d1d2) { $points_d1 = 0; $points_d2 = 0; }
 
                 # If user got points: use user points 
                 if ( property_exists($data, $thash) ) {
-                    $points = $data->$thash;
-//                    $points_d1 = $data->$thash->points_d1;
-//                    $points_d2 = $data->$thash->points_d2;
+                    $points = $data->$thash->points;
                     $played = 1;
+                    if ( $d1d2 ) {
+                      $points_d1 = $data->$thash->points_d1;
+                      $points_d2 = $data->$thash->points_d2;
+                    }
                 # Else check if deadman exists and has points for this
                 # specific tournament date ($thash).
-                } else if ( $deadman ) {
-                    if ( property_exists($deadman, $thash) ) {
-                        $points = $deadman->$thash;
-                    }
+                } else if ( $deadman and  property_exists($deadman, $thash) ) {
+                    $points = $deadman->$thash;
                 }
                 # Adding points
                 # We have to check whether the points fall in the
@@ -538,24 +585,26 @@ class wetterturnier_rankingObject {
                     if ( $tdate >= $this->tdates->from_prev &&
                          $tdate <= $this->tdates->to_prev ) {
                         $ranking->pre->$user->points += $points;
-//                        $ranking->pre->$user->points_d1 += $points_d1;
-//                        $ranking->pre->$user->points_d2 += $points_d2;
                         $ranking->pre->$user->played += $played;
+                        if ($d1d2) {
+                            $ranking->pre->$user->points_d1 += $points_d1;
+                            $ranking->pre->$user->points_d2 += $points_d2;
+                        }
                     }
                 }
                 if ( $tdate >= $this->tdates->from &&
                      $tdate <= $this->tdates->to ) {
                     $ranking->now->$user->points += $points;
-//                    $ranking->now->$user->points_d1 += $points_d1;
-//                    $ranking->now->$user->points_d2 += $points_d2;
                     $ranking->now->$user->played += $played;
+                    if ($d1d2) {
+                        $ranking->now->$user->points_d1 += $points_d1;
+                        $ranking->now->$user->points_d2 += $points_d2;
+                    }
                 }
-
             }
             #drop players who not participated at all in the ranking, workaround for strange bug
             #TODO: investigate on this quirk, if clause should not be neccesary (actually)!
-            if ( $ranking->now->$user->played == 0 )
-               { unset($ranking->now->$user); }
+            if ( $ranking->now->$user->played == 0 ) { unset($ranking->now->$user); }
         }
         
         # If tdates->from == tdates->to (only one weekend)
@@ -573,42 +622,6 @@ class wetterturnier_rankingObject {
             }
         }
 
-        /* Assign rank to each value of the array $in. 
-         * Pretty cool function I wrote, I think :).
-         *
-         * Args:
-         *   in (array): Array containing as set of numeric values.
-         *
-         * Returns:
-         *   Returns an array of the same length with ranks. Highest
-         *   values of $in get rank 1, lower values get higher ranks.
-         *   The same values are attributed to the same ranks.
-         *   Ranks are re-used. Some ranks may not appear if some
-         *   elements in $in do have the same value!
-         */
-        function array_rank( $in ) {
-            # Keep input array "x" and replace values with rank.
-            # This preserves the order. Working on a copy called $x
-            # to set the ranks.
-            $x = $in; arsort($x); 
-            # Initival values
-            $rank       = 0;
-            $hiddenrank = 0;
-            $hold = null;
-            foreach ( $x as $key=>$val ) {
-                # Always increade hidden rank
-                $hiddenrank += 1;
-                # If current value is lower than previous:
-                # set new hold, and set rank to hiddenrank.
-                if ( is_null($hold) || $val < $hold ) {
-                    $rank = $hiddenrank; $hold = $val;
-                }
-                # Set rank $rank for $in[$key]
-                $in[$key] = $rank;
-            }
-            return $in;
-        }
-
         # Extracting points to get rank
         $rank = (object)array("now"=>array());
 
@@ -616,7 +629,7 @@ class wetterturnier_rankingObject {
         foreach ( $ranking->now as $rec ) {
             array_push( $rank->now, round($rec->points,2) );
         }
-        $rank->now = array_rank( $rank->now );
+        $rank->now = $this->_array_rank( $rank->now );
 
         # Previous rank (to calculate the trend), if requested
         if ( $this->calc_trend ) {
@@ -624,7 +637,7 @@ class wetterturnier_rankingObject {
             foreach ( $ranking->pre as $rec ) {
                 array_push( $rank->pre, round($rec->points,2) );
             }
-            $rank->pre = array_rank( $rank->pre );
+            $rank->pre = $this->_array_rank( $rank->pre );
         }
 
         # Array of the same order as $rank containing usernames
@@ -650,13 +663,15 @@ class wetterturnier_rankingObject {
             $final->$user = new stdClass();
             $final->$user->rank_now    = $rank->now[$idx];
             $final->$user->points_now  = $this->WTuser->number_format($ranking->now->$user->points,1);
-//            $final->$user->points_d1   = $this->WTuser->number_format($ranking->now->$user->points_d1,1);
-//            $final->$user->points_d2   = $this->WTuser->number_format($ranking->now->$user->points_d2,1);
-
             $final->$user->played_now  = $ranking->now->$user->played;
             $final->$user->points_relative = $ranking->now->$user->points / $points_max;
             $final->$user->points_diff = $this->WTuser->number_format($points_winner
                                                  - $ranking->now->$user->points,1);
+
+            if ( $d1d2 ) {
+                $final->$user->points_d1    = $this->WTuser->number_format($ranking->now->$user->points_d1,1);
+                $final->$user->points_d2    = $this->WTuser->number_format($ranking->now->$user->points_d2,1);
+            }
 
             if ( $this->calc_trend ) {
                 $final->$user->rank_pre    = $rank->pre[$idx];
@@ -680,13 +695,14 @@ class wetterturnier_rankingObject {
                 $final->$user->detail_button = $this->_get_detail_button( $userObj );
             }
 
-            # Loading additional information
-            $final->$user->avatar = get_wp_user_avatar($userObj->ID, 96);
+            # Loading additional information only for leaderboard
+            #if ($type == "leading") {
+                $final->$user->avatar = get_wp_user_avatar($userObj->ID, 96);
+                $final->$user->avatar_link = sprintf(bbp_get_user_profile_url($userObj->ID));
+            #}
 
             // Getting profile link
             $final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );
-            $final->$user->avatar_link = sprintf(bbp_get_user_profile_url($userObj->ID));
-                                         //sprintf("/forums/users/%s/", $tmp->user_login);
         }
 
         unset($ranking);

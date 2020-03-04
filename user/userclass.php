@@ -1938,9 +1938,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        # Loading ranking
        $rankingObj = new wetterturnier_rankingObject();
        $rankingObj->set_cities($cityObj);
-       $rankingObj->set_tdates($tdates);
+       $rankingObj->set_tdates($tdates, $type=$_REQUEST["type"]);
        $rankingObj->set_cachehash($_REQUEST["type"]);
-       $rankingObj->prepare_ranking();
+       $rankingObj->prepare_ranking($type=$_REQUEST["type"]);
        print $rankingObj->return_json();
        die(0);
    }

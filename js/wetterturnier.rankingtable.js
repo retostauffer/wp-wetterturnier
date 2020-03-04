@@ -19,7 +19,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
   // If not existing, start Rscript to create the image.
   // Ajaxing the calculation miniscript
   input["action"] = "ranking_ajax";
-  $.ajax({
+  test = $.ajax({
      url: ajaxurl, dataType: 'json', type: 'post', data: input,
      success: function(results, hxr, settings) {
 
@@ -39,6 +39,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
      }
 
   });
+  console.log(test);
 
 
   // Show status bar (return status bar html)
@@ -106,8 +107,8 @@ $.fn.show_ranking = function(ajaxurl, input) {
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                .append("<th class=\"points difference\">"+data.dict.difference+"</th>")
                .append("<th class=\"points\">"+data.dict.points+"</th>")
-//               .append("<th class=\"points\">"+data.dict.points_d1+"</th>")
-//               .append("<th class=\"points\">"+data.dict.points_d2+"</th>")
+               .append("<th class=\"points\">"+data.dict.points_d1+"</th>")
+               .append("<th class=\"points\">"+data.dict.points_d2+"</th>")
                .append("<th class=\"statusbar\"></th>");
 
       counter = 0;
@@ -138,8 +139,8 @@ $.fn.show_ranking = function(ajaxurl, input) {
                       rec.profile_link + "</td>")
                    .append("<td class=\"points difference\">"+rec.points_diff+"</td>")
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
-//                   .append("<td class=\"points\">"+rec.points_d1+"</td>")
-//                   .append("<td class=\"points\">"+rec.points_d2+"</td>")
+                   .append("<td class=\"points\">"+rec.points_d1+"</td>")
+                   .append("<td class=\"points\">"+rec.points_d2+"</td>")
                    .append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
 
           // Increase loop counter
@@ -172,7 +173,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     // Triggering ajax request "ranking_ajax" (registered wordpress action)
     // to load the data. On success the leaderboard will be displayed.
     input["action"] = "ranking_ajax"
-    $.ajax({
+    test = $.ajax({
        url: ajaxurl, dataType: 'json', type: 'post', data: input,
        success: function( results, hxr, settings ) {
   
@@ -193,7 +194,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
        }
   
     });
-  
+    console.log( test );
     // Creates the frontend output
     function display_leaders( e, data, input ) {
   
