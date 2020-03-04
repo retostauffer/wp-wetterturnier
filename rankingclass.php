@@ -292,18 +292,23 @@ class wetterturnier_rankingObject {
 
                 # User hash
                 $uhash = $rec->user_login;
-                if ( ! property_exists($res->data,$uhash) ) { $res->data->$uhash = new stdClass(); }
+                if ( ! property_exists($res->data, $uhash) ) { $res->data->$uhash = new stdClass(); }
+                $res->data->$uhash->userID = $rec->ID;
 
                 # Append tournament date to city
                 $thash = sprintf("tdate_%d",$rec->tdate);
+                if (!isset($res->data->$uhash->$thash)) $res->data->$uhash->$thash = new stdClass();
+
                 $res->data->$uhash->$thash->points = $rec->points;
+                
                 if ($d1d2) {
-                    if (is_null($rec->points_d1)) $rec->points_d1 = 0;
-                    if (is_null($rec->points_d2)) $rec->points_d2 = 0;
+                    if (is_null($rec->points_d1)) {
+                        $rec->points_d1 = NULL;
+                        $rec->points_d2 = NULL;
+                    }
                     $res->data->$uhash->$thash->points_d1 = $rec->points_d1;
                     $res->data->$uhash->$thash->points_d2 = $rec->points_d2;                
                 } 
-                $res->data->$uhash->userID = $rec->ID;
             }
         }
 
@@ -532,7 +537,7 @@ class wetterturnier_rankingObject {
             if ( ! property_exists($ranking->pre,$user) ) {
                 if ( $this->calc_trend ) {
                     $ranking->pre->$user = (object)array("played"=>0,"points"=>0);
-                    if ($d1d2) { $ranking->pre->$user->points_d1 = 0; $ranking->pre->$user->points_d2 = 0; }
+                    if ($d1d2) { $ranking->pre->$user->points_d1 = NULL; $ranking->pre->$user->points_d2 = NULL; }
                 }
                 $ranking->now->$user = (object)array("played"=>0,"points"=>0);
                 if ($d1d2) { $ranking->now->$user->points_d1 = 0; $ranking->now->$user->points_d2 = 0; }
@@ -557,9 +562,12 @@ class wetterturnier_rankingObject {
                 if ( property_exists($data, $thash) ) {
                     $points = $data->$thash->points;
                     $played = 1;
-                    if ( $d1d2 ) {
-                      $points_d1 = $data->$thash->points_d1;
-                      $points_d2 = $data->$thash->points_d2;
+                    if ($d1d2) {
+                        if (is_null($points_d1)) { $data->$thash->points_d1 = NULL; $data->$thash->points_d2 = NULL; }
+                        else {
+                            $points_d1 = $data->$thash->points_d1;
+                            $points_d2 = $data->$thash->points_d2;
+                        }
                     }
                 # Else check if deadman exists and has points for this
                 # specific tournament date ($thash).
@@ -587,8 +595,13 @@ class wetterturnier_rankingObject {
                         $ranking->pre->$user->points += $points;
                         $ranking->pre->$user->played += $played;
                         if ($d1d2) {
-                            $ranking->pre->$user->points_d1 += $points_d1;
-                            $ranking->pre->$user->points_d2 += $points_d2;
+                            if (is_null($points_d1)) {
+                                $ranking->pre->$user->points_d1 = NULL;
+                                $ranking->pre->$user->points_d2 = NULL;
+                            } else {
+                                $ranking->pre->$user->points_d1 += $points_d1;
+                                $ranking->pre->$user->points_d2 += $points_d2;
+                            }    
                         }
                     }
                 }
@@ -597,8 +610,13 @@ class wetterturnier_rankingObject {
                     $ranking->now->$user->points += $points;
                     $ranking->now->$user->played += $played;
                     if ($d1d2) {
-                        $ranking->now->$user->points_d1 += $points_d1;
-                        $ranking->now->$user->points_d2 += $points_d2;
+                        if (is_null($points_d1)) {
+                            $ranking->now->$user->points_d1 = NULL;
+                            $ranking->now->$user->points_d2 = NULL;
+                        } else {
+                            $ranking->now->$user->points_d1 += $points_d1;
+                            $ranking->now->$user->points_d2 += $points_d2;
+                        }   
                     }
                 }
             }
@@ -669,8 +687,13 @@ class wetterturnier_rankingObject {
                                                  - $ranking->now->$user->points,1);
 
             if ( $d1d2 ) {
-                $final->$user->points_d1    = $this->WTuser->number_format($ranking->now->$user->points_d1,1);
-                $final->$user->points_d2    = $this->WTuser->number_format($ranking->now->$user->points_d2,1);
+                if (is_null($ranking->now->$user->points_d1)) {
+                    $final->$user->points_d1 = "-";
+                    $final->$user->points_d2 = "-";
+                } else {
+                    $final->$user->points_d1    = $this->WTuser->number_format($ranking->now->$user->points_d1,1);
+                    $final->$user->points_d2    = $this->WTuser->number_format($ranking->now->$user->points_d2,1);
+                }    
             }
 
             if ( $this->calc_trend ) {

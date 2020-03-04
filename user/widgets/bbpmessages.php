@@ -199,7 +199,7 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
                      <br>
                      <bar></bar>
                      <info class="small">
-                     <?php printf("<a href='%s' target='_self'>%s</b>",$msg_link,__("Open Messenger","wpwt")); ?>
+                     <?php printf("<a href='%s' target='_self'>%s</a>",$msg_link,__("Open Messenger","wpwt")); ?>
                      </info><br>
                   </div>
                </div>
