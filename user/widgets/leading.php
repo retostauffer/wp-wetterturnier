@@ -128,7 +128,7 @@ class WP_wetterturnier_widget_leading extends WP_Widget
         $args = array(
             "type"    => "leading",
             "tdate"   => $current,
-            "limit"   => 3,
+            "limit"   => 5,
             "city"    => $WTuser->get_current_city_id(),
             "tdates"  => array("from"      => $current->tdate,
                                "to"        => $current->tdate,

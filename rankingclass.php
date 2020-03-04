@@ -76,17 +76,20 @@ class wetterturnier_rankingObject {
        $this->cache      = $cache;
 
        $this->dict = new stdClass();
-       $this->dict->older        = __("Older", "wpwt");
-       $this->dict->newer        = __("Newer", "wpwt");
-       $this->dict->points       = __("Points", "wpwt");
-       $this->dict->points_d1    = __("Sat","wpwt");
-       $this->dict->points_d2    = __("Sun","wpwt");
-       $this->dict->trend        = "+/-";
-       $this->dict->played       = __("Participations", "wpwt");
-       $this->dict->difference   = __("Diff", "wpwt");
-       $this->dict->rank         = __("Rank", "wpwt");
-       $this->dict->user         = __("User", "wpwt");
-       $this->dict->points_max   = __("The maximum score (total) for the ranking is","wpwt");
+       $this->dict->older      = __("Older", "wpwt");
+       $this->dict->newer      = __("Newer", "wpwt");
+       $this->dict->place      = __("place", "wpwt");
+       $this->dict->th         = array(__("st","wpwt"),__("nd","wpwt"),__("rd","wpwt"),__("th","wpwt"));
+       $this->dict->p          = __("points", "wpwt");
+       $this->dict->points     = __("Points", "wpwt");
+       $this->dict->points_d1  = __("Sat","wpwt");
+       $this->dict->points_d2  = __("Sun","wpwt");
+       $this->dict->trend      = "+/-";
+       $this->dict->played     = __("Participations", "wpwt");
+       $this->dict->difference = __("Diff", "wpwt");
+       $this->dict->rank       = __("Rank", "wpwt");
+       $this->dict->user       = __("User", "wpwt");
+       $this->dict->points_max = __("The maximum score (total) for the ranking is","wpwt");
 
     }
 

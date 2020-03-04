@@ -205,7 +205,13 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
         $.each( data.data, function(idx,rec) {
         //console.log(rec)
         //console.log(rec.rank_now)
-    
+   
+            if (rec.rank_now <= 3) {
+                th = data.dict.th[rec.rank_now-1]
+            } else {
+                th = data.dict.th[3]
+            }
+
             $(e).append("<div class=\"wt-leaderboard\">\n"
                       + "    <div class=\"wt-leaderboard-avatar\" style=\"width: 33%;\">\n"
                       + "        <a href=\"" + rec.avatar_link + "\" target=\"_self\">"
@@ -213,11 +219,11 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
                       + "    </div>\n"
                       + "    <div class=\"wt-leaderboard-info\">\n"
                       // TODO: english translation
-                      + "        <info>" + rec.rank_now + ". Platz</info><br>\n"
+                      + "        <info>" + rec.rank_now + th + " " + data.dict.place + "</info><br>\n"
                       + "        <bar></bar>\n"
                       + "        <info class=\"color\">" + idx.replace("GRP_", "") + "</info><br>\n"
                       + "        <info class=\"color big\">" + rec.points_now + "</info>&nbsp;\n"
-                      + "        <info class=\"color\">points</info><br>\n"
+                      + "        <info class=\"color\">" + data.dict.p + "</info><br>\n"
                       + "        <bar></bar><info class=\"small\">" + data.meta.city + "&nbsp;" + data.meta.to + "</info><br>\n"
                       + "    </div>"
                       + "</div>");

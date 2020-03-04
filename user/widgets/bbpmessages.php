@@ -138,7 +138,7 @@ class WP_wetterturnier_widget_bbpmessages extends WP_Widget
             if ( $msg_count === 0 ) {
                print "<div class='message-info'>\n";
                _e("No unread messages in your inbox.","wpwt");
-               print "\n<br>\n";
+               print "\n<br><br>\n";
                print "<table style=\"border-collapse: collapse; border-style: hidden; width: 100%; table-layout: fixed !important;\"><tr>";
                printf("<th style=\"text-align: left !important; border-style: hidden !important;\"><a href='%s' target='_self'>%s</a></td>",
                   $msg_link, __("Open Messenger","wpwt"));

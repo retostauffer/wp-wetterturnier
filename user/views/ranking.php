@@ -86,7 +86,7 @@ switch ( $args->type ) {
       // Bit freaky. Translation needs to be the permalink to the
       // corresponding language!
       $short_title = sprintf("<a href='%s?wetterturnier_city=%s' target='_self'>%s</a>",
-                     __("/ranking/weekend-rankings/","wpwt"),$cityObj->get("hash"),
+                     __("/rankings/weekend-rankings/","wpwt"),$cityObj->get("hash"),
                      $short_title);
 
       // Navigation items 
@@ -135,7 +135,9 @@ switch ( $args->type ) {
                   array(join(", ",array_slice($names,0,-1)), end($names))),
                   __("for the weekend around","wpwt"),$WTuser->date_format($args->tdate));
 
-      // bug current tournament / "aktuelles turnier" / end of page !!!
+      $short_title = sprintf( __("Top %d of %d cities ranking (%s)","wpwt"), $args->limit, count($cityObj), $WTuser->date_format($args->tdate) );
+      $link = sprintf( __("/rankings/%d-city-ranking/","wpwt"), count($cityObj));
+      $short_title = sprintf("<a href='%s' target='_self'>%s</a>", $link, $short_title);
 
       // Navigation items 
       $tdates->older = $WTuser->older_tournament($args->tdate)->tdate;

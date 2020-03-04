@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-04 13:44+0000\n"
-"PO-Revision-Date: 2020-03-04 13:44+0000\n"
+"POT-Creation-Date: 2020-03-04 17:01+0000\n"
+"PO-Revision-Date: 2020-03-04 17:03+0000\n"
 "Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -241,7 +241,7 @@ msgstr "ABGABEFORMULAR"
 msgid "Validate & Save"
 msgstr "Überprüfen & Senden"
 
-#: betclass.php:1145 user/widgets/tournaments.php:221 user/views/ranking.php:389
+#: betclass.php:1145 user/widgets/tournaments.php:221 user/views/ranking.php:391
 msgid "for"
 msgstr "für"
 
@@ -269,36 +269,60 @@ msgstr "Älter"
 msgid "Newer"
 msgstr "Neuer"
 
-#: rankingclass.php:81 chartclass.php:133 user/userclass.php:2096 user/userclass.php:2099 user/userclass.php:2138
+#: rankingclass.php:81 user/userclass.php:2431 user/userclass.php:2433
+msgid "place"
+msgstr "Platz"
+
+#: rankingclass.php:82
+msgid "st"
+msgstr "."
+
+#: rankingclass.php:82 user/userclass.php:2431
+msgid "nd"
+msgstr "."
+
+#: rankingclass.php:82
+msgid "rd"
+msgstr "."
+
+#: rankingclass.php:82 user/userclass.php:2433
+msgid "th"
+msgstr "."
+
+#: rankingclass.php:83 user/userclass.php:2463
+msgid "points"
+msgstr "Punkte"
+
+#: rankingclass.php:84 chartclass.php:133 user/userclass.php:2096 user/userclass.php:2099 user/userclass.php:2138
 #: user/userclass.php:2368 user/views/archive.php:68 user/views/archive.php:85 user/views/current.php:75
 msgid "Points"
 msgstr "Punkte"
 
-#: rankingclass.php:82
+#: rankingclass.php:85
 msgid "Sat"
 msgstr "Sam"
 
-#: rankingclass.php:83
+#: rankingclass.php:86
 msgid "Sun"
 msgstr "Son"
 
-#: rankingclass.php:85
+#: rankingclass.php:88
 msgid "Participations"
 msgstr "Teilnahmen"
 
-#: rankingclass.php:86
+#: rankingclass.php:89
 msgid "Diff"
 msgstr "Diff"
 
-#: rankingclass.php:87 user/userclass.php:1266 user/userclass.php:2104
+#: rankingclass.php:90 user/userclass.php:1266 user/userclass.php:2104
 msgid "Rank"
 msgstr "Rang"
 
-#: rankingclass.php:88 user/userclass.php:1358 user/userclass.php:1408 user/userclass.php:2367 admin/classes/bets_list.php:51
+#: rankingclass.php:91 user/userclass.php:1358 user/userclass.php:1408 user/userclass.php:2367 admin/classes/bets_list.php:51
 msgid "User"
 msgstr "Benutzername"
 
-#: rankingclass.php:89
+#: rankingclass.php:92
 msgid "The maximum score (total) for the ranking is"
 msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
 
@@ -667,22 +691,6 @@ msgstr "Login-Formular"
 msgid "Leaderboard"
 msgstr "Bestenliste"
 
-#: user/userclass.php:2431
-msgid "nd"
-msgstr "."
-
-#: user/userclass.php:2431 user/userclass.php:2433
-msgid "place"
-msgstr "Platz"
-
-#: user/userclass.php:2433
-msgid "th"
-msgstr "."
-
-#: user/userclass.php:2463
-msgid "points"
-msgstr "Punkte"
-
 #: admin/adminclass.php:192
 msgid "Settings"
 msgstr "Einstellungen"
@@ -854,7 +862,7 @@ msgstr "Werte anzeigen"
 msgid "Show Points"
 msgstr "Punkte anzeigen"
 
-#: user/views/archive.php:63 user/views/ranking.php:464
+#: user/views/archive.php:63 user/views/ranking.php:466
 msgid "older"
 msgstr "älter"
 
@@ -862,7 +870,7 @@ msgstr "älter"
 msgid "Values"
 msgstr "Werte"
 
-#: user/views/archive.php:72 user/views/ranking.php:469
+#: user/views/archive.php:72 user/views/ranking.php:471
 msgid "newer"
 msgstr "neuer"
 
@@ -1131,11 +1139,11 @@ msgstr "Keinen Benutzer ausgewählt"
 msgid "This is the weekend ranking for the weekend around"
 msgstr "Dies ist die Wochenendwertung für das Wochenende vom"
 
-#: user/views/ranking.php:89 user/views/mosescoefs2.php:69
-msgid "/ranking/weekend-rankings/"
-msgstr "/rangliste/wochenendwertungen/"
+#: user/views/ranking.php:89
+msgid "/rankings/weekend-rankings/"
+msgstr "/wertungen/wochenendwertungen/"
 
-#: user/views/ranking.php:128 user/views/ranking.php:282 user/views/ranking.php:337
+#: user/views/ranking.php:128 user/views/ranking.php:284 user/views/ranking.php:339
 msgid "Sorry, no proper city definition for"
 msgstr "Sorry, keine Definition für Stadt"
 
@@ -1143,7 +1151,7 @@ msgstr "Sorry, keine Definition für Stadt"
 msgid "City-ranking for the cities "
 msgstr "Städte-Rangliste für die Städte"
 
-#: user/views/ranking.php:134 user/views/ranking.php:291 user/views/ranking.php:346
+#: user/views/ranking.php:134 user/views/ranking.php:293 user/views/ranking.php:348
 msgid " and "
 msgstr "und"
 
@@ -1151,69 +1159,83 @@ msgstr "und"
 msgid "for the weekend around"
 msgstr "für das Wochenende vom"
 
-#: user/views/ranking.php:171 user/views/ranking.php:187 user/views/ranking.php:230 user/views/ranking.php:246
+#: user/views/ranking.php:138
+#, php-format
+msgid "Top %d of %d cities ranking (%s)"
+msgstr "Top %d der %d-Städtewertung"
+
+#: user/views/ranking.php:139
+#, php-format
+msgid "/rankings/%d-city-ranking/"
+msgstr "/wertungen/%d-staedte-wertung/"
+
+#: user/views/ranking.php:173 user/views/ranking.php:189 user/views/ranking.php:232 user/views/ranking.php:248
 msgid "Winter"
 msgstr "Winter"
 
-#: user/views/ranking.php:175 user/views/ranking.php:234
+#: user/views/ranking.php:177 user/views/ranking.php:236
 msgid "Spring"
 msgstr "Frühling"
 
-#: user/views/ranking.php:179 user/views/ranking.php:238
+#: user/views/ranking.php:181 user/views/ranking.php:240
 msgid "Summer"
 msgstr "Sommer"
 
-#: user/views/ranking.php:183 user/views/ranking.php:242
+#: user/views/ranking.php:185 user/views/ranking.php:244
 msgid "Fall"
 msgstr "Herbst"
 
-#: user/views/ranking.php:215 user/views/ranking.php:289
+#: user/views/ranking.php:217 user/views/ranking.php:291
 msgid "season ranking for"
 msgstr "Jahreszeitenwertung für"
 
-#: user/views/ranking.php:216 user/views/ranking.php:293 user/views/ranking.php:348
+#: user/views/ranking.php:218 user/views/ranking.php:295 user/views/ranking.php:350
 msgid "tournaments from"
 msgstr "Turniere vom"
 
-#: user/views/ranking.php:217 user/views/ranking.php:294 user/views/ranking.php:349 user/views/ranking.php:427
+#: user/views/ranking.php:219 user/views/ranking.php:296 user/views/ranking.php:351 user/views/ranking.php:429
 msgid "to"
 msgstr "bis"
 
-#: user/views/ranking.php:289 user/views/ranking.php:344
+#: user/views/ranking.php:291 user/views/ranking.php:346
 msgid "the"
 msgstr "die"
 
-#: user/views/ranking.php:290 user/views/ranking.php:345
+#: user/views/ranking.php:292 user/views/ranking.php:347
 msgid "cities"
 msgstr "Städte"
 
-#: user/views/ranking.php:344
+#: user/views/ranking.php:346
 msgid "yearly ranking for"
 msgstr "Jahreswertung für"
 
-#: user/views/ranking.php:388
+#: user/views/ranking.php:390
 msgid "Ranking for"
 msgstr "Wertung für"
 
-#: user/views/ranking.php:403
+#: user/views/ranking.php:405
 msgid " weeks ranking for"
 msgstr "-Wochen-Wertung für"
 
-#: user/views/ranking.php:406
+#: user/views/ranking.php:408
 msgid "Alltime ranking for"
 msgstr "Allzeitwertung für"
 
-#: user/views/ranking.php:437
+#: user/views/ranking.php:439
 msgid "Sorry, cannot understand input 'type' for"
 msgstr "Sorry, Input 'type' nicht erkannt"
 
-#: user/views/ranking.php:505
+#: user/views/ranking.php:507
 msgid "Loading data ..."
 msgstr "Lade Daten ..."
 
 #: user/views/mosescoefs2.php:60
 msgid "These are the moses coefs for the weeked around"
 msgstr "Dies sind die Moses-Koeffizienten für das Wochenende vom"
+
+#: user/views/mosescoefs2.php:69
+msgid "/ranking/weekend-rankings/"
+msgstr "/rangliste/wochenendwertungen/"
 
 #: user/views/mosescoefs2.php:101
 msgid "Tournament"
