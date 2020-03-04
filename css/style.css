@@ -262,7 +262,8 @@ table.tablesorter tbody td {
 .wttable-show * th { padding: 0 2px; }
 .wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 45px; }
 .wttable-show * th.trend,      .wttable-show * td.trend       { text-align: center; width: 45px; }
-.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 120px; }
+.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 60px }
+.wttable-show * th.user,       .wttable-show * td.user        { text-align: left; min-width: 200px; }
 .wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 60px; }
 .wttable-show * th.statusbar,  .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
 .wttable-show * td.difference                                 { color: gray; }
@@ -331,7 +332,7 @@ table.tablesorter tbody td {
 }
 
 /* Hide Sat/Sun on very small screens */
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 600px) {
    #content .wttable-show * th.points.d1,     .wttable-show * td.points.d1 { display: none; }
    #content .wttable-show * th.points.d2,     .wttable-show * td.points.d2 { display: none; }
    /*
@@ -344,15 +345,16 @@ table.tablesorter tbody td {
    */
 }
 
-/*Hide trends*/
-/*
-@media screen and (max-width: 1000px) {
+/*Hide trends/part*/
+@media screen and (max-width: 1023px) {
+   /* both are always second element -> recomment later
    #content .wttable-show-ranking th:nth-child(2),
-   #content .wttable-show-ranking td:nth-child(2) {
-       display: none;
+   #content .wttable-show-ranking td:nth-child(2),
+   */
+   #content .wttable-show * th.played,         .wttable-show * td.played {
+      display: none !important;
    }
 }
-*/
 
 /* Hide statusbar*/
 @media screen and (max-width: 1400px) {

@@ -85,7 +85,7 @@ class wetterturnier_rankingObject {
        $this->dict->points_d1  = __("Sat","wpwt");
        $this->dict->points_d2  = __("Sun","wpwt");
        $this->dict->trend      = "+/-";
-       $this->dict->played     = __("Participations", "wpwt");
+       $this->dict->played     = __("Part", "wpwt");
        $this->dict->difference = __("Diff", "wpwt");
        $this->dict->rank       = __("Rank", "wpwt");
        $this->dict->user       = __("User", "wpwt");
