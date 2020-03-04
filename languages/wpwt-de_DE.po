@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-04 17:01+0000\n"
-"PO-Revision-Date: 2020-03-04 17:03+0000\n"
+"PO-Revision-Date: 2020-03-04 17:24+0000\n"
 "Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -1162,7 +1162,7 @@ msgstr "für das Wochenende vom"
 #: user/views/ranking.php:138
 #, php-format
 msgid "Top %d of %d cities ranking (%s)"
-msgstr "Top %d der %d-Städtewertung"
+msgstr "Top %d der %d-Städtewertung (%s)"
 
 #: user/views/ranking.php:139
 #, php-format

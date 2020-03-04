@@ -143,5 +143,4 @@ class WP_wetterturnier_widget_leading extends WP_Widget
 
 // Add widget to wordpress
 add_action('widgets_init', function() { register_widget("WP_wetterturnier_widget_leading"); });
-
 ?>
