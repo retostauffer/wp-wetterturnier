@@ -330,13 +330,29 @@ table.tablesorter tbody td {
    padding-right: 3px;
 }
 
-@media screen and (max-width: 1200px) {
-   #content .wttable-show-ranking th:nth-last-child(3),
-   #content .wttable-show-ranking td:nth-last-child(3) {
+/* Hide Sat/Sun on very small screens */
+@media screen and (max-width: 550px) {
+   #content .wttable-show * th.points.d1,     .wttable-show * td.points.d1 { display: none; }
+   #content .wttable-show * th.points.d2,     .wttable-show * td.points.d2 { display: none; }
+   /*
+   #content .wttable-show-ranking td:nth-child(5),
+   #content .wttable-show-ranking td:nth-child(5),
+   #content .wttable-show-ranking th:nth-child(6),
+   #content .wttable-show-ranking td:nth-child(6), {
+       display: none !important;
+   }
+   */
+}
+
+/*Hide trends*/
+@media screen and (max-width: 1000px) {
+   #content .wttable-show-ranking th:nth-child(2),
+   #content .wttable-show-ranking td:nth-child(2) {
        display: none;
    }
 }
 
+/* Hide statusbar*/
 @media screen and (max-width: 1400px) {
    #content .wttable-show-ranking th:nth-last-child(1),
    #content .wttable-show-ranking td:nth-last-child(1) {

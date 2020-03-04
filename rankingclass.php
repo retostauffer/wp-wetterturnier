@@ -42,7 +42,7 @@ class wetterturnier_rankingObject {
 
     # Whether or not the trend (increase/decrease in rank)
     # should be calculated. Is controlled by set_tdates().
-    private $calc_trend;
+    private $calc_trend = true;
 
     # Used to generate the name of the cache files if $cache is enabled.
     private $cachehash = "UNNAMED";
@@ -145,7 +145,7 @@ class wetterturnier_rankingObject {
      *
      * See also :php:meth:`set_tdates`.
      */
-    public function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null, $type = "ranking", $calc_trend = false) {
+    public function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null, $type = "ranking", $calc_trend = true) {
 
         if (in_array($type, array("season","yearly","seasoncities","yearlycities")))
             { $calc_trend = true; }
