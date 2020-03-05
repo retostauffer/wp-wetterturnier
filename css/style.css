@@ -342,6 +342,10 @@ table.tablesorter tbody td {
    #content .wttable-show-ranking td:nth-child(6), {
        display: none !important;
    }
+   #content div.wt-twocolumn.column-right.colorlegend-wrapper * {
+      text-align: left;
+      float: left;
+   }
    */
 }
 
@@ -357,7 +361,7 @@ table.tablesorter tbody td {
 }
 
 /* Hide statusbar*/
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1500px) {
    #content .wttable-show-ranking th:nth-last-child(1),
    #content .wttable-show-ranking td:nth-last-child(1) {
        display: none;
