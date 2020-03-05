@@ -450,12 +450,12 @@ class wetterturnier_rankingObject {
         $hiddenrank = 0;
         $hold = null;
         foreach ( $x as $key=>$val ) {
-            # Always increade hidden rank
-            $hiddenrank += 1;
             # If current value is lower than previous:
             # set new hold, and set rank to hiddenrank.
             if ( is_null($hold) || $val < $hold ) {
-                $rank = $hiddenrank; $hold = $val;
+                $hiddenrank += 1;
+                $rank = $hiddenrank;
+                $hold = $val;
             }
             # Set rank $rank for $in[$key]
             $in[$key] = $rank;
