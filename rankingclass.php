@@ -80,6 +80,7 @@ class wetterturnier_rankingObject {
        $this->dict->newer      = __("Newer", "wpwt");
        $this->dict->place      = __("place", "wpwt");
        $this->dict->th         = array(__("st","wpwt"),__("nd","wpwt"),__("rd","wpwt"),__("th","wpwt"));
+       $this->dict->trophy     = array( 'first', 'second', 'third', 'none' );
        $this->dict->p          = __("points", "wpwt");
        $this->dict->points     = __("Points", "wpwt");
        $this->dict->points_d1  = __("Sat","wpwt");
