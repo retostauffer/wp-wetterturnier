@@ -361,7 +361,7 @@ table.tablesorter tbody td {
 }
 
 /* Hide statusbar*/
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1519px) {
    #content .wttable-show-ranking th:nth-last-child(1),
    #content .wttable-show-ranking td:nth-last-child(1) {
        display: none;
@@ -856,7 +856,7 @@ div.wt-leaderboard .wt-leaderboard-info bar {
    margin: 2px 0;
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1519px) {
    div.wt-leaderboard.wide {
       width: 100%;
       float: none;
