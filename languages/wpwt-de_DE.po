@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-04 23:15+0000\n"
-"PO-Revision-Date: 2020-03-04 23:16+0000\n"
+"POT-Creation-Date: 2020-03-05 03:57+0000\n"
+"PO-Revision-Date: 2020-03-05 03:58+0000\n"
 "Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -289,40 +289,40 @@ msgstr "."
 msgid "th"
 msgstr "."
 
-#: rankingclass.php:83 user/userclass.php:2463
+#: rankingclass.php:84 user/userclass.php:2463
 msgid "points"
 msgstr "Punkte"
 
-#: rankingclass.php:84 chartclass.php:133 user/userclass.php:2096 user/userclass.php:2099 user/userclass.php:2138
+#: rankingclass.php:85 chartclass.php:133 user/userclass.php:2096 user/userclass.php:2099 user/userclass.php:2138
 #: user/userclass.php:2368 user/views/archive.php:68 user/views/archive.php:85 user/views/current.php:75
 msgid "Points"
 msgstr "Punkte"
 
-#: rankingclass.php:85
+#: rankingclass.php:86
 msgid "Sat"
 msgstr "Sam"
 
-#: rankingclass.php:86
+#: rankingclass.php:87
 msgid "Sun"
 msgstr "Son"
 
-#: rankingclass.php:88
+#: rankingclass.php:89
 msgid "Part"
 msgstr "Teiln"
 
-#: rankingclass.php:89
+#: rankingclass.php:90
 msgid "Diff"
 msgstr "Diff"
 
-#: rankingclass.php:90 user/userclass.php:1266 user/userclass.php:2104
+#: rankingclass.php:91 user/userclass.php:1266 user/userclass.php:2104
 msgid "Rank"
 msgstr "Rang"
 
-#: rankingclass.php:91 user/userclass.php:1358 user/userclass.php:1408 user/userclass.php:2367 admin/classes/bets_list.php:51
+#: rankingclass.php:92 user/userclass.php:1358 user/userclass.php:1408 user/userclass.php:2367 admin/classes/bets_list.php:51
 msgid "User"
 msgstr "Benutzername"
 
-#: rankingclass.php:92
+#: rankingclass.php:93
 msgid "The maximum score (total) for the ranking is"
 msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
 
@@ -1161,8 +1161,8 @@ msgstr "für das Wochenende vom"
 
 #: user/views/ranking.php:138
 #, php-format
-msgid "Top %d of %d cities ranking (%s)"
-msgstr "Top %d der %d-Städtewertung (%s)"
+msgid "%d cities ranking (%s)"
+msgstr "%d-Städtewertung (%s)"
 
 #: user/views/ranking.php:139
 #, php-format

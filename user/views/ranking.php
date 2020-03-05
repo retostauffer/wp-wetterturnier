@@ -80,7 +80,7 @@ switch ( $args->type ) {
       $title = $cityObj->get('name').": ".__("This is the weekend ranking for the weekend around","wpwt")
                  .sprintf(" %s.",$WTuser->date_format($args->tdate));
       // For the overview: smaller title
-      $short_title = sprintf("Top %d %s (%s)",$args->limit,$cityObj->get('name'),
+      $short_title = sprintf("%s (%s)", $cityObj->get('name'),
                               $WTuser->date_format($args->tdate));
       // Appending link to $short_title
       // Bit freaky. Translation needs to be the permalink to the
@@ -135,7 +135,7 @@ switch ( $args->type ) {
                   array(join(", ",array_slice($names,0,-1)), end($names))),
                   __("for the weekend around","wpwt"),$WTuser->date_format($args->tdate));
 
-      $short_title = sprintf( __("Top %d of %d cities ranking (%s)","wpwt"), $args->limit, count($cityObj), $WTuser->date_format($args->tdate) );
+      $short_title = sprintf( __("%d cities ranking (%s)","wpwt"), count($cityObj), $WTuser->date_format($args->tdate) );
       $link = sprintf( __("/rankings/%d-city-ranking/","wpwt"), count($cityObj));
       $short_title = sprintf("<a href='%s' target='_self'>%s</a>", $link, $short_title);
 
