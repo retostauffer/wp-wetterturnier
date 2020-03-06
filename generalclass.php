@@ -1522,7 +1522,7 @@ class wetterturnier_generalclass
                ." AND b.tdate = %d "
                ." AND b.betdate = %d ";
            if ( $mos ) {
-              $mosIDs = $this->get_users_in_group("Automaten", $active = true);
+              $mosIDs = $this->get_users_in_group("Automaten", NULL, $active = 1);
               $mosSTR = "";
               foreach ($mosIDs as $i) {
                  $mosSTR .= sprintf("%s,", $i); 

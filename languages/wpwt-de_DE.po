@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-06 05:07+0000\n"
-"PO-Revision-Date: 2020-03-06 05:10+0000\n"
+"POT-Creation-Date: 2020-03-06 06:51+0000\n"
+"PO-Revision-Date: 2020-03-06 06:52+0000\n"
 "Last-Translator: sferics <juri.hubrig@fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -53,6 +53,10 @@ msgstr "Nicht verfügbar"
 #: classes.php:641 user/userclass.php:899
 msgid "Show profile"
 msgstr "Zum Profil"
+
+#: generalclass.php:858
+msgid "Multi-Model-Mix"
+msgstr "Multi-Modellmix"
 
 #: generalclass.php:863 user/userclass.php:1174
 msgid "Automated forecast"
@@ -141,7 +145,7 @@ msgstr "Minuten"
 msgid "hours"
 msgstr "Stunden"
 
-#: generalclass.php:1023 user/views/userprofile.php:100
+#: generalclass.php:1023 user/views/userprofile.php:111
 msgid "and"
 msgstr "und"
 
@@ -482,7 +486,7 @@ msgstr "werden nicht berücksichtigt"
 msgid "Currently no users in this group"
 msgstr "Im Moment befinden sich keine Teilnehmer in dieser Gruppe."
 
-#: user/userclass.php:903 user/views/userprofile.php:232
+#: user/userclass.php:903 user/views/userprofile.php:243
 msgid "active"
 msgstr "aktiv"
 
@@ -1026,98 +1030,98 @@ msgstr "Datenbank obs.stations nicht erreichbar. Stations-Information wird ignor
 msgid "Cannot reach database obs.bufrdesc, exit."
 msgstr "Datenbank obs.bufrdesc nicht erreichbar. Spalten-Beschreibung kann leider nicht mitgeliefert werden!"
 
-#: user/views/userprofile.php:37
+#: user/views/userprofile.php:48
 msgid "No information available"
 msgstr "Keine Information verfügbar"
 
-#: user/views/userprofile.php:99
+#: user/views/userprofile.php:110
 msgid "participations"
 msgstr "Teilnahmen"
 
-#: user/views/userprofile.php:99
+#: user/views/userprofile.php:110
 msgid "between"
 msgstr "zwischen"
 
-#: user/views/userprofile.php:103
+#: user/views/userprofile.php:114
 msgid "Average points:"
 msgstr "Mittlere Punktzahl:"
 
-#: user/views/userprofile.php:104
+#: user/views/userprofile.php:115
 #, php-format
 msgid "<tr><td>Median points:</td><td><b>%s</b></td><tr>"
 msgstr "<tr><td>Median:</td><td><b>%s</b></td><tr>"
 
-#: user/views/userprofile.php:105
+#: user/views/userprofile.php:116
 #, php-format
 msgid "<tr><td>Max points:</td><td><b>%s</b></td><tr>"
 msgstr "<tr><td>Maximale Punktzahl:</td><td><b>%s</b></td><tr>"
 
-#: user/views/userprofile.php:106
+#: user/views/userprofile.php:117
 #, php-format
 msgid "<tr><td>Min points:</td><td><b>%s</b></td><tr>"
 msgstr "<tr><td>Minimale Punktzahl:</td><td><b>%s</b></td><tr>"
 
-#: user/views/userprofile.php:107
+#: user/views/userprofile.php:118
 #, php-format
 msgid "<tr><td>Standard deviation:</td><td><b>%s</b></td><tr></table>"
 msgstr "<tr><td>Standardabweichung:</td><td><b>%s</b></td><tr></table>"
 
-#: user/views/userprofile.php:112
+#: user/views/userprofile.php:123
 msgid "<span style='color: gray;'>Never participated</span>"
 msgstr "Bisher nie teilgenommen"
 
-#: user/views/userprofile.php:137 admin/classes/deactivateusers_list.php:72
+#: user/views/userprofile.php:148 admin/classes/deactivateusers_list.php:72
 msgid "Username"
 msgstr "Teilnehmer"
 
-#: user/views/userprofile.php:140 admin/classes/stations_list.php:29 admin/classes/cities_list.php:32
+#: user/views/userprofile.php:151 admin/classes/stations_list.php:29 admin/classes/cities_list.php:32
 #: admin/classes/api_list.php:71 admin/classes/param_list.php:35
 msgid "Name"
 msgstr "Name"
 
-#: user/views/userprofile.php:142
+#: user/views/userprofile.php:153
 msgid "Registered since"
 msgstr "Registriert seit"
 
-#: user/views/userprofile.php:142
+#: user/views/userprofile.php:153
 msgid "d.m.Y"
 msgstr "d.m.Y"
 
-#: user/views/userprofile.php:154
+#: user/views/userprofile.php:165
 msgid "Biography"
 msgstr "Biographie"
 
-#: user/views/userprofile.php:161
+#: user/views/userprofile.php:172
 msgid "capabilities"
 msgstr "Berechtigungen"
 
-#: user/views/userprofile.php:172 admin/classes/api_list.php:69
+#: user/views/userprofile.php:183 admin/classes/api_list.php:69
 msgid "Type"
 msgstr "Typ"
 
-#: user/views/userprofile.php:203
+#: user/views/userprofile.php:214
 msgid "Active members"
-msgstr "Aktive Mitglieder"
+msgstr ""
 
-#: user/views/userprofile.php:225
+#: user/views/userprofile.php:236
 msgid "Inactive members"
-msgstr "Inaktive Mitglieder"
+msgstr ""
 
-#: user/views/userprofile.php:232
+#: user/views/userprofile.php:243
 msgid "inactive"
-msgstr "inaktiv"
+msgstr ""
 
-#: user/views/userprofile.php:233
+#: user/views/userprofile.php:244
 msgid "Group status"
-msgstr "Gruppenstatus"
-
-#: user/views/userprofile.php:246
-msgid "Current group memberships"
-msgstr "Derzeitige Gruppen"
+msgstr ""
 
 #: user/views/userprofile.php:257
+msgid "Current group memberships"
+msgstr ""
+
+#: user/views/userprofile.php:268
 msgid "Past group memberships"
-msgstr "Frühere Gruppen"
+msgstr ""
 
 #: user/views/mosescoefs.php:33
 msgid "Date: "
@@ -1181,7 +1185,7 @@ msgstr "Städte-Rangliste für die Städte"
 
 #: user/views/ranking.php:134 user/views/ranking.php:293 user/views/ranking.php:348
 msgid " and "
-msgstr "und"
+msgstr "inaktiv"
 
 #: user/views/ranking.php:136
 msgid "for the weekend around"
