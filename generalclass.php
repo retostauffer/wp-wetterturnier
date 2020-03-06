@@ -849,13 +849,13 @@ class wetterturnier_generalclass
        if ($mos) {
           //get kind of MOS for mosforecasts view
           if ( strpos($usr->user_login, 'EZ') ) {
-            $userclass = "EZ";
+            $userclass = "EZ"; $text = "Integrated Forecasted System (ECMWF)";
           } else if ( strpos($usr->user_login, 'GFS') ) {
-            $userclass = "GFS";
+            $userclass = "GFS"; $text = "Global Forecasting System (NOAA)";
           } else if ( strpos($usr->user_login, 'ICON') ) {
-            $userclass = "ICON";
+            $userclass = "ICON"; $text = "ICOsahedral Nonhydrostatic (DWD)";
           } else if ( strpos($usr->user_login, 'MIX') || strpos($usr->user_login, 'Mix') || $usr->user_login == "Ms.Os" ) {
-            $userclass = "MIX";
+            $userclass = "MIX"; $text = __("Multi-Model-Mix","wpwt");
           }
        } else {
        // Check if user is Automat or mix or so
@@ -1522,7 +1522,7 @@ class wetterturnier_generalclass
                ." AND b.tdate = %d "
                ." AND b.betdate = %d ";
            if ( $mos ) {
-              $mosIDs = $this->get_users_in_group("Automaten");
+              $mosIDs = $this->get_users_in_group("Automaten", $active = true);
               $mosSTR = "";
               foreach ($mosIDs as $i) {
                  $mosSTR .= sprintf("%s,", $i); 
