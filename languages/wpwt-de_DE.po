@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-06 06:51+0000\n"
-"PO-Revision-Date: 2020-03-06 06:52+0000\n"
+"PO-Revision-Date: 2020-03-06 06:58+0000\n"
 "Last-Translator: sferics <juri.hubrig@fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -1101,27 +1101,27 @@ msgstr "Typ"
 
 #: user/views/userprofile.php:214
 msgid "Active members"
-msgstr ""
+msgstr "Aktive Mitglieder"
 
 #: user/views/userprofile.php:236
 msgid "Inactive members"
-msgstr ""
+msgstr "Inaktive Mitglieder"
 
 #: user/views/userprofile.php:243
 msgid "inactive"
-msgstr ""
+msgstr "inaktiv"
 
 #: user/views/userprofile.php:244
 msgid "Group status"
-msgstr ""
+msgstr "Gruppenstatus"
 
 #: user/views/userprofile.php:257
 msgid "Current group memberships"
-msgstr ""
+msgstr "Derzeitige Gruppen"
 
 #: user/views/userprofile.php:268
 msgid "Past group memberships"
-msgstr ""
+msgstr "Frühere Gruppen"
 
 #: user/views/mosescoefs.php:33
 msgid "Date: "
