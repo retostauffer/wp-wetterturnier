@@ -551,7 +551,7 @@ class wetterturnier_groupsObject {
     *   Else a list of stdClass objects will be returned containing
     *   the required information about the user/users in the group.
     */
-   public function get_members( $groupID ) {
+   public function get_members( $groupID, $active = false ) {
 
       // Check which group matches
       $idx = array_search((int)$groupID,$this->groupIDs,true);
@@ -564,7 +564,9 @@ class wetterturnier_groupsObject {
       array_push($sql,sprintf("LEFT JOIN %s AS usr",$this->wpdb->users));
       array_push($sql,"ON gu.userID = usr.ID");
       array_push($sql,sprintf("WHERE groupID = %d",$groupID));
-
+      if ($active) {
+            array_push($sql, "WHERE gu.active = 1");
+      }
       //print join(" ",$sql); 
       return($this->wpdb->get_results( join("\n",$sql) ));
 
@@ -593,7 +595,6 @@ class wetterturnier_groupsObject {
          foreach ( $members as $mem ) {
             if ( is_inactive($mem->active) ) { $num_inactive++; }
          }
-
 
          // Else create new table 
          ?>

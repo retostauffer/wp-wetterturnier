@@ -704,7 +704,7 @@ class wetterturnier_generalclass
      * @param $groupName. Name of the group to check.
      * @return Returns `true` if the user is a member of the group and false` else. 
      */
-    public function check_user_is_in_group( $userID, $groupName ) {
+    public function check_user_is_in_group( $userID, $groupName, $active = true ) {
         global $wpdb;
         $res = $wpdb->get_row(
                     sprintf("SELECT gu.active FROM %swetterturnier_groups AS g "
@@ -714,7 +714,7 @@ class wetterturnier_generalclass
                             $wpdb->prefix,$wpdb->prefix,$groupName,$userID));
 
         if ( ! $res ) { return false; }
-        if ( ! $res->active == 1 ) { return false; }
+        if ( $active and ! $res->active == 1 ) { return false; }
         return true;
     }
 
@@ -727,13 +727,20 @@ class wetterturnier_generalclass
      *   else an array of the group members' userIDs is returned.
      */
 
-    public function get_users_in_group( $groupName, $groupID=NULL, $active = FALSE ) {
+    public function get_users_in_group( $groupName, $groupID=NULL, $active = NULL ) { 
        global $wpdb;
-       if ( ! isset($groupID) ) {
-          $groupID = $wpdb->get_row(sprintf('SELECT groupID FROM %swetterturnier_groups WHERE groupName = \'%s\'', $wpdb->prefix, $groupName))->groupID;
+       
+       if ( is_null($groupID) ) {
+           $groupID = $wpdb->get_row(sprintf('SELECT groupID FROM %swetterturnier_groups ' .
+               'WHERE groupName = \'%s\'', $wpdb->prefix, $groupName))->groupID;
        }
-       $sql = sprintf('SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d', $wpdb->prefix, $groupID);
-       if ($active) { $sql += " AND active=1"; }
+       
+       if (!is_null($active)) {
+           $active = sprintf( " AND active = %d", (($active==1) ? 1 : 0) );
+       } else { $active = ""; }
+       
+       $sql = sprintf('SELECT userID FROM %swetterturnier_groupusers ' .
+                      'WHERE groupID = %d%s', $wpdb->prefix, (int)$groupID, $active);
        $tmp = $wpdb->get_results( $sql );
        $res = array();
        foreach ( $tmp as $i ) {
@@ -751,14 +758,20 @@ class wetterturnier_generalclass
      *   at least one group and a stdClass object containing the group
      *   ID and group names for all groups where the user is a member of.
      */
-    public function get_groups_for_user( $userID ) {
-        global $wpdb;
-        $res = $wpdb->get_results(
-                    sprintf("SELECT gu.ID, g.groupName FROM %swetterturnier_groups AS g "
+    public function get_groups_for_user( $userID, $active = 1 ) {
+       global $wpdb;
+        
+       if (!is_null($active)) {
+           $active = sprintf( " AND gu.active = %d", (($active==1) ? 1 : 0) );
+       } else { $active = ""; } 
+
+        $sql = sprintf("SELECT gu.ID, g.groupName FROM %swetterturnier_groups AS g "
                            ."LEFT OUTER JOIN %swetterturnier_groupusers AS gu "
                            ."ON g.groupID = gu.groupID "
-                           ."WHERE gu.userID = %d AND gu.active = 1",
-                            $wpdb->prefix,$wpdb->prefix,$userID));
+                           ."WHERE gu.userID = %d%s", $wpdb->prefix, $wpdb->prefix,
+                           $userID, $active);
+
+        $res = $wpdb->get_results( $sql );
 
         if ( ! $res ) { return false; }
         return $res; 
@@ -821,7 +834,7 @@ class wetterturnier_generalclass
      *
      * @param $userID. Integer, numeric user ID.
      *
-     * @param $user_login. String containing the user_login name.
+     * @param $usr. Object, user data object as returned by get_user_by* functions
      *
      * @return stdClass containing two strings. `userclass` contains
      * the main class (automat, referenz, mitteltip, or Sleepy), 
@@ -834,6 +847,7 @@ class wetterturnier_generalclass
           $username = $usr->display_name;
        }
        if ($mos) {
+          //get kind of MOS for mosforecasts view
           if ( strpos($usr->user_login, 'EZ') ) {
             $userclass = "EZ";
           } else if ( strpos($usr->user_login, 'GFS') ) {
@@ -845,20 +859,20 @@ class wetterturnier_generalclass
           }
        } else {
        // Check if user is Automat or mix or so
-       if      ( $this->check_user_is_in_group($userID, 'Automaten') ) {
-          $userclass = 'automat';
-       } else if      ( $this->check_user_is_in_group($userID, 'Referenztipps') ) {
-          $userclass = 'referenz';
+       if ( $this->check_user_is_in_group($userID, 'Automaten', $active=false) ) {
+          $userclass = 'automat'; $text = __("Automated forecast","wpwt");
+       } else if ( $this->check_user_is_in_group($userID, 'Referenztipps') ) {
+          $userclass = 'referenz'; $text = __("Reference method","wpwt");
        } else if ( $username == 'Sleepy' ) {
-          $userclass = 'sleepy';
-          $username  = sprintf('%s <span></span>',$usr->user_login);
-       } else { $userclass = 'player'; }
-       } if ( substr($usr->user_login,0,4) == 'GRP_' ) {
-          $userclass = 'mitteltip';
-          $username  = str_replace('GRP_',"",$usr->user_login);
+          $userclass = 'sleepy'; $text = "Sleepy";
+       } else { $userclass = 'player'; $text = __("Human player","wpwt"); }
+       } if ( substr($usr->user_login, 0, 4) == 'GRP_' ) {
+          $userclass = 'mitteltip'; $text = __("Group","wpwt");
+          $username  = str_replace('GRP_', "", $usr->user_login);
        }
        $res = new stdClass();
        $res->userclass    = $userclass;
+       $res->text         = $text;
        $res->display_name = $username;
        $res->user_login   = $usr->user_login;
        $res->ID           = $userID;

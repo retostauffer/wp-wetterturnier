@@ -1,6 +1,15 @@
+<!-- First remove GRP_ in title for wetterturnier groups -->
+<script>
+$( document ).ready( function() {
+    var entry_title = document.getElementsByClassName("entry-title")[0];
+    entry_title.innerHTML = entry_title.innerHTML.replace("GRP_", "");
+    var page_title = document.getElementsByTagName("title")[0];
+    console.log(page_title);
+    document.title = page_title.innerHTML.replace("GRP_", "");
+});
+</script>
+
 <?php
-
-
 // Get displayed user id first
 $userID = bbp_get_displayed_user_id();
 $user   = get_userdata( $userID );
@@ -17,7 +26,6 @@ function show_row($key,$value) {
       ."      <td class='key'>".$key.":</td>\n"
       ."      <td>".$value."</td>\n"
       ."   </tr>\n";
-
 }
 
 // ------------------------------------------------------------------
@@ -28,6 +36,7 @@ function get_city_stats( $cityID, $userID ) {
    global $WTuser, $wpdb;
    // Do not show results for today - number of bet days - 1 (until Tuesday in wetterturnier)
    // To show only fully finished tournaments in this 'stats'
+   
    $tdatebefore    = (int)$WTuser->options->wetterturnier_betdays;
    $tdatebefore    = (int)(time()/86400) - $tdatebefore - 1;
  
@@ -42,7 +51,7 @@ function get_city_stats( $cityID, $userID ) {
    $last  = $WTuser->date_format($res->max);
 
    // Checking if on first three ranks
-   /*
+   /*   
    $sql = array();
    array_push($sql,sprintf("SELECT rank, count(rank) AS count"));
    array_push($sql,sprintf("FROM %swetterturnier_betstat",$wpdb->prefix));
@@ -50,7 +59,7 @@ function get_city_stats( $cityID, $userID ) {
    array_push($sql,sprintf(" AND tdate < %d",$tdatebefore));
    array_push($sql,sprintf("GROUP BY rank ORDER BY rank"));
    //$rank_res = $wpdb->get_results(join("\n",$sql));
-   //*/
+   */
    $sql = "SELECT ranks_weekend AS medals FROM ".$wpdb->prefix."wetterturnier_userstats\n".
           "WHERE userID = ".$userID." AND cityID = ".$cityID;
    $rankhistory = new stdClass();
@@ -93,22 +102,22 @@ function get_city_stats( $cityID, $userID ) {
    // Return string
    if ( $res->count > 0 ) {
       $return = array();
-      array_push($return,sprintf("<span class='rankhistory first'>%d</span>",$rankhistory->rank_1));
-      array_push($return,sprintf("<span class='rankhistory second'>%d</span>",$rankhistory->rank_2));
-      array_push($return,sprintf("<span class='rankhistory third'>%d</span>",$rankhistory->rank_3));
-      array_push($return,"<br>");
+      array_push($return, sprintf("<span class='rankhistory first'>%d</span>",$rankhistory->rank_1));
+      array_push($return, sprintf("<span class='rankhistory second'>%d</span>",$rankhistory->rank_2));
+      array_push($return, sprintf("<span class='rankhistory third'>%d</span>",$rankhistory->rank_3));
+      array_push($return, "<br>");
       array_push($return, sprintf("<b>%d</b> %s %s %s %s %s",
                           $res->count,__("participations","wpwt"),__("between","wpwt"),
                           $first, __("and","wpwt"), $last) );
 
       if ($pavg !== NULL) {
-         array_push($return, sprintf("<table style=\"width:200px;\"><tr><td>".__("Average points:","wpwt")."</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
+         array_push($return, sprintf("<table style=\"width:300px;\"><tr><td>".__("Average points:","wpwt")."</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
          array_push($return, sprintf(__("<tr><td>Median points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmed,1) ) );
          array_push($return, sprintf(__("<tr><td>Max points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmax,1) ) );
          array_push($return, sprintf(__("<tr><td>Min points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmin,1) ) );
          array_push($return, sprintf(__("<tr><td>Standard deviation:</td><td><b>%s</b></td><tr></table>","wpwt"), number_format($pstd,1) ) );
       }
-      return( join("\n",$return) );
+      return( join("\n", $return) );
 
    } else {
       return( __("<span style='color: gray;'>Never participated</span>","wpwt") );
@@ -130,35 +139,142 @@ table#wt-profile-table tr td.key {
 </style>
 
 <table id='wt-profile-table'>
+
 <?php
 // Globalize class
 global $WTuser;
 
 // Some user infos
-show_row(__("Username","wpwt"),         str_replace('GRP_','',$user->display_name));
-show_row(__("Name","wpwt"),             $user->real_name);
+show_row(__("Username","wpwt"),         str_replace('GRP_', '', $user->display_name));
+
+if (strpos($user->real_name==="", 0)) {
+    show_row(__("Name","wpwt"), $user->real_name);
+} 
 show_row(__("Registered since","wpwt"), date(__("d.m.Y","wpwt"), strtotime($user->user_registered)));
-// Loading user bio for the current language
+
+// Loading user's current language
 $user_lang = $WTuser->get_user_language("slug");
-// Try to load user description based on user language
-$bio = get_user_meta($userID,sprintf("sescription_%s",$user_lang),true);
+
+// Try to load user bio/description based on user language
+$bio = get_user_meta($userID, sprintf("sescription_%s", $user_lang), true);
+
 if ( strlen($bio) == 0 ) {
-   $bio = get_user_meta($userID,"description",true);
+   $bio = get_user_meta($userID, "description",true);
 }
-if ( strlen($bio) > 0 ) { show_row(sprintf("%s",__("Biography","wpwt")),
-                          sprintf("<b>%s</b>",$bio)); }
+if ( strlen($bio) > 0 ) {
+    show_row(sprintf("%s",__("Biography","wpwt")), sprintf("<b>%s</b>", $bio)); }
 
 // User roles
 $roles = array();
-foreach ( $user->wp_capabilities as $key=>$val ) { if ( $val ) { array_push($roles,$key); } }
-show_row(__("capabilities","wpwt"),join(", ",$roles));
+foreach ( $user->wp_capabilities as $key=>$val ) {
+    if ( $val ) { array_push($roles, $key); }
+}
+show_row(__("capabilities","wpwt"), join(", ", $roles));
+
+// show website/url if exists
+$user_url = get_user_meta( $userID, "user_url", true );
+if ( !empty($user_url) ) {
+    show_row( "Website", $url );
+}
+
+//type
+$usr = $WTuser->get_user_by_ID( $userID );
+$userclass = $WTuser->get_user_display_class_and_name($userID, $usr);
+show_row(__("Type","wpwt"), $userclass->text);
+
+//group memberships/members
+if ( $userclass->userclass === "mitteltip" ) {
+
+    if ( in_array($usr->user_login, array( "GRP_MOS", "GRP_MOS-Max", "GRP_MOS-Min", "GRP_MOS-Random" ) ) ) {
+        $group_name = "Automaten";
+    } else {
+        $group_name = str_replace( "GRP_", "", $usr->user_login );
+    }
+    
+    $members = $WTuser->get_users_in_group( $group_name, NULL, $active=true );
+    
+    if ($members) {
+        $member_names = array();
+        foreach ( $members as $m ) {
+            if ( ! in_array($m, $member_names) ) {
+                array_push($member_names, $WTuser->get_user_by_ID($m)->user_login);
+            }
+        }
+        asort($member_names);
+        $member_profiles = array();
+        foreach ( $member_names as $m ) {
+                $usr = $WTuser->get_user_by_username( $m );
+                array_push($member_profiles, sprintf("<a href=\"%s\">" . 
+                $usr->display_name . "</a>", bbp_get_user_profile_url($usr->ID) ));
+        }
+        $member_profiles = join(", ", $member_profiles);
+    } else {
+        $member_profiles = "No active members";
+    }
+    show_row(__("Active members","wpwt"), $member_profiles );
+
+    $members_inactive = $WTuser->get_users_in_group( $group_name, NULL, $active=false );
+
+    if ($members_inactive) {
+        $member_names = array();
+        foreach ( $members_inactive as $m ) {
+            if ( ! in_array($m, $member_names) ) {
+                array_push($member_names, $WTuser->get_user_by_ID($m)->user_login);
+            }
+        }
+        asort($member_names);
+        $member_profiles = array();
+        foreach ( $member_names as $m ) {
+                $usr = $WTuser->get_user_by_username( $m );
+                array_push($member_profiles, sprintf("<a href=\"%s\">" .
+                $usr->display_name . "</a>", bbp_get_user_profile_url($usr->ID) ));
+        }
+        $member_profiles = join(", ", $member_profiles);
+    } else {
+        $member_profiles = "No inactive members";
+    }
+    show_row(__("Inactive members","wpwt"), $member_profiles );
+
+
+    //check whether group is active or not
+    global $wpdb;
+    $sql = "SELECT active AS a FROM wp_wetterturnier_groups WHERE groupName LIKE 'Automaten'";
+    $active = $wpdb->get_row($sql)->a;
+    $status = ($active) ? __("active","wpwt") : __("inactive","wpwt");
+    show_row(__("Group status","wpwt"), $status);
+
+//show a user's group memberships
+} else {
+
+    $groups = $WTuser->get_groups_for_user( $userID, $active=1 );
+    if (!empty($groups)) {
+        $group_names = array();
+        foreach ( $groups as $g ) {
+            $group_userID = $WTuser->get_user_ID( $g->groupName, "group" );
+            array_push( $group_names, sprintf("<a href=\"%s\">".$g->groupName."</a>",
+                bbp_get_user_profile_url($group_userID) ) );
+        }
+        show_row(__("Current group memberships","wpwt"), join(", ", $group_names));
+    }
+
+    $groups_past = $WTuser->get_groups_for_user( $userID, $active=0 );
+    if (!empty($groups_past)) {
+        $group_names = array();
+        foreach ( $groups_past as $g ) {
+            $group_userID = $WTuser->get_user_ID( $g->groupName, "group" );
+            array_push( $group_names, sprintf("<a href=\"%s\">".$g->groupName."</a>",
+                bbp_get_user_profile_url($group_userID) ) );
+        }
+        show_row(__("Past group memberships","wpwt"), join(", ", $group_names));
+    }
+}
 
 
 // Show statistics for each city
 $cities = $WTuser->get_all_cityObj();
 foreach ( $cities as $cityObj ) {
-   show_row(sprintf("%s",
-            $cityObj->get('name')),get_city_stats($cityObj->get('ID'),$userID));
+    show_row(sprintf("%s", $cityObj->get('name')),
+        get_city_stats($cityObj->get('ID'), $userID));
 }
 ?>
 </table>

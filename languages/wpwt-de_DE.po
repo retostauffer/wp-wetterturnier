@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-05 03:57+0000\n"
-"PO-Revision-Date: 2020-03-05 03:58+0000\n"
-"Last-Translator: sferics <amris@zedat.fu-berlin.de>\n"
+"POT-Creation-Date: 2020-03-06 05:07+0000\n"
+"PO-Revision-Date: 2020-03-06 05:10+0000\n"
+"Last-Translator: sferics <juri.hubrig@fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
@@ -14,122 +14,138 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.3.1; wp-5.3.2"
 
-#: classes.php:601 user/userclass.php:862 admin/classes/webcams_list.php:49 admin/classes/api_list.php:72
+#: classes.php:602 user/userclass.php:862 admin/classes/webcams_list.php:49 admin/classes/api_list.php:72
 msgid "Description"
 msgstr "Beschreibung"
 
-#: classes.php:606 admin/classes/deactivateusers_list.php:77
+#: classes.php:607 admin/classes/deactivateusers_list.php:77
 msgid "Inactive"
 msgstr "Inaktiv"
 
-#: classes.php:606
+#: classes.php:607
 msgid "This group is inactive at the moment and will not be considered in the tournament."
 msgstr "Diese Gruppe ist zur Zeit inaktiv und wird beim Turnier nicht berücksichtigt."
 
-#: classes.php:611
+#: classes.php:612
 msgid "Show inactive"
 msgstr "Zeige inaktive Benutzer"
 
-#: classes.php:616 user/userclass.php:883
+#: classes.php:617 user/userclass.php:883
 msgid "User name"
 msgstr "Benutzername"
 
-#: classes.php:617 user/userclass.php:884
+#: classes.php:618 user/userclass.php:884
 msgid "since"
 msgstr "Seit"
 
-#: classes.php:618 user/userclass.php:885
+#: classes.php:619 user/userclass.php:885
 msgid "until"
 msgstr "bis"
 
-#: classes.php:619 user/userclass.php:886
+#: classes.php:620 user/userclass.php:886
 msgid "Show user profile"
 msgstr "Zum User-Profil"
 
-#: classes.php:639 user/userclass.php:873 user/userclass.php:895
+#: classes.php:640 user/userclass.php:873 user/userclass.php:895
 msgid "Not available"
 msgstr "Nicht verfügbar"
 
-#: classes.php:640 user/userclass.php:899
+#: classes.php:641 user/userclass.php:899
 msgid "Show profile"
 msgstr "Zum Profil"
 
-#: generalclass.php:915
+#: generalclass.php:863 user/userclass.php:1174
+msgid "Automated forecast"
+msgstr "Automatische Vorhersage"
+
+#: generalclass.php:865 user/userclass.php:1178
+msgid "Reference method"
+msgstr "Referenzmethode"
+
+#: generalclass.php:868 user/userclass.php:1166
+msgid "Human player"
+msgstr "Menschlicher Spieler"
+
+#: generalclass.php:870 user/userclass.php:1170
+msgid "Group"
+msgstr "Gruppe"
+
+#: generalclass.php:929
 msgid "There is an ongoing tournament right now."
 msgstr "Keine Hilfe verfügbar"
 
-#: generalclass.php:916
+#: generalclass.php:930
 msgid "Current values can be found here:"
 msgstr "Die aktuellen Werte findest du hier:"
 
-#: generalclass.php:917
+#: generalclass.php:931
 msgid "Link ... "
 msgstr "Link ..."
 
-#: generalclass.php:924
+#: generalclass.php:938
 msgid "Sorry, no access to these bet form"
 msgstr "Sorry, im Moment kein Zugriff auf das Abgabeformular"
 
-#: generalclass.php:925
+#: generalclass.php:939
 #, php-format
 msgid "The form to submit tips always opens %d days in advance."
 msgstr "Das Abgabeformular öffnet jeweils %d Tage vor dem Turnier"
 
-#: generalclass.php:927
+#: generalclass.php:941
 #, php-format
 msgid "Next tournament will take place on %s"
 msgstr "Das nächste Turnier findet statt am %s"
 
-#: generalclass.php:929
+#: generalclass.php:943
 #, php-format
 msgid "The bet form opens %s"
 msgstr "Das Abgabeformular dafür öffnet am/um %s"
 
-#: generalclass.php:939
+#: generalclass.php:953
 msgid "Sorry, no access to these bet form."
 msgstr "Sorry, kein Zugriff auf das Tippspiel."
 
-#: generalclass.php:940
+#: generalclass.php:954
 msgid "The form to submit tips for today's tournament is already closed."
 msgstr "Das Abgabeformular ist bereits geschlossen."
 
-#: generalclass.php:941
+#: generalclass.php:955
 msgid "The next tournament will take place on"
 msgstr "Das nächste Turnier findet statt am"
 
-#: generalclass.php:975
+#: generalclass.php:989
 msgid "The requested tournament date is in the future."
 msgstr "Das angefragte Turnier-Datum liegt in der Zukunft."
 
-#: generalclass.php:976
+#: generalclass.php:990
 msgid "Do you try to cheat, bro?"
 msgstr "Was probierst du da?"
 
-#: generalclass.php:999
+#: generalclass.php:1013
 msgid "Sorry, no access to these data."
 msgstr "Sorry, kein Zugriff auf diese Daten."
 
-#: generalclass.php:1000
+#: generalclass.php:1014
 msgid "We will show the current bets as soon as the bet-form has been closed."
 msgstr "Die aktuellen Tipps und abgegebenen Werte werden angezeigt, sobald das Abgabeformular geschlossen ist."
 
-#: generalclass.php:1003 generalclass.php:1009
+#: generalclass.php:1017 generalclass.php:1023
 msgid "You can see the newest tips in "
 msgstr "Einsehen kannst du die neuesten Tipps in"
 
-#: generalclass.php:1003 generalclass.php:1008 betclass.php:934 betclass.php:937 betclass.php:945
+#: generalclass.php:1017 generalclass.php:1022 betclass.php:934 betclass.php:937 betclass.php:945
 msgid "minutes"
 msgstr "Minuten"
 
-#: generalclass.php:1007 betclass.php:929
+#: generalclass.php:1021 betclass.php:929
 msgid "hours"
 msgstr "Stunden"
 
-#: generalclass.php:1009 user/views/userprofile.php:102
+#: generalclass.php:1023 user/views/userprofile.php:100
 msgid "and"
 msgstr "und"
 
-#: generalclass.php:1017
+#: generalclass.php:1031
 msgid "If you would like to submitt a bet please go to the \"SUBMISSION-FORM\" in the navigation."
 msgstr "Falls du mitspielen und einen Tipp abgeben möchtest geh zur \"TIPPABGABE\" in der Navigation."
 
@@ -466,7 +482,7 @@ msgstr "werden nicht berücksichtigt"
 msgid "Currently no users in this group"
 msgstr "Im Moment befinden sich keine Teilnehmer in dieser Gruppe."
 
-#: user/userclass.php:903
+#: user/userclass.php:903 user/views/userprofile.php:232
 msgid "active"
 msgstr "aktiv"
 
@@ -545,22 +561,6 @@ msgid ""
 msgstr ""
 "Diese Legende zeigt die Farbkodierung der verschiedenen Teilnehmer-Typen. Durch Anklicken der Buttons kannst du einzelne "
 "Typen aus- und wieder einblenden!"
-
-#: user/userclass.php:1166
-msgid "Human player"
-msgstr "Menschlicher Spieler"
-
-#: user/userclass.php:1170
-msgid "Group"
-msgstr "Gruppe"
-
-#: user/userclass.php:1174
-msgid "Automated forecast"
-msgstr "Automatische Vorhersage"
-
-#: user/userclass.php:1178
-msgid "Reference method"
-msgstr "Referenzmethode"
 
 #: user/userclass.php:1182
 msgid "Sleepy"
@@ -1026,70 +1026,98 @@ msgstr "Datenbank obs.stations nicht erreichbar. Stations-Information wird ignor
 msgid "Cannot reach database obs.bufrdesc, exit."
 msgstr "Datenbank obs.bufrdesc nicht erreichbar. Spalten-Beschreibung kann leider nicht mitgeliefert werden!"
 
-#: user/views/userprofile.php:39
+#: user/views/userprofile.php:37
 msgid "No information available"
 msgstr "Keine Information verfügbar"
 
-#: user/views/userprofile.php:101
+#: user/views/userprofile.php:99
 msgid "participations"
 msgstr "Teilnahmen"
 
-#: user/views/userprofile.php:101
+#: user/views/userprofile.php:99
 msgid "between"
 msgstr "zwischen"
 
-#: user/views/userprofile.php:105
+#: user/views/userprofile.php:103
 msgid "Average points:"
 msgstr "Mittlere Punktzahl:"
 
-#: user/views/userprofile.php:106
+#: user/views/userprofile.php:104
 #, php-format
 msgid "<tr><td>Median points:</td><td><b>%s</b></td><tr>"
 msgstr "<tr><td>Median:</td><td><b>%s</b></td><tr>"
 
-#: user/views/userprofile.php:107
+#: user/views/userprofile.php:105
 #, php-format
 msgid "<tr><td>Max points:</td><td><b>%s</b></td><tr>"
 msgstr "<tr><td>Maximale Punktzahl:</td><td><b>%s</b></td><tr>"
 
-#: user/views/userprofile.php:108
+#: user/views/userprofile.php:106
 #, php-format
 msgid "<tr><td>Min points:</td><td><b>%s</b></td><tr>"
 msgstr "<tr><td>Minimale Punktzahl:</td><td><b>%s</b></td><tr>"
 
-#: user/views/userprofile.php:109
+#: user/views/userprofile.php:107
 #, php-format
 msgid "<tr><td>Standard deviation:</td><td><b>%s</b></td><tr></table>"
 msgstr "<tr><td>Standardabweichung:</td><td><b>%s</b></td><tr></table>"
 
-#: user/views/userprofile.php:114
+#: user/views/userprofile.php:112
 msgid "<span style='color: gray;'>Never participated</span>"
 msgstr "Bisher nie teilgenommen"
 
-#: user/views/userprofile.php:138 admin/classes/deactivateusers_list.php:72
+#: user/views/userprofile.php:137 admin/classes/deactivateusers_list.php:72
 msgid "Username"
 msgstr "Teilnehmer"
 
-#: user/views/userprofile.php:139 admin/classes/stations_list.php:29 admin/classes/cities_list.php:32
+#: user/views/userprofile.php:140 admin/classes/stations_list.php:29 admin/classes/cities_list.php:32
 #: admin/classes/api_list.php:71 admin/classes/param_list.php:35
 msgid "Name"
 msgstr "Name"
 
-#: user/views/userprofile.php:140
+#: user/views/userprofile.php:142
 msgid "Registered since"
 msgstr "Registriert seit"
 
-#: user/views/userprofile.php:140
+#: user/views/userprofile.php:142
 msgid "d.m.Y"
 msgstr "d.m.Y"
 
-#: user/views/userprofile.php:148
+#: user/views/userprofile.php:154
 msgid "Biography"
 msgstr "Biographie"
 
-#: user/views/userprofile.php:154
+#: user/views/userprofile.php:161
 msgid "capabilities"
 msgstr "Berechtigungen"
+
+#: user/views/userprofile.php:172 admin/classes/api_list.php:69
+msgid "Type"
+msgstr "Typ"
+
+#: user/views/userprofile.php:203
+msgid "Active members"
+msgstr "Aktive Mitglieder"
+
+#: user/views/userprofile.php:225
+msgid "Inactive members"
+msgstr "Inaktive Mitglieder"
+
+#: user/views/userprofile.php:232
+msgid "inactive"
+msgstr "inaktiv"
+
+#: user/views/userprofile.php:233
+msgid "Group status"
+msgstr "Gruppenstatus"
+
+#: user/views/userprofile.php:246
+msgid "Current group memberships"
+msgstr "Derzeitige Gruppen"
+
+#: user/views/userprofile.php:257
+msgid "Past group memberships"
+msgstr "Frühere Gruppen"
 
 #: user/views/mosescoefs.php:33
 msgid "Date: "
@@ -1378,10 +1406,6 @@ msgstr "Öffentlich"
 #: admin/classes/api_list.php:68
 msgid "API Key"
 msgstr "API Schlüssel"
-
-#: admin/classes/api_list.php:69
-msgid "Type"
-msgstr "Typ"
 
 #: admin/classes/api_list.php:70
 msgid "Configuration"
