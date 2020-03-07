@@ -26,7 +26,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          // Initialize user search
          var adminurl = <?php printf("'%s'\n",admin_url('admin-ajax.php')); ?>
          var opts  = {target:"#chart-div",
-                      call: "timeseries_user_points",
+                      call: get_current_plottype(),
                       cityID:<?php printf("'%d'",$WTuser->get_current_cityObj()->get("ID")); ?>,
                       userID:<?php _e(get_current_user_id()); ?>,
                       sleepy: "0", column: "points" }
@@ -83,7 +83,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
                 $("#chart-options #pointselector").hide()
 
             } else if ( call === "init" ) {
-               var opts = {call: "timeseries_user_points", userID:uid, cityID: opt_cityID, sleepy: "0", column: "points" }
+               var opts = {call: get_current_plottype(), userID:uid, cityID: opt_cityID, sleepy: "0", column: "points" }
             } else {
                alert("Undefind procedure creating the opts object for \""+call+"\"!");
             }
@@ -185,8 +185,18 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
    <div id="plot-type">
       <b>Select plot type:</b>&nbsp;
       <select name="opt-plottype" class="observe">
-         <option value="timeseries_user_points" selected>Timeseries Points</option>
+         <option value="timeseries_user_points" selected>Timeseries points</option>
+         <!--TODO-->
          <!--<option value="timeseries_user_param_points">Timeseries Parameter Points</option>-->
+         <!--<option value="median">Timeseries Parameter Points</option>-->
+         <!--<option value="median_IQR">Timeseries Parameter Points</option>-->
+         <!--<option value="median_range">Timeseries Parameter Points</option>-->
+         <!--<option value="mean">Timeseries Parameter Points</option>-->
+         <!--<option value="mean">Timeseries Parameter Points</option>-->
+         <!--<option value="sd">Timeseries Parameter Points</option>-->
+         <!--<option value="sd_upp">Timeseries Parameter Points</option>-->
+         <!--<option value="max">Timeseries Parameter Points</option>-->
+         <!--<option value="min">Timeseries Parameter Points</option>-->
          <option value="participants_counts">Participants counts</option>
       </select>
    </div>

@@ -50,6 +50,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // Everytime!
         call_user_func(array($this,'city_check'));
 
+        //TODO add javascript localisation 
         //add_action('pll_language_defined', array($this,'load_locale'));
         add_action('pll_language_defined', array($this,'load_float_format'));
         add_action('pll_language_defined', array($this,'load_date_format'));
@@ -1073,7 +1074,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                 ."  </tr>\n";
 
             // Width of the points status bar
-            $max_width = 390;
+            $max_width = 300;
             foreach ( $data as $rec ) {
                 
                // Create link to the archive page
