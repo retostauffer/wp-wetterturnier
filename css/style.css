@@ -814,7 +814,7 @@ span.rankhistory.third  { background-image: url('../images/trophy_third.svg'); }
  * ------------------------------------------------------------------ */
 div.wt-leaderboard {
    position: relative;
-   margin-bottom: 20px;
+   margin-bottom: 10px;
 }
 div.wt-leaderboard.wide {
    position: relative;
@@ -828,7 +828,7 @@ div.wt-leaderboard.wide:nth-child(3) {
 div.wt-leaderboard .wt-leaderboard-avatar {
    display: block;
    position: absolute;
-   left: 5px; top: 0;
+   left: 0; top: 0;
 }
 div.wt-leaderboard .wt-leaderboard-info {
    display: block;
@@ -862,4 +862,3 @@ div.wt-leaderboard .wt-leaderboard-info bar {
       float: none;
    }
 }
-

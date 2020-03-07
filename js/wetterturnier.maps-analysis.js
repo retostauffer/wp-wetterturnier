@@ -36,20 +36,37 @@ jQuery(document).on('ready',function() {
          } 
       });
 
+      //jumping to a certain position (e.g. first/last)
+      //last step can be triggered by step=0
+      function timestep(step) {
+         var total   = $("#wt-maps-timeline ul li").length
+         if ( step > 0 ) {
+            $("#wt-maps-timeline ul li.selected").removeClass('selected')
+            $("#wt-maps-timeline ul li:nth-child("+(step+1)+")").addClass('selected')
+         // Else jumping back to the first one!
+         } else {
+            $("#wt-maps-timeline ul li").removeClass('selected')
+            $("#wt-maps-timeline ul li:nth-child("+(total-1)+")").addClass('selected')
+         }
+         showImage()
+      }
+
+
       // Jumping one time step forwards. If active is the last one,
       // jumping to the first one.
-      function timestep_forward() {
+      function timestep_forwards(steps=1) {
 
-         var current = parseInt($("#wt-maps-timeline ul li.selected").attr("time")) 
+         var current = parseInt($("#wt-maps-timeline ul li.selected").attr("time"))
          var model   = $("#wt-maps-navigation .models   ul li.selected").attr("model")
          var region  = $("#wt-maps-navigation .regions  ul li.selected").attr("region")
          var product = $("#wt-maps-navigation .products ul li.selected").attr("product")
          // Data subsetting
          data = $.wtmapdata[model][region][product].times
-         //console.log( current )
-         if ( (current+1) < data.length ) {
+         console.log( current, model, region, product )
+         
+         if ( (current+steps) < data.length ) {
             $("#wt-maps-timeline ul li").removeClass('selected')
-            $("#wt-maps-timeline ul li[time='"+(current+1)+"']").addClass('selected')
+            $("#wt-maps-timeline ul li[time='"+(current+steps)+"']").addClass('selected')
          // Else jumping back to the first one!
          } else {
             $("#wt-maps-timeline ul li").removeClass('selected')
@@ -61,17 +78,17 @@ jQuery(document).on('ready',function() {
 
       // Jumping one time step backwards. If active is the firstone,
       // jumping to the last timestep.
-      function timestep_backwards() {
+      function timestep_backwards(steps=1) {
 
-         var current = parseInt($("#wt-maps-timeline ul li.selected").attr("time")) 
+         var current = parseInt($("#wt-maps-timeline ul li.selected").attr("time"))
          var model   = $("#wt-maps-navigation .models   ul li.selected").attr("model")
          var region  = $("#wt-maps-navigation .regions  ul li.selected").attr("region")
          var product = $("#wt-maps-navigation .products ul li.selected").attr("product")
          // Data subsetting
          data = $.wtmapdata[model][region][product].times
-         if ( current > 0 ) { 
+         if ( current > 0 ) {
             $("#wt-maps-timeline ul li").removeClass('selected')
-            $("#wt-maps-timeline ul li[time='"+(current-1)+"']").addClass('selected')
+            $("#wt-maps-timeline ul li[time='"+(current-steps)+"']").addClass('selected')
          // Else jumping to the last entry
          } else {
             $("#wt-maps-timeline ul li").removeClass('selected')
@@ -97,13 +114,17 @@ jQuery(document).on('ready',function() {
 
 
          // Add functionality that each click onto the image itself
-         // will act like a "go forward in time by one time step"
-         $("#wt-maps-container").on("click","img",function() { timestep_forward(); });
+         // will act like a "go forwards in time by one time step"
+         $("#wt-maps-container").on("click","img",function() { timestep_forwards(); });
 
          // Adding keyboard navigation functionality
          $("body").on("keydown",function(e){
-            if      ( e.keyCode == 39 ) { timestep_forward(); }
+            if      ( e.keyCode == 39 ) { timestep_forwards(); }
+            else if ( e.keyCode == 34 ) { e.preventDefault(); timestep_forwards(steps=2); }
             else if ( e.keyCode == 37 ) { timestep_backwards(); }
+            else if ( e.keyCode == 33 ) { e.preventDefault(); timestep_backwards(steps=2); }
+            else if ( e.keyCode == 35 ) { e.preventDefault(); timestep(0); } //end -> last step 
+            else if ( e.keyCode == 36 ) { e.preventDefault(); timestep(1); } //pos1 -> first step
          });
 
          // Appending models
@@ -284,7 +305,7 @@ jQuery(document).on('ready',function() {
          // Appending interactive functionality
          $("#wt-maps-timeline ul").on("click","li",function() {
             var timeID = $(this).attr('time')
-            if      ( timeID == "+" ) { timestep_forward(); }
+            if      ( timeID == "+" ) { timestep_forwards(); }
             else if ( timeID == "-" ) { timestep_backwards(); }
             else {
                $(this).parent("ul").find("li").removeClass('selected')

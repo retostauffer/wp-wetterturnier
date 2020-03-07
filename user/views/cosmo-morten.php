@@ -31,7 +31,7 @@ $xml_file = sprintf("%s/user/xmlfiles/cosmo-morten.xml",
 #wt-cosmo-navigation .stations {
    display: block;
    top: 0px;
-   width: 200px;
+   width: max-width;
    margin-right: 10px;
    position: relative;
    float: left;

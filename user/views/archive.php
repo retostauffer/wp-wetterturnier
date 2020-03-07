@@ -197,7 +197,7 @@ if ( empty( $_GET['tdate'] ) ) {
       (function($) {
          // Allows user to sort the tables
          $(".wttable-show").tablesorter({sortList: [[0,0]],
-             stringTo: "bottom", sortInitialOrder:"desc"});
+             sortInitialOrder: "desc", stringTo: "bottom" });
          $(".wttable-show th").css('cursor', 'pointer');
       })(jQuery);
     });

@@ -23,6 +23,11 @@
       <station>
          <name>Synoptic overview</name>
          <imgname>wxdbz_D2</imgname>
+         <run>03</run>
+      </station>
+      <station>
+         <name>Max dBZ + WMAXSHEAR</name>
+         <imgname>wxdbz_D2</imgname>
          <run>00</run>
       </station>
       <station>
