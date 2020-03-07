@@ -43,15 +43,6 @@ class wetterturnier_chartHandler {
       // Tdate for which fetching data is allowed.
       $this->tdatemax = (int)(floor(time()/86400)) - (int)$this->ndays - 1;
 
-      //strings for translation
-      $this->selected_users     = __("Selected users","wpwt");
-      $this->select_plot_type   = __("Select plot type","wpwt");
-      $this->timeseries_points  = __("timeseries points","wpwt");
-      $this->timeseries_param_points = __("timseries parameter points","wpwt");
-      $this->participants_count = __("participants count","wpwt");
-      $this->expand_with_sleepy = __("Expand with sleepy","wpwt");
-      $this->show_points_d1d2   = __("Show points for Saturday/Sunday:","wpwt");
-
    }
 
    // ---------------------------------------------------------------

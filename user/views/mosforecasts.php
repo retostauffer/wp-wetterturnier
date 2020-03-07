@@ -64,3 +64,12 @@ foreach ( $showdays as $showday ) {
    $WTuser->archive_show( 'mos', $current->tdate, $points, $showday );
 }
 ?>
+<script>
+    jQuery(document).on('ready',function($) {
+      (function($) {
+         // Allows user to sort the tables
+         $(".wttable-show").tablesorter({sortList: [[0,0]]});
+         $(".wttable-show th").css('cursor', 'pointer');      
+      })(jQuery);
+    });
+</script>

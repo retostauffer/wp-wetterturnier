@@ -1065,7 +1065,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             echo "<table width=\"100%\" class=\"wttable-archive ".$wttable_style."\">\n"
                 ."  <tr>\n"
                 ."    <th>".__('Date','wpwt')."</th>\n"
-                ."    <th>".__('Players','wpwt')."</th>\n"
+                ."    <th>".__('Part','wpwt')."</th>\n"
                 ."    <th>".__('Winner','wpwt')."</th>\n"
                 ."    <th>".__('Max','wpwt')."</th>\n"
                 ."    <th>".__('Mean','wpwt')."</th>\n"
@@ -2129,14 +2129,17 @@ public function debug_to_console($data) {
 
          // Start content: setting up a table for this forecast/bet day
          array_push( $return, sprintf("<b>%s</b>, %s\n",__($tdate_readable,"wpwt"),$tdate_yyyymmdd) );
-         array_push( $return, sprintf("<table class=\"wttable-show small\">\n"
-                     ."  <tbody>\n  <tr>\n    <th>%s</th>\n    <th>%s</th>\n",
+         array_push( $return, sprintf("<table class=\"wttable-show small tablesorter\">\n"
+                     ."  <thead>\n  <tr>\n    <th>%s</th>\n    <th>%s</th>\n",
                      __("Parameter","wpwt"),__("Forecast","wpwt")) );
+
          foreach ( $stations as $rec ) {
             array_push( $return, sprintf("    <th>%s</th>\n",$rec->name) );
          }
          array_push( $return, sprintf("    <th>%s</th>\n    <th>%s</th>\n  </tr>\n\n",
                      __("Deviation","wpwt"),__("Points","wpwt")) );
+
+         array_push( $return, sprintf("</thead>\n<tbody>") );
 
          foreach ( $params as $rec ) {
 
@@ -2194,7 +2197,7 @@ public function debug_to_console($data) {
          }
 
          // Close table
-         array_push( $return, "</table>\n");
+         array_push( $return, "</tbody>\n</table>\n");
       }
 
       // Close <div id='betdetails>

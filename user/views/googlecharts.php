@@ -124,7 +124,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
    float: inline;
 }
 #selected-users:before {
-   content: "Selected users:";
+   content: "<?= _e("Selected users:","wpwt"); ?>";
    font-weight: bold;
    clear: both;
    padding-right: 10px;
@@ -165,7 +165,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
    margin: 20px 0;
 }
 #chart-share-url:before {
-   content: "Share Plot:";
+   content: "<?= _e("Share Plot:","wpwt")?>";
    padding-right: 5px;
    font-weight: bold;
 }
@@ -186,9 +186,9 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
       <li class="selected-user" userid="<?php _e(get_current_user_id()); ?>"><?php _e(get_user_by("id", get_current_user_id())->display_name); ?></li>
    </ul>
    <div id="plot-type">
-      <b>Select plot type:</b>&nbsp;
+      <b><?php _e("Select plot type:","wpwt"); ?></b>&nbsp;
       <select name="opt-plottype" class="observe">
-         <option value="timeseries_user_points" selected>Timeseries points</option>
+          <option value="timeseries_user_points" selected><?php _e("Timeseries points","wpwt"); ?></option>
          <!--TODO-->
          <!--<option value="timeseries_user_param_points">Timeseries Parameter Points</option>-->
          <!--<option value="median">Timeseries Parameter Points</option>-->
@@ -200,11 +200,11 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          <!--<option value="sd_upp">Timeseries Parameter Points</option>-->
          <!--<option value="max">Timeseries Parameter Points</option>-->
          <!--<option value="min">Timeseries Parameter Points</option>-->
-         <option value="participants_counts">Participants counts</option>
+         <option value="participants_counts"><?php _e("Participants counts","wpwt"); ?></option>
       </select>
    </div>
    <div id="paramID" style="display:none;">
-      <b>Select a parameter:</b>&nbsp;
+   <b><?php _e("Select a parameter:","wpwt"); ?></b>&nbsp;
       <select name="opt-paramID" class="observe" style="display:none;">
       <?php
       $selected = "selected";
@@ -229,15 +229,15 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
       </select>
    </div>
    <div id="sleepy" style="display:none;">
-      <b>Expand with Sleepy:</b>&nbsp;
-        <input class="observe" type="radio" name="opt-sleepy" value="1"> Yes
-        <input class="observe" type="radio" name="opt-sleepy" value="0" checked> No
+   <b><?php _e("Expand with Sleepy:","wpwt"); ?></b>&nbsp;
+      <input class="observe" type="radio" name="opt-sleepy" value="1"> <?php _e("yes","wpwt"); ?>
+      <input class="observe" type="radio" name="opt-sleepy" value="0" checked> <?php _e("no","wpwt"); ?>
    </div>
    <div id="pointselector" style="display:none;">
-      <b>Show points for Saturday/Sunday/Total:</b>&nbsp;
-      <input class="observe" type="radio" name="opt-column" value="points_d1"> Saturday
-      <input class="observe" type="radio" name="opt-column" value="points_d2"> Sunday
-      <input class="observe" type="radio" name="opt-column" value="points" checked> Total
+   <b><?php _e("Show points for Saturday/Sunday/total:","wpwt"); ?></b>&nbsp;
+      <input class="observe" type="radio" name="opt-column" value="points_d1"> <?php _e("Saturday","wpwt"); ?>
+      <input class="observe" type="radio" name="opt-column" value="points_d2"> <?php _e("Sunday","wpwt"); ?>
+      <input class="observe" type="radio" name="opt-column" value="points" checked> <?php _e("total","wpwt"); ?>
    </div>
 </div>
 

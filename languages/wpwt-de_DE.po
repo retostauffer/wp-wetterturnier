@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-07 03:07+0000\n"
-"PO-Revision-Date: 2020-03-07 03:10+0000\n"
+"POT-Creation-Date: 2020-03-07 03:50+0000\n"
+"PO-Revision-Date: 2020-03-07 03:52+0000\n"
 "Last-Translator: sferics <juri.hubrig@fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -313,7 +313,7 @@ msgstr "."
 msgid "points"
 msgstr "Punkte"
 
-#: rankingclass.php:85 chartclass.php:144 user/userclass.php:2097 user/userclass.php:2100 user/userclass.php:2139
+#: rankingclass.php:85 chartclass.php:135 user/userclass.php:2097 user/userclass.php:2100 user/userclass.php:2139
 #: user/userclass.php:2369 user/views/archive.php:68 user/views/archive.php:85 user/views/current.php:75
 msgid "Points"
 msgstr "Punkte"
@@ -346,63 +346,35 @@ msgstr "Benutzername"
 msgid "The maximum score (total) for the ranking is"
 msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
 
-#: chartclass.php:47
-msgid "Selected users"
-msgstr ""
-
-#: chartclass.php:48
-msgid "Select plot type"
-msgstr ""
-
-#: chartclass.php:49
-msgid "timeseries points"
-msgstr ""
-
-#: chartclass.php:50
-msgid "timseries parameter points"
-msgstr ""
-
-#: chartclass.php:51
-msgid "participants count"
-msgstr ""
-
-#: chartclass.php:52
-msgid "Expand with sleepy"
-msgstr ""
-
-#: chartclass.php:53
-msgid "Show points for Saturday/Sunday:"
-msgstr "Zeige Punkte für Samstag/Sonntag"
-
-#: chartclass.php:145 chartclass.php:239 user/userclass.php:1067
+#: chartclass.php:136 chartclass.php:230 user/userclass.php:1067
 msgid "Date"
 msgstr "Datum"
 
-#: chartclass.php:146
+#: chartclass.php:137
 msgid "Full weekend points"
 msgstr "Gesamtpunkte Wochenende"
 
-#: chartclass.php:238
+#: chartclass.php:229
 msgid "Particioners"
 msgstr "Teilnehmer"
 
-#: chartclass.php:240
+#: chartclass.php:231
 msgid "Number of participants"
 msgstr "Anzahl Teilnehmer"
 
-#: chartclass.php:242
+#: chartclass.php:233
 msgid "Reference methods"
 msgstr "Referenztipps"
 
-#: chartclass.php:242 admin/adminclass.php:198 admin/adminclass.php:198
+#: chartclass.php:233 admin/adminclass.php:198 admin/adminclass.php:198
 msgid "Groups"
 msgstr "Gruppen"
 
-#: chartclass.php:242
+#: chartclass.php:233
 msgid "Automated forecasts"
 msgstr "Automatische Vorhersagen"
 
-#: chartclass.php:242
+#: chartclass.php:233
 msgid "Human players"
 msgstr "Menschliche Spieler"
 
@@ -438,7 +410,7 @@ msgstr "Wähle deine Standard-Ausrichtung"
 msgid "MOS forecasts on betform"
 msgstr "Mosvorhersagen im Abgageformular"
 
-#: user/userclass.php:269
+#: user/userclass.php:269 user/views/googlecharts.php:234
 msgid "no"
 msgstr "nein"
 
@@ -626,17 +598,17 @@ msgstr "Wochenendwertung f&uum;r"
 msgid "Player"
 msgstr "Teilnehmer"
 
-#: user/userclass.php:1269 user/userclass.php:2097
+#: user/userclass.php:1269 user/userclass.php:2097 user/views/googlecharts.php:238
 msgid "Saturday"
 msgstr "Samstag"
 
-#: user/userclass.php:1270 user/userclass.php:2100
+#: user/userclass.php:1270 user/userclass.php:2100 user/views/googlecharts.php:239
 msgid "Sunday"
 msgstr "Sonntag"
 
 #: user/userclass.php:1271
 msgid "Total"
-msgstr "Total"
+msgstr "Gesamt"
 
 #: user/userclass.php:1272 admin/classes/groupusers_list.php:74
 msgid "Status"
@@ -1203,9 +1175,49 @@ msgstr "Preset exportieren"
 msgid "Checked: export (useful) preset. Else everything."
 msgstr "Wenn selektiert: exportiere ein Subset aller Daten. Sonst alles."
 
-#: user/views/googlecharts.php:182
+#: user/views/googlecharts.php:127
+msgid "Selected users:"
+msgstr "Ausgewählte Spieler:"
+
+#: user/views/googlecharts.php:168
+msgid "Share Plot:"
+msgstr "Ploten teilen:"
+
+#: user/views/googlecharts.php:185
 msgid "No user selected"
 msgstr "Keinen Benutzer ausgewählt"
+
+#: user/views/googlecharts.php:189
+msgid "Select plot type:"
+msgstr "Plot-Typ auswählen:"
+
+#: user/views/googlecharts.php:191
+msgid "Timeseries points"
+msgstr "Zeitserie der Punkte"
+
+#: user/views/googlecharts.php:203
+msgid "Participants counts"
+msgstr "Teilnehmerzahl"
+
+#: user/views/googlecharts.php:207
+msgid "Select a parameter:"
+msgstr "Parameter auswählen:"
+
+#: user/views/googlecharts.php:232
+msgid "Expand with Sleepy:"
+msgstr "Mit Sleepy erweitern:"
+
+#: user/views/googlecharts.php:233
+msgid "yes"
+msgstr "ja"
+
+#: user/views/googlecharts.php:237
+msgid "Show points for Saturday/Sunday/total:"
+msgstr "Zeige Punkte für Samstag/Sonntag/gesamt:"
+
+#: user/views/googlecharts.php:240
+msgid "total"
+msgstr "gesamt"
 
 #: user/views/ranking.php:80
 msgid "This is the weekend ranking for the weekend around"

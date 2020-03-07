@@ -170,3 +170,13 @@ foreach ( $showdays as $showday ) {
 }
 
 ?>
+<script>
+    jQuery(document).on('ready',function($) {
+      (function($) {
+         // Allows user to sort the tables
+         $(".wttable-show").tablesorter({sortList: [[0,0]],
+             stringTo: "bottom", sortInitialOrder:"desc"});
+         $(".wttable-show th").css('cursor', 'pointer'); 
+      })(jQuery);
+    });
+</script>

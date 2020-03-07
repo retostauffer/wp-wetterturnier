@@ -93,7 +93,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
       }
 
       // Append new table
-      $(e).append("<table class=\"wttable-show-ranking wttable-show small ranking-weekend default\"></table>")
+      $(e).append("<table class=\"wttable-show-ranking wttable-show small ranking-weekend default tablesorter\"></table>")
       $(e).find("table").append("<thead><tr></tr></thead><tbody></tbody>")
 
       var head = $(e).find("table thead tr")
@@ -150,6 +150,10 @@ $.fn.show_ranking = function(ajaxurl, input) {
       });
 
       $(e).fadeIn("fast");
+      // Allow user to sort the tables
+      $(".wttable-show").tablesorter({sortList: [[0,0]],
+          stringTo: "bottom", sortInitialOrder:"desc"});
+      $(".wttable-show th").css('cursor', 'pointer');
 
   };
 
@@ -256,7 +260,7 @@ $(document).on('ready',function() {
     $("div.wt-ranking-container").each(function() {
         $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
     });
-
+    
     // Looking for wt-ranking-container divs and call the show_ranking
     // plugin on each of these to load/display ranking data.
     $("div.wt-leaderboard").each(function() {
