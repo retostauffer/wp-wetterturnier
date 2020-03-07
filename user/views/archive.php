@@ -195,10 +195,19 @@ if ( empty( $_GET['tdate'] ) ) {
 <script>
     jQuery(document).on('ready',function($) {
       (function($) {
-         // Allows user to sort the tables
-         $(".wttable-show, .wttable-archive").tablesorter({sortList: [[0,0]],
-             sortInitialOrder: "desc", stringTo: "bottom" });
-         $(".wttable-show th, .wttable-archive th").css('cursor', 'pointer');
+          // Allows user to sort the tables
+          // we need to tell tablesorter our special local date format, but first convert it
+          var datestr = "<?php _e($WTuser->date_format,"wpwt"); ?>";
+          if (datestr === "%d.%m.%Y") { datestr = "ddmmyyyy"; }
+          else { datestr = "yyyymmdd"; }
+           
+          $(".wttable-archive").tablesorter({sortList: [[0,1]],
+             dateFormat : datestr, sortInitialOrder: "desc", stringTo: "bottom" });
+          
+          $(".wttable-show").tablesorter({sortList: [[0,0]],
+             dateFormat : datestr, sortInitialOrder: "desc", stringTo: "bottom" });
+
+          $(".wttable-show th, .wttable-archive th").css('cursor', 'pointer');
       })(jQuery);
     });
 </script>
