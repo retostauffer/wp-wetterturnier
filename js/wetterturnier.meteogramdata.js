@@ -11,7 +11,7 @@ jQuery(document).on('ready',function() {
       // Loading xml file with meteogram specifications first.
       // Will return a jQuery object (needs xml2json.js, included
       // by default by the wp-wetterturnier plugin).
-      console.log( $.meteogramdata.xmlfile );
+      //console.log( $.meteogramdata.xmlfile );
       $.ajax({
          type: "GET",
          url: $.meteogramdata.xmlfile,

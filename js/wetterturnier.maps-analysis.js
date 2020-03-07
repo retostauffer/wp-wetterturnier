@@ -46,7 +46,7 @@ jQuery(document).on('ready',function() {
          var product = $("#wt-maps-navigation .products ul li.selected").attr("product")
          // Data subsetting
          data = $.wtmapdata[model][region][product].times
-         console.log( current )
+         //console.log( current )
          if ( (current+1) < data.length ) {
             $("#wt-maps-timeline ul li").removeClass('selected')
             $("#wt-maps-timeline ul li[time='"+(current+1)+"']").addClass('selected')
@@ -307,7 +307,7 @@ jQuery(document).on('ready',function() {
          var product = $("#wt-maps-navigation .products ul li.selected").attr("product")
          var timeID  = $("#wt-maps-timeline             ul li.selected").attr("time")
          var time = $.wtmapdata[model][region][product].times[ parseInt(timeID) ]
-         console.log( time )
+         //console.log( time )
 
          // Generate image name
          if      ( time < 10 )  { time = "00"+time; }

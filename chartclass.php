@@ -27,7 +27,7 @@ class wetterturnier_chartHandler {
    /// from the ongoing tournament are shown!
    private $tdatemax = NULL;
    private $ndays = NULL;
-
+ 
    /// Note: _construct should NOT produce any output (ajax crashes)
    /// @param $init. String, just used as an information from where the
    ///   function has been called. 
@@ -42,6 +42,16 @@ class wetterturnier_chartHandler {
       $this->ndays =  $ndays;
       // Tdate for which fetching data is allowed.
       $this->tdatemax = (int)(floor(time()/86400)) - (int)$this->ndays - 1;
+
+      //strings for translation
+      $this->selected_users     = __("Selected users","wpwt");
+      $this->select_plot_type   = __("Select plot type","wpwt");
+      $this->timeseries_points  = __("timeseries points","wpwt");
+      $this->timeseries_param_points = __("timseries parameter points","wpwt");
+      $this->participants_count = __("participants count","wpwt");
+      $this->expand_with_sleepy = __("Expand with sleepy","wpwt");
+      $this->show_points_d1d2   = __("Show points for Saturday/Sunday:","wpwt");
+
    }
 
    // ---------------------------------------------------------------
@@ -94,8 +104,9 @@ class wetterturnier_chartHandler {
       array_push($sql,join(",\n",$playerdata));
       array_push($sql,"FROM");
       array_push($sql,sprintf("  (SELECT tdate, %s AS points FROM %swetterturnier_betstat",$args->column,$this->wpdb->prefix));
-      #TODO get sleepy ID!
-      array_push($sql,sprintf("   WHERE userID = 1130 and cityID = %d ) AS dead",$args->cityID));
+
+      $sleepyID = $WTuser->get_user_ID("Sleepy");
+      array_push($sql,sprintf("   WHERE userID = %d and cityID = %d ) AS dead",$sleepyID,$args->cityID));
 
       for ( $i=0; $i < count($users); $i++ ) { 
          array_push($sql,"LEFT OUTER JOIN");
@@ -165,17 +176,21 @@ class wetterturnier_chartHandler {
    public function participants_counts_ajax() {
 
       global $WTuser;
+      $sleepyID = $WTuser->get_user_ID("Sleepy");
 
       $args = (object)$_POST;
-
       // Automaten, WARNING do not check time when active in group!
+      $automaten_id = $WTuser->get_group_ID( "Automaten" );
       $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d",
-                  $this->wpdb->prefix,15));
+                  $this->wpdb->prefix, $automaten_id));
+      
       $automaten = array();
       foreach ( $tmp as $rec ) { array_push($automaten,$rec->userID); }
-      // Referneztips, WARNING do not check time when active in group!
-      $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d",
-                  $this->wpdb->prefix,18));
+      
+      // Referenztips, WARNING do not check time when active in group!
+      $referenz_id = $WTuser->get_group_ID( "Referenztipps" );
+      $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d", $this->wpdb->prefix, $referenz_id));
+
       $referenz = array();
       foreach ( $tmp as $rec ) { array_push($referenz,$rec->userID); }
 
@@ -206,7 +221,7 @@ class wetterturnier_chartHandler {
       array_push($sql,sprintf("   FROM %swetterturnier_betstat AS betstat",$this->wpdb->prefix));
       array_push($sql,sprintf("   LEFT JOIN %s AS user",$this->wpdb->users));
       array_push($sql,"   ON betstat.userID = user.ID");
-      array_push($sql,sprintf("   WHERE betstat.cityID = %d AND NOT user.ID = 11130",$args->cityID));
+      array_push($sql,sprintf("   WHERE betstat.cityID = %d AND NOT user.ID = %d",$args->cityID, $sleepyID));
       array_push($sql,") AS tmp");
       array_push($sql,"GROUP BY timestamp ORDER BY timestamp ASC");
 
@@ -224,7 +239,7 @@ class wetterturnier_chartHandler {
       $result->xlabel      = __("Date","wpwt");
       $result->title       = __("Number of participants","wpwt");
 
-      $result->names = array("referenz","group","automate","human");
+      $result->names = array(__("Reference methods","wpwt"),__("Groups","wpwt"),__("Automated forecasts","wpwt"),__("Human players","wpwt"));
 
       // Create proper data arrays
       $result->data       = array();

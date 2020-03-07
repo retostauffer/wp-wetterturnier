@@ -186,7 +186,7 @@
 				xDiff = Math.abs( xRange[0]-xRange[1] );
 
             // Create an array where to put the vertical grid/ticks/labels
-            var looper = parseInt(d3.min(xRange)/86400000)*86400000;
+            var looper = parseInt(d3.min(xRange) / 86400000) * 86400000;
             var xTicksAt = []
             while ( looper < d3.max(xRange) ) {
                 if ( looper > d3.min(xRange) ) { xTicksAt[xTicksAt.length] = looper }
@@ -200,6 +200,15 @@
 			// Helper function to set proper x-ticks and labels in UTC
             function UTCTickFun( x ) {
                 x = new Date( x );
+                var weekday = new Array();
+                weekday[0] = "Su";
+                weekday[1] = "Mo";
+                weekday[2] = "Tu";
+                weekday[3] = "We";
+                weekday[4] = "Th";
+                weekday[5] = "Fr";
+                weekday[6] = "Sa";
+                weekday = weekday[x.getUTCDay()];
                 return ((x.getUTCHours() < 10) ? "0"+x.getUTCHours() : x.getUTCHours()) + ":" +
                        ((x.getUTCMinutes() < 10) ? "0"+x.getUTCMinutes() : x.getUTCMinutes());
             }

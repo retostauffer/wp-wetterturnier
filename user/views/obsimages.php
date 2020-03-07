@@ -107,7 +107,7 @@ jQuery(document).on('ready',function() {
           //name: "<?php print $cityObj->stations()[0]->get("name"); ?>",
           width: 800, height: 250,
           setup: [
-              {main:"Temperature",parameter:["t","td"],
+              {main:"Temperature and dewpoint",parameter:["t","td"],
                   ylab:"Degrees C"},
               {main:"Wind",parameter:["ff","ffx"],
                   ylab:"m/s", ylim:[0,null]},
@@ -147,4 +147,3 @@ jQuery(document).on('ready',function() {
 
 <div id="wt-obsplot-container">
 </div>
-

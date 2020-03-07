@@ -21,12 +21,12 @@ jQuery(document).on('ready',function() {
       // Call the function depending on input.call
       // ------------------------------------------------------------
       // Hide all options first
-      $("#chart-options").children("div").hide()
-      $("#chart-options").children("ul").hide()
-      if ( inputs.call === undefined | inputs.call === "init" ) {
+      //$("#chart-options").children("div").hide()
+      //$("#chart-options").children("ul").hide()
+      if ( inputs.call === undefined ) {
          // Show plot type option
          $("#chart-options").children("div#plot-type").show()
-         $(target).html("<div class='googlechart-noplot'>No method selected, cannot draw plot!</div>")
+         //$(target).html("<div class='googlechart-noplot'>No method selected, cannot draw plot!</div>")
          return(false)
          alert("Error: inputs.call missing when calling googlechart function.")
       } else if ( ! eval("$.isFunction("+inputs.call+")") ) {
@@ -71,7 +71,7 @@ jQuery(document).on('ready',function() {
 
          // Calling ajax now
          $.ajax({
-             url: ajaxurl, dataType: 'json', cache: false, type: 'post', async: false, data: args,
+             url: ajaxurl, dataType: 'json', cache: true, type: 'post', async: false, data: args,
              success: function( data ) {
                wtdata = data
                // Convert to date
@@ -104,6 +104,9 @@ jQuery(document).on('ready',function() {
 
          if ( ! wtdata ) { $(target).empty(); return }
 
+         //TODO localize with wp_localize_script()
+         //https://developer.wordpress.org/reference/functions/wp_localize_script/
+         //var lang = "en-US"; //{"language":lang}
          google.charts.load('current', {packages: ['corechart', 'line']});
          google.charts.setOnLoadCallback(show_data);
 

@@ -207,7 +207,7 @@ class wetterturnier_generalclass
      *   Can also be set to `name`. If set to `name` the
      *   language name will be returned (e.g., `en_US`, `de_DE`).
      *
-     * @todo Reto: if $vlaue is not slug or name: problem?
+     * @todo Reto: if $value is not slug or name: problem?
      */
     function get_user_language( $value = 'slug' ) {
         // Getting language
@@ -777,14 +777,20 @@ class wetterturnier_generalclass
         return $res; 
     }
 
-
     public function get_user_ID( $user, $type=NULL ) {
         global $wpdb;
-        if ($type == "group") { $user = "GRP_" . $user; }
+        if ($type == "group" || substr($user, 0, 4) === "GRP_") { $user = "GRP_" . $user; }
         $res = $wpdb->get_row(sprintf('SELECT ID FROM %susers WHERE user_login = \'%s\'',$wpdb->prefix,$user))->ID;
         if ( ! $res ) { return false; }
         return $res;
-    }    
+    }
+
+    public function get_group_ID( $groupName ) {
+        global $wpdb;
+            $res = $wpdb->get_row(sprintf('SELECT groupID FROM %swetterturnier_groups WHERE groupName LIKE \'%s\'',$wpdb->prefix, $groupName))->groupID;
+            if ( ! $res ) { return false; }
+            return $res;
+    }
 
 
     /** @details Returns a stdClass object with all information about a

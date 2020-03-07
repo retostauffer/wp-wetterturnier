@@ -27,12 +27,18 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          var adminurl = <?php printf("'%s'\n",admin_url('admin-ajax.php')); ?>
          var opts  = {target:"#chart-div",
                       call: "timeseries_user_points",
-                      cityID:<?php printf("'%d'",$WTuser->get_current_cityObj()->get("ID")); ?>}
-         var opts = {addul:"#selected-users",ulmax:4}
+                      cityID:<?php printf("'%d'",$WTuser->get_current_cityObj()->get("ID")); ?>,
+                      userID:<?php _e(get_current_user_id()); ?>,
+                      sleepy: "0", column: "points" }
+         var opts = {addul:"#selected-users", ulmax:5}
+
+         refresh_chart("init");
+
          $('#chart-options div.user-search').usersearch(adminurl, opts);
          function get_current_plottype() {
             return( $("#chart-options").find("[name='opt-plottype']").val() );
          }
+
          // Execute whenever usersearch changes the userID to trigger the
          // regeneration of the googlechart. 
          $("#selected-users").live("change",function() {
@@ -49,7 +55,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          function refresh_chart(call) {
             // Show/hide placeholder
             if ( $("#selected-users").find(".selected-user").length === 0 ) {
-               $("#selected-users li.placeholder").show()
+                $("#selected-users li.placeholder").show()
             } else { $("#selected-users li.placeholder").hide()  }
             // Getting sleepy option
             var opt_column    = $("#chart-options").find("[name='opt-column']:checked").val()
@@ -71,9 +77,13 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
                var opts = {call: call, userID: uid, cityID: opt_cityID, sleepy: opt_sleepy,
                            column: opt_column }
             } else if ( call === "participants_counts" ) {
-               var opts = {call: call, cityID: opt_cityID}
+                var opts = {call: call, cityID: opt_cityID}
+                //hide expand with sleepy and points d1/d2 options
+                $("#chart-options #sleepy").hide()
+                $("#chart-options #pointselector").hide()
+
             } else if ( call === "init" ) {
-               var opts = {call: call}
+               var opts = {call: "timeseries_user_points", userID:uid, cityID: opt_cityID, sleepy: "0", column: "points" }
             } else {
                alert("Undefind procedure creating the opts object for \""+call+"\"!");
             }
@@ -165,24 +175,24 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
 }
 </style>
 
-<div id='chart-options' autocomplete="off">
+<div id='chart-options' autocomplete="on">
    <!-- place where usersearch stores the result -->
    <div id="user-search" class='user-search'></div><br>
    <ul id="selected-users">
-      <li class="placeholder"><?php _e("No user selected","wpwt"); ?></li>
+      <li class="placeholder"><?php _e("No user selected","wpwt");?></li>
+      <li class="selected-user" userid="<?php _e(get_current_user_id()); ?>"><?php _e(get_user_by("id", get_current_user_id())->display_name); ?></li>
    </ul>
    <div id="plot-type">
       <b>Select plot type:</b>&nbsp;
       <select name="opt-plottype" class="observe">
-         <option value="" selected>Select a plot type first</option>
-         <option value="timeseries_user_points">Timeseries Points</option>
-         <!--<option value="timeseries_user_points">Timeseries Parameter Points</option>-->
-         <!--<option value="participants_counts">Participants counts</option>-->
+         <option value="timeseries_user_points" selected>Timeseries Points</option>
+         <!--<option value="timeseries_user_param_points">Timeseries Parameter Points</option>-->
+         <option value="participants_counts">Participants counts</option>
       </select>
    </div>
-   <div id="paramID">
+   <div id="paramID" style="display:none;">
       <b>Select a parameter:</b>&nbsp;
-      <select name="opt-paramID" class="observe">
+      <select name="opt-paramID" class="observe" style="display:none;">
       <?php
       $selected = "selected";
       foreach ( $WTuser->get_param_data() as $rec ) {
@@ -193,7 +203,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
       </select>
    </div>
    <div id="cityID">
-      <b>Select a city:</b>&nbsp;
+      <!-- <b>Select a city:</b>&nbsp; -->
       <select name="opt-cityID" class="observe">
       <?php
       $curCityObj = $WTuser->get_current_cityObj();
@@ -207,8 +217,8 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
    </div>
    <div id="sleepy">
       <b>Expand with Sleepy:</b>&nbsp;
-      <input class="observe" type="radio" name="opt-sleepy" value="0"> No
-      <input class="observe" type="radio" name="opt-sleepy" value="1" checked> Yes
+        <input class="observe" type="radio" name="opt-sleepy" value="1"> Yes
+        <input class="observe" type="radio" name="opt-sleepy" value="0" checked> No
    </div>
    <div id="pointselector">
       <b>Show points for Saturday/Sunday/Total:</b>&nbsp;
