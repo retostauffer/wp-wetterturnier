@@ -76,6 +76,9 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
             if ( call === "timeseries_user_points" ) {
                var opts = {call: call, userID: uid, cityID: opt_cityID, sleepy: opt_sleepy,
                            column: opt_column }
+               //show expand with sleepy and points d1/d2 options
+               $("#chart-options #sleepy").show()
+               $("#chart-options #pointselector").show()
             } else if ( call === "participants_counts" ) {
                 var opts = {call: call, cityID: opt_cityID}
                 //hide expand with sleepy and points d1/d2 options
@@ -225,12 +228,12 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
       ?>
       </select>
    </div>
-   <div id="sleepy">
+   <div id="sleepy" style="display:none;">
       <b>Expand with Sleepy:</b>&nbsp;
         <input class="observe" type="radio" name="opt-sleepy" value="1"> Yes
         <input class="observe" type="radio" name="opt-sleepy" value="0" checked> No
    </div>
-   <div id="pointselector">
+   <div id="pointselector" style="display:none;">
       <b>Show points for Saturday/Sunday/Total:</b>&nbsp;
       <input class="observe" type="radio" name="opt-column" value="points_d1"> Saturday
       <input class="observe" type="radio" name="opt-column" value="points_d2"> Sunday
