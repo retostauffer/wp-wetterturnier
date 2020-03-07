@@ -28,7 +28,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          var opts  = {target:"#chart-div",
                       call: get_current_plottype(),
                       cityID:<?php printf("'%d'",$WTuser->get_current_cityObj()->get("ID")); ?>,
-                      userID:<?php _e(get_current_user_id()); ?>,
+                      //userID:<?php _e(get_current_user_id()); ?>,
                       sleepy: "0", column: "points" }
          var opts = {addul:"#selected-users", ulmax:5}
 
@@ -183,7 +183,18 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
    <div id="user-search" class='user-search'></div><br>
    <ul id="selected-users">
       <li class="placeholder"><?php _e("No user selected","wpwt");?></li>
-      <li class="selected-user" userid="<?php _e(get_current_user_id()); ?>"><?php _e(get_user_by("id", get_current_user_id())->display_name); ?></li>
+      <?php
+            if (is_user_logged_in()) {
+                $userID = get_current_user_id();
+                $display_name = get_user_by("id", $userID)->display_name;
+                printf("<li class=\"selected-user\" userid=\"%d\">%s</li>", $userID, $display_name);
+            } else {
+                // get Moses
+                $moses = get_user_by("login", "Moses");
+                printf("<li class=\"selected-user\" userid=\"%d\">%s</li>",
+                    $moses->ID, $moses->display_name);
+            }
+        ?>
    </ul>
    <div id="plot-type">
       <b><?php _e("Select plot type:","wpwt"); ?></b>&nbsp;
