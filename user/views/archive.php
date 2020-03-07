@@ -196,9 +196,9 @@ if ( empty( $_GET['tdate'] ) ) {
     jQuery(document).on('ready',function($) {
       (function($) {
          // Allows user to sort the tables
-         $(".wttable-show").tablesorter({sortList: [[0,0]],
+         $(".wttable-show, .wttable-archive").tablesorter({sortList: [[0,0]],
              sortInitialOrder: "desc", stringTo: "bottom" });
-         $(".wttable-show th").css('cursor', 'pointer');
+         $(".wttable-show th, .wttable-archive th").css('cursor', 'pointer');
       })(jQuery);
     });
 </script>

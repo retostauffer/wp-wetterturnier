@@ -230,7 +230,8 @@ input[type="submit"].settings-button:hover {
 .wttable-archive.orangeblue * tr:nth-child(odd) td a
 { color: #ff6600; }
 
-/* Overrulilng the tablesorter properties */
+/* Overruling the tablesorter properties */
+
 table.tablesorter tbody td {
    padding: 1px 3px;
    margin: 0px;
