@@ -150,6 +150,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         // Initialize charthandler object
         $ndays = $this->options->wetterturnier_betdays;
         $chartHandler = new wetterturnier_chartHandler("init in userclass",$ndays);
+        
         add_action('wp_ajax_nopriv_timeseries_user_points_ajax',
                   array($chartHandler,"timeseries_user_points_ajax"));
         add_action('wp_ajax_timeseries_user_points_ajax',

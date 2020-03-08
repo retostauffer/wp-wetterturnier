@@ -152,7 +152,8 @@ $.fn.show_ranking = function(ajaxurl, input) {
       $(e).fadeIn("fast");
       // Allow user to sort the tables
       $(".wttable-show").tablesorter({sortList: [[0,0]],
-          stringTo: "bottom", sortInitialOrder:"desc"});
+          stringTo: "bottom", sortInitialOrder:"desc",
+          sortRestart : true, sortReset : true});
       $(".wttable-show th").css('cursor', 'pointer');
 
   };

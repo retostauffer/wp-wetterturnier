@@ -72,7 +72,8 @@ class wetterturnier_chartHandler {
       if ( empty($args->userID) ) {
          print json_encode(array("error"=>"[ERROR] Input userID not set!")); die();
       } else if ( preg_match("/^(\d+)(,\d+)*$/",$args->userID) ) {
-         $users = explode(",",$args->userID); array_walk($users,'intval');
+          $users = explode(",",$args->userID);
+          array_walk($users,'intval');
       } else {
          print json_encode(array("error"=>"[ERROR] Input userID not valid (wrong format/pattern).")); die();
       }
@@ -149,9 +150,12 @@ class wetterturnier_chartHandler {
       // No data?
       if ( $this->wpdb->num_rows == 0 ) { $result->num_rows = $this->wpdb->num_rows; }
       foreach( $tmp as $rec ) {
-         $tmp = array(); foreach ( $rec as $key=>$val ) { array_push($tmp,(float)$val); }
-         array_push($result->data,$tmp); //array((int)$rec->tdate*86400,(int)$rec->player1));
-         unset($tmp);
+          $tmp = array();
+          foreach ( $rec as $key=>$val ) {
+              array_push($tmp,(float)$val);
+          }
+          array_push($result->data,$tmp); //array((int)$rec->tdate*86400,(int)$rec->player1));
+          unset($tmp);
       }
       echo json_encode($result,true);
       die();

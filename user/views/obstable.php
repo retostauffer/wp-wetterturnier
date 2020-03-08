@@ -42,6 +42,7 @@ jQuery(document).on('ready',function() {
 console.log( statnr+'  '+title+'  '+days )
          var style = "<?php print $wttable_style; ?>"
          $('#obs-table').show_obstable({ajaxurl:ajaxurl,style:style,title:title,statnr:statnr,days:days});
+
       }
 
       // Initialize the data
@@ -62,57 +63,88 @@ console.log( statnr+'  '+title+'  '+days )
       })
 
       // Makes lines highlightable
-      $(document).on("click","table.wetterturnier-obstable tr",function($) {
+      $(document).on("click","table.wttable-obs tr",function($) {
          $ = jQuery
          var trclass = $(this).attr('row')
          var classname = "highlighted";
          if ( $(this).hasClass( classname ) ) {
-            $("table.wetterturnier-obstable tr[row='"+trclass+"']").removeClass( classname )
-         } else {
-            $("table.wetterturnier-obstable tr[row='"+trclass+"']").addClass( classname )
+            $("table.wttable-obs tr[row='"+trclass+"']").removeClass( classname )
+            $("table.wttable-obs tr[row='"+trclass+"']").addClass( classname )
          }
       });
+
+
+      // add parser through the tablesorter addParser method
+  $.tablesorter.addParser({
+    // set a unique id
+    id: 'data',
+    is: function(s, table, cell, $cell) {
+      // return false so this parser is not auto detected
+      return false;
+    },
+    format: function(s, table, cell, cellIndex) {
+      var $cell = $(cell);
+      // I could have used $(cell).data(), then we get back an object which contains both
+      // data-lastname & data-date; but I wanted to make this demo a bit more straight-forward
+      // and easier to understand.
+
+      // returns lastname data-attribute, or cell text (s) if it doesn't exist
+      return $cell.attr('param') || s;
+      },
+      // flag for filter widget (true = ALWAYS search parsed values; false = search cell text)
+      parsed: false,
+      // set type, either numeric or text
+      type: 'text'
+   });
+
+      // Allows user to sort the tables
+      $(".wttable-obs").tablesorter({sortList: [[1,0]],
+            textExtractrion: "basic", sortInitialOrder: "desc",
+            stringTo: "bottom", debug: "true"});
+      //$(".wttable-obs th").css('cursor', 'pointer');
+      //var resort = true;
+      //$(".wttable-obs").trigger("updateAll", [resort]);
 
    })(jQuery);
 });
 </script>
 
 <style>
-table.wetterturnier-obstable            { width: auto; }
-table.wetterturnier-obstable tr td.null { color: #B2B2B2; }
-table.wetterturnier-obstable tr td      { white-space: nowrap; }
+table.wttable-obs            { width: auto; }
+table.wttable-obs tr td.null { color: #B2B2B2; }
+table.wttable-obs tr td      { white-space: nowrap; }
 input[type='button'].obs-table-station  { margin-right: 10px; }
 input[type='button'].obs-table-days     { margin-right: 10px; }
 input[type='button'].active             { background-color: #41a62a;     }
 div#obs-table                           { margin-top: 20px; }
-table.wetterturnier-obstable tr td          { background-color: transparent !important; }
-table.wetterturnier-obstable tr:nth-child(odd) { background-color: #eef0f2; } 
-table.wetterturnier-obstable tr.highlighted { background-color: #ffe4a8; }
-table.wetterturnier-obstable tr.highlighted:nth-child(odd) { background-color: #ffd270; }
-.wetterturnier-obstable th, .wetterturnier-obstable td { max-width: 100px; }
-#wetterturnier-obstable-nav {
+table.wttable-obs tr td          { background-color: transparent !important; }
+table.wttable-obs tr:nth-child(odd) { background-color: #eef0f2; } 
+table.wttable-obs tr.highlighted { background-color: #ffe4a8; }
+table.wttable-obs tr.highlighted:nth-child(odd) { background-color: #ffd270; }
+.wttable-obs th, .wttable-obs td { max-width: 100px; }
+#wttable-obs-nav {
     margin-bottom: 1em; 
 }
-#wetterturnier-obstable-nav > ul {
+#wttable-obs-nav > ul {
     list-style: none;
     position: relative;
 }
-#wetterturnier-obstable-nav > ul > li {
+#wttable-obs-nav > ul > li {
     float: left; min-width: 100px;
 }
-#wetterturnier-obstable-nav > .preset > h3 {
+#wttable-obs-nav > .preset > h3 {
    font-size: 1em; float: left;
    padding-right: 1em; line-height: 1.5em;
 }
-#wetterturnier-obstable-nav > .preset > ul {
+#wttable-obs-nav > .preset > ul {
    list-style: none;
    position: relative;
 }
-#wetterturnier-obstable-nav > .preset > ul li {
+#wttable-obs-nav > .preset > ul li {
    float: left; padding: 0 1em 0 0;
    cursor: pointer;
 }
-#wetterturnier-obstable-nav > .preset > ul li:hover {
+#wttable-obs-nav > .preset > ul li:hover {
     color: #ff6600;
 }
 </style>
@@ -129,4 +161,3 @@ for ( $i=2; $i<=9; $i++ ) {
 }
 ?>
 <div id='obs-table'></div>
-

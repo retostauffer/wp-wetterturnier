@@ -4,7 +4,9 @@
    jQuery(document).on('ready',function($) {
       (function($) {
          // Allows user to sort the tables
-         $(".wttable-groups").tablesorter({sortList: [[0,0]]});
+          $(".wttable-groups").tablesorter({sortList: [[0,0]]});
+          $(".wttable-groups th").css('cursor', 'pointer');
+
          // Show inactive groupmembers
          $('.groups-show-inactive').live('click',function() {
             // Getting group ID

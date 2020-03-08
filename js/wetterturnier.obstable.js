@@ -23,9 +23,7 @@ jQuery(document).on('ready',function() {
          input.days = 2
       }
 
-      // Check if file exists. If it exists, just display.
-      // If not existing, start Rscript to create the image.
-      // Ajaxing the calculation miniscript
+      // get the obs data with AJAX call
       $.ajax({
          url: ajaxurl, dataType: 'json', type: 'post', async: false,
          data: {action:'getobservations_ajax',statnr:input.statnr,days:input.days},
@@ -47,12 +45,12 @@ jQuery(document).on('ready',function() {
          $(elem).empty().append("<h1>"+input.title+"</h1>")
 
          // Adding Navigation checkboxes
-         $(elem).append("<div id='wetterturnier-obstable-nav'>"
+         $(elem).append("<div id='wttable-obs-nav'>"
             +"<div class=\"preset\"></div><ul></ul><div style=\"clear: both;\"></div></div>");
 
-         $("#wetterturnier-obstable-nav div.preset").append("<h3>Presets:</h3>")
+         $("#wttable-obs-nav div.preset").append("<h3>Presets:</h3>")
             .append("<ul></ul><div style=\"clear: both;\" />");
-         $("#wetterturnier-obstable-nav div.preset ul")
+         $("#wttable-obs-nav div.preset ul")
             .append("<li do=\"show\" what=\"all\">show all</li>")
             .append("<li do=\"show\" what=\"stint,datum,stdmin\">hide all</li>")
             .append("<li do=\"show\" what=\"stint,datum,stdmin,w1,w2,ww,rr24,rrr1,rrr3,rrr6,rrr12\">ww/rain</li>")
@@ -62,46 +60,48 @@ jQuery(document).on('ready',function() {
             .append("<li do=\"show\" what=\"stint,datum,stdmin,pch,pmsl,psta,ptend\">pressure</li>");
 
          $.each( $.map(data.data,function(elem,index) { return index; }), function(i,param) {
-            $("#wetterturnier-obstable-nav > ul").append("<li><input type=\"checkbox\" "
-                  + " param='" + param + "' checked /> " + param + "</li>");
+            $("#wttable-obs-nav > ul").append("<li><input type=\"checkbox\" "
+                  + " class='" + param + "' checked /> " + param + "</li>");
          });
 
          // Adding functionality to the presets
-         $("#wetterturnier-obstable-nav div.preset ul").on("click","li",function(){
+         $("#wttable-obs-nav div.preset ul").on("click","li",function(){
              var todo = $(this).attr("do");
              var what = $(this).attr("what");
              // Show all
              if ( todo == "show" & what == "all" ) {
-                 $(".wetterturnier-obstable th, .wetterturnier-obstable td").show();
-                 $("#wetterturnier-obstable-nav input").prop("checked",true);
+                 $(".wttable-obs th, .wttable-obs td").show();
+                 $("#wttable-obs-nav input").prop("checked",true);
+
              // Hide all, show only these
              } else if ( todo == "show" ) {
-                 $(".wetterturnier-obstable th, .wetterturnier-obstable td").hide();
-                 $("#wetterturnier-obstable-nav input").prop("checked",false);
+                 $(".wttable-obs th, .wttable-obs td").hide();
+                 $("#wttable-obs-nav input").prop("checked",false);
                  $.each( what.split(","), function(idx,param) {
-                    $(".wetterturnier-obstable th[param='"+param+"']").show()
-                    $(".wetterturnier-obstable td[param='"+param+"']").show()
-                    $("#wetterturnier-obstable-nav input[param='"+param+"']").prop("checked",true);
+                    $(".wttable-obs th[class='"+param+"']").show()
+                    $(".wttable-obs td[class='"+param+"']").show()
+                    $("#wttable-obs-nav input[class='"+param+"']").prop("checked",true);
                  });
              // Hide some
              } else if ( todo == "hide" ) {
                  $.each( what.split(","), function(idx,param) {
-                    $(".wetterturnier-obstable th[param='"+param+"']").show()
-                    $(".wetterturnier-obstable td[param='"+param+"']").show()
-                    $("#wetterturnier-obstable-nav input[param='"+param+"']").prop("checked",false);
+                    $(".wttable-obs th[class='"+param+"']").show()
+                    $(".wttable-obs td[class='"+param+"']").show()
+                    $("#wttable-obs-nav input[class='"+param+"']").prop("checked",false);
                  });
              }
          });
 
          // Adding the title
-         $(elem).append("<table class='wetterturnier-obstable "+input.style+"'><thead></thead><tbody></tbody></table>")
+         $(elem).append("<table class='wttable-obs tablesorter "+input.style+"'><thead></thead><tbody></tbody></table>")
          var id = "#" + $(elem).attr('id')
 
          // Header from first entry in the data object
          //$.each( data.data, function(k,v) {
          $.each( $.map(data.data,function(elem,index) { return index; }), function(i,param) {
-            $(id+' table thead').append("<th param='" + param + "'>" + param + "</th>");
+            $(id+' table thead').append("<th class='" + param + "'>" + param + "</th>");
          });
+
          if ( data.data == null ) {
             $(elem).append("<div style=\"color: red; padding-bottom: 50px;\">Sorry, no data available!</div>");
             return;
@@ -116,32 +116,31 @@ jQuery(document).on('ready',function() {
          rowname = ""
          for ( var i=0; i<data.data.datum.length; i++ ) {
             if ( addrowname ) { 
-               rowname = " row='tr-"+data.data['datum'][i].toString()+data.data['stdmin'][i].toString()+"'";
+               rowname = " class='tr-"+data.data['datum'][i].toString()+data.data['stdmin'][i].toString()+"'";
             }
             $(id+' table tbody').append("<tr"+rowname+"></tr>");
             $.each( $.map(data.data,function(elem,index) { return index; }), function(pi,param) {
-               var tdclass = ( data.data[param][i] === null ) ? " class=\"null\" " : "";
                $(id+' table tbody tr:last')
-                    .append("<td param='" + param + "' " + tdclass + ">" + data.data[param][i] + "</td>");
+                    .append("<td class='" + param + "' >" + data.data[param][i] + "</td>");
             });
          }
 
 
          // Adding functionality to the checkboxes
-         $("#wetterturnier-obstable-nav ul").on("click","input[type='checkbox']",function() {
-             var p = $(this).attr("param");
+         $("#wttable-obs-nav ul").on("click","input[type='checkbox']",function() {
+             var p = $(this).attr("class");
              if ( $(this).attr("checked") == "checked" ) {
-                 $(".wetterturnier-obstable td[param='"+p+"']").show();
-                 $(".wetterturnier-obstable th[param='"+p+"']").show();
+                 $(".wttable-obs td[class='"+p+"']").show();
+                 $(".wttable-obs th[class='"+p+"']").show();
              } else {
-                 $(".wetterturnier-obstable td[param='"+p+"']").hide();
-                 $(".wetterturnier-obstable th[param='"+p+"']").hide();
+                 $(".wttable-obs td[class='"+p+"']").hide();
+                 $(".wttable-obs th[class='"+p+"']").hide();
              }
          });
-
       } else {
          $(elem).empty().html("Sorry, no data available.")
       }
+
    }
 
 });

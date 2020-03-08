@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-07 03:50+0000\n"
-"PO-Revision-Date: 2020-03-07 03:52+0000\n"
+"PO-Revision-Date: 2020-03-07 13:00+0000\n"
 "Last-Translator: sferics <juri.hubrig@fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -1237,7 +1237,7 @@ msgstr "Städte-Rangliste für die Städte"
 
 #: user/views/ranking.php:134 user/views/ranking.php:293 user/views/ranking.php:348
 msgid " and "
-msgstr "inaktiv"
+msgstr "und"
 
 #: user/views/ranking.php:136
 msgid "for the weekend around"

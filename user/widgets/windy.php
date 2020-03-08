@@ -106,7 +106,8 @@ class WP_wetterturnier_widget_windy extends WP_Widget
 
         //see "fully working example"
         //https://stackoverflow.com/questions/1504459/getting-the-screen-resolution-using-php        
-        if ( ($window_width > 320) and !($this->isMobileDevice() or wp_is_mobile()) ) {
+        
+        if ( ($window_width > 320) and !($this->isMobileDevice() or wp_is_mobile()) and get_user_option("wt_windy") == "on") {
             echo '<div class="widget-text wp_widget_plugin_box">';
 
 		      // Check if title is set

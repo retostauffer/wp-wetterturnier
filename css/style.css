@@ -151,7 +151,7 @@ input[type="submit"].settings-button:hover {
 .wttable-show * tr:hover td                          { background-color: #d1e2f9; }
 .wttable-show-bets * tr:hover td                     { background-color: #d1e2f9; }
 .wttable-show-ranking * tr:hover td                  { background-color: #d1e2f9; }
-.wetterturnier-obstable * tr:hover td                { background-color: #d1e2f9; }
+.wttable-obs * tr:hover td                { background-color: #d1e2f9; }
 
 .wttable-show-bets * tr:nth-child(odd) td            { background-color: #eef0f2; }
 .wttable-show-bets * tr:nth-child(odd):hover td      { background-color: #c0d2eb; }
@@ -160,33 +160,33 @@ input[type="submit"].settings-button:hover {
 .wttable-show-ranking * tr.partial-participation a,
 .wttable-show-ranking * tr.partial-participation     { color: gray; }
 
-.wetterturnier-obstable * tr:nth-child(odd)       td { background-color: #eef0f2; }
-.wetterturnier-obstable * tr:nth-child(odd):hover td { background-color: #c0d2eb; }
+.wttable-obs * tr:nth-child(odd)       td { background-color: #eef0f2; }
+.wttable-obs * tr:nth-child(odd):hover td { background-color: #c0d2eb; }
 
 
 
 /* Custom table styles which can be set via profile page: contrast style  */
-.wetterturnier-obstable.contrast * td,
+.wttable-obs.contrast * td,
 .wttable-show.contrast * td,
 .wttable-show-bets.contrast * td
       { background-color: black; color: white; }
-.wetterturnier-obstable.contrast * td a,
+.wttable-obs.contrast * td a,
 .wttable-show.contrast * td a,
 .wttable-show-bets.contrast * td a
       { color: white; }
-.wetterturnier-obstable.contrast * tr:nth-child(odd) td,
+.wttable-obs.contrast * tr:nth-child(odd) td,
 .wttable-show.contrast * tr:nth-child(odd) td,
 .wttable-show-bets.contrast * tr:nth-child(odd) td
       { color: black; }
-.wetterturnier-obstable.contrast * tr:nth-child(odd) td a,
+.wttable-obs.contrast * tr:nth-child(odd) td a,
 .wttable-show.contrast * tr:nth-child(odd) td a,
 .wttable-show-bets.contrast * tr:nth-child(odd) td a
       { color: black; }
-.wetterturnier-obstable.contrast * tr:hover td,
+.wttable-obs.contrast * tr:hover td,
 .wttable-show.contrast * tr:hover td,
 .wttable-show.contrast * tr:hover td a
       { background-color: #0c3772; }
-.wetterturnier-obstable.contrast * tr:nth-child(odd):hover td,
+.wttable-obs.contrast * tr:nth-child(odd):hover td,
 .wttable-show.contrast * tr:nth-child(odd):hover td,
 .wttable-show.contrast * tr:nth-child(odd):hover td a
       { background-color: #b3b3b3; }
@@ -201,25 +201,25 @@ input[type="submit"].settings-button:hover {
 
 
 /* Custom table styles which can be set via profile page: orangeblue style */
-.wetterturnier-obstable.orangeblue * td,
-.wetterturnier-obstable-bets.orangeblue * td,
-.wetterturnier-obstable.orangeblue * td a,
-.wetterturnier-obstable-bets.orangeblue * td a,
+.wttable-obs.orangeblue * td,
+.wttable-obs-bets.orangeblue * td,
+.wttable-obs.orangeblue * td a,
+.wttable-obs-bets.orangeblue * td a,
 .wttable-show.orangeblue * td,
 .wttable-show-bets.orangeblue * td,
 .wttable-show.orangeblue * td a,
 .wttable-show-bets.orangeblue * td a
       { color: #0c3772; }
-.wetterturnier-obstable.orangeblue * tr:nth-child(odd) td,
-.wetterturnier-obstable.orangeblue * tr:nth-child(odd) td a,
+.wttable-obs.orangeblue * tr:nth-child(odd) td,
+.wttable-obs.orangeblue * tr:nth-child(odd) td a,
 .wttable-show.orangeblue * tr:nth-child(odd) td,
 .wttable-show.orangeblue * tr:nth-child(odd) td a
       { color: #ff6600; }
 
-.wetterturnier-obstable.orangeblue * tr.highlighted td,
+.wttable-obs.orangeblue * tr.highlighted td,
 .wttable-show.orangeblue * tr.highlighted td
       { background-color: #d1e2f9; }
-.wetterturnier-obstable.orangeblue * tr.highlighted:nth-child(odd) td,
+.wttable-obs.orangeblue * tr.highlighted:nth-child(odd) td,
 .wttable-show.orangeblue * tr.highlighted:nth-child(odd) td
       { background-color: #ffd1b3; }
 
@@ -648,13 +648,13 @@ td span.wetterturnier-edit-row:hover {
 }
 
 /* observation table styling */
-table.wetterturnier-obstable {
+table.wttable-obs {
    font-size: .5em;
 }
-table.wetterturnier-obstable tr:hover {
+table.wttable-obs tr:hover {
    background-color: #6592cf;
 }
-table.wetterturnier-obstable td {
+table.wttable-obs td {
    text-align: right;
 }
 
