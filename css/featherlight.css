@@ -134,7 +134,7 @@
       /* position: centering vertical and horizontal */
       position: absolute;
       z-index: 9999;
-      top: 0;
+      top: -5px;
       right: 0;
 
       /* dimensions: 25px x 25px */
