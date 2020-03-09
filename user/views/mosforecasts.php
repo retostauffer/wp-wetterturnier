@@ -68,7 +68,8 @@ foreach ( $showdays as $showday ) {
     jQuery(document).on('ready',function($) {
       (function($) {
          // Allows user to sort the tables
-         $(".wttable-show").tablesorter({sortList: [[0,0]]});
+          $(".wttable-show").tablesorter({sortList: [],
+            sortRestart:true, sortReset:true, sortInitialOrder:"desc"});
          $(".wttable-show th").css('cursor', 'pointer');      
       })(jQuery);
     });
