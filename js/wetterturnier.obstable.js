@@ -142,8 +142,8 @@ jQuery(document).on('ready',function() {
          
          // Allow user to sort the tables
          $(".wttable-obs").tablesorter({sortList: [[1,1]],
-            textExtractrion: "basic", sortInitialOrder: "desc",
-            stringTo: "bottom", debug: "false",
+            sortInitialOrder: "desc", stringTo: "bottom",
+            sortReset: true, sortRestart: true,
             textExtraction: function (node) {
                 var txt = $(node).text();
                 txt = txt.replace('-', '');

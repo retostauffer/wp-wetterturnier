@@ -202,10 +202,14 @@ if ( empty( $_GET['tdate'] ) ) {
           else { datestr = "yyyymmdd"; }
            
           $(".wttable-archive").tablesorter({sortList: [[0,1]],
-             dateFormat : datestr, sortInitialOrder: "desc", stringTo: "bottom" });
+              dateFormat : datestr, sortInitialOrder: "desc", stringTo: "bottom",
+              sortReset: true, sortRestart: true
+          });
           
           $(".wttable-show").tablesorter({sortList: [[0,0]],
-             dateFormat : datestr, sortInitialOrder: "desc", stringTo: "bottom" });
+              dateFormat : datestr, sortInitialOrder: "desc", stringTo: "bottom",
+              sortReset: true, sortRestart: true
+          });
 
           $(".wttable-show th, .wttable-archive th").css('cursor', 'pointer');
       })(jQuery);

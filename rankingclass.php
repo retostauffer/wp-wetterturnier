@@ -148,7 +148,7 @@ class wetterturnier_rankingObject {
      */
     public function set_tdates($from, $to = Null, $from_prev = Null, $to_prev = Null, $type = "ranking", $calc_trend = false) {
 
-        if (in_array($type, array("season","yearly","seasoncities","yearlycities")))
+        if (in_array($type, array("season","yearly","seasoncities","yearlycities","total")))
             { $calc_trend = true; }
         
         if ( ! is_object($from) ) {
@@ -253,7 +253,7 @@ class wetterturnier_rankingObject {
         $sql = array();
         array_push($sql, sprintf("SELECT b.tdate, %s", $usercol));
         array_push($sql, " SUM(b.points) AS points,");
-        #carefull, sleepy has no points for d1/d2 and no points_adj!
+        #carefull, sleepy has no points for d1/d2
         if ( $d1d2 ) {
            array_push($sql, " SUM(b.points_d1) AS points_d1,");
            array_push($sql, " SUM(b.points_d2) AS points_d2,");
@@ -315,6 +315,10 @@ class wetterturnier_rankingObject {
                 } 
             }
         }
+
+        $sql=sprintf("SELECT COUNT(*) AS c FROM %swetterturnier_dates WHERE tdate BETWEEN %d AND %d AND status = 1",
+            $this->wpdb->prefix, $this->tdates->from, $this->tdates->to);
+        $res->total = $this->wpdb->get_row($sql)->c;
 
         return $res;
     }
@@ -672,7 +676,10 @@ class wetterturnier_rankingObject {
 
         $final         = new stdClass();
         $points_winner = NULL;
-        $points_max    = $this->points_max * $ntournaments * count($this->cityObj);
+
+        $total_tournaments = $userdata->total;
+        $points_max    = $this->points_max * $total_tournaments * count($this->cityObj);
+        
         foreach ( $order as $idx=>$trash ) {
 
             # Current user in loop (winner first)

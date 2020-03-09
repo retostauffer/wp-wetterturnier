@@ -39,8 +39,8 @@ jQuery(document).on("ready",function(){
       $.featherlight(foo,{afterClose:function() { $(this).remove() }});
       
       // Allow user to sort the tables
-      $(".wttable-show").tablesorter({sortList: [[0,0]],
-          stringTo: "bottom", sortInitialOrder:"desc"});
+      $(".wttable-show").tablesorter({sortList: [], stringTo: "bottom",
+          sortReset: true, sortRestart: true, sortInitialOrder: "desc"});
       $(".wttable-show th").css('cursor', 'pointer'); 
 
    });      
