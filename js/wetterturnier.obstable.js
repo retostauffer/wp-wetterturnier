@@ -93,13 +93,13 @@ jQuery(document).on('ready',function() {
          });
 
          // Adding the title
-         $(elem).append("<table class='wttable-obs tablesorter "+input.style+"'><thead></thead><tbody></tbody></table>")
+         $(elem).append("<table class='wttable-obs tablesorter "+input.style+"'><thead><tr></tr></thead><tbody></tbody></table>")
          var id = "#" + $(elem).attr('id')
 
          // Header from first entry in the data object
          //$.each( data.data, function(k,v) {
          $.each( $.map(data.data,function(elem,index) { return index; }), function(i,param) {
-            $(id+' table thead').append("<th class='" + param + "'>" + param + "</th>");
+            $(id+' table thead tr').append("<th class='" + param + "'>" + param + "</th>");
          });
 
          if ( data.data == null ) {
@@ -120,8 +120,10 @@ jQuery(document).on('ready',function() {
             }
             $(id+' table tbody').append("<tr"+rowname+"></tr>");
             $.each( $.map(data.data,function(elem,index) { return index; }), function(pi,param) {
-               $(id+' table tbody tr:last')
-                    .append("<td class='" + param + "' >" + data.data[param][i] + "</td>");
+                //if data === null convert it to string "-" so that tablesorter can sort it at bottom
+                var data_param = ( data.data[param][i] === null ) ? "-" : data.data[param][i];
+                $(id+' table tbody tr:last')
+                    .append("<td class='"+ param +"' >" + data_param + "</td>");
             });
          }
 
@@ -137,6 +139,18 @@ jQuery(document).on('ready',function() {
                  $(".wttable-obs th[class='"+p+"']").hide();
              }
          });
+         
+         // Allow user to sort the tables
+         $(".wttable-obs").tablesorter({sortList: [[1,1]],
+            textExtractrion: "basic", sortInitialOrder: "desc",
+            stringTo: "bottom", debug: "false",
+            textExtraction: function (node) {
+                var txt = $(node).text();
+                txt = txt.replace('-', '');
+                return txt;
+            }, });
+         $(".wttable-obs th").css('cursor', 'pointer');
+
       } else {
          $(elem).empty().html("Sorry, no data available.")
       }

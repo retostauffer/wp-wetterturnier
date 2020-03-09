@@ -73,38 +73,6 @@ console.log( statnr+'  '+title+'  '+days )
          }
       });
 
-
-      // add parser through the tablesorter addParser method
-  $.tablesorter.addParser({
-    // set a unique id
-    id: 'data',
-    is: function(s, table, cell, $cell) {
-      // return false so this parser is not auto detected
-      return false;
-    },
-    format: function(s, table, cell, cellIndex) {
-      var $cell = $(cell);
-      // I could have used $(cell).data(), then we get back an object which contains both
-      // data-lastname & data-date; but I wanted to make this demo a bit more straight-forward
-      // and easier to understand.
-
-      // returns lastname data-attribute, or cell text (s) if it doesn't exist
-      return $cell.attr('class') || s;
-      },
-      // flag for filter widget (true = ALWAYS search parsed values; false = search cell text)
-      parsed: false,
-      // set type, either numeric or text
-      type: 'text'
-   });
-
-      // Allows user to sort the tables
-      $(".wttable-obs").tablesorter({sortList: [[1,0]],
-            textExtractrion: "basic", sortInitialOrder: "desc",
-            stringTo: "bottom", debug: "true"});
-      //$(".wttable-obs th").css('cursor', 'pointer');
-      var resort = true;
-      $(".wttable-obs").trigger("updateAll", [resort]);
-
    })(jQuery);
 });
 </script>
