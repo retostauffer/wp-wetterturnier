@@ -127,7 +127,20 @@ input[type="submit"].settings-button:hover {
 /* Tables where the bets are displayed, e,g. archive */
 .wttable-show                          { table-layout: auto; display: table; }
 .wttable-show * td                     { font-size: 1.0em; }
-.wttable-show.small * td               { font-size: 1.0em; padding: 1px 5px; }
+.wttable-show.small * td               {
+   font-size: 1.0em;
+   padding: 1px 5px;
+}
+
+/* featherlight window (magnifier on ranking tables */
+.wttable-show.info th:nth-child(1), .wttable-show.small td:nth-child(1),
+.wttable-show.info th:nth-last-child(1), .wttable-show.small td:nth-last-child(1),
+.wttable-show.info th:nth-last-child(2), .wttable-show.small td:nth-last-child(2) {
+   width:60px;
+}
+
+
+.wttable-show-bets th.param-col-N,    .wttable-show-obs th.param-col-N
 /*.wttable-show * td.username            { font-weight: bold; }*/
 .wttable-show * td.data                { text-align: right; }
 .wttable-show * td.day                 { text-align: center; }

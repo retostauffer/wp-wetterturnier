@@ -2132,15 +2132,15 @@ public function debug_to_console($data) {
 
          // Start content: setting up a table for this forecast/bet day
          array_push( $return, sprintf("<b>%s</b>, %s\n",__($tdate_readable,"wpwt"),$tdate_yyyymmdd) );
-         array_push( $return, sprintf("<table class=\"wttable-show small tablesorter\">\n"
+         array_push( $return, sprintf("<table class=\"wttable-show small info tablesorter\">\n"
                      ."  <thead>\n  <tr>\n    <th>%s</th>\n    <th>%s</th>\n",
-                     __("Parameter","wpwt"),__("Forecast","wpwt")) );
+                     __("Param","wpwt"),__("Forecast","wpwt")) );
 
          foreach ( $stations as $rec ) {
             array_push( $return, sprintf("    <th>%s</th>\n",$rec->name) );
          }
          array_push( $return, sprintf("    <th>%s</th>\n    <th>%s</th>\n  </tr>\n\n",
-                     __("Deviation","wpwt"),__("Points","wpwt")) );
+                     __("Diff","wpwt"),__("Points","wpwt")) );
 
          array_push( $return, sprintf("</thead>\n<tbody>") );
 
