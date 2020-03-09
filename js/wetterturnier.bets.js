@@ -37,6 +37,7 @@ jQuery(document).on("ready",function(){
       // --------------------
       // Show featherlight lightbox now
       $.featherlight(foo,{afterClose:function() { $(this).remove() }});
+      
       // Allow user to sort the tables
       $(".wttable-show").tablesorter({sortList: [[0,0]],
           stringTo: "bottom", sortInitialOrder:"desc"});

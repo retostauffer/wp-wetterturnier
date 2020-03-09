@@ -123,11 +123,33 @@
 @media only screen and (max-width: 1024px) {
 	.featherlight .featherlight-content {
 		/* dimensions: maximize lightbox with for small screens */
-		margin-left: 10px;
-		margin-right: 10px;
-		max-height: 98%;
+		margin-left: 5px;
+		margin-right: 5px;
+		max-height: 90%;
 
-		padding: 10px 10px 0;
-		border-bottom: 10px solid transparent;
-	}
+		padding: 5px 5px 0;
+		border-bottom: 20px solid transparent;
+   }
+   .featherlight .featherlight-close-icon {
+      /* position: centering vertical and horizontal */
+      position: absolute;
+      z-index: 9999;
+      top: 0;
+      right: 0;
+
+      /* dimensions: 25px x 25px */
+      line-height: 50px;
+      width: 50px;
+   }
+   div.betinfo {
+      visibility:collapse;
+      display:none;
+   }
+   div.betinfo b {
+      display:none;
+      font-size: 0;
+      margin: 0;
+      padding: 0;
+   }
+
 }

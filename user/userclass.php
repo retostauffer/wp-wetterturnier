@@ -2088,11 +2088,13 @@ public function debug_to_console($data) {
       // ------------------------------------------------------------
       $return = array("<div id=\"betdetails\" class=\"entry-content\">\n");
 
-   
+      // Adding betinfo <div> around basic information to make them hideable for mobiles
+      array_push($return,"<div class=\"betinfo\">");
+
       // Adding points and ranking
-      array_push($return,sprintf("Name: %s (%s)<br>",
+      array_push($return,sprintf(__("Name","wpwt") . ": %s (%s)<br>",
                          $res->display_name,$res->user_login));
-      array_push($return,sprintf("Submitted: %s<br>",
+      array_push($return,sprintf(__("Submitted","wpwt") . ": %s<br>",
                          (is_null($res->submitted)) ? "---" : $res->submitted));
       array_push($return,sprintf("%s&nbsp;%s: %s<br>",
                          __("Points","wpwt"),__("Saturday","wpwt"),
@@ -2102,7 +2104,7 @@ public function debug_to_console($data) {
                          $this->number_format($res->points_d2,1)));
       array_push($return,sprintf("%s: %s<br>",
                          __("Points total","wpwt"),$this->number_format($res->points,1)));
-      array_push($return,sprintf("%s: %d/%d<br><br>",
+      array_push($return,sprintf("%s: %d/%d<br><br></div>",
                          __("Rank","wpwt"),$res->rank,$maxrank->maxrank));
 
 
