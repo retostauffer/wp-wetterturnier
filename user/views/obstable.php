@@ -40,7 +40,7 @@ jQuery(document).on('ready',function() {
          var title  = $("input.active.obs-table-station").val()
          var days   = $("input.active.obs-table-days").attr("days")
 console.log( statnr+'  '+title+'  '+days )
-         var style = "<?php print $wttable_style; ?>"
+         var style = "<?php print($wttable_style); ?>"
          $('#obs-table').show_obstable({ajaxurl:ajaxurl,style:style,title:title,statnr:statnr,days:days});
 
       }
@@ -102,8 +102,8 @@ console.log( statnr+'  '+title+'  '+days )
             textExtractrion: "basic", sortInitialOrder: "desc",
             stringTo: "bottom", debug: "true"});
       //$(".wttable-obs th").css('cursor', 'pointer');
-      //var resort = true;
-      //$(".wttable-obs").trigger("updateAll", [resort]);
+      var resort = true;
+      $(".wttable-obs").trigger("updateAll", [resort]);
 
    })(jQuery);
 });
