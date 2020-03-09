@@ -78,14 +78,19 @@ jQuery(document).on('ready',function() {
                  $(".wttable-obs th, .wttable-obs td").hide();
                  $("#wttable-obs-nav input").prop("checked",false);
                  $.each( what.split(","), function(idx,param) {
-                    $(".wttable-obs th[class='"+param+"']").show()
-                    $(".wttable-obs td[class='"+param+"']").show()
+                    idx++
+                    $(".wttable-obs thead th:nth-child("+parseInt(idx)+")").show();
+                    $(".wttable-obs td[class='"+param+"']").show();
                     $("#wttable-obs-nav input[class='"+param+"']").prop("checked",true);
                  });
              // Hide some
              } else if ( todo == "hide" ) {
                  $.each( what.split(","), function(idx,param) {
-                    $(".wttable-obs th[class='"+param+"']").show()
+                    classname = $(".wttable-obs th").attr("class");
+                    console.log(param, classname);
+                    if ($(".wttable-obs th").attr("class").split(" ").includes(param)) {
+                        $(".wttable-obs th[class='"+classname+"'").show()
+                    }
                     $(".wttable-obs td[class='"+param+"']").show()
                     $("#wttable-obs-nav input[class='"+param+"']").prop("checked",false);
                  });

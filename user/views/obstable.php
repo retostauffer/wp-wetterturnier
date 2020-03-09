@@ -65,11 +65,11 @@ console.log( statnr+'  '+title+'  '+days )
       // Makes lines highlightable
       $(document).on("click","table.wttable-obs tr",function($) {
          $ = jQuery
-         var trclass = $(this).attr('row')
+         var trclass = $(this).attr('class')
          var classname = "highlighted";
          if ( $(this).hasClass( classname ) ) {
-            $("table.wttable-obs tr[row='"+trclass+"']").removeClass( classname )
-            $("table.wttable-obs tr[row='"+trclass+"']").addClass( classname )
+            $("table.wttable-obs tr[class='"+trclass+"']").removeClass( classname )
+            $("table.wttable-obs tr[class='"+trclass+"']").addClass( classname )
          }
       });
 
@@ -89,7 +89,7 @@ console.log( statnr+'  '+title+'  '+days )
       // and easier to understand.
 
       // returns lastname data-attribute, or cell text (s) if it doesn't exist
-      return $cell.attr('param') || s;
+      return $cell.attr('class') || s;
       },
       // flag for filter widget (true = ALWAYS search parsed values; false = search cell text)
       parsed: false,
