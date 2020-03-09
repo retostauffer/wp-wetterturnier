@@ -1383,7 +1383,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                $data->$hash = $this->get_obs_values($cityObj->get('ID'),$tdate+$day);
                $data->counter += count( (array) $data->$hash->data );
             }
-            $nameth = "      <th class=\"user-name\"".__("Station","wpwt")."</th>\n";
+            $nameth = "      <th class=\"user-name\">".__("Station","wpwt")."</th>\n";
 
             // Title of the table
             if ( is_bool($showday) ) {
