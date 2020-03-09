@@ -1075,7 +1075,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                 ."  </tr>\n</thead>\n<tbody>\n";
 
             // Width of the points status bar
-            $max_width = 300;
+            $max_width = 200;
             foreach ( $data as $rec ) {
                 
                // Create link to the archive page

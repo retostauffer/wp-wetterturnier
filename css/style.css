@@ -349,6 +349,9 @@ table.tablesorter tbody td {
 @media screen and (max-width: 639px) {
    #content .wttable-show * th.points.d1,     .wttable-show * td.points.d1 { display: none; }
    #content .wttable-show * th.points.d2,     .wttable-show * td.points.d2 { display: none; }
+   #content .wttable-archive * th:nth-last-child(1), #content .wttable-archive * td:nth-last-child(1) { 
+      display:none;
+   }
    /*
    #content .wttable-show-ranking td:nth-child(5),
    #content .wttable-show-ranking td:nth-child(5),
