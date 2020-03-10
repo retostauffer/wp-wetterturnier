@@ -172,9 +172,9 @@ foreach ( $user->wp_capabilities as $key=>$val ) {
 show_row(__("capabilities","wpwt"), join(", ", $roles));
 
 // show website/url if exists
-$user_url = get_user_meta( $userID, "user_url", true );
+$user_url = get_user_by( "id", $userID )->user_url;
 if ( !empty($user_url) ) {
-    show_row( "Website", $url );
+    show_row( "Website", "<a href='".$user_url."'>".$user_url."</a>" );
 }
 
 //type
