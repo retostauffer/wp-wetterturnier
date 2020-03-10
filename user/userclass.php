@@ -1100,7 +1100,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                $w2 = max(0,(int)floor((float)$rec->pavg / 200. * (float)$max_width)) - $w1 - 1;
                # Width of the bar between average and highest -1 for border
                $w3 = max(0,(int)floor((float)$rec->points / 200. * (float)$max_width)) - $w1 - $w2 - 2;
-               $sbar  = "<span class='archiv-statusbar' style='max-width: ".$max_width."px; text-align:center'>\n"
+               $sbar = "<span class='archiv-statusbar' style='display:flex; max-width:".$max_width."px; text-align:center'>\n"
                        ."  <span class='lower' style='margin-left: ".$w1."px; width: ".$w2."px;'></span>"
                        ."  <span class='upper' style='width: ".$w3."px;'></span>"
                        ."</span>\n";
