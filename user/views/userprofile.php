@@ -238,7 +238,8 @@ if ( $userclass->userclass === "mitteltip" ) {
 
     //check whether group is active or not
     global $wpdb;
-    $sql = "SELECT active AS a FROM wp_wetterturnier_groups WHERE groupName LIKE 'Automaten'";
+    $sql = sprintf("SELECT active AS a FROM wp_wetterturnier_groups WHERE groupName LIKE '%s'",
+                    $group_name);
     $active = $wpdb->get_row($sql)->a;
     $status = ($active) ? __("active","wpwt") : __("inactive","wpwt");
     show_row(__("Group status","wpwt"), $status);
