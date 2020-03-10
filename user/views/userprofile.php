@@ -111,11 +111,11 @@ function get_city_stats( $cityID, $userID ) {
                           $first, __("and","wpwt"), $last) );
 
       if ($pavg !== NULL) {
-         array_push($return, sprintf("<table style=\"width:300px;\"><tr><td>".__("Average points:","wpwt")."</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
-         array_push($return, sprintf(__("<tr><td>Median points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmed,1) ) );
-         array_push($return, sprintf(__("<tr><td>Max points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmax,1) ) );
-         array_push($return, sprintf(__("<tr><td>Min points:</td><td><b>%s</b></td><tr>","wpwt"), number_format($pmin,1) ) );
-         array_push($return, sprintf(__("<tr><td>Standard deviation:</td><td><b>%s</b></td><tr></table>","wpwt"), number_format($pstd,1) ) );
+         array_push($return, sprintf("<table style=\"width:300px;\"><tr><td>".__("Average points","wpwt").":</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
+         array_push($return, sprintf("<tr><td>".__("Median points","wpwt").":</td><td><b>%s</b></td><tr>", number_format($pmed,1) ) );
+         array_push($return, sprintf( "<tr><td>".__("Max points","wpwt").":</td><td><b>%s</b></td><tr>", number_format($pmax,1) ) );
+         array_push($return, sprintf( "<tr><td>".__("Min points").":</td><td><b>%s</b></td><tr>", number_format($pmin,1) ) );
+         array_push($return, sprintf( "<tr><td>".__("Standard deviation","wpwt").":</td><td><b>%s</b></td><tr></table>", number_format($pstd,1) ) );
       }
       return( join("\n", $return) );
 
@@ -156,7 +156,7 @@ show_row(__("Registered since","wpwt"), date(__("d.m.Y","wpwt"), strtotime($user
 $user_lang = $WTuser->get_user_language("slug");
 
 // Try to load user bio/description based on user language
-$bio = get_user_meta($userID, sprintf("sescription_%s", $user_lang), true);
+$bio = get_user_meta($userID, sprintf("description_%s", $user_lang), true);
 
 if ( strlen($bio) == 0 ) {
    $bio = get_user_meta($userID, "description",true);
@@ -210,7 +210,7 @@ if ( $userclass->userclass === "mitteltip" ) {
         }
         $member_profiles = join(", ", $member_profiles);
     } else {
-        $member_profiles = "No active members";
+        $member_profiles = __("No active members","wpwt");
     }
     show_row(__("Active members","wpwt"), $member_profiles );
 
@@ -233,7 +233,7 @@ if ( $userclass->userclass === "mitteltip" ) {
         }
         $member_profiles = join(", ", $member_profiles);
     } else {
-        $member_profiles = "No inactive members";
+        $member_profiles = __("No inactive members","wpwt");
     }
     show_row(__("Inactive members","wpwt"), $member_profiles );
 

@@ -46,8 +46,28 @@
          <run>03</run>
       </station>
       <station>
+         <name>Dynamic State Index</name>
+         <imgname>dsi_D2</imgname>
+         <run>00</run>
+      </station>
+      <station>
+         <name>Shear (0-6km) + SRH</name>
+         <imgname>shrsrh_D2</imgname>
+         <run>00</run>
+      </station>
+      <station>
+         <name>Supercell detection</name>
+         <imgname>uphelsdi_D2</imgname>
+         <run>00</run>
+      </station>
+      <station>
          <name>Low level clouds EPS</name>
          <imgname>clcl_D2_eps</imgname>
+         <run>00</run>
+      </station>
+      <station>
+         <name>Mid/high level clouds EPS</name>
+         <imgname>clcm_D2_eps</imgname>
          <run>00</run>
       </station>
       <station>
