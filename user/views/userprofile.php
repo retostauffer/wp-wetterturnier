@@ -196,8 +196,9 @@ if ( $userclass->userclass === "mitteltip" ) {
     if ($members) {
         $member_names = array();
         foreach ( $members as $m ) {
-            if ( ! in_array($m, $member_names) ) {
-                array_push($member_names, $WTuser->get_user_by_ID($m)->user_login);
+            $member = $WTuser->get_user_by_ID($m)->user_login;
+            if ( ! in_array($member, $member_names) ) {
+                array_push($member_names, $member);
             }
         }
         asort($member_names);
@@ -218,8 +219,9 @@ if ( $userclass->userclass === "mitteltip" ) {
     if ($members_inactive) {
         $member_names = array();
         foreach ( $members_inactive as $m ) {
-            if ( ! in_array($m, $member_names) ) {
-                array_push($member_names, $WTuser->get_user_by_ID($m)->user_login);
+            $member = $WTuser->get_user_by_ID($m)->user_login;
+            if ( ! in_array($member, $member_names) ) {
+                array_push($member_names, $member);
             }
         }
         asort($member_names);
@@ -252,8 +254,11 @@ if ( $userclass->userclass === "mitteltip" ) {
         $group_names = array();
         foreach ( $groups as $g ) {
             $group_userID = $WTuser->get_user_ID( $g->groupName, "group" );
-            array_push( $group_names, sprintf("<a href=\"%s\">".$g->groupName."</a>",
-                bbp_get_user_profile_url($group_userID) ) );
+            $group_url = sprintf("<a href=\"%s\">".$g->groupName."</a>",
+                bbp_get_user_profile_url($group_userID) );
+            if (! in_array($group_url, $group_names)) {
+            array_push( $group_names, $group_url );
+            }
         }
         show_row(__("Current group memberships","wpwt"), join(", ", $group_names));
     }
@@ -263,8 +268,11 @@ if ( $userclass->userclass === "mitteltip" ) {
         $group_names = array();
         foreach ( $groups_past as $g ) {
             $group_userID = $WTuser->get_user_ID( $g->groupName, "group" );
-            array_push( $group_names, sprintf("<a href=\"%s\">".$g->groupName."</a>",
-                bbp_get_user_profile_url($group_userID) ) );
+            $group_url = sprintf("<a href=\"%s\">".$g->groupName."</a>",
+                bbp_get_user_profile_url($group_userID) );
+            if (! in_array($group_url, $group_names)) {
+                array_push( $group_names, $group_url );
+            }
         }
         show_row(__("Past group memberships","wpwt"), join(", ", $group_names));
     }
