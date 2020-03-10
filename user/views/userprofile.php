@@ -201,7 +201,7 @@ if ( $userclass->userclass === "mitteltip" ) {
                 array_push($member_names, $member);
             }
         }
-        asort($member_names);
+        natcasesort($member_names);
         $member_profiles = array();
         foreach ( $member_names as $m ) {
                 $usr = $WTuser->get_user_by_username( $m );
@@ -224,7 +224,7 @@ if ( $userclass->userclass === "mitteltip" ) {
                 array_push($member_names, $member);
             }
         }
-        asort($member_names);
+        natcasesort($member_names);
         $member_profiles = array();
         foreach ( $member_names as $m ) {
                 $usr = $WTuser->get_user_by_username( $m );
