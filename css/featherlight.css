@@ -56,8 +56,8 @@
 		border-bottom: 25px solid transparent;
 
 		/* dimensions: handling large content */
-		margin-left: 5%;
-		margin-right: 5%;
+		margin-left: 10%;
+		margin-right: 10%;
 		max-height: 95%;
 
 		/* styling */
@@ -82,8 +82,8 @@
 		right: 0;
 
 		/* dimensions: 25px x 25px */
-		line-height: 25px;
-		width: 25px;
+		line-height: 32px;
+		width: 32px;
 
 		/* styling */
 		cursor: pointer;
@@ -123,11 +123,11 @@
 @media only screen and (max-width: 1024px) {
 	.featherlight .featherlight-content {
 		/* dimensions: maximize lightbox with for small screens */
-		margin-left: 10px;
-		margin-right: 10px;
-		max-height: 98%;
+		margin-left: 25px;
+		margin-right: 25px;
+		max-height: 80%;
 
-		padding: 10px 10px 0;
-		border-bottom: 10px solid transparent;
+		padding: 25px 25px 0;
+		border-bottom: 25px solid transparent;
 	}
 }

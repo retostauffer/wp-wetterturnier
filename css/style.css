@@ -277,7 +277,7 @@ table.tablesorter tbody td {
 .wttable-show-bets th.param-col-Wv,   .wttable-show-obs th.param-col-Wv  { width: 40px; }
 .wttable-show-bets th.param-col-Wn,   .wttable-show-obs th.param-col-Wn  { width: 40px; }
 .wttable-show-bets th.param-col-PPP,  .wttable-show-obs th.param-col-PPP { width: 80px; }
-.wttable-show-bets th.user-name,      .wttable-show-obs  th.user-name    { min-width: 220px; }
+.wttable-show-bets th.user-name,      .wttable-show-obs th.user-name     { min-width: 220px; }
 
 .wttable-show span.button.small {
    padding: 1px 3px;

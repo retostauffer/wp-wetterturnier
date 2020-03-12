@@ -97,7 +97,6 @@ class wetterturnier_rankingObject {
        $this->dict->statusbar    = __("Statusbar","wpwt");
 
        //only for etertnal ranking
-       $this->dict->points_adj   = __("Eternal Points","wpwt");
        $this->dict->points_max   = __("Max","wpwt");
        $this->dict->points_mean  = __("Mean","wpwt");
        $this->dict->sd_ind       = __("PSD","wpwt");
@@ -324,10 +323,6 @@ class wetterturnier_rankingObject {
                 if ( ! in_array($rec->user_login, $res->users) ) {
                     array_push($res->users, $rec->user_login);
                 }
-		        if ( $type === "eternal" ) { $rec->tdate = 0; }
-                if ( ! in_array($rec->tdate, $res->tdates ) ) {
-                    array_push($res->tdates, $rec->tdate );
-		        }
                 # User hash
                 $uhash = $rec->user_login;
                 if ( ! property_exists($res->data, $uhash) ) { $res->data->$uhash = new stdClass(); }
@@ -335,6 +330,9 @@ class wetterturnier_rankingObject {
                 $res->data->$uhash->userID = $rec->ID;
 
                 if ( $type != "eternal" ) {
+                    if ( ! in_array($rec->tdate, $res->tdates ) ) {
+                        array_push($res->tdates, $rec->tdate );
+                    }
                     # Append tournament date to city
                     $thash = sprintf("tdate_%d", $rec->tdate);
                     if (!isset($res->data->$uhash->$thash)) $res->data->$uhash->$thash = new stdClass();
@@ -357,6 +355,10 @@ class wetterturnier_rankingObject {
                 }
             }
         }
+        $sql = sprintf("SELECT COUNT(*) AS c FROM %swetterturnier_dates WHERE tdate BETWEEN %d AND %d AND status = 1",
+                $this->wpdb->prefix, $this->tdates->from, $this->tdates->to);
+        $res->total = $this->wpdb->get_row($sql)->c;
+
         return $res;
     }
 
@@ -697,8 +699,11 @@ class wetterturnier_rankingObject {
 
         $final         = new stdClass();
         $points_winner = NULL;
+        //print_r($userdata->total);
+        $total_tournaments = $userdata->total;
+
         if ($type != "eternal") {
-            $max_points = $this->max_points * $ntournaments * $this->cities;
+            $max_points = $this->max_points * $total_tournaments * $this->cities;
         }
         foreach ( $order as $idx=>$trash ) {
 
@@ -747,7 +752,7 @@ class wetterturnier_rankingObject {
 
             // Create edit button for administrators
 
-            if ( ! is_array($this->cityObj) && $ntournaments == 1 ) {
+            if ( ! is_array($this->cityObj) and $ntournaments === 1 and $total_tournaments === 1 ) {
                 $final->$user->edit_button   = $this->_get_edit_button( $tmp->userclass, $userObj );
                 $final->$user->detail_button = $this->_get_detail_button( $userObj );
             }
@@ -769,6 +774,7 @@ class wetterturnier_rankingObject {
         $this->ranking->meta               = new stdClass();
         $this->ranking->meta->has_trends   = $this->calc_trend;
         $this->ranking->meta->ntournaments = $ntournaments;
+        $this->ranking->meta->total_tournaments = $total_tournaments;
         $this->ranking->meta->max_points   = $max_points;
         $this->ranking->meta->older        = $this->tdates->older;
         $this->ranking->meta->newer        = $this->tdates->newer;

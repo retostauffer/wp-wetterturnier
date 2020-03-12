@@ -1057,14 +1057,14 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             $wttable_style = get_user_option("wt_wttable_style");
             $wttable_style = (is_bool($wttable_style) ? "" : $wttable_style);
             echo "<table width=\"100%\" class=\"wttable-archive ".$wttable_style."\">\n"
-                ."  <tr>\n"
+                ."<thead>\n<tr>\n"
                 ."    <th>".__('Date','wpwt')."</th>\n"
                 ."    <th>".__('Players','wpwt')."</th>\n"
                 ."    <th>".__('Winner','wpwt')."</th>\n"
                 ."    <th>".__('Points','wpwt')."</th>\n"
                 ."    <th>".__('Median','wpwt')."</th>\n"
                 ."    <th>".__('Stats','wpwt')."</th>\n"
-                ."  </tr>\n";
+                ."  </tr>\n</thead>\n<tbody>";
 
             // Width of the points status bar
             $max_width = 300;
@@ -1110,7 +1110,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
             
             }
             // End table
-            echo "</table>\n";
+            echo "</tbody>\n</table>\n";
 
         }
     }

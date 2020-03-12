@@ -780,6 +780,14 @@ class wetterturnier_generalclass
     }
 
 
+    public function get_group_ID( $groupName ) {
+        global $wpdb;
+            $res = $wpdb->get_row(sprintf('SELECT groupID FROM %swetterturnier_groups WHERE groupName LIKE \'%s\'',$wpdb->prefix, $groupName))->groupID;
+            if ( ! $res ) { return false; }
+            return $res;
+    }
+
+
     public function get_user_ID( $user, $type=NULL ) {
         global $wpdb;
         if ($type == "group") { $user = "GRP_" . $user; }
@@ -1850,14 +1858,14 @@ class wetterturnier_generalclass
        } else {
           $like = "WHERE LCASE(user_login) LIKE '%"
                  .strtolower(htmlspecialchars($_POST['search']))
-                 ."%'";
+                 ."%' AND LCASE(user_login) NOT LIKE '%".strtolower(htmlspecialchars($_POST['selected']))."%'";
        }
 
        // - Searching in the database and create corresponding ajax
        //   string containing userID:user_login
-       $sql  = sprintf('SELECT ID, user_login FROM %susers',$wpdb->prefix);
-       $sql  = $sql." ".$like." ORDER BY user_login ASC";
-       $res   = $wpdb->get_results($sql);
+       $sql  = sprintf('SELECT ID, user_login FROM %susers ',$wpdb->prefix);
+       $sql .= $like." ORDER BY user_login ASC";
+       $res  = $wpdb->get_results($sql);
 
        print json_encode($res);
        die(); # important
@@ -1865,7 +1873,7 @@ class wetterturnier_generalclass
     }
 
     /** Getting avatar url instead of a full avatar imgi tag. */
-    function get_avatar_url($userID){
+    function get_avatar_url($userID) {
         $get_avatar = get_wp_user_avatar($userID, 96);
         preg_match("/src=\"(.*?)\"/i", $get_avatar, $matches);
         return $matches[1];

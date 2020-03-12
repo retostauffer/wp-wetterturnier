@@ -57,7 +57,9 @@ class wetterturnier_chartHandler {
    // ---------------------------------------------------------------
    public function timeseries_user_points_ajax() {
 
+      error_reporting(0);
       global $WTuser;
+      $sleepyID = $WTuser->get_user_ID("Sleepy");
 
       $args = (object)$_POST;
       // Append default Sleepy = 1 (show Sleepy)
@@ -72,53 +74,61 @@ class wetterturnier_chartHandler {
          print json_encode(array("error"=>"[ERROR] Input userID not set!")); die();
       } else if ( preg_match("/^(\d+)(,\d+)*$/",$args->userID) ) {
          $users = explode(",",$args->userID); array_walk($users,'intval');
+         $usercount = count($users);
       } else {
          print json_encode(array("error"=>"[ERROR] Input userID not valid (wrong format/pattern).")); die();
       }
 
       // Create sql command
-      $sql = array();
-      array_push($sql,"SELECT * FROM");
-      array_push($sql,"(SELECT dead.tdate*86400 AS timestamp, "); // Begin of ( ) AS tmp table
-      array_push($sql," ROUND(dead.points,2) AS sleepy,");
-      $playerdata = array();
-      for ( $i=0; $i < count($users); $i++ ) { 
-         if ( ! $args->sleepy ) {
-            array_push($playerdata,sprintf(" ROUND(p%d.points,2) AS player%d",$i+1,$i+1));
-         } else {
-            // Fill missing (not played) weekends with sleepy points
-            array_push($playerdata,sprintf(" ROUND(CASE WHEN p%d.points IS NULL THEN "
-                       ."dead.points ELSE p%d.points END,2) AS player%d",$i+1,$i+1,$i+1));
-         }
+      $sql  = "SELECT * FROM\n";
+      $sql .= "(SELECT p1.tdate*86400 AS timestamp,\n";
+      $sql .= "ROUND(p1.points, 1) AS player1";
+      
+      if ($usercount > 1) {
+          for ( $i=2; $i <= $usercount; $i++ ) { 
+             if ( ! $args->sleepy ) {
+                $sql .= sprintf(",\nROUND(p%d.points, 1) AS player%d", $i, $i);
+             } else {
+                // Fill missing (not played) weekends with sleepy points
+                $sql .= sprintf(",\nROUND(CASE WHEN p%d.points IS NULL THEN p1.points "
+                   ."ELSE p%d.points END, 1) AS player%d", $i, $i, $i);
+             }
+          }
       }
-      array_push($sql,join(",\n",$playerdata));
-      array_push($sql,"FROM");
-      array_push($sql,sprintf("  (SELECT tdate, %s AS points FROM %swetterturnier_betstat",$args->column,$this->wpdb->prefix));
-      array_push($sql,sprintf("   WHERE userID = 1130 and cityID = %d ) AS dead",$args->cityID));
 
-      for ( $i=0; $i < count($users); $i++ ) { 
-         array_push($sql,"LEFT OUTER JOIN");
-         array_push($sql,sprintf("  (SELECT tdate, userID, %s AS points FROM %swetterturnier_betstat",$args->column,$this->wpdb->prefix));
-         array_push($sql,sprintf("   WHERE userID = %d and cityID = %d ) AS p%d",$users[$i],$args->cityID,$i+1));
-         array_push($sql,sprintf("   ON dead.tdate = p%d.tdate",$i+1));
+      array_push($sql,join("\n",$playerdata));
+      $sql .= "\nFROM\n";
+      $sql .= sprintf("   (SELECT tdate, %s AS points FROM %swetterturnier_betstat\n",$args->column,
+              $this->wpdb->prefix);
+      $sql .= sprintf("   WHERE userID = %d AND cityID = %d ) AS p1\n", $users[0], $args->cityID);
+
+      if ($usercount > 1) {
+         for ( $i=2; $i <= $usercount; $i++ ) {
+            $sql .= "LEFT OUTER JOIN\n";
+            $sql .= sprintf("   (SELECT tdate, userID, %s AS points FROM %swetterturnier_betstat\n",
+                    $args->column, $this->wpdb->prefix);
+            $sql .= sprintf("   WHERE userID = %d AND cityID = %d ) AS p%d\n", $users[$i-1], 
+                    $args->cityID, $i);
+            $sql .= sprintf("   ON p1.tdate = p%d.tdate\n", $i);
+          }
       }
-      array_push($sql,") AS tmp"); // End of ( ) AS tmp table
 
+      $sql .= ") AS tmp\n"; // End of ( ) AS tmp table
+
+      $where = array();
       // Kill empty lines
       if ( ! $args->sleepy ) {
-         $wherenot = array();
-         for ( $i = 0; $i < count($users); $i++ )
-         { array_push($wherenot,sprintf("player%d IS NOT NULL",$i+1)); }
-         array_push($sql,sprintf("WHERE %s",join(" AND ",$wherenot )));
-         array_push($sql,sprintf("AND timestamp < %d",$this->tdatemax*86400));
-      } else {
-         array_push($sql,sprintf("WHERE timestamp < %d",$this->tdatemax*86400));
+         for ( $i = 1; $i <= $usercount; $i++ ) {
+             array_push($where, "player".$i." IS NOT NULL");
+         }
       }
+      array_push($where, "timestamp < " . $this->tdatemax*86400);
+
+      $sql .= "WHERE ".join(" AND ", $where);
 
       // Order time series
-      array_push($sql,"ORDER BY timestamp");
-
-      array_push($sql,sprintf(" # COMMENT: ndays = %d",$this->ndays));
+      $sql .= "\nORDER BY timestamp";   
+      
       //print "\n------------------------------\n";
       //print join("\n",$sql);
       //print "\n------------------------------\n";
@@ -126,23 +136,46 @@ class wetterturnier_chartHandler {
 
       // Save results
       $result = new stdClass();
-      $result->sql = join("\n",$sql);
-      
-      $result->line_colors = array("#cccccc","#E16A86","#9C9500","#00AD81","#4195E2");
+      $result->sql = $sql;
+
+      /* Wetterturnier ORANGE:     #ff6600  */
+      /* Wetterturnier DARKBLUE:   #0c3772  */
+      /* Wetterturnier GREEN:      #0e9311  */
+      /* Wetterturnier LIGHTGREEN  #41c343  */
+      /* Wetterturnier LIGHTBLUE:  #6592cf  */
+      /* Wetterturnier GRAY:       #b3b3b3  */
+      /* Wetterturnier VERLY LIGHT BLUEISH: #eef0f2 */
+
+      $sleepy_color  = "#cccccc";
+      $player_colors = array("#ff6600","#0c3772","#0e9311","red","darkviolet");
+
+      $result->line_colors = array_fill(0, $usercount, "");
+
+      //$result->line_colors = array("#ff6600","#E16A86","#9C9500","#00AD81","#4195E2");
+      $ii = 0;
+      for ($i=0; $i < $usercount; $i++) {
+        if ($users[$i] == $sleepyID) {
+            $result->line_colors[$i] = $sleepy_color;
+            $ii++;
+        } else {
+            $result->line_colors[$i] = $player_colors[$i - $ii]; 
+        }
+      }
+      //$result->line_colors = array("#cccccc","#E16A86","#9C9500","#00AD81","#4195E2");
       $result->ylabel      = __("Points","wpwt");
       $result->xlabel      = __("Date","wpwt");
       $result->title       = __("Full weekend points","wpwt");
 
       // Append readable usernames
-      $result->user_login  = array("Sleepy");
-      for ( $i = 0; $i < count($users); $i++ ) {
+      $result->user_login  = array();
+      for ( $i = 0; $i < $usercount; $i++ ) {
          $tmp = $WTuser->get_user_by_ID( (int)$users[$i] );
          array_push($result->user_login,$tmp->user_login);
       }
 
       // Create proper data arrays
       $result->data       = array();
-      $tmp = $this->wpdb->get_results( join("\n",$sql) );
+      $tmp = $this->wpdb->get_results( $sql );
       // No data?
       if ( $this->wpdb->num_rows == 0 ) { $result->num_rows = $this->wpdb->num_rows; }
       foreach( $tmp as $rec ) {
@@ -155,6 +188,90 @@ class wetterturnier_chartHandler {
 
    }
 
+public $str = <<<EOD
+SELECT * FROM
+(SELECT p1.tdate*86400 AS timestamp, 
+ROUND(p1.points, 1) AS player1
+, ROUND(p2.points, 1) AS player2
+FROM
+(SELECT tdate, points FROM wp_wetterturnier_bets
+WHERE userID = 1461 AND cityID = 4 AND paramID IN(1,2) ) AS p1
+LEFT OUTER JOIN
+(SELECT tdate, userID, points FROM wp_wetterturnier_bets
+WHERE userID = 954 AND cityID = 4 AND paramID IN(1,2) ) AS p2
+ON p1.tdate = p2.tdate
+) AS tmp
+WHERE player1 IS NOT NULL AND player2 IS NOT NULL AND timestamp < 1583712000
+ORDER BY timestamp"""
+EOD;
+
+   public function timeseries_parameter_points_ajax() {
+
+      global $WTuser;
+      $sleepyID = $WTuser->get_user_ID("Sleepy");
+
+      $args = (object)$_POST;
+
+      if ( ! property_exists($args,"column") ) { $args->column = "points"; }
+
+      // Parsing user inputs. Creates an array of integers if the
+      // format matches /^(\d+)(,\d+)*$/. Else error message and exit.
+      if ( empty($args->userID) ) {
+         print json_encode(array("error"=>"[ERROR] Input userID not set!")); die();
+      } else if ( preg_match("/^(\d+)(,\d+)*$/",$args->userID) ) {
+         $users = explode(",",$args->userID); array_walk($users,'intval');
+         $usercount = count($users);
+      } else { 
+         print json_encode(array("error"=>"[ERROR] Input userID not valid (wrong format/pattern).")); die();
+      }
+
+      if ( empty($args->cityID) ) {
+         print json_encode(array("error"=>"[ERROR] Input cityID not set!")); die();
+      } else { $cityID = $args->cityID; }
+
+      if ( empty($args->params) ) {
+         print json_encode(array("error"=>"[ERROR] Input params not set!")); die();
+      } else { $params = $args->params; }
+
+      $sql  = "SELECT * FROM\n";
+         $sql .= "SELECT(p1.tdate*86400 AS timestamp\n";
+         $sql .= "ROUND(p1.pouints, 1) AS player1";
+         if ($usercount > 1) {
+            for ($i=2; $i <= $usercount; $i++) {
+               $sql .= sprintf(", ROUND(p%d.points, 1) AS player%d", $i, $i);
+            }
+         }
+
+      $sql .= "FROM\n";
+      $sql .= "   (SELECT tdate, points FROM wp_wetterturnier_bets\n";
+      $sql .= sprintf("   WHERE userID = %d AND cityID = %d AND paramID IN(%s) ) AS p1\n", $users[0],
+              $cityID, $params);;
+
+      if ($usercount > 1) {
+         $sql .= "LEFT OUTER JOIN\n";
+         for ($i=2; $i <= $usercount; $i++) {
+            $sql .= "   (SELECT tdate, userID, points FROM wp_wetterturnier_bets\n";
+            $sql .= sprintf("WHERE userID = %d AND cityID = %d AND paramID IN(%s) ) AS p%d\n",
+                           $users[$i-1], $cityID, $params);
+            $sql .= sprintf("ON p1.tdate = p%d.tdate\n", $i);
+         }
+      }
+
+      $sql .= ") AS tmp\n"; // End of ( ) AS tmp table
+
+      $where = array();
+      // Kill empty lines
+      for ( $i = 1; $i <= $usercount; $i++ ) {
+         array_push($where, "player".$i." IS NOT NULL");
+      }
+      array_push($where, "timestamp < " . $this->tdatemax*86400);
+
+      $sql .= "WHERE ".join(" AND ", $where);
+
+      // Order time series
+      $sql .= "\nORDER BY timestamp";
+   
+   }
 
    // ---------------------------------------------------------------
    /// @details 
@@ -162,19 +279,24 @@ class wetterturnier_chartHandler {
    ///   cityID integer.
    // ---------------------------------------------------------------
    public function participants_counts_ajax() {
-
+      
       global $WTuser;
+      $sleepyID = $WTuser->get_user_ID("Sleepy");
 
       $args = (object)$_POST;
 
       // Automaten, WARNING do not check time when active in group!
+      $automaten_id = $WTuser->get_group_ID( "Automaten" );
       $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d",
-                  $this->wpdb->prefix,15));
+                  $this->wpdb->prefix, $automaten_id));
+
       $automaten = array();
       foreach ( $tmp as $rec ) { array_push($automaten,$rec->userID); }
-      // Referneztips, WARNING do not check time when active in group!
-      $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d",
-                  $this->wpdb->prefix,18));
+
+      // Referenztips, WARNING do not check time when active in group!
+      $referenz_id = $WTuser->get_group_ID( "Referenztipps" );
+      $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d", $this->wpdb->prefix, $referenz_id));
+
       $referenz = array();
       foreach ( $tmp as $rec ) { array_push($referenz,$rec->userID); }
 
@@ -205,7 +327,7 @@ class wetterturnier_chartHandler {
       array_push($sql,sprintf("   FROM %swetterturnier_betstat AS betstat",$this->wpdb->prefix));
       array_push($sql,sprintf("   LEFT JOIN %s AS user",$this->wpdb->users));
       array_push($sql,"   ON betstat.userID = user.ID");
-      array_push($sql,sprintf("   WHERE betstat.cityID = %d AND NOT user.ID = 11130",$args->cityID));
+      array_push($sql,sprintf("   WHERE betstat.cityID = %d AND NOT user.ID = %d",$args->cityID, $sleepyID));
       array_push($sql,") AS tmp");
       array_push($sql,"GROUP BY timestamp ORDER BY timestamp ASC");
 

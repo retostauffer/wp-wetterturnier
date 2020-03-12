@@ -2,7 +2,7 @@
 // ------------------------------------------------------------------
 // You can append init_user_search to any <div> object.
 // ------------------------------------------------------------------
-jQuery.fn.usersearch = function(ajaxurl,inputs) {
+jQuery.fn.usersearch = function(ajaxurl, inputs) {
    // Shortcut for jQuery
    $ = jQuery
 
@@ -17,7 +17,7 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
    // Append class
    $(this).addClass('wetterturnier-user-search');
    $(this).empty()
-   $("<input class=\"user-search\" name=\"user-search\" automplete=\"off\"></input>").appendTo(this);
+   $("<input class=\"user-search\" name=\"user-search\" autocomplete=\"on\"></input>").appendTo(this);
    $("<input type=\"hidden\" name=\"user-search-id\" value=\"\" />").appendTo(this)
    $("<input type=\"hidden\" name=\"user-search-name\" value=\"\" />").appendTo(this)
    $("<ul></ul>").appendTo(this);
@@ -27,8 +27,8 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
    // this is a wordpress plugin!
    wpwt_get_user_data = function() {
    
-      console.log( ajaxurl )
-      // Ajaxing the calculation miniscript
+      console.log( inputs )
+      // Ajaxing the usersearch on database, see generalclass
       var data = false;
       $.ajax({
          url: ajaxurl, dataType: 'json', type: 'post', async: false,
@@ -72,7 +72,7 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
             $("<li class=\"user-search-selectable\" userID=\""+data[i]['ID']+"\">"+data[i]['user_login']+"</li>").appendTo( thisul );
          });
          var num = thisul.find("li").length
-         if      ( num == 1 ) {
+         if ( num == 1 ) {
             var username = thisul.find("li").first().html()
             var userID   = thisul.find("li").first().attr("userid")
 console.log( " ----------- " + username )

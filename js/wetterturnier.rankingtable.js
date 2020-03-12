@@ -95,8 +95,8 @@ $.fn.show_ranking = function(ajaxurl, input ) {
       if ( data.meta.has_trends ) {
           $( head ).append("<th class=\"trend\">"+data.dict.trend+"</th>");
       }
-      // Only show number of played games if begin/end date differ
-      if ( data.meta.ntournaments > 1 || input.type === "eternal" ) {
+      // Only show number of played games if begin/end date differ or in season/yearly rankings
+      if ( data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 || input.type=="eternal" ) {
           $( head ).append("<th class=\"played\">"+data.dict.played+"</th>");
       }
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
@@ -137,8 +137,10 @@ $.fn.show_ranking = function(ajaxurl, input ) {
          if ( data.meta.has_trends ) {
              $( tr ).append("<td class=\"trend\">"+colorize_trend(rec.trend)+"</td>");
          }
-         // Only show number of played games if begin/end date differ
-         if ( data.meta.ntournaments > 1 ) { $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.ntournaments+"</td>"); }
+         // Only show number of played games if begin/end date differ or for season/yearly rankings
+         if ( data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 ) {
+             $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.total_tournaments+"</td>");
+         }
          else if ( input.type === "eternal" ) { $(tr).append("<td class=\"played\">"+rec.played_now+"</td>"); }
          $(tr).append("<td>" +
                       (( rec.detail_button != undefined && data.meta.ntournaments === 1 ) ? rec.detail_button : "") + 

@@ -5,10 +5,7 @@
 /// @date 16 June 2017
 /// @brief Interface to create some plots.
 // ------------------------------------------------------------------
-
-
 global $WTuser;
-
 // The jQuery code for sending applications. 
 ///$ndays = (int)$WTuser->options->wetterturnier_betdays;
 ///$chartHandler = new wetterturnier_chartHandler( 'test in googleclass', $ndays );
@@ -16,27 +13,29 @@ global $WTuser;
 $WTuser->include_js_script("wetterturnier.usersearch");
 $WTuser->include_js_script("wetterturnier.googlecharts");
 //$WTuser->include_js_script("jquery-ui.min");
-
 ?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-
    jQuery(document).on("ready",function() {
       (function($) {
-
          // Prevent enter button on this page (not that the user submits
          // the <form> below)
          $(window).keydown(function(event){
            if(event.keyCode == 13) { event.preventDefault(); return false; }
          });
-
          // Initialize user search
-         var adminurl = <?php printf("'%s'\n",admin_url('admin-ajax.php')); ?>
+         var adminurl = <?php printf("'%s'\n", admin_url('admin-ajax.php')); ?>
          var opts  = {target:"#chart-div",
-                      call: "timeseries_user_points",
-                      cityID:<?php printf("'%d'",$WTuser->get_current_cityObj()->get("ID")); ?>}
-         var opts = {addul:"#selected-users",ulmax:4}
+                      call: get_current_plottype(),
+                      cityID:<?php printf("'%d'",$WTuser->get_current_cityObj()->get("ID")); ?>,
+                      //userID:<?php _e(get_current_user_id()); ?>,
+                      sleepy: "0", column: "points" }
+         var opts = {addul:"#selected-users", ulmax:5, serched:"Sleepy"}
+
+         refresh_chart("init");
+
          $('#chart-options div.user-search').usersearch(adminurl, opts);
+         
          function get_current_plottype() {
             return( $("#chart-options").find("[name='opt-plottype']").val() );
          }
@@ -50,17 +49,25 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
             $(this).remove()
             refresh_chart("timeseries_user_points")
          });
+
+        $( '#paramID .all-button' ).click( function () {
+            $( '#paramID input[type="checkbox"]' ).prop('checked', "true")
+        })
+
+        $( '#paramID .none-button' ).click( function () {
+            $( '#paramID input[type="checkbox"]' ).removeAttr("checked")
+        })
+
          // Execute as soon as observed elements change
          $("#chart-options").on("change",".observe",function() {
             refresh_chart( get_current_plottype() )
          });
-         function refresh_chart(call) {
 
+         function refresh_chart(call) {
             // Show/hide placeholder
             if ( $("#selected-users").find(".selected-user").length === 0 ) {
-               $("#selected-users li.placeholder").show()
+                $("#selected-users li.placeholder").show()
             } else { $("#selected-users li.placeholder").hide()  }
-
             // Getting sleepy option
             var opt_column    = $("#chart-options").find("[name='opt-column']:checked").val()
             if ( opt_column !== "points" ) {
@@ -68,7 +75,6 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
             }
             var opt_sleepy   = $("#chart-options").find("[name='opt-sleepy']:checked").val()
             var opt_cityID    = $("#chart-options").find("[name='opt-cityID']").val()
-
             // Read selected users
             var lis = $("#selected-users").find("li.selected-user")
             //if ( lis.length === 0 ) { return }
@@ -77,19 +83,24 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
                if ( uid.length == 0 ) { uid = $(val).attr("userid") }
                else { uid = uid + "," + $(val).attr("userid") }
             });
-
             // Argument options for googlechart function call
             if ( call === "timeseries_user_points" ) {
                var opts = {call: call, userID: uid, cityID: opt_cityID, sleepy: opt_sleepy,
                            column: opt_column }
+               //show expand with sleepy and points d1/d2 options
+               //$("#chart-options #sleepy").show()
+               $("#chart-options #pointselector").show()
             } else if ( call === "participants_counts" ) {
-               var opts = {call: call, cityID: opt_cityID}
+                var opts = {call: call, cityID: opt_cityID}
+                //hide expand with sleepy and points d1/d2 options
+                //$("#chart-options #sleepy").hide()
+                $("#chart-options #pointselector").hide()
+
             } else if ( call === "init" ) {
-               var opts = {call: call}
+               var opts = {call: get_current_plottype(), userID:uid, cityID: opt_cityID, sleepy: "0", column: "points" }
             } else {
                alert("Undefind procedure creating the opts object for \""+call+"\"!");
             }
-
             $.fn.googlechart(adminurl,"chart-div",opts);
          }
 
@@ -100,7 +111,6 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
             foreach ( $_GET as $key=>$val ) { $get_opts[$key] = $val; } ?>
             var getopts = <?php print json_encode($get_opts); ?>;
          <?php } ?>
-
          // Initialize
          if ( typeof(getopts) !== "undefined" ) {
             console.log( adminurl )
@@ -109,7 +119,6 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          } else {
             refresh_chart( "init" )
          }
-
       })(jQuery);
    });
 </script>
@@ -127,7 +136,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
    float: inline;
 }
 #selected-users:before {
-   content: "Selected users:";
+   content: "<?= _e("Selected users:","wpwt"); ?>";
    font-weight: bold;
    clear: both;
    padding-right: 10px;
@@ -168,7 +177,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
    margin: 20px 0;
 }
 #chart-share-url:before {
-   content: "Share Plot:";
+   content: "<?= _e("Share Plot:","wpwt")?>";
    padding-right: 5px;
    font-weight: bold;
 }
@@ -185,31 +194,51 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
    <!-- place where usersearch stores the result -->
    <div id="user-search" class='user-search'></div><br>
    <ul id="selected-users">
-      <li class="placeholder"><?php _e("No user selected","wpwt"); ?></li>
+      <li class="placeholder"><?php _e("No user selected","wpwt");?></li>
+      <?php
+            if (is_user_logged_in()) {
+                $userID = get_current_user_id();
+                $display_name = get_user_by("id", $userID)->display_name;
+                printf("<li class=\"selected-user\" userid=\"%d\">%s</li>", $userID, $display_name);
+            }
+            // else only get Sleepy
+            $moses = get_user_by("login", "Sleepy");
+            printf("<li class=\"selected-user\" userid=\"%d\">%s</li>",
+            $moses->ID, $moses->display_name);
+        ?>
    </ul>
    <div id="plot-type">
-      <b>Select plot type:</b>&nbsp;
+      <b><?php _e("Select plot type:","wpwt"); ?></b>&nbsp;
       <select name="opt-plottype" class="observe">
-         <option value="" selected>Select a plot type first</option>
-         <option value="timeseries_user_points">Timeseries Points</option>
-         <!--<option value="timeseries_user_points">Timeseries Parameter Points</option>-->
-         <option value="participants_counts">Participants counts</option>
+         <option value="timeseries_user_points" selected><?php _e("Timeseries points","wpwt"); ?></option>
+         <!--TODO-->
+         <option value="timeseries_user_param_points"><?php _e("Timeseries Parameter Points","wpwt"); ?></option>
+         <!--<option value="median">Median</option>-->
+         <!--<option value="median_IQR">Median + IQR</option>-->
+         <!--<option value="median_range">Timeseries Parameter Points</option>-->
+         <!--<option value="mean">Timeseries Parameter Points</option>-->
+         <!--<option value="mean">Timeseries Parameter Points</option>-->
+         <!--<option value="sd">Timeseries Parameter Points</option>-->
+         <!--<option value="sd_upp">Timeseries Parameter Points</option>-->
+         <!--<option value="max">Timeseries Parameter Points</option>-->
+         <!--<option value="min">Timeseries Parameter Points</option>-->
+         <option value="participants_counts"><?php _e("Participants counts","wpwt"); ?></option>
       </select>
    </div>
    <div id="paramID">
-      <b>Select a parameter:</b>&nbsp;
-      <select name="opt-paramID" class="observe">
+   <b><?php _e("Select parameters:","wpwt"); ?></b>&nbsp;
       <?php
-      $selected = "selected";
+      $checked = "checked";
       foreach ( $WTuser->get_param_data() as $rec ) {
-         printf("  <option value='%d' %s>%s</s>",$rec->paramID,
-               $selected,$rec->paramName); $selected = "";
+         printf("<input id='param' type='checkbox' value='%d' %s>%s </s>", $rec->paramID,
+               $checked, $rec->paramName);
       }
       ?>
-      </select>
+      <input type="button" class="all-button" value="All"></input>
+      <input type="button" class="none-button" value="None"></input>
    </div>
    <div id="cityID">
-      <b>Select a city:</b>&nbsp;
+      <b><?php _e("Select a city:","wpwt"); ?></b>&nbsp;
       <select name="opt-cityID" class="observe">
       <?php
       $curCityObj = $WTuser->get_current_cityObj();
@@ -221,19 +250,18 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
       ?>
       </select>
    </div>
-   <div id="sleepy">
-      <b>Expand with Sleepy:</b>&nbsp;
-      <input class="observe" type="radio" name="opt-sleepy" value="0"> No
-      <input class="observe" type="radio" name="opt-sleepy" value="1" checked> Yes
+   <div id="sleepy" style="display:none;">
+      <b style="display:none"><?php _e("Expand with Sleepy:","wpwt"); ?></b>&nbsp;
+      <input style="display:none" class="observe" type="radio" name="opt-sleepy" value="1"> <?php //_e("yes","wpwt"); ?>
+      <input style="display:none" class="observe" type="radio" name="opt-sleepy" value="0" checked> <?php //_e("no","wpwt"); ?>
    </div>
-   <div id="pointselector">
-      <b>Show points for Saturday/Sunday/Total:</b>&nbsp;
-      <input class="observe" type="radio" name="opt-column" value="points_d1"> Saturday
-      <input class="observe" type="radio" name="opt-column" value="points_d2"> Sunday
-      <input class="observe" type="radio" name="opt-column" value="points" checked> Total
+   <div id="pointselector" style="display:none;">
+   <b><?php _e("Show points for:","wpwt"); ?></b>&nbsp;
+      <input class="observe" type="radio" name="opt-column" value="points_d1"> <?php _e("Saturday","wpwt"); ?>
+      <input class="observe" type="radio" name="opt-column" value="points_d2"> <?php _e("Sunday","wpwt"); ?>
+      <input class="observe" type="radio" name="opt-column" value="points" checked> <?php _e("total","wpwt"); ?>
    </div>
 </div>
 
 <div id='chart-div'></div>
 <div id='chart-share-url'></div>
-
