@@ -30,7 +30,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
                       cityID:<?php printf("'%d'",$WTuser->get_current_cityObj()->get("ID")); ?>,
                       //userID:<?php _e(get_current_user_id()); ?>,
                       sleepy: "0", column: "points" }
-         var opts = {addul:"#selected-users", ulmax:5, serched:"Sleepy"}
+         var opts = {addul:"#selected-users", ulmax:5} //TODO save already searched users, pass here
 
          refresh_chart("init");
 

@@ -212,7 +212,9 @@ EOD;
 
       $args = (object)$_POST;
 
-      if ( ! property_exists($args,"column") ) { $args->column = "points"; }
+      //for points_d1/d2 we have to use the betdate column instead of tdate
+      //d1: bdate = tdate+1
+      //d2: bdate = tdate+2
 
       // Parsing user inputs. Creates an array of integers if the
       // format matches /^(\d+)(,\d+)*$/. Else error message and exit.
@@ -279,87 +281,101 @@ EOD;
    ///   cityID integer.
    // ---------------------------------------------------------------
    public function participants_counts_ajax() {
-      
+
+      error_reporting(0); 
       global $WTuser;
       $sleepyID = $WTuser->get_user_ID("Sleepy");
 
       $args = (object)$_POST;
 
       // Automaten, WARNING do not check time when active in group!
-      $automaten_id = $WTuser->get_group_ID( "Automaten" );
-      $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d",
-                  $this->wpdb->prefix, $automaten_id));
+      $automat_id = $WTuser->get_group_ID( "Automaten" );
+      $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d", $this->wpdb->prefix, $automat_id));
 
-      $automaten = array();
-      foreach ( $tmp as $rec ) { array_push($automaten,$rec->userID); }
+      $automat = array();
+      foreach ( $tmp as $rec ) { array_push($automat, $rec->userID); }
 
       // Referenztips, WARNING do not check time when active in group!
       $referenz_id = $WTuser->get_group_ID( "Referenztipps" );
       $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d", $this->wpdb->prefix, $referenz_id));
 
       $referenz = array();
-      foreach ( $tmp as $rec ) { array_push($referenz,$rec->userID); }
+      foreach ( $tmp as $rec ) { array_push($referenz, $rec->userID); }
 
       // Create strings for the sql query
-      $id_automaten = sprintf("(%s)",join(",",$automaten));
-      $id_referenz  = sprintf("(%s)",join(",",$referenz));
-      $id_nonhuman  = sprintf("(%s)",join(",",array_merge($referenz,$automaten)));
+      $id_automat  = sprintf("(%s)", join(",", $automat));
+      $id_referenz = sprintf("(%s)", join(",", $referenz));
+      $id_nonhuman = sprintf("(%s)", join(",", array_merge($referenz, $automat)));
 
       // Create SQL command
-      $sql = array();
-      array_push($sql,"SELECT timestamp, SUM(referenz) AS referenz, SUM(gruppe) AS gruppe,");
-      array_push($sql,"SUM(automat) AS automat, SUM(human) AS human");
-      array_push($sql,"FROM (");
-      array_push($sql,sprintf("   SELECT betstat.tdate*86400 AS timestamp,"));
-      // Check if automatenforecast
-      array_push($sql,sprintf("   CASE WHEN user.ID IN %s THEN 1 ELSE 0 END AS automat,",$id_automaten));
-      // Check if referenztip
-      array_push($sql,sprintf("   CASE WHEN user.ID IN %s THEN 1 ELSE 0 END AS referenz,",$id_referenz));
-      // Check if group bet
-      array_push($sql,sprintf("   CASE WHEN user.ID IN %s THEN 0 ELSE",$id_nonhuman));
-      array_push($sql,"      CASE WHEN user.user_login LIKE 'GRP_%' THEN 1 ELSE 0 END");
-      array_push($sql,"   END AS gruppe,");
-      // Check if human player
-      array_push($sql,sprintf("   CASE WHEN user.ID IN %s THEN 0 ELSE",$id_nonhuman));
-      array_push($sql,"      CASE WHEN user.user_login LIKE 'GRP_%' THEN 0 ELSE 1 END");
-      array_push($sql,"   END AS human");
-      ///
-      array_push($sql,sprintf("   FROM %swetterturnier_betstat AS betstat",$this->wpdb->prefix));
-      array_push($sql,sprintf("   LEFT JOIN %s AS user",$this->wpdb->users));
-      array_push($sql,"   ON betstat.userID = user.ID");
-      array_push($sql,sprintf("   WHERE betstat.cityID = %d AND NOT user.ID = %d",$args->cityID, $sleepyID));
-      array_push($sql,") AS tmp");
-      array_push($sql,"GROUP BY timestamp ORDER BY timestamp ASC");
-
-      ///print "\n------------------------------\n";
-      ///print join("\n",$sql);
-      ///print "\n------------------------------\n";
-      ///die();
+      $sql  = "SELECT timestamp, SUM(referenz) AS referenz, SUM(gruppe) AS gruppe,\n";
+      $sql .= "SUM(automat) AS automat, SUM(human) AS human\n";
+      $sql .= "FROM (\n";
+      $sql .= "   SELECT betstat.tdate*86400 AS timestamp,\n";
+      $sql .= "   CASE WHEN user.ID IN ".$id_automat. " THEN 1 ELSE 0 END AS automat,\n";
+      $sql .= "   CASE WHEN user.ID IN ".$id_referenz." THEN 1 ELSE 0 END AS referenz,\n";
+      $sql .= "   CASE WHEN user.ID IN ".$id_nonhuman." THEN 0 ELSE\n";
+      $sql .= "      CASE WHEN user.user_login LIKE 'GRP_%' THEN 1 ELSE 0 END\n";
+      $sql .= "   END AS gruppe,\n";
+      $sql .= "   CASE WHEN user.ID IN ".$id_nonhuman." THEN 0 ELSE\n";
+      $sql .= "      CASE WHEN user.user_login LIKE 'GRP_%' THEN 0 ELSE 1 END\n";
+      $sql .= "   END AS human\n";
+      $sql .= "   FROM ".$this->wpdb->prefix."wetterturnier_betstat AS betstat\n";
+      $sql .= "   LEFT JOIN ".$this->wpdb->users." AS user\n";
+      $sql .= "   ON betstat.userID = user.ID\n";
+      $sql .= "   WHERE betstat.cityID = ".$args->cityID." AND NOT user.ID = ".$sleepyID;
+      $sql.="\n) AS tmp\n";
+      $sql .= "GROUP BY timestamp ORDER BY timestamp ASC";
+      
+      //this would be even nicer to read but doesnt work somehow???
+      /* 
+      $sql = <<< SQL
+         SELECT timestamp, SUM(referenz) AS referenz, SUM(gruppe) AS gruppe
+         SUM(automat) AS automat, SUM(human) AS human
+         FROM (
+            SELECT betstat.tdate*86400 AS timestamp
+            CASE WHEN user.ID IN $id_automat  THEN 1 ELSE 0 END AS automat
+            CASE WHEN user.ID IN $id_referenz THEN 1 ELSE 0 END AS referenz
+            CASE WHEN user.ID IN $id_nonhuman THEN 0 ELSE
+               CASE WHEN user.user_login LIKE 'GRP_%' THEN 1 ELSE 0 END
+            END AS gruppe
+            CASE WHEN user.ID IN $id_nonhuman THEN 0 ELSE
+               CASE WHEN user.user_login LIKE 'GRP_%' THEN 0 ELSE 1 END
+            END AS human
+            FROM {$this->wpdb->prefix}wetterturnier_betstat AS betstat
+            LEFT JOIN $this->wpdb->users AS user
+            ON betstat.userID = user.ID
+            WHERE betstat.cityID = $args->cityID AND NOT user.ID = $sleepyID
+         ) AS tmp
+         GROUP BY timestamp ORDER BY timestamp ASC
+      SQL;
+      */
 
       // Save results
       $result = new stdClass();
-      $result->sql = join("\n",$sql);
+      $result->sql = $sql;
       
       $result->line_colors = array("#cccccc","#E16A86","#9C9500","#00AD81");
       $result->ylabel      = __("Particioners","wpwt");
       $result->xlabel      = __("Date","wpwt");
       $result->title       = __("Number of participants","wpwt");
 
-      $result->names = array("referenz","group","automate","human");
+      $result->names = array(__("Reference methods","wpwt"),__("Groups","wpwt"),__("Automated forecasts","wpwt"),__("Human players","wpwt"));
 
       // Create proper data arrays
       $result->data       = array();
-      $tmp = $this->wpdb->get_results( join("\n",$sql) );
+      $tmp = $this->wpdb->get_results( $sql );
       // No data?
       if ( $this->wpdb->num_rows == 0 ) { $result->num_rows = $this->wpdb->num_rows; }
       foreach( $tmp as $rec ) {
-         $tmp = array(); foreach ( $rec as $key=>$val ) { array_push($tmp,(float)$val); }
+         $tmp = array();
+         foreach ( $rec as $key=>$val ) {
+             array_push($tmp, (float)$val);
+         }
          array_push($result->data,$tmp);
          unset($tmp);
       }
       echo json_encode($result,true);
       die();
-
    }
-
 }
