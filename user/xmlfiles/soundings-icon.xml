@@ -43,10 +43,12 @@
          <name>Zurich</name>
          <imgname>Zurich</imgname>
       </station>
+      <!--
       <station>
          <name>Innsbruck</name>
          <imgname>Innsbruck</imgname>
       </station>
+      -->
       <station>
          <name>Leipzig</name>
          <imgname>Leipzig</imgname>
@@ -55,12 +57,12 @@
 
    <types>
       <type>
-         <name>Stuve [s]</name>
-         <imgname>stuve</imgname>
-      </type>
-      <type>
          <name>Skew-T [t]</name>
          <imgname>skewT</imgname>
+      </type>
+      <type>
+         <name>Stuve [s]</name>
+         <imgname>stuve</imgname>
       </type>
       <type>
          <name>Hodograph [h]</name>

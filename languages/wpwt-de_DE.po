@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-10 04:20+0000\n"
-"PO-Revision-Date: 2020-03-10 04:21+0000\n"
+"POT-Creation-Date: 2020-03-10 15:12+0000\n"
+"PO-Revision-Date: 2020-03-10 15:12+0000\n"
 "Last-Translator: sferics <juri.hubrig@fu-berlin.de>\n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -1070,6 +1070,10 @@ msgstr "Median"
 #: user/views/userprofile.php:116
 msgid "Max points"
 msgstr "Maximale Punktzahl"
+
+#: user/views/userprofile.php:117
+msgid "Min points"
+msgstr "Minimale Punktzahl"
 
 #: user/views/userprofile.php:118
 msgid "Standard deviation"

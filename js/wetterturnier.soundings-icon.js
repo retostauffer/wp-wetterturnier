@@ -156,7 +156,7 @@ jQuery(document).on('ready',function() {
                 // Remove current selection
                 $("#wt-sounding-navigation .types ul li.selected").removeClass("selected")
                 // Add new selection
-                $("#wt-sounding-navigation .types ul li:nth-child(1)").addClass("selected")
+                $("#wt-sounding-navigation .types ul li:nth-child(2)").addClass("selected")
                 $("#wt-sounding-navigation .types ul li.selected").attr("type", "stuve")
                 showImage(); // Update image
             } else if ( e.keyCode == 84 ) { //t
@@ -164,7 +164,7 @@ jQuery(document).on('ready',function() {
                 // Remove current selection
                 $("#wt-sounding-navigation .types ul li.selected").removeClass("selected")
                 // Add new selection
-                $("#wt-sounding-navigation .types ul li:nth-child(2)").addClass("selected")
+                $("#wt-sounding-navigation .types ul li:nth-child(1)").addClass("selected")
                 $("#wt-sounding-navigation .types ul li.selected").attr("type", "skewT")
                 showImage(); // Update image
             } else if ( e.keyCode == 72 ) { //h

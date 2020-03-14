@@ -114,7 +114,7 @@ function get_city_stats( $cityID, $userID ) {
          array_push($return, sprintf("<table style=\"width:300px;\"><tr><td>".__("Average points","wpwt").":</td><td><b>%s</b></td><tr>", number_format($pavg,1) ) );
          array_push($return, sprintf("<tr><td>".__("Median points","wpwt").":</td><td><b>%s</b></td><tr>", number_format($pmed,1) ) );
          array_push($return, sprintf( "<tr><td>".__("Max points","wpwt").":</td><td><b>%s</b></td><tr>", number_format($pmax,1) ) );
-         array_push($return, sprintf( "<tr><td>".__("Min points").":</td><td><b>%s</b></td><tr>", number_format($pmin,1) ) );
+         array_push($return, sprintf( "<tr><td>".__("Min points","wpwt").":</td><td><b>%s</b></td><tr>", number_format($pmin,1) ) );
          array_push($return, sprintf( "<tr><td>".__("Standard deviation","wpwt").":</td><td><b>%s</b></td><tr></table>", number_format($pstd,1) ) );
       }
       return( join("\n", $return) );

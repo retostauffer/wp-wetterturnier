@@ -176,8 +176,7 @@ class wetterturnier_chartHandler {
       $args = (object)$_POST;
       // Automaten, WARNING do not check time when active in group!
       $automaten_id = $WTuser->get_group_ID( "Automaten" );
-      $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d",
-                  $this->wpdb->prefix, $automaten_id));
+      $tmp = $this->wpdb->get_results(sprintf("SELECT userID FROM %swetterturnier_groupusers WHERE groupID = %d", $this->wpdb->prefix, $automaten_id));
       
       $automaten = array();
       foreach ( $tmp as $rec ) { array_push($automaten,$rec->userID); }
@@ -242,7 +241,10 @@ class wetterturnier_chartHandler {
       // No data?
       if ( $this->wpdb->num_rows == 0 ) { $result->num_rows = $this->wpdb->num_rows; }
       foreach( $tmp as $rec ) {
-         $tmp = array(); foreach ( $rec as $key=>$val ) { array_push($tmp,(float)$val); }
+         $tmp = array();
+         foreach ( $rec as $key=>$val ) {
+            array_push($tmp, (float)$val);
+         }
          array_push($result->data,$tmp);
          unset($tmp);
       }

@@ -274,11 +274,14 @@ table.tablesorter tbody td {
 }
 
 .wttable-show * th { padding: 0 2px; }
-.wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 45px; }
+.wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 30px; }
 .wttable-show * th.trend,      .wttable-show * td.trend       { text-align: center; width: 45px; }
-.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 60px }
-.wttable-show * th.user,       .wttable-show * td.user        { text-align: left; min-width: 200px; }
-.wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 60px; }
+.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; min-width: 60px; }
+.wttable-show * th.user,       .wttable-show * td.user        { text-align: left; width: 180px; }
+.wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 70px; max-width: 70px; }
+.wttable-show * th.points-diff,     .wttable-show * td.points-diff { text-align: right; width: 40px; }
+.wttable-show * th.points-d1d2,     .wttable-show * td.points-d1d2 { text-align: right; width: 40px; }
+
 .wttable-show * th.statusbar,  .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
 .wttable-show * td.difference                                 { color: gray; }
 
@@ -347,8 +350,7 @@ table.tablesorter tbody td {
 
 /* Hide Sat/Sun on very small screens */
 @media screen and (max-width: 639px) {
-   #content .wttable-show * th.points.d1,     .wttable-show * td.points.d1 { display: none; }
-   #content .wttable-show * th.points.d2,     .wttable-show * td.points.d2 { display: none; }
+   #content .wttable-show * th.points-d1d2,     .wttable-show * td.points-d1d2 { display: none; }
    #content .wttable-archive * th:nth-last-child(1), #content .wttable-archive * td:nth-last-child(1) { 
       display:none;
    }

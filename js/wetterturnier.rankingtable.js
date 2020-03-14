@@ -105,10 +105,10 @@ $.fn.show_ranking = function(ajaxurl, input) {
       // Only show number of played games if begin/end date differ
       if ( data.meta.ntournaments > 1 ) { $( head ).append("<th class=\"played\">"+data.dict.played+"</th>"); }
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
-               .append("<th class=\"points difference\">"+data.dict.difference+"</th>")
+               .append("<th class=\"points-diff\">"+data.dict.difference+"</th>")
                .append("<th class=\"points\">"+data.dict.points+"</th>")
-               .append("<th class=\"points d1\">"+data.dict.points_d1+"</th>")
-               .append("<th class=\"points d2\">"+data.dict.points_d2+"</th>")
+               .append("<th class=\"points-d1d2\">"+data.dict.points_d1+"</th>")
+               .append("<th class=\"points-d1d2\">"+data.dict.points_d2+"</th>")
                .append("<th class=\"statusbar\"></th>");
 
       counter = 0;
@@ -137,10 +137,10 @@ $.fn.show_ranking = function(ajaxurl, input) {
                       (( rec.detail_button != undefined && data.meta.ntournaments === 1 ) ? rec.detail_button : "") + 
                       (( rec.edit_button != undefined ) ? rec.edit_button : "") +
                       rec.profile_link + "</td>")
-                   .append("<td class=\"points difference\">"+rec.points_diff+"</td>")
+                   .append("<td class=\"points-diff\">"+rec.points_diff+"</td>")
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
-                   .append("<td class=\"points d1\">"+rec.points_d1+"</td>")
-                   .append("<td class=\"points d2\">"+rec.points_d2+"</td>")
+                   .append("<td class=\"points-d1d2\">"+rec.points_d1+"</td>")
+                   .append("<td class=\"points-d1d2\">"+rec.points_d2+"</td>")
                    .append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
 
           // Increase loop counter
