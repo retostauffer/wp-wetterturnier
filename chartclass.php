@@ -188,22 +188,21 @@ class wetterturnier_chartHandler {
 
    }
 
-public $str = <<<EOD
-SELECT * FROM
-(SELECT p1.tdate*86400 AS timestamp, 
-ROUND(p1.points, 1) AS player1
-, ROUND(p2.points, 1) AS player2
-FROM
-(SELECT tdate, points FROM wp_wetterturnier_bets
-WHERE userID = 1461 AND cityID = 4 AND paramID IN(1,2) ) AS p1
-LEFT OUTER JOIN
-(SELECT tdate, userID, points FROM wp_wetterturnier_bets
-WHERE userID = 954 AND cityID = 4 AND paramID IN(1,2) ) AS p2
-ON p1.tdate = p2.tdate
-) AS tmp
-WHERE player1 IS NOT NULL AND player2 IS NOT NULL AND timestamp < 1583712000
-ORDER BY timestamp"""
-EOD;
+   public $str = <<<SQL
+      SELECT * FROM
+      (SELECT p1.tdate*86400 AS timestamp, 
+      ROUND(p1.points, 1) AS player1, ROUND(p2.points, 1) AS player2
+      FROM
+         (SELECT tdate, points FROM wp_wetterturnier_bets
+         WHERE userID = 1461 AND cityID = 4 AND paramID IN(1,2) ) AS p1
+         LEFT OUTER JOIN
+         (SELECT tdate, userID, points FROM wp_wetterturnier_bets
+         WHERE userID = 954 AND cityID = 4 AND paramID IN(1,2) ) AS p2
+         ON p1.tdate = p2.tdate
+      ) AS tmp
+      WHERE player1 IS NOT NULL AND player2 IS NOT NULL AND timestamp < 1583712000
+      ORDER BY timestamp
+SQL;
 
    public function timeseries_parameter_points_ajax() {
 
@@ -272,7 +271,9 @@ EOD;
 
       // Order time series
       $sql .= "\nORDER BY timestamp";
-   
+
+      //calculate mean of points for each player by timestamp
+      //
    }
 
    // ---------------------------------------------------------------
@@ -282,7 +283,7 @@ EOD;
    // ---------------------------------------------------------------
    public function participants_counts_ajax() {
 
-      error_reporting(0); 
+      //error_reporting(0); 
       global $WTuser;
       $sleepyID = $WTuser->get_user_ID("Sleepy");
 
@@ -326,10 +327,9 @@ EOD;
       $sql .= "   WHERE betstat.cityID = ".$args->cityID." AND NOT user.ID = ".$sleepyID;
       $sql.="\n) AS tmp\n";
       $sql .= "GROUP BY timestamp ORDER BY timestamp ASC";
-      
+/*    
       //this would be even nicer to read but doesnt work somehow???
-      /* 
-      $sql = <<< SQL
+      $sql = <<<SQL
          SELECT timestamp, SUM(referenz) AS referenz, SUM(gruppe) AS gruppe
          SUM(automat) AS automat, SUM(human) AS human
          FROM (
@@ -348,9 +348,8 @@ EOD;
             WHERE betstat.cityID = $args->cityID AND NOT user.ID = $sleepyID
          ) AS tmp
          GROUP BY timestamp ORDER BY timestamp ASC
-      SQL;
-      */
-
+SQL;
+*/
       // Save results
       $result = new stdClass();
       $result->sql = $sql;

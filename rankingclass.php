@@ -298,7 +298,7 @@ class wetterturnier_rankingObject {
             # cities we have to capsule the statement above: 
             if ( $this->cities > 1 ) {
                 $sql = sprintf("SELECT * FROM (\n%s\n) AS X WHERE X.played = %d",
-                               $sql, $cities );
+                               $sql, $this->cities );
             }
         }
 
