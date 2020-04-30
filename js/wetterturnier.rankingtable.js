@@ -39,7 +39,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
      }
 
   });
-  //console.log(test);
+  console.log(test);
 
 
   // Show status bar (return status bar html)
@@ -88,7 +88,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
       // Short information about the maximum number of points possible
       if ( input.header && data.meta.ntournaments <= 52 ) {
           $(e).append("<div class=\"wttable-show-points-max\">" +
-              data.dict.points_max + " <b>" + data.meta.points_max + "</b>." +
+              data.dict.max_points + " <b>" + data.meta.max_points + "</b>." +
               "</div>");
       }
 
@@ -102,20 +102,32 @@ $.fn.show_ranking = function(ajaxurl, input) {
       if ( data.meta.has_trends ) {
           $( head ).append("<th class=\"trend\">"+data.dict.trend+"</th>");
       }
-      // Only show number of played games if begin/end date differ
-      if ( data.meta.ntournaments > 1 ) { $( head ).append("<th class=\"played\">"+data.dict.played+"</th>"); }
+      // Only show number of played games if begin/end date differ or in season/yearly rankings
+      if ( data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 || input.type=="eternal" ) {
+          $( head ).append("<th class=\"played\">"+data.dict.played+"</th>");
+      }
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                .append("<th class=\"points-diff\">"+data.dict.difference+"</th>")
                .append("<th class=\"points\">"+data.dict.points+"</th>")
-               .append("<th class=\"points-d1d2\">"+data.dict.points_d1+"</th>")
-               .append("<th class=\"points-d1d2\">"+data.dict.points_d2+"</th>")
-               .append("<th class=\"statusbar\"></th>");
+               if ( ["weekend","cities"].includes( input.type ) ) {
+                    $(head).append("<th class=\"points-d1d2\">"+data.dict.points_d1+"</th>")
+                           .append("<th class=\"points-d1d2\">"+data.dict.points_d2+"</th>")
+               } else if ( input.type === "eternal" ) {
+                    $(head).append("<th class=\"points\">"+data.dict.sd_ind+      "</th>")
+                           .append("<th class=\"points\">"+data.dict.points_max+  "</th>")
+                           .append("<th class=\"points\">"+data.dict.points_mean+ "</th>")
+                           //.append("<th class=\"points\">"+data.dict.points_med+  "</th>")
+                           .append("<th class=\"points\">"+data.dict.won_weekends+"</th>") // in %
+                           //.append("<th class=\"points\">"+data.dict.won_seasons +"</th>")
+                           //.append("<th class=\"points\">"+data.dict.played_seasons +"</th>")
+               }
+               $(head).append("<th class=\"statusbar\">"+data.dict.statusbar+"</th>");
 
       counter = 0;
       if ( typeof(input.limit) == undefined | typeof(input.limit) === "boolean" ) {
           input.limit = data.data.length;
       }
-      $.each( data.data, function(idx,rec) {
+      $.each( data.data, function(idx, rec) {
 
          // If input.type === "seasoncities": colorize the guys who have
          // not played all games.
@@ -131,17 +143,33 @@ $.fn.show_ranking = function(ajaxurl, input) {
          if ( data.meta.has_trends ) {
              $( tr ).append("<td class=\"trend\">"+colorize_trend(rec.trend)+"</td>");
          }
-         // Only show number of played games if begin/end date differ
-         if ( data.meta.ntournaments > 1 ) { $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.ntournaments+"</td>"); }
-         $(tr).append("<td>" +
-                      (( rec.detail_button != undefined && data.meta.ntournaments === 1 ) ? rec.detail_button : "") + 
+         // Only show number of played games if begin/end date differ or for season/yearly rankings
+         if ( (data.meta.ntournaments > 1 || data.meta.total_tournaments > 1) && input.type != "eternal") {
+             $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.total_tournaments+"</td>");
+         } else {
+             $(tr).append("<td class=\"played\">"+rec.played_now+"</td>");
+         }
+         $(tr).append("<td class=\"user\">" +
+                      (( rec.detail_button != undefined && data.meta.ntournaments === 1 ) ? rec.detail_button : "") +
                       (( rec.edit_button != undefined ) ? rec.edit_button : "") +
                       rec.profile_link + "</td>")
                    .append("<td class=\"points-diff\">"+rec.points_diff+"</td>")
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
-                   .append("<td class=\"points-d1d2\">"+rec.points_d1+"</td>")
-                   .append("<td class=\"points-d1d2\">"+rec.points_d2+"</td>")
-                   .append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
+
+                   // if only single tournament: show points_d1/d2
+                   if ( ["weekend","cities"].includes( input.type ) ) {
+                       $(tr).append("<td class=\"points-d1d2\">"+rec.points_d1+  "</td>")
+                            .append("<td class=\"points-d1d2\">"+rec.points_d2+  "</td>")
+                   } else if ( input.type === "eternal" ) {
+                       $(tr).append("<td class=\"points\">"+rec.sd_ind+     "</td>")
+                            .append("<td class=\"points\">"+rec.points_max+ "</td>")
+                            .append("<td class=\"points\">"+rec.points_mean+"</td>")
+                            //.append("<td class=\"points\">"+rec.points_med+"</td>")
+                            .append("<td class=\"points\">"+rec.won_weekends+"</td>")
+                            //.append("<td class=\"points\">"+rec.won_seasons+ "</td>")
+                            //.append("<td class=\"points\">"+rec.played_seasons+"</td>")
+                   }
+                   $(tr).append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
 
           // Increase loop counter
           counter++;
@@ -210,7 +238,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     
         counter = 1
         $.each( data.data, function(user, rec) {
-        //console.log(rec)
+        console.log(rec)
         //console.log(rec.rank_now)
    
             if (rec.rank_now <= 3) {

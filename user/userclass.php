@@ -646,7 +646,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         foreach ( array("slim", "hidebuttons", "header") as $key ) {
             $args[$key] = ( $args[$key] === "true" ) ? true : false;
         }
-        if ( ! in_array($args['type'], array('weekend','total','season','seasoncities','yearlycities','cities','yearly')) ) {
+        if ( ! in_array($args['type'], array('weekend','total','eternal','season','seasoncities','yearlycities','cities','yearly')) ) {
             return(sprintf("<div class=\"wetterturnier-info error\">%s</div>",
                 sprintf("Sorry, ranking of <b>type='%s'</b> unknown. Option wrong.",$args['type'])));
         }
@@ -1921,7 +1921,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        }
 
        # Parsing cities
-       if ( in_array($_REQUEST["type"], array("cities", "seasoncities")) || in_array($_REQUEST["type"], array("cities", "yearlycities")) ) {
+       $type = $_REQUEST["type"];
+
+       if ( in_array($type, array("cities", "seasoncities", "yearlycities")) ) {
           $cityObj = array();
           foreach ( explode(",", $_REQUEST["cities"]) as $cityID ) {
              array_push($cityObj, new wetterturnier_cityObject( (int)$cityID ));
@@ -1937,12 +1939,14 @@ class wetterturnier_userclass extends wetterturnier_generalclass
           }
        }
 
+       $d1d2 = ($type === "eternal") ? False : True;
+
        # Loading ranking
        $rankingObj = new wetterturnier_rankingObject();
        $rankingObj->set_cities($cityObj);
-       $rankingObj->set_tdates($tdates, $type=$_REQUEST["type"]);
-       $rankingObj->set_cachehash($_REQUEST["type"]);
-       $rankingObj->prepare_ranking($type=$_REQUEST["type"]);
+       $rankingObj->set_tdates($tdates);
+       $rankingObj->set_cachehash($type);
+       $rankingObj->prepare_ranking($d1d2=$d1d2, $type=$type);
        print $rankingObj->return_json();
        die(0);
    }

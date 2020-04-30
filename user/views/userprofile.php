@@ -38,7 +38,7 @@ function get_city_stats( $cityID, $userID ) {
    // To show only fully finished tournaments in this 'stats'
    
    $tdatebefore    = (int)$WTuser->options->wetterturnier_betdays;
-   $tdatebefore    = (int)(time()/86400) - $tdatebefore - 1;
+   $tdatebefore    = (int)(time()/86400) - $tdatebefore;
  
    $sql  = "SELECT min(tdate) AS min, max(tdate) AS max, count(tdate) AS count";
    $sql .= sprintf(" FROM %swetterturnier_betstat",$wpdb->prefix);

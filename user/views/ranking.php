@@ -394,6 +394,7 @@ switch ( $args->type ) {
 
    // ---------------------------------------------------------------
    case "total":
+   case "eternal":
 
       // Need the last $args->weeks tournament weekends for this ranking
       // type. 
@@ -405,7 +406,7 @@ switch ( $args->type ) {
          $ranking = (string)$args->weeks . __(" weeks ranking for","wpwt");
       } else {
          array_push($sql,sprintf("GROUP BY tdate DESC"));
-         $ranking = __("Alltime ranking for","wpwt");
+         $ranking = ucfirst( $args->type ) . __("ranking for","wpwt");
       }
 
       $dates = $wpdb->get_results(join(" ",$sql));
