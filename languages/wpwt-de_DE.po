@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-01 00:19+0000\n"
-"PO-Revision-Date: 2020-05-01 00:20+0000\n"
+"POT-Creation-Date: 2020-05-01 08:29+0000\n"
+"PO-Revision-Date: 2020-05-01 08:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -347,26 +347,30 @@ msgid "The maximum score (total) for the ranking is"
 msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
 
 #: rankingclass.php:94
+msgid "The total number of tournaments for this ranking is"
+msgstr "Die Anzahl der gespielten Turniere für diese Wertung ist"
+
+#: rankingclass.php:95
 msgid "Statusbar"
 msgstr "Statusbar"
 
-#: rankingclass.php:97 user/userclass.php:1071
+#: rankingclass.php:98 user/userclass.php:1071
 msgid "Max"
 msgstr "Maximum"
 
-#: rankingclass.php:98 user/userclass.php:1072
+#: rankingclass.php:99 user/userclass.php:1072
 msgid "Mean"
 msgstr "Mittel"
 
-#: rankingclass.php:99
+#: rankingclass.php:100
 msgid "PSD"
 msgstr "Pseudo-SD"
 
-#: rankingclass.php:100
+#: rankingclass.php:101
 msgid "Wins (%)"
 msgstr "Siege (%)"
 
-#: rankingclass.php:101
+#: rankingclass.php:102
 msgid "Seasons (x/N)"
 msgstr "Saisonsiege (x/N)"
 
@@ -899,7 +903,7 @@ msgstr "Werte anzeigen"
 msgid "Show Points"
 msgstr "Punkte anzeigen"
 
-#: user/views/archive.php:63 user/views/ranking.php:471
+#: user/views/archive.php:63 user/views/ranking.php:475
 msgid "older"
 msgstr "älter"
 
@@ -907,7 +911,7 @@ msgstr "älter"
 msgid "Values"
 msgstr "Werte"
 
-#: user/views/archive.php:72 user/views/ranking.php:476
+#: user/views/archive.php:72 user/views/ranking.php:480
 msgid "newer"
 msgstr "neuer"
 
@@ -1297,7 +1301,7 @@ msgstr "Jahreszeitenwertung für"
 msgid "tournaments from"
 msgstr "Turniere vom"
 
-#: user/views/ranking.php:219 user/views/ranking.php:296 user/views/ranking.php:351 user/views/ranking.php:434
+#: user/views/ranking.php:219 user/views/ranking.php:296 user/views/ranking.php:351 user/views/ranking.php:436
 msgid "to"
 msgstr "bis"
 
@@ -1317,23 +1321,23 @@ msgstr "Jahreswertung für"
 msgid "Ranking for"
 msgstr "Wertung für"
 
-#: user/views/ranking.php:406
+#: user/views/ranking.php:407
 msgid " weeks ranking for"
 msgstr "-Wochen-Wertung für"
 
-#: user/views/ranking.php:410
+#: user/views/ranking.php:417
 msgid "Eternal ranking for"
 msgstr "Ewige Wertung für"
 
-#: user/views/ranking.php:412
+#: user/views/ranking.php:419
 msgid "Alltime ranking for"
 msgstr "Allzeitwertung für"
 
-#: user/views/ranking.php:444
+#: user/views/ranking.php:446
 msgid "Sorry, cannot understand input 'type' for"
 msgstr "Sorry, Input 'type' nicht erkannt"
 
-#: user/views/ranking.php:512
+#: user/views/ranking.php:516
 msgid "Loading data ..."
 msgstr "Lade Daten ..."
 

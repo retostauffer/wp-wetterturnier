@@ -156,7 +156,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
              if ( input.type == "eternal" ) {
                  $(tr).append("<td class=\"played\">"+rec.played_now+"</td>");
              } else {
-             $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.total_tournaments+"</td>");
+             $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.ntournaments+"</td>");
              }
          }
 

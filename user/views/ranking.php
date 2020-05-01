@@ -406,11 +406,6 @@ switch ( $args->type ) {
          array_push($sql,sprintf("GROUP BY tdate DESC LIMIT %d", $args->weeks));
          $ranking = (string)$args->weeks . __(" weeks ranking for","wpwt");
    
-         # For navigation
-         $tdates->older     = $tdates->to_prev;
-         $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
-         if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
-
       } else {
           array_push($sql,sprintf("GROUP BY tdate DESC"));
           if ($args->type === "eternal") {
@@ -422,6 +417,11 @@ switch ( $args->type ) {
 
       $dates = $wpdb->get_results(join(" ",$sql));
       $dates = array(end($dates)->tdate,$args->tdate);
+
+      # For navigation
+      $tdates->older     = $tdates->to_prev;
+      $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
+      if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
 
       $tdates->from      = $dates[0];
       $tdates->to        = $dates[1];
