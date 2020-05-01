@@ -144,11 +144,12 @@ $.fn.show_ranking = function(ajaxurl, input) {
              $( tr ).append("<td class=\"trend\">"+colorize_trend(rec.trend)+"</td>");
          }
          // Only show number of played games if begin/end date differ or for season/yearly rankings
-         if ( (data.meta.ntournaments > 1 || data.meta.total_tournaments > 1) && input.type != "eternal") {
+         if (data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 && input.type!="eternal") {
              $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.total_tournaments+"</td>");
-         } else {
+         } else if ( input.type == "eternal" ) {
              $(tr).append("<td class=\"played\">"+rec.played_now+"</td>");
          }
+
          $(tr).append("<td class=\"user\">" +
                       (( rec.detail_button != undefined && data.meta.ntournaments === 1 ) ? rec.detail_button : "") +
                       (( rec.edit_button != undefined ) ? rec.edit_button : "") +

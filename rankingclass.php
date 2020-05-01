@@ -223,7 +223,7 @@ class wetterturnier_rankingObject {
      * >>>        )
      * >>>  )
      */
-    private function _get_data_object( $deadman = false, $d1d2=false, $type = "ranking" ) {
+    private function _get_data_object( $deadman = false, $d1d2 = false, $type = NULL ) {
 
         if ($type === "eternal") {
 
@@ -241,7 +241,7 @@ class wetterturnier_rankingObject {
             $sql = sprintf("SELECT u.ID, u.user_login, s.points_adj AS points, s.ranks_weekend AS ranks_weekend,\n" .
             "s.sd_ind AS sd_ind, s.max AS points_max, s.mean AS points_mean, s.part AS played\n" .
             "FROM %susers AS u RIGHT OUTER JOIN %swetterturnier_userstats AS s ON u.ID = s.userID\n".
-            "WHERE cityID = %d AND ID NOT LIKE \"NULL\" AND s.points_adj != 0 GROUP BY u.ID",
+            "WHERE cityID = %d AND ID IS NOT NULL AND s.part >= 25 GROUP BY u.ID",
             $this->wpdb->prefix, $this->wpdb->prefix, $cityID);
 
         } else {
@@ -535,7 +535,7 @@ class wetterturnier_rankingObject {
      *
      * .. todo:: Explain caching.
      */
-    public function prepare_ranking( $type = "ranking", $d1d2=false ) {
+    public function prepare_ranking( $type = NULL, $d1d2=false ) {
 
         if ( is_null($this->tdates) || is_null($this->cityObj) ) {
             //echo "Sorry, cannot prepare ranking, tdate or cityObject not set!";
@@ -564,7 +564,7 @@ class wetterturnier_rankingObject {
 
         # Loading deadman points. Whenever a player did not participate he/she
         # will get these points. May return "0" if the deadman is not defined.
-        $deadman = ($type != "eternal") ? $this->_get_data_object($deadman=true) : NULL;
+        $deadman = ($type !== "eternal") ? $this->_get_data_object($deadman=true) : NULL;
 
         # Loading user data
         $userdata = $this->_get_data_object($deadman=false, $d1d2=$d1d2, $type=$type);
@@ -740,14 +740,14 @@ class wetterturnier_rankingObject {
             # Setting winner points, used to compute differences.
             if ( is_null($points_winner) ) { $points_winner = $ranking->now->$user->points; }
             
-            if ($type === "eternal") { $max_points = $points_winner; }
+            if ($type === "eternal") { $max_points = round( $points_winner, 1 ); }
 
             # Appending data
             $final->$user = new stdClass();
             $final->$user->rank_now    = $rank->now[$idx];
             $final->$user->points_now  = $this->WTuser->number_format($ranking->now->$user->points,1);
             $final->$user->played_now  = $ranking->now->$user->played;
-            $final->$user->points_relative = $ranking->now->$user->points / $max_points;
+            $final->$user->points_relative = round($ranking->now->$user->points, 1) / $max_points;
             $final->$user->points_diff = $this->WTuser->number_format($points_winner
                                                  - $ranking->now->$user->points,1);
 
@@ -796,10 +796,10 @@ class wetterturnier_rankingObject {
             }
 
             # Loading additional information only for leaderboard
-            #if ($type == "leading") {
+            if ($type === "leading") {
                 $final->$user->avatar = get_wp_user_avatar($userObj->ID, 96);
                 $final->$user->avatar_link = sprintf(bbp_get_user_profile_url($userObj->ID));
-            #}
+            }
 
             // Getting profile link
             $final->$user->profile_link = $this->WTuser->get_user_profile_link( $tmp );

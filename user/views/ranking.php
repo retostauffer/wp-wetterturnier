@@ -405,8 +405,12 @@ switch ( $args->type ) {
          array_push($sql,sprintf("GROUP BY tdate DESC LIMIT %d", $args->weeks));
          $ranking = (string)$args->weeks . __(" weeks ranking for","wpwt");
       } else {
-         array_push($sql,sprintf("GROUP BY tdate DESC"));
-         $ranking = ucfirst( $args->type ) . __("ranking for","wpwt");
+          array_push($sql,sprintf("GROUP BY tdate DESC"));
+          if ($args->type === "eternal") {
+              $ranking = __("Eternal ranking for","wpwt");
+          } else {
+              $ranking = __("Alltime ranking for","wpwt");
+          } 
       }
 
       $dates = $wpdb->get_results(join(" ",$sql));

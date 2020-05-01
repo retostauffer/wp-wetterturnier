@@ -1946,7 +1946,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        $rankingObj->set_cities($cityObj);
        $rankingObj->set_tdates($tdates);
        $rankingObj->set_cachehash($type);
-       $rankingObj->prepare_ranking($d1d2=$d1d2, $type=$type);
+       $rankingObj->prepare_ranking($type, $d1d2);
        print $rankingObj->return_json();
        die(0);
    }

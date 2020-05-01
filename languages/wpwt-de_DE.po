@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-10 15:12+0000\n"
-"PO-Revision-Date: 2020-03-10 15:12+0000\n"
-"Last-Translator: sferics <juri.hubrig@fu-berlin.de>\n"
+"POT-Creation-Date: 2020-05-01 00:19+0000\n"
+"PO-Revision-Date: 2020-05-01 00:20+0000\n"
+"Last-Translator: \n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.1; wp-5.3.2"
+"X-Loco-Version: 2.3.3; wp-5.4"
 
 #: classes.php:602 user/userclass.php:864 admin/classes/webcams_list.php:49 admin/classes/api_list.php:72
 msgid "Description"
@@ -289,7 +289,7 @@ msgstr "Älter"
 msgid "Newer"
 msgstr "Neuer"
 
-#: rankingclass.php:81 user/userclass.php:2438 user/userclass.php:2440
+#: rankingclass.php:81 user/userclass.php:2442 user/userclass.php:2444
 msgid "place"
 msgstr "Platz"
 
@@ -297,7 +297,7 @@ msgstr "Platz"
 msgid "st"
 msgstr "."
 
-#: rankingclass.php:82 user/userclass.php:2438
+#: rankingclass.php:82 user/userclass.php:2442
 msgid "nd"
 msgstr "."
 
@@ -305,16 +305,16 @@ msgstr "."
 msgid "rd"
 msgstr "."
 
-#: rankingclass.php:82 user/userclass.php:2440
+#: rankingclass.php:82 user/userclass.php:2444
 msgid "th"
 msgstr "."
 
-#: rankingclass.php:84 user/userclass.php:2470
+#: rankingclass.php:84 user/userclass.php:2474
 msgid "points"
 msgstr "Punkte"
 
-#: rankingclass.php:85 chartclass.php:136 user/userclass.php:2100 user/userclass.php:2103 user/userclass.php:2143
-#: user/userclass.php:2375 user/views/archive.php:68 user/views/archive.php:85 user/views/current.php:75
+#: rankingclass.php:85 chartclass.php:136 user/userclass.php:2104 user/userclass.php:2107 user/userclass.php:2147
+#: user/userclass.php:2379 user/views/archive.php:68 user/views/archive.php:85 user/views/current.php:75
 msgid "Points"
 msgstr "Punkte"
 
@@ -330,15 +330,15 @@ msgstr "Son"
 msgid "Part"
 msgstr "Teiln"
 
-#: rankingclass.php:90 user/userclass.php:2143
+#: rankingclass.php:90 user/userclass.php:2147
 msgid "Diff"
 msgstr "Diff"
 
-#: rankingclass.php:91 user/userclass.php:1268 user/userclass.php:2108
+#: rankingclass.php:91 user/userclass.php:1268 user/userclass.php:2112
 msgid "Rank"
 msgstr "Rang"
 
-#: rankingclass.php:92 user/userclass.php:1360 user/userclass.php:1410 user/userclass.php:2374 admin/classes/bets_list.php:51
+#: rankingclass.php:92 user/userclass.php:1360 user/userclass.php:1410 user/userclass.php:2378 admin/classes/bets_list.php:51
 msgid "User"
 msgstr "Benutzername"
 
@@ -346,7 +346,31 @@ msgstr "Benutzername"
 msgid "The maximum score (total) for the ranking is"
 msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
 
-#: chartclass.php:137 chartclass.php:234 user/userclass.php:1068
+#: rankingclass.php:94
+msgid "Statusbar"
+msgstr "Statusbar"
+
+#: rankingclass.php:97 user/userclass.php:1071
+msgid "Max"
+msgstr "Maximum"
+
+#: rankingclass.php:98 user/userclass.php:1072
+msgid "Mean"
+msgstr "Mittel"
+
+#: rankingclass.php:99
+msgid "PSD"
+msgstr "Pseudo-SD"
+
+#: rankingclass.php:100
+msgid "Wins (%)"
+msgstr "Siege (%)"
+
+#: rankingclass.php:101
+msgid "Seasons (x/N)"
+msgstr "Saisonsiege (x/N)"
+
+#: chartclass.php:137 chartclass.php:233 user/userclass.php:1068
 msgid "Date"
 msgstr "Datum"
 
@@ -354,27 +378,27 @@ msgstr "Datum"
 msgid "Full weekend points"
 msgstr "Gesamtpunkte Wochenende"
 
-#: chartclass.php:233
+#: chartclass.php:232
 msgid "Particioners"
 msgstr "Teilnehmer"
 
-#: chartclass.php:235
+#: chartclass.php:234
 msgid "Number of participants"
 msgstr "Anzahl Teilnehmer"
 
-#: chartclass.php:237
+#: chartclass.php:236
 msgid "Reference methods"
 msgstr "Referenztipps"
 
-#: chartclass.php:237 admin/adminclass.php:198 admin/adminclass.php:198
+#: chartclass.php:236 admin/adminclass.php:198 admin/adminclass.php:198
 msgid "Groups"
 msgstr "Gruppen"
 
-#: chartclass.php:237
+#: chartclass.php:236
 msgid "Automated forecasts"
 msgstr "Automatische Vorhersagen"
 
-#: chartclass.php:237
+#: chartclass.php:236
 msgid "Human players"
 msgstr "Menschliche Spieler"
 
@@ -522,14 +546,6 @@ msgstr "Alle anzeigen"
 msgid "Winner"
 msgstr "Gewinner"
 
-#: user/userclass.php:1071
-msgid "Max"
-msgstr "Maximum"
-
-#: user/userclass.php:1072
-msgid "Mean"
-msgstr "Mittel"
-
 #: user/userclass.php:1073
 msgid "Median"
 msgstr "Median"
@@ -594,11 +610,11 @@ msgstr "Wochenendwertung f&uum;r"
 msgid "Player"
 msgstr "Teilnehmer"
 
-#: user/userclass.php:1270 user/userclass.php:2100 user/views/googlecharts.php:249
+#: user/userclass.php:1270 user/userclass.php:2104 user/views/googlecharts.php:249
 msgid "Saturday"
 msgstr "Samstag"
 
-#: user/userclass.php:1271 user/userclass.php:2103 user/views/googlecharts.php:250
+#: user/userclass.php:1271 user/userclass.php:2107 user/views/googlecharts.php:250
 msgid "Sunday"
 msgstr "Sonntag"
 
@@ -667,40 +683,40 @@ msgstr "Summe"
 msgid "Modified by"
 msgstr "Modifiziert durch"
 
-#: user/userclass.php:2095 user/views/userprofile.php:151 admin/classes/stations_list.php:29 admin/classes/cities_list.php:32
+#: user/userclass.php:2099 user/views/userprofile.php:151 admin/classes/stations_list.php:29 admin/classes/cities_list.php:32
 #: admin/classes/api_list.php:71 admin/classes/param_list.php:35
 msgid "Name"
 msgstr "Name"
 
-#: user/userclass.php:2097 admin/classes/bets_list.php:53
+#: user/userclass.php:2101 admin/classes/bets_list.php:53
 msgid "Submitted"
 msgstr "Abgeschickt"
 
-#: user/userclass.php:2106
+#: user/userclass.php:2110
 msgid "Points total"
 msgstr "Gesamtpunkte"
 
-#: user/userclass.php:2137
+#: user/userclass.php:2141
 msgid "Param"
 msgstr "Param"
 
-#: user/userclass.php:2137
+#: user/userclass.php:2141
 msgid "Forecast"
 msgstr "Vorhersage"
 
-#: user/userclass.php:2292
+#: user/userclass.php:2296
 msgid "Access denied"
 msgstr "Zugriff verweigert"
 
-#: user/userclass.php:2294
+#: user/userclass.php:2298
 msgid "The access for some pages is restricted to "
 msgstr "Der Zugriff auf einige Seiten ist nur für "
 
-#: user/userclass.php:2294
+#: user/userclass.php:2298
 msgid "registered"
 msgstr "registrierte"
 
-#: user/userclass.php:2294
+#: user/userclass.php:2298
 msgid ""
 "and logged in users only. You are not logged in at the moment! To see the content of this specific page, please login first. "
 "Thank you for your understanding."
@@ -708,11 +724,11 @@ msgstr ""
 " und eingeloggte User freigeschaltet. Um den Inhalt dieser Seite zu sehen, logge dich bitte ein. Vielen Dank für dein "
 "Verständnis."
 
-#: user/userclass.php:2297 user/views/bet.php:27
+#: user/userclass.php:2301 user/views/bet.php:27
 msgid "Login form"
 msgstr "Login-Formular"
 
-#: user/userclass.php:2416
+#: user/userclass.php:2420
 msgid "Leaderboard"
 msgstr "Bestenliste"
 
@@ -883,7 +899,7 @@ msgstr "Werte anzeigen"
 msgid "Show Points"
 msgstr "Punkte anzeigen"
 
-#: user/views/archive.php:63 user/views/ranking.php:466
+#: user/views/archive.php:63 user/views/ranking.php:471
 msgid "older"
 msgstr "älter"
 
@@ -891,7 +907,7 @@ msgstr "älter"
 msgid "Values"
 msgstr "Werte"
 
-#: user/views/archive.php:72 user/views/ranking.php:471
+#: user/views/archive.php:72 user/views/ranking.php:476
 msgid "newer"
 msgstr "neuer"
 
@@ -1281,7 +1297,7 @@ msgstr "Jahreszeitenwertung für"
 msgid "tournaments from"
 msgstr "Turniere vom"
 
-#: user/views/ranking.php:219 user/views/ranking.php:296 user/views/ranking.php:351 user/views/ranking.php:429
+#: user/views/ranking.php:219 user/views/ranking.php:296 user/views/ranking.php:351 user/views/ranking.php:434
 msgid "to"
 msgstr "bis"
 
@@ -1301,19 +1317,23 @@ msgstr "Jahreswertung für"
 msgid "Ranking for"
 msgstr "Wertung für"
 
-#: user/views/ranking.php:405
+#: user/views/ranking.php:406
 msgid " weeks ranking for"
 msgstr "-Wochen-Wertung für"
 
-#: user/views/ranking.php:408
+#: user/views/ranking.php:410
+msgid "Eternal ranking for"
+msgstr "Ewige Wertung für"
+
+#: user/views/ranking.php:412
 msgid "Alltime ranking for"
 msgstr "Allzeitwertung für"
 
-#: user/views/ranking.php:439
+#: user/views/ranking.php:444
 msgid "Sorry, cannot understand input 'type' for"
 msgstr "Sorry, Input 'type' nicht erkannt"
 
-#: user/views/ranking.php:507
+#: user/views/ranking.php:512
 msgid "Loading data ..."
 msgstr "Lade Daten ..."
 
