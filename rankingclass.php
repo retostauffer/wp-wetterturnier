@@ -548,7 +548,10 @@ class wetterturnier_rankingObject {
                     if ($d1d2) { $ranking->pre->$user->points_d1 = NULL; $ranking->pre->$user->points_d2 = NULL; }
                 }
                 $ranking->now->$user = (object)array("played"=>0,"points"=>0);
-                if ($d1d2) { $ranking->now->$user->points_d1 = 0; $ranking->now->$user->points_d2 = 0; }
+                if ($d1d2) {
+                    $ranking->now->$user->points_d1 = NULL;
+                    $ranking->now->$user->points_d2 = NULL;
+                }
             }
 
             # Looping over the tournament dates
