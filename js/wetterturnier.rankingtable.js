@@ -86,10 +86,16 @@ $.fn.show_ranking = function(ajaxurl, input) {
       $(e).hide().empty();
 
       // Short information about the maximum number of points possible
-      if ( input.header && data.meta.ntournaments <= 52 ) {
-          $(e).append("<div class=\"wttable-show-points-max\">" +
+      if ( input.header ) {
+          if ( input.type == "eternal" ) {
+              $(e).append("<div class=\"wttable-show-points-max\">" +
+              data.dict.total_tournaments + " <b>" + data.meta.total_tournaments
+              + "</b>." + "</div>");
+          } else {
+              $(e).append("<div class=\"wttable-show-points-max\">" +
               data.dict.max_points + " <b>" + data.meta.max_points + "</b>." +
               "</div>");
+          }
       }
 
       // Append new table
@@ -109,10 +115,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                .append("<th class=\"points-diff\">"+data.dict.difference+"</th>")
                .append("<th class=\"points\">"+data.dict.points+"</th>")
-               if ( ["weekend","cities"].includes( input.type ) ) {
-                    $(head).append("<th class=\"points-d1d2\">"+data.dict.points_d1+"</th>")
-                           .append("<th class=\"points-d1d2\">"+data.dict.points_d2+"</th>")
-               } else if ( input.type === "eternal" ) {
+               if ( input.type === "eternal" ) {     
                     $(head).append("<th class=\"points\">"+data.dict.sd_ind+      "</th>")
                            .append("<th class=\"points\">"+data.dict.points_max+  "</th>")
                            .append("<th class=\"points\">"+data.dict.points_mean+ "</th>")
@@ -120,6 +123,11 @@ $.fn.show_ranking = function(ajaxurl, input) {
                            .append("<th class=\"points\">"+data.dict.won_weekends+"</th>") // in %
                            //.append("<th class=\"points\">"+data.dict.won_seasons +"</th>")
                            //.append("<th class=\"points\">"+data.dict.played_seasons +"</th>")
+
+               } else {
+                   $(head).append("<th class=\"points-d1d2\">"+data.dict.points_d1+"</th>")
+                           .append("<th class=\"points-d1d2\">"+data.dict.points_d2+"</th>")
+
                }
                $(head).append("<th class=\"statusbar\">"+data.dict.statusbar+"</th>");
 
@@ -144,10 +152,12 @@ $.fn.show_ranking = function(ajaxurl, input) {
              $( tr ).append("<td class=\"trend\">"+colorize_trend(rec.trend)+"</td>");
          }
          // Only show number of played games if begin/end date differ or for season/yearly rankings
-         if (data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 && input.type!="eternal") {
+         if (data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 ) {
+             if ( input.type == "eternal" ) {
+                 $(tr).append("<td class=\"played\">"+rec.played_now+"</td>");
+             } else {
              $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.total_tournaments+"</td>");
-         } else if ( input.type == "eternal" ) {
-             $(tr).append("<td class=\"played\">"+rec.played_now+"</td>");
+             }
          }
 
          $(tr).append("<td class=\"user\">" +
@@ -157,11 +167,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
                    .append("<td class=\"points-diff\">"+rec.points_diff+"</td>")
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
 
-                   // if only single tournament: show points_d1/d2
-                   if ( ["weekend","cities"].includes( input.type ) ) {
-                       $(tr).append("<td class=\"points-d1d2\">"+rec.points_d1+  "</td>")
-                            .append("<td class=\"points-d1d2\">"+rec.points_d2+  "</td>")
-                   } else if ( input.type === "eternal" ) {
+                   if ( input.type === "eternal" ) {
                        $(tr).append("<td class=\"points\">"+rec.sd_ind+     "</td>")
                             .append("<td class=\"points\">"+rec.points_max+ "</td>")
                             .append("<td class=\"points\">"+rec.points_mean+"</td>")
@@ -169,6 +175,9 @@ $.fn.show_ranking = function(ajaxurl, input) {
                             .append("<td class=\"points\">"+rec.won_weekends+"</td>")
                             //.append("<td class=\"points\">"+rec.won_seasons+ "</td>")
                             //.append("<td class=\"points\">"+rec.played_seasons+"</td>")
+                   } else {
+                       $(tr).append("<td class=\"points-d1d2\">"+rec.points_d1+  "</td>")
+                            .append("<td class=\"points-d1d2\">"+rec.points_d2+  "</td>")
                    }
                    $(tr).append("<td class=\"statusbar\">"+statusbar(rec.points_relative, 200)+"</td>");
 

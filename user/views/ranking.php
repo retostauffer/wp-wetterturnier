@@ -402,8 +402,15 @@ switch ( $args->type ) {
       array_push($sql,sprintf("SELECT tdate FROM %swetterturnier_betstat", $wpdb->prefix));
       array_push($sql,sprintf("WHERE cityID = %d AND tdate <= %d", $cityObj->get('ID'), $args->tdate));
       if ($args->weeks) {
+          
          array_push($sql,sprintf("GROUP BY tdate DESC LIMIT %d", $args->weeks));
          $ranking = (string)$args->weeks . __(" weeks ranking for","wpwt");
+   
+         # For navigation
+         $tdates->older     = $tdates->to_prev;
+         $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
+         if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
+
       } else {
           array_push($sql,sprintf("GROUP BY tdate DESC"));
           if ($args->type === "eternal") {
@@ -420,11 +427,6 @@ switch ( $args->type ) {
       $tdates->to        = $dates[1];
       $tdates->from_prev = $dates[0];
       $tdates->to_prev   = $WTuser->older_tournament($dates[1])->tdate;
-
-      # For navigation
-      $tdates->older     = $tdates->to_prev;
-      $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
-      if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
 
       // Loading the data set
       //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
@@ -454,24 +456,26 @@ $hrefurl = $WTuser->curPageURL(true);
 
 // Append date range to $arg's object
 $args->tdates = $tdates;
+
 if ( ! $args->hidebuttons & $args->header ) { ?>
    <div class="wt-twocolumn wrapper">
       <div class="wt-twocolumn column-left" style="width: 65%;">
          <?php
          // Show title
-         if ( $args->header )
-         { printf("<h3>%s</h3><br>\n",$title); }
-         else if ( ($args->type === "weekend" | $args->type === "cities") & is_numeric($args->limit) )
-         { printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title); }
+         if ( $args->header ) {
+             printf("<h3>%s</h3><br>\n", $title);
+         } else if ( is_numeric($args->limit) ) {
+             printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title);
+         }
          ?>
 
          <div style="min-height: 30px;">
-            <?php if ( ! is_null($tdates->older) ) { ?>
+            <?php if ( isset($tdates->older) ) { ?>
             <form style="float: left; padding-right: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->older); ?>">
                 <input class="button" type="submit" value="<< <?php _e("older","wpwt"); ?>" />
             </form>
             <?php } ?>
-            <?php if ( ! is_null($tdates->newer) ) { ?>
+            <?php if ( isset($tdates->newer) ) { ?>
             <form style="float: left; padding-left: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->newer); ?>">
                 <input class="button" type="submit" value="<?php _e("newer","wpwt"); ?> >>" />
             </form>
@@ -495,9 +499,9 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
             <?php $WTuser->archive_show_colorlegend(); ?>
          </div>
       <?php }
+   } else if ( is_numeric($args->limit) ) {
+       printf("<h3 class=\"wt-table-title\">%s</h3>\n", $short_title);
    }
-   else if ( ($args->type === "weekend" | $args->type === "cities") & is_numeric($args->limit) )
-   { printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title); }
 }
 
 # Random container ID

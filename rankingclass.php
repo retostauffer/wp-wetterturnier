@@ -588,7 +588,7 @@ class wetterturnier_rankingObject {
                     if ($d1d2) { $ranking->pre->$user->points_d1 = NULL; $ranking->pre->$user->points_d2 = NULL; }
                 }
                 $ranking->now->$user = (object)array("played"=>0,"points"=>0);
-                if ($d1d2) { $ranking->now->$user->points_d1 = 0; $ranking->now->$user->points_d2 = 0; }
+                if ($d1d2) { $ranking->now->$user->points_d1 = NULL; $ranking->now->$user->points_d2 = NULL; }
             }
 
             # Looping over the tournament dates
@@ -641,13 +641,10 @@ class wetterturnier_rankingObject {
                         $ranking->pre->$user->points += $points;
                         $ranking->pre->$user->played += $played;
                         if ($d1d2) {
-                            if (is_null($points_d1)) {
-                                $ranking->pre->$user->points_d1 = NULL;
-                                $ranking->pre->$user->points_d2 = NULL;
-                            } else {
+                            if ( ! is_null($points_d1)) {
                                 $ranking->pre->$user->points_d1 += $points_d1;
                                 $ranking->pre->$user->points_d2 += $points_d2;
-                            }    
+                            } 
                         }
                     }
                 }
@@ -656,13 +653,10 @@ class wetterturnier_rankingObject {
                     $ranking->now->$user->points += $points;
                     $ranking->now->$user->played += $played;
                     if ($d1d2) {
-                        if (is_null($points_d1)) {
-                            $ranking->now->$user->points_d1 = NULL;
-                            $ranking->now->$user->points_d2 = NULL;
-                        } else {
+                        if ( ! is_null($points_d1)) {
                             $ranking->now->$user->points_d1 += $points_d1;
                             $ranking->now->$user->points_d2 += $points_d2;
-                        }   
+                        }
                     }
                 }
             }
@@ -840,7 +834,6 @@ class wetterturnier_rankingObject {
                 file_put_contents($cache_file, serialize($this->ranking), LOCK_EX);
             }
         }
-
     }
 
     /**
