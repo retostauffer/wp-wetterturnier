@@ -91,6 +91,8 @@ class wetterturnier_rankingObject {
        $this->dict->rank       = __("Rank", "wpwt");
        $this->dict->user       = __("User", "wpwt");
        $this->dict->max_points = __("The maximum score (total) for the ranking is","wpwt");
+       $this->dict->total_tournaments = __("The total number of tournaments for this ranking is","wpwt");
+       $this->dict->statusbar    = __("Statusbar","wpwt");
 
     }
 
@@ -533,7 +535,7 @@ class wetterturnier_rankingObject {
 
         # Number of played tournaments so far
         $ntournaments = 0;
-        $latest = $this->WTuser->latest_tournament(floor(time() / 86400))->tdate-1;
+        $latest = $this->WTuser->latest_tournament(floor(time() / 86400))->tdate;
         foreach ( $userdata->tdates as $tdate ) {
             if ( $tdate >= $this->tdates->from && $tdate <= $latest ) { $ntournaments++; }
         }
@@ -548,10 +550,7 @@ class wetterturnier_rankingObject {
                     if ($d1d2) { $ranking->pre->$user->points_d1 = NULL; $ranking->pre->$user->points_d2 = NULL; }
                 }
                 $ranking->now->$user = (object)array("played"=>0,"points"=>0);
-                if ($d1d2) {
-                    $ranking->now->$user->points_d1 = NULL;
-                    $ranking->now->$user->points_d2 = NULL;
-                }
+                if ($d1d2) { $ranking->now->$user->points_d1 = 0; $ranking->now->$user->points_d2 = 0; }
             }
 
             # Looping over the tournament dates
@@ -572,9 +571,7 @@ class wetterturnier_rankingObject {
                 # If user got points: use user points 
                 if ( property_exists($data, $thash) ) {
                     $points = $data->$thash->points;
-                    if (! is_null($points)) {
-                        $played = 1;
-                    }                    
+                    $played = 1;
                     if ($d1d2) {
                         if (is_null($points_d1)) { $data->$thash->points_d1 = NULL; $data->$thash->points_d2 = NULL; }
                         else {
@@ -608,10 +605,13 @@ class wetterturnier_rankingObject {
                         $ranking->pre->$user->points += $points;
                         $ranking->pre->$user->played += $played;
                         if ($d1d2) {
-                            if ( ! is_null($points_d1)) {
+                            if (is_null($points_d1)) {
+                                $ranking->pre->$user->points_d1 = NULL;
+                                $ranking->pre->$user->points_d2 = NULL;
+                            } else {
                                 $ranking->pre->$user->points_d1 += $points_d1;
                                 $ranking->pre->$user->points_d2 += $points_d2;
-                            }                        
+                            }    
                         }
                     }
                 }
@@ -620,10 +620,13 @@ class wetterturnier_rankingObject {
                     $ranking->now->$user->points += $points;
                     $ranking->now->$user->played += $played;
                     if ($d1d2) {
-                        if ( ! is_null($points_d1)) {
+                        if (is_null($points_d1)) {
+                            $ranking->now->$user->points_d1 = NULL;
+                            $ranking->now->$user->points_d2 = NULL;
+                        } else {
                             $ranking->now->$user->points_d1 += $points_d1;
                             $ranking->now->$user->points_d2 += $points_d2;
-                        }
+                        }   
                     }
                 }
             }

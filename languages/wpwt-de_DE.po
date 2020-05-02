@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-01 08:29+0000\n"
-"PO-Revision-Date: 2020-05-01 08:30+0000\n"
+"POT-Creation-Date: 2020-05-02 06:39+0000\n"
+"PO-Revision-Date: 2020-05-02 06:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -153,6 +153,81 @@ msgstr "und"
 msgid "If you would like to submitt a bet please go to the \"SUBMISSION-FORM\" in the navigation."
 msgstr "Falls du mitspielen und einen Tipp abgeben möchtest geh zur \"TIPPABGABE\" in der Navigation."
 
+#: rankingclass_bak.php:79 rankingclass.php:79 rankingclass_new.php:79
+msgid "Older"
+msgstr "Älter"
+
+#: rankingclass_bak.php:80 rankingclass.php:80 rankingclass_new.php:80
+msgid "Newer"
+msgstr "Neuer"
+
+#: rankingclass_bak.php:81 rankingclass.php:81 rankingclass_new.php:81 user/userclass.php:2442 user/userclass.php:2444
+msgid "place"
+msgstr "Platz"
+
+#: rankingclass_bak.php:82 rankingclass.php:82 rankingclass_new.php:82
+msgid "st"
+msgstr "."
+
+#: rankingclass_bak.php:82 rankingclass.php:82 rankingclass_new.php:82 user/userclass.php:2442
+msgid "nd"
+msgstr "."
+
+#: rankingclass_bak.php:82 rankingclass.php:82 rankingclass_new.php:82
+msgid "rd"
+msgstr "."
+
+#: rankingclass_bak.php:82 rankingclass.php:82 rankingclass_new.php:82 user/userclass.php:2444
+msgid "th"
+msgstr "."
+
+#: rankingclass_bak.php:84 rankingclass.php:84 rankingclass_new.php:84 user/userclass.php:2474
+msgid "points"
+msgstr "Punkte"
+
+#: rankingclass_bak.php:85 rankingclass.php:85 chartclass.php:136 rankingclass_new.php:85 user/userclass.php:2104
+#: user/userclass.php:2107 user/userclass.php:2147 user/userclass.php:2379 user/views/archive.php:68 user/views/archive.php:85
+#: user/views/current.php:75
+msgid "Points"
+msgstr "Punkte"
+
+#: rankingclass_bak.php:86 rankingclass.php:86 rankingclass_new.php:86
+msgid "Sat"
+msgstr "Sam"
+
+#: rankingclass_bak.php:87 rankingclass.php:87 rankingclass_new.php:87
+msgid "Sun"
+msgstr "Son"
+
+#: rankingclass_bak.php:89 rankingclass.php:89 rankingclass_new.php:89 user/userclass.php:1069
+msgid "Part"
+msgstr "Teiln"
+
+#: rankingclass_bak.php:90 rankingclass.php:90 rankingclass_new.php:90 user/userclass.php:2147
+msgid "Diff"
+msgstr "Diff"
+
+#: rankingclass_bak.php:91 rankingclass.php:91 rankingclass_new.php:91 user/userclass.php:1268 user/userclass.php:2112
+msgid "Rank"
+msgstr "Rang"
+
+#: rankingclass_bak.php:92 rankingclass.php:92 rankingclass_new.php:92 user/userclass.php:1360 user/userclass.php:1410
+#: user/userclass.php:2378 admin/classes/bets_list.php:51
+msgid "User"
+msgstr "Benutzername"
+
+#: rankingclass_bak.php:93 rankingclass.php:93 rankingclass_new.php:93
+msgid "The maximum score (total) for the ranking is"
+msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
+
+#: rankingclass_bak.php:94 rankingclass.php:94 rankingclass_new.php:94
+msgid "The total number of tournaments for this ranking is"
+msgstr "Die Anzahl der gespielten Turniere für diese Wertung ist"
+
+#: rankingclass_bak.php:95 rankingclass.php:95 rankingclass_new.php:95
+msgid "Statusbar"
+msgstr "Statusleiste"
+
 #: betclass.php:842 betclass.php:849
 msgid "Form closes"
 msgstr "Abgabeschluss ist"
@@ -281,99 +356,6 @@ msgstr "Bitte informiere einen unserer Admins/Programmierer!"
 msgid "Sorry, tournament CLOSED. We cannot store your changes anymore."
 msgstr "Sorry, das Turnier ist bereits GESCHLOSSEN. Wir können deine Änderungen leider nicht mehr annehmen."
 
-#: rankingclass.php:79
-msgid "Older"
-msgstr "Älter"
-
-#: rankingclass.php:80
-msgid "Newer"
-msgstr "Neuer"
-
-#: rankingclass.php:81 user/userclass.php:2442 user/userclass.php:2444
-msgid "place"
-msgstr "Platz"
-
-#: rankingclass.php:82
-msgid "st"
-msgstr "."
-
-#: rankingclass.php:82 user/userclass.php:2442
-msgid "nd"
-msgstr "."
-
-#: rankingclass.php:82
-msgid "rd"
-msgstr "."
-
-#: rankingclass.php:82 user/userclass.php:2444
-msgid "th"
-msgstr "."
-
-#: rankingclass.php:84 user/userclass.php:2474
-msgid "points"
-msgstr "Punkte"
-
-#: rankingclass.php:85 chartclass.php:136 user/userclass.php:2104 user/userclass.php:2107 user/userclass.php:2147
-#: user/userclass.php:2379 user/views/archive.php:68 user/views/archive.php:85 user/views/current.php:75
-msgid "Points"
-msgstr "Punkte"
-
-#: rankingclass.php:86
-msgid "Sat"
-msgstr "Sam"
-
-#: rankingclass.php:87
-msgid "Sun"
-msgstr "Son"
-
-#: rankingclass.php:89 user/userclass.php:1069
-msgid "Part"
-msgstr "Teiln"
-
-#: rankingclass.php:90 user/userclass.php:2147
-msgid "Diff"
-msgstr "Diff"
-
-#: rankingclass.php:91 user/userclass.php:1268 user/userclass.php:2112
-msgid "Rank"
-msgstr "Rang"
-
-#: rankingclass.php:92 user/userclass.php:1360 user/userclass.php:1410 user/userclass.php:2378 admin/classes/bets_list.php:51
-msgid "User"
-msgstr "Benutzername"
-
-#: rankingclass.php:93
-msgid "The maximum score (total) for the ranking is"
-msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
-
-#: rankingclass.php:94
-msgid "The total number of tournaments for this ranking is"
-msgstr "Die Anzahl der gespielten Turniere für diese Wertung ist"
-
-#: rankingclass.php:95
-msgid "Statusbar"
-msgstr "Statusbar"
-
-#: rankingclass.php:98 user/userclass.php:1071
-msgid "Max"
-msgstr "Maximum"
-
-#: rankingclass.php:99 user/userclass.php:1072
-msgid "Mean"
-msgstr "Mittel"
-
-#: rankingclass.php:100
-msgid "PSD"
-msgstr "Pseudo-SD"
-
-#: rankingclass.php:101
-msgid "Wins (%)"
-msgstr "Siege (%)"
-
-#: rankingclass.php:102
-msgid "Seasons (x/N)"
-msgstr "Saisonsiege (x/N)"
-
 #: chartclass.php:137 chartclass.php:233 user/userclass.php:1068
 msgid "Date"
 msgstr "Datum"
@@ -405,6 +387,26 @@ msgstr "Automatische Vorhersagen"
 #: chartclass.php:236
 msgid "Human players"
 msgstr "Menschliche Spieler"
+
+#: rankingclass_new.php:98 user/userclass.php:1071
+msgid "Max"
+msgstr "Maximum"
+
+#: rankingclass_new.php:99 user/userclass.php:1072
+msgid "Mean"
+msgstr "Mittel"
+
+#: rankingclass_new.php:100
+msgid "PSD"
+msgstr "Pseudo-SD"
+
+#: rankingclass_new.php:101
+msgid "Wins (%)"
+msgstr "Siege (%)"
+
+#: rankingclass_new.php:102
+msgid "Seasons (x/N)"
+msgstr "Saisonsiege (x/N)"
 
 #: user/userclass.php:213
 msgid "Wetterturnier Options"
@@ -556,7 +558,7 @@ msgstr "Median"
 
 #: user/userclass.php:1074
 msgid "Status bar"
-msgstr "Statusbar"
+msgstr "Statusleiste"
 
 #: user/userclass.php:1135
 msgid "MOS type selection:"
@@ -1325,11 +1327,11 @@ msgstr "Wertung für"
 msgid " weeks ranking for"
 msgstr "-Wochen-Wertung für"
 
-#: user/views/ranking.php:417
+#: user/views/ranking.php:412
 msgid "Eternal ranking for"
 msgstr "Ewige Wertung für"
 
-#: user/views/ranking.php:419
+#: user/views/ranking.php:414
 msgid "Alltime ranking for"
 msgstr "Allzeitwertung für"
 
