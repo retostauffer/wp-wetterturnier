@@ -120,7 +120,8 @@ $.fn.show_ranking = function(ajaxurl, input) {
                            .append("<th class=\"points\">"+data.dict.points_max+  "</th>")
                            .append("<th class=\"points\">"+data.dict.points_mean+ "</th>")
                            //.append("<th class=\"points\">"+data.dict.points_med+  "</th>")
-                           .append("<th class=\"points\">"+data.dict.won_weekends+"</th>") // in %
+                           .append("<th class=\"points\">"+data.dict.won_weekends+"</th>")
+                           .append("<th class=\"points\">"+data.dict.top3+        "</th>")
                            //.append("<th class=\"points\">"+data.dict.won_seasons +"</th>")
                            //.append("<th class=\"points\">"+data.dict.played_seasons +"</th>")
 
@@ -173,6 +174,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
                             .append("<td class=\"points\">"+rec.points_mean+"</td>")
                             //.append("<td class=\"points\">"+rec.points_med+"</td>")
                             .append("<td class=\"points\">"+rec.won_weekends+"</td>")
+                            .append("<td class=\"points\">"+rec.top3+        "</th>")
                             //.append("<td class=\"points\">"+rec.won_seasons+ "</td>")
                             //.append("<td class=\"points\">"+rec.played_seasons+"</td>")
                    } else {
