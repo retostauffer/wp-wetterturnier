@@ -103,7 +103,7 @@ class wetterturnier_rankingObject {
        $this->dict->max_points   = __("The maximum score (total) for the ranking is", "wpwt");
        $this->dict->statusbar    = __("Statusbar","wpwt");
 
-       //only for etertnal ranking
+       //only for eternal ranking
        $this->dict->points_max   = __("Max","wpwt");
        $this->dict->points_mean  = __("Mean","wpwt");
        $this->dict->points_med   = __("&empty; > Median","wpwt");
@@ -266,7 +266,6 @@ class wetterturnier_rankingObject {
 
         } else {
             # If $deadman is set to true: only fetch deadman data
-            $this->deadman = "Schläfrig";
             $deadman = get_user_by( "login", $this->deadman );
             $where_user = ($deadman) ? " AND userID = " . (int)$deadman->ID : " ";
 

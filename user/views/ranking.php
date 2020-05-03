@@ -358,9 +358,11 @@ switch ( $args->type ) {
       }
 
       $cityID = ( is_countable($cityObj) ) ? 1 : $cityObj->get('ID');
+      
       $sql = array();
       array_push($sql,sprintf("SELECT tdate FROM %swetterturnier_betstat", $wpdb->prefix));
       array_push($sql,sprintf("WHERE cityID = %d AND tdate <= %d", $cityID, $args->tdate));
+      
       if ($args->weeks) {
          array_push($sql,sprintf("GROUP BY tdate DESC LIMIT %d", $args->weeks));
          $ranking = (string)$args->weeks . __(" weeks ranking for","wpwt");
