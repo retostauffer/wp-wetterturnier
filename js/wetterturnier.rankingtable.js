@@ -32,7 +32,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
 
   });
 
-  console.log(test);
+  //console.log(test);
 
   // Show status bar (return status bar html)
   function statusbar(rel, width) {
@@ -79,10 +79,16 @@ $.fn.show_ranking = function(ajaxurl, input ) {
       $(e).hide().empty();
 
       // Short information about the maximum number of points possible
-      if ( input.header && data.meta.ntournaments <= 52 && input.type != "eternal" ) {
-          $(e).append("<div class=\"wttable-show-points-max\">" +
+      if ( input.header ) {
+          if ( input.type == "eternal" ) {
+              $(e).append("<div class=\"wttable-show-points-max\">" +
+              data.dict.total_tournaments + " <b>" + data.meta.total_tournaments
+              + "</b>." + "</div>");
+          } else {
+              $(e).append("<div class=\"wttable-show-points-max\">" +
               data.dict.max_points + " <b>" + data.meta.max_points + "</b>." +
               "</div>");
+          }
       }
 
       // Append new table
@@ -98,18 +104,18 @@ $.fn.show_ranking = function(ajaxurl, input ) {
       // Only show number of played games if begin/end date differ or in season/yearly rankings
       if ( data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 || input.type=="eternal" ) {
           $( head ).append("<th class=\"played\">"+data.dict.played+"</th>");
-      }
+      }      
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                .append("<th class=\"points-diff\">"+data.dict.difference+"</th>")
                .append("<th class=\"points\">"+data.dict.points+"</th>")
-               if ( ["weekend","cities"].includes( input.type ) ) {
+               if ( input.type != "eternal" ) {
                     $(head).append("<th class=\"points-d1d2\">"+data.dict.points_d1+"</th>")
                            .append("<th class=\"points-d1d2\">"+data.dict.points_d2+"</th>")
-               } else if ( input.type === "eternal" ) {
-                    $(head).append("<th class=\"points\">"+data.dict.sd_ind+      "</th>")
+               } else {
+                    $(head).append("<th class=\"points\">"+data.dict.points_med+      "</th>")
+                           .append("<th class=\"points\">"+data.dict.sd_ind+      "</th>")
                            .append("<th class=\"points\">"+data.dict.points_max+  "</th>")
                            .append("<th class=\"points\">"+data.dict.points_mean+ "</th>")
-                           //.append("<th class=\"points\">"+data.dict.points_med+  "</th>")
                            .append("<th class=\"points\">"+data.dict.won_weekends+"</th>") // in %
                            //.append("<th class=\"points\">"+data.dict.won_seasons +"</th>")
                            //.append("<th class=\"points\">"+data.dict.played_seasons +"</th>")
@@ -121,8 +127,8 @@ $.fn.show_ranking = function(ajaxurl, input ) {
           input.limit = data.data.length;
       }
       $.each( data.data, function(idx, rec) {
-         //console.log(rec);
-         // If input.type === "seasoncities": colorize the guys who have
+         
+          // If input.type === "seasoncities": colorize the guys who have
          // not played all games.
          if ( input.type === "seasoncities" && rec.played_now < data.meta.ntournaments )
          { tdclass = " partial-participation"; } else { tdclass = ""; }
@@ -137,10 +143,15 @@ $.fn.show_ranking = function(ajaxurl, input ) {
              $( tr ).append("<td class=\"trend\">"+colorize_trend(rec.trend)+"</td>");
          }
          // Only show number of played games if begin/end date differ or for season/yearly rankings
-         if ( data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 ) {
-             $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.total_tournaments+"</td>");
+         if (data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 ) {
+             if ( input.type == "eternal" ) {
+                 $(tr).append( "<td class=\"played\">" + rec.played_now + "</td>" );
+             } else {
+                 $(tr).append( "<td class=\"played\">" + rec.played_now + "/" + 
+                               data.meta.ntournaments + "</td>" );
+             }
          }
-         else if ( input.type === "eternal" ) { $(tr).append("<td class=\"played\">"+rec.played_now+"</td>"); }
+
          $(tr).append("<td class=\"user\">" +
                       (( rec.detail_button != undefined && data.meta.ntournaments === 1 ) ? rec.detail_button : "") + 
                       (( rec.edit_button != undefined ) ? rec.edit_button : "") +
@@ -148,13 +159,13 @@ $.fn.show_ranking = function(ajaxurl, input ) {
                    .append("<td class=\"points-diff\">"+rec.points_diff+"</td>")
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
 
-                   // if only single tournament: show points_d1/d2
-                   if ( ["weekend","cities"].includes( input.type ) ) {
+                   // if not eternal ranking: show points_d1/d2
+                   if ( input.type != "eternal" ) {
                        $(tr).append("<td class=\"points-d1d2\">"+rec.points_d1+  "</td>")
                             .append("<td class=\"points-d1d2\">"+rec.points_d2+  "</td>")
-                   } else if ( input.type === "eternal" ) {
-                       console.log(rec.points_max);
-                       $(tr).append("<td class=\"points\">"+rec.sd_ind+     "</td>")
+                   } else {
+                       $(tr).append("<td class=\"points\">"+rec.points_med+ "</td>")
+                            .append("<td class=\"points\">"+rec.sd_ind+     "</td>")
                             .append("<td class=\"points\">"+rec.points_max+ "</td>")
                             .append("<td class=\"points\">"+rec.points_mean+"</td>")
                             .append("<td class=\"points\">"+rec.won_weekends+"</td>")
@@ -217,29 +228,43 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     // Creates the frontend output
     function display_leaders( e, data, input ) {
   
+        path="/wp-content/plugins/wp-wetterturnier/images/"
+        
         // Clear content of the div
         $(e).hide().empty();
     
         counter = 1
-        $.each( data.data, function(idx,rec) {
+        $.each( data.data, function(user, rec) {
         //console.log(rec)
     
+            if (rec.rank_now <= 3) {
+                i = rec.rank_now-1
+                th = data.dict.th[i]
+            } else {
+                i = 3
+                th = data.dict.th[i]
+            }
+
             $(e).append("<div class=\"wt-leaderboard\">\n"
                       + "    <div class=\"wt-leaderboard-avatar\" style=\"width: 33%;\">\n"
                       + "        <a href=\"" + rec.avatar_link + "\" target=\"_self\">"
                       + rec.avatar + "</a>\n"
                       + "    </div>\n"
                       + "    <div class=\"wt-leaderboard-info\">\n"
-                      + "        <info>" + rec.rank_now + data.dict.place + "</info><br>\n"
+                      + "        <info>" + rec.rank_now + th + " " +data.dict.place+ "</info><br>\n"
                       + "        <bar></bar>\n"
-                      + "        <info class=\"color\">" + idx + "</info><br>\n"
+                      + "        <info class=\"color\" style=\"text-align:left;\">"
+                      + "<span style=\"position:absolute; z-index:1;\">"+user.replace("GRP_", "") +"</span>"
+                      + "<span style=\"float:right; position:absolute; right:-2px;\">"+"<img src=\""
+                      + path+"trophy_"+data.dict.trophy[i]+".svg\" style=\"margin-Top:-2px\"></img></span></info><br>\n"
                       + "        <info class=\"color big\">" + rec.points_now + "</info>&nbsp;\n"
-                      + "        <info class=\"color\">"+ data.dict.points + "</info><br>\n"
-                      + "        <bar></bar><info class=\"small\">" + data.meta.city + "&nbsp;" + data.meta.to + "</info><br>\n"
+                      + "        <info class=\"color\">" + data.dict.p + "</info><br>\n"
+                      + "        <bar></bar><info class=\"small\">" + data.meta.city + "&nbsp;"
+                      + data.meta.to + "</info><br>\n"
                       + "    </div>"
                       + "</div>");
-    
-    
+            //console.log(user)
+
             // Breaking .each
             if ( counter >= input.limit ) { return(false); }; counter++;
         });
@@ -259,76 +284,18 @@ function Sleep(milliseconds) {
 // ------------------------------------------------------------------
 // Initialization function
 // ------------------------------------------------------------------
-$(document).on('ready', function() {
+// Initialization function
+// ------------------------------------------------------------------
+$(document).on('ready',function() {
     // Looking for wt-ranking-container divs and call the show_ranking
     // plugin on each of these to load/display ranking data.
     $("div.wt-ranking-container").each(function() {
-       
-        //Sleep(1000);
         $(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
-
-        // wait 1 sec
-        //Sleep(1000);
-
-        // look for the hidden <div> element with id="leading_loading"
-        //var div = document.getElementById('ranking_loading');
-
-        // if present, remove it & reload
-        /*
-        if (div) {
-            div.remove();
-            //$(this).show_ranking(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")))
-        };
-        */
     });
 
-    // Looking for wt-ranking-leaderboard divs and call the show_leaderboard
+    // Looking for wt-ranking-container divs and call the show_ranking
     // plugin on each of these to load/display ranking data.
     $("div.wt-leaderboard").each(function() {
-        
-        //Sleep(1000);
         $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")));
-
-        // wait 1 sec
-        //Sleep(1000);
-        
-        // look for the hidden <div> element with id="leading_loading"
-        //var div = document.getElementById('leading_loading');
-      
-        // if present, remove it & reload
-        /*
-        if (div) {
-            div.remove();
-            $(this).show_leaderboard(jQuery.ajaxurl, jQuery.parseJSON($(this).attr("args")))
-        };
-        */
     });
-
 });
-
-// possible but hacky as FUCK!
-// bug workaround: reload page just after that, otherwise sometimes tables with d1/d2 are not loading...
-// https://stackoverflow.com/questions/6985507/one-time-page-refresh-after-first-page-load
-// https://stackoverflow.com/questions/570015/how-do-i-reload-a-page-without-a-postdata-warning-in-javascript
-//      form submission dialog shows in firefox, but disappears by itself during reloading. chrome is fine
-//      does work but is ugly as fuck plus users would get confused
-/*
-window.onload = function() {
-    if(!window.location.hash) {
-        window.location = window.location.href.split("#")[0];
-        window.location = window.location + '#loaded';
-        // these lines cause a reload loop in chrome:
-        // window.location.href = window.location.protocol +'//'+ window.location.host + window.location.pathname + window.location.search;
-        // window.location.assign(document.URL);
-        
-        // shows repost warning in firefox:
-        window.location.reload();
-        // firefox reload loop...
-        // window.location=window.location;
-        // window.opener.location.href = window.opener.location;
-        setTimeout (function () {
-            window.location.reload(true);
-        },0);
-    }
-}
-*/

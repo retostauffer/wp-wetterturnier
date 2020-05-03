@@ -1829,7 +1829,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
    public function ranking_ajax( ) {
 
        //TODO user option trend calc
-       $calc_trend = false;
+       $calc_trend = NULL;
        global $wpdb;
        if ( empty($_REQUEST["city"]) || empty($_REQUEST["tdates"]) ) {
            print json_encode(array("error"=>"Error by ajax interface function: wrong inputs."));
@@ -1859,7 +1859,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
        }
 
        # Parsing cities
-       // give me all cities you have for the eternal all-city ranking!
+       #TODO: give me all cities you have for the eternal all-city ranking!
        /*
        if ($_REQUEST["cities"] === "all" and $_REQUEST["type"] === "eternal" ) {
           $cityObj = array();
@@ -1869,8 +1869,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
               array_push($cityObj, new wetterturnier_cityObject( (int)$cityID) );
           }
        } else 
-       */   
-       if ( in_array($_REQUEST["type"], array("cities", "seasoncities")) ) {
+       */
+       $type = $_REQUEST["type"];
+    
+    if ( in_array($type, array("cities", "seasoncities", "yearlycities")) ) {
            $cityObj = array();
            foreach ( explode(",", $_REQUEST["cities"]) as $cityID ) {
                array_push($cityObj, new wetterturnier_cityObject( (int)$cityID ));
@@ -1885,15 +1887,17 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                }
            }
        }
-       // only if weekend/cities ranking: show d1/d2 points
-       $d1d2 = (in_array( $_REQUEST["type"], array( "weekend", "cities") ) ) ? True : False;
+       # eternal ranking: dont show d1/d2 points
+       $d1d2 = ($type === "eternal") ? False : True;
+       # only calc trends for season and seasoncities ranking
+       $calc_trend = (in_array( $type, array("season", "seasoncities") )) ? True : False;
 
        # Loading ranking
        $rankingObj = new wetterturnier_rankingObject();
        $rankingObj->set_cities($cityObj);
        $rankingObj->set_tdates($tdates, $calc_trend=$calc_trend);
-       $rankingObj->set_cachehash($_REQUEST["type"]);
-       $rankingObj->prepare_ranking($d1d2, $calc_trend=$calc_trend, $type=$_REQUEST["type"]);
+       $rankingObj->set_cachehash($type);
+       $rankingObj->prepare_ranking($type);
        print $rankingObj->return_json();
        die(0);
    }

@@ -364,14 +364,10 @@ switch ( $args->type ) {
       if ($args->weeks) {
          array_push($sql,sprintf("GROUP BY tdate DESC LIMIT %d", $args->weeks));
          $ranking = (string)$args->weeks . __(" weeks ranking for","wpwt");
-        # For navigation
-        $tdates->older     = $tdates->to_prev;
-        $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
-        if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
 
       } else {
          array_push($sql,sprintf("GROUP BY tdate DESC"));
-         $ranking = ucfirst($args->type) . __("ranking for","wpwt");
+         $ranking = ucfirst($args->type) . __(" ranking for","wpwt");
       }
 
       $dates = $wpdb->get_results(join(" ",$sql));
@@ -381,6 +377,13 @@ switch ( $args->type ) {
       $tdates->to        = $dates[1];
       $tdates->from_prev = $dates[0];
       $tdates->to_prev   = $WTuser->older_tournament($dates[1])->tdate;
+
+      if ($args->weeks) {
+        # For navigation   
+        $tdates->older     = $tdates->to_prev;
+        $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
+        if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
+      }
 
       // Loading the data set
       //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
@@ -416,12 +419,12 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
       <div class="wt-twocolumn column-left" style="width: 65%;">
          <?php
          // Show title
-         if ( $args->header )
-         { printf("<h3>%s</h3><br>\n",$title); }
-         else if ( ($args->type === "weekend" | $args->type === "cities") & is_numeric($args->limit) )
-         { printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title); }
+         if ( $args->header ) {
+             printf("<h3>%s</h3><br>\n",$title);
+         } else if ( ($args->type === "weekend" | $args->type === "cities") & is_numeric($args->limit) ) {
+             printf("<h3 class=\"wt-table-title\">%s</h3>\n",$short_title);
+         }
          ?>
-
          <div style="min-height: 30px;">
             <?php if ( isset($tdates->older) ) { ?>
             <form style="float: left; padding-right: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->older); ?>">
