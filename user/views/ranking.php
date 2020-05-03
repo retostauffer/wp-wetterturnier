@@ -395,7 +395,6 @@ switch ( $args->type ) {
    // ---------------------------------------------------------------
    case "total":
    case "eternal":
-
       // Need the last $args->weeks tournament weekends for this ranking
       // type. 
       $sql = array();
@@ -408,6 +407,7 @@ switch ( $args->type ) {
    
       } else {
           array_push($sql,sprintf("GROUP BY tdate DESC"));
+          
           if ($args->type === "eternal") {
               $ranking = __("Eternal ranking for","wpwt");
           } else {
@@ -418,15 +418,17 @@ switch ( $args->type ) {
       $dates = $wpdb->get_results(join(" ",$sql));
       $dates = array(end($dates)->tdate,$args->tdate);
 
-      # For navigation
-      $tdates->older     = $tdates->to_prev;
-      $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
-      if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
-
       $tdates->from      = $dates[0];
       $tdates->to        = $dates[1];
       $tdates->from_prev = $dates[0];
       $tdates->to_prev   = $WTuser->older_tournament($dates[1])->tdate;
+
+      if ($args->weeks) {
+        # For navigation   
+        $tdates->older     = $tdates->to_prev;
+        $tdates->newer     = $WTuser->newer_tournament($dates[1])->tdate;
+        if ( $tdates->newer > $tdates->latest ) { $tdates->newer = Null; }
+      }
 
       // Loading the data set
       //$ranking = $WTuser->get_ranking_data($cityObj,$dates,$args->limit);
@@ -437,6 +439,7 @@ switch ( $args->type ) {
                $WTuser->date_format($tdates->to));
 
       break;
+
 
    // ---------------------------------------------------------------
    // Else there was a problem with the shortcode specification
