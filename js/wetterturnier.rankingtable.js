@@ -89,7 +89,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
       if ( input.header ) {
           if ( input.type == "eternal" ) {
               $(e).append("<div class=\"wttable-show-points-max\">" +
-              data.dict.total_tournaments + " <b>" + data.meta.total_tournaments
+              data.dict.total_tournaments + " <b>" + data.meta.ntournaments
               + "</b>." + "</div>");
           } else {
               $(e).append("<div class=\"wttable-show-points-max\">" +
