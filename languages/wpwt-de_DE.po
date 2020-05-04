@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-02 06:39+0000\n"
-"PO-Revision-Date: 2020-05-02 06:39+0000\n"
+"POT-Creation-Date: 2020-05-04 01:11+0000\n"
+"PO-Revision-Date: 2020-05-04 01:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -153,78 +153,78 @@ msgstr "und"
 msgid "If you would like to submitt a bet please go to the \"SUBMISSION-FORM\" in the navigation."
 msgstr "Falls du mitspielen und einen Tipp abgeben möchtest geh zur \"TIPPABGABE\" in der Navigation."
 
-#: rankingclass_bak.php:79 rankingclass.php:79 rankingclass_new.php:79
+#: rankingclass_bak.php:79 rankingclass.php:83 rankingclass_new.php:79
 msgid "Older"
 msgstr "Älter"
 
-#: rankingclass_bak.php:80 rankingclass.php:80 rankingclass_new.php:80
+#: rankingclass_bak.php:80 rankingclass.php:84 rankingclass_new.php:80
 msgid "Newer"
 msgstr "Neuer"
 
-#: rankingclass_bak.php:81 rankingclass.php:81 rankingclass_new.php:81 user/userclass.php:2442 user/userclass.php:2444
+#: rankingclass_bak.php:81 rankingclass.php:87 rankingclass_new.php:81 user/userclass.php:2442 user/userclass.php:2444
 msgid "place"
 msgstr "Platz"
 
-#: rankingclass_bak.php:82 rankingclass.php:82 rankingclass_new.php:82
+#: rankingclass_bak.php:82 rankingclass.php:88 rankingclass_new.php:82
 msgid "st"
 msgstr "."
 
-#: rankingclass_bak.php:82 rankingclass.php:82 rankingclass_new.php:82 user/userclass.php:2442
+#: rankingclass_bak.php:82 rankingclass.php:88 rankingclass_new.php:82 user/userclass.php:2442
 msgid "nd"
 msgstr "."
 
-#: rankingclass_bak.php:82 rankingclass.php:82 rankingclass_new.php:82
+#: rankingclass_bak.php:82 rankingclass.php:88 rankingclass_new.php:82
 msgid "rd"
 msgstr "."
 
-#: rankingclass_bak.php:82 rankingclass.php:82 rankingclass_new.php:82 user/userclass.php:2444
+#: rankingclass_bak.php:82 rankingclass.php:88 rankingclass_new.php:82 user/userclass.php:2444
 msgid "th"
 msgstr "."
 
-#: rankingclass_bak.php:84 rankingclass.php:84 rankingclass_new.php:84 user/userclass.php:2474
+#: rankingclass_bak.php:84 rankingclass.php:90 rankingclass_new.php:84 user/userclass.php:2474
 msgid "points"
 msgstr "Punkte"
 
-#: rankingclass_bak.php:85 rankingclass.php:85 chartclass.php:136 rankingclass_new.php:85 user/userclass.php:2104
+#: rankingclass_bak.php:85 rankingclass.php:91 chartclass.php:136 rankingclass_new.php:85 user/userclass.php:2104
 #: user/userclass.php:2107 user/userclass.php:2147 user/userclass.php:2379 user/views/archive.php:68 user/views/archive.php:85
 #: user/views/current.php:75
 msgid "Points"
 msgstr "Punkte"
 
-#: rankingclass_bak.php:86 rankingclass.php:86 rankingclass_new.php:86
+#: rankingclass_bak.php:86 rankingclass.php:94 rankingclass_new.php:86
 msgid "Sat"
 msgstr "Sam"
 
-#: rankingclass_bak.php:87 rankingclass.php:87 rankingclass_new.php:87
+#: rankingclass_bak.php:87 rankingclass.php:95 rankingclass_new.php:87
 msgid "Sun"
 msgstr "Son"
 
-#: rankingclass_bak.php:89 rankingclass.php:89 rankingclass_new.php:89 user/userclass.php:1069
+#: rankingclass_bak.php:89 rankingclass.php:99 rankingclass_new.php:89 user/userclass.php:1069
 msgid "Part"
 msgstr "Teiln"
 
-#: rankingclass_bak.php:90 rankingclass.php:90 rankingclass_new.php:90 user/userclass.php:2147
+#: rankingclass_bak.php:90 rankingclass.php:100 rankingclass_new.php:90 user/userclass.php:2147
 msgid "Diff"
 msgstr "Diff"
 
-#: rankingclass_bak.php:91 rankingclass.php:91 rankingclass_new.php:91 user/userclass.php:1268 user/userclass.php:2112
+#: rankingclass_bak.php:91 rankingclass.php:101 rankingclass_new.php:91 user/userclass.php:1268 user/userclass.php:2112
 msgid "Rank"
 msgstr "Rang"
 
-#: rankingclass_bak.php:92 rankingclass.php:92 rankingclass_new.php:92 user/userclass.php:1360 user/userclass.php:1410
+#: rankingclass_bak.php:92 rankingclass.php:102 rankingclass_new.php:92 user/userclass.php:1360 user/userclass.php:1410
 #: user/userclass.php:2378 admin/classes/bets_list.php:51
 msgid "User"
 msgstr "Benutzername"
 
-#: rankingclass_bak.php:93 rankingclass.php:93 rankingclass_new.php:93
+#: rankingclass_bak.php:93 rankingclass.php:103 rankingclass_new.php:93
 msgid "The maximum score (total) for the ranking is"
 msgstr "Die maximale Gesamtpunktzahl für diese Wertung ist"
 
-#: rankingclass_bak.php:94 rankingclass.php:94 rankingclass_new.php:94
+#: rankingclass_bak.php:94 rankingclass_new.php:94
 msgid "The total number of tournaments for this ranking is"
 msgstr "Die Anzahl der gespielten Turniere für diese Wertung ist"
 
-#: rankingclass_bak.php:95 rankingclass.php:95 rankingclass_new.php:95
+#: rankingclass_bak.php:95 rankingclass.php:104 rankingclass_new.php:95
 msgid "Statusbar"
 msgstr "Statusleiste"
 
@@ -356,6 +356,38 @@ msgstr "Bitte informiere einen unserer Admins/Programmierer!"
 msgid "Sorry, tournament CLOSED. We cannot store your changes anymore."
 msgstr "Sorry, das Turnier ist bereits GESCHLOSSEN. Wir können deine Änderungen leider nicht mehr annehmen."
 
+#: rankingclass.php:107 rankingclass_new.php:98 user/userclass.php:1071
+msgid "Max"
+msgstr "Maximum"
+
+#: rankingclass.php:108 rankingclass_new.php:99 user/userclass.php:1072
+msgid "Mean"
+msgstr "Mittel"
+
+#: rankingclass.php:109
+msgid "> Median"
+msgstr ""
+
+#: rankingclass.php:110
+msgid "Individ. SD"
+msgstr ""
+
+#: rankingclass.php:111
+msgid "Wins"
+msgstr "Siege"
+
+#: rankingclass.php:112
+msgid "Top3 (%)"
+msgstr ""
+
+#: rankingclass.php:113 rankingclass_new.php:102
+msgid "Seasons (x/N)"
+msgstr "Saisonsiege (x/N)"
+
+#: rankingclass.php:114
+msgid "The total number of tournaments is"
+msgstr "Die Anzahl aller gespielten Turnier ist"
+
 #: chartclass.php:137 chartclass.php:233 user/userclass.php:1068
 msgid "Date"
 msgstr "Datum"
@@ -388,14 +420,6 @@ msgstr "Automatische Vorhersagen"
 msgid "Human players"
 msgstr "Menschliche Spieler"
 
-#: rankingclass_new.php:98 user/userclass.php:1071
-msgid "Max"
-msgstr "Maximum"
-
-#: rankingclass_new.php:99 user/userclass.php:1072
-msgid "Mean"
-msgstr "Mittel"
-
 #: rankingclass_new.php:100
 msgid "PSD"
 msgstr "Pseudo-SD"
@@ -403,10 +427,6 @@ msgstr "Pseudo-SD"
 #: rankingclass_new.php:101
 msgid "Wins (%)"
 msgstr "Siege (%)"
-
-#: rankingclass_new.php:102
-msgid "Seasons (x/N)"
-msgstr "Saisonsiege (x/N)"
 
 #: user/userclass.php:213
 msgid "Wetterturnier Options"
@@ -905,7 +925,7 @@ msgstr "Werte anzeigen"
 msgid "Show Points"
 msgstr "Punkte anzeigen"
 
-#: user/views/archive.php:63 user/views/ranking.php:475
+#: user/views/archive.php:63 user/views/ranking.php:478
 msgid "older"
 msgstr "älter"
 
@@ -913,7 +933,7 @@ msgstr "älter"
 msgid "Values"
 msgstr "Werte"
 
-#: user/views/archive.php:72 user/views/ranking.php:480
+#: user/views/archive.php:72 user/views/ranking.php:483
 msgid "newer"
 msgstr "neuer"
 
@@ -1303,7 +1323,7 @@ msgstr "Jahreszeitenwertung für"
 msgid "tournaments from"
 msgstr "Turniere vom"
 
-#: user/views/ranking.php:219 user/views/ranking.php:296 user/views/ranking.php:351 user/views/ranking.php:436
+#: user/views/ranking.php:219 user/views/ranking.php:296 user/views/ranking.php:351 user/views/ranking.php:438
 msgid "to"
 msgstr "bis"
 
@@ -1323,7 +1343,7 @@ msgstr "Jahreswertung für"
 msgid "Ranking for"
 msgstr "Wertung für"
 
-#: user/views/ranking.php:407
+#: user/views/ranking.php:406
 msgid " weeks ranking for"
 msgstr "-Wochen-Wertung für"
 
@@ -1335,13 +1355,21 @@ msgstr "Ewige Wertung für"
 msgid "Alltime ranking for"
 msgstr "Allzeitwertung für"
 
-#: user/views/ranking.php:446
+#: user/views/ranking.php:449
 msgid "Sorry, cannot understand input 'type' for"
 msgstr "Sorry, Input 'type' nicht erkannt"
 
-#: user/views/ranking.php:516
+#: user/views/ranking.php:486
+msgid ">> Explain columns <<"
+msgstr ">> Was bedeuten die Spalten? <<"
+
+#: user/views/ranking.php:521
 msgid "Loading data ..."
 msgstr "Lade Daten ..."
+
+#: user/views/ranking.php:524
+msgid "^ scroll up ^"
+msgstr "^ hochscrollen ^"
 
 #: user/views/mosescoefs2.php:60
 msgid "These are the moses coefs for the weeked around"

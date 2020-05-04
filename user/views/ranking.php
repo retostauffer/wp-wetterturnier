@@ -474,14 +474,16 @@ if ( ! $args->hidebuttons & $args->header ) { ?>
 
          <div style="min-height: 30px;">
             <?php if ( isset($tdates->older) ) { ?>
-            <form style="float: left; padding-right: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->older); ?>">
+                <form style="float: left; padding-right: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->older); ?>">
                 <input class="button" type="submit" value="<< <?php _e("older","wpwt"); ?>" />
-            </form>
+                </form>
             <?php } ?>
             <?php if ( isset($tdates->newer) ) { ?>
-            <form style="float: left; padding-left: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->newer); ?>">
+                <form style="float: left; padding-left: 3px;" method="post" action="<?php printf("%s?tdate=%d", $hrefurl, $tdates->newer); ?>">
                 <input class="button" type="submit" value="<?php _e("newer","wpwt"); ?> >>" />
-            </form>
+                </form>
+            <?php } else if ( $args->type === "eternal" ) { ?>
+            <input class="button" type="submit" id="scroll-down" value="<?php _e(">> Explain columns <<","wpwt"); ?>" onClick="document.getElementById('wt-ranking-container-end').scrollIntoView();" />
             <?php } ?>
          </div>
       </div>
@@ -518,8 +520,11 @@ $containerID = $WTuser->random_string(10, "wt-ranking-container");
      args="<?php print htmlspecialchars(json_encode($args)); ?>">
 <?php _e("Loading data ...", "wpwt"); ?>
 </div>
-
-
+<?php if ( $args->type === "eternal" ) { ?>
+<div id="wt-ranking-container-end">
+<input class="button" type="submit" id="scroll-up" value="<?php _e("^ scroll up ^","wpwt"); ?>" onClick="document.getElementById('page').scrollIntoView();" />
+</div>
+<?php } ?>
 <?php
 // Print dates in a ugly way
 $today = (int)(time()/86400);

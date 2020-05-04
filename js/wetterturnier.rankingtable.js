@@ -116,7 +116,8 @@ $.fn.show_ranking = function(ajaxurl, input) {
                .append("<th class=\"points-diff\">"+data.dict.difference+"</th>")
                .append("<th class=\"points\">"+data.dict.points+"</th>")
                if ( input.type === "eternal" ) {     
-                    $(head).append("<th class=\"points\">"+data.dict.sd_ind+      "</th>")
+                    $(head).append("<th class=\"points\">"+data.dict.points_med+      "</th>")
+                           .append("<th class=\"points\">"+data.dict.sd_ind+      "</th>")
                            .append("<th class=\"points\">"+data.dict.points_max+  "</th>")
                            .append("<th class=\"points\">"+data.dict.points_mean+ "</th>")
                            //.append("<th class=\"points\">"+data.dict.points_med+  "</th>")
@@ -169,7 +170,8 @@ $.fn.show_ranking = function(ajaxurl, input) {
                    .append("<td class=\"points\">"+rec.points_now+"</td>")
 
                    if ( input.type === "eternal" ) {
-                       $(tr).append("<td class=\"points\">"+rec.sd_ind+     "</td>")
+                       $(tr).append("<td class=\"points\">"+rec.points_med+ "</td>")
+                            .append("<td class=\"points\">"+rec.sd_ind+     "</td>")
                             .append("<td class=\"points\">"+rec.points_max+ "</td>")
                             .append("<td class=\"points\">"+rec.points_mean+"</td>")
                             //.append("<td class=\"points\">"+rec.points_med+"</td>")
