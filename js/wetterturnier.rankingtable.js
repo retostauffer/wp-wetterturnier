@@ -32,7 +32,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
 
   });
 
-  //console.log(test);
+  console.log(test);
 
   // Show status bar (return status bar html)
   function statusbar(rel, width) {
@@ -116,7 +116,8 @@ $.fn.show_ranking = function(ajaxurl, input ) {
                            .append("<th class=\"points\">"+data.dict.sd_ind+      "</th>")
                            .append("<th class=\"points\">"+data.dict.points_max+  "</th>")
                            .append("<th class=\"points\">"+data.dict.points_mean+ "</th>")
-                           .append("<th class=\"points\">"+data.dict.won_weekends+"</th>") // in %
+                           .append("<th class=\"points\">"+data.dict.won_weekends+"</th>")
+                           .append("<th class=\"points\">"+data.dict.top3+        "</th>")
                            //.append("<th class=\"points\">"+data.dict.won_seasons +"</th>")
                            //.append("<th class=\"points\">"+data.dict.played_seasons +"</th>")
                }
@@ -128,10 +129,12 @@ $.fn.show_ranking = function(ajaxurl, input ) {
       }
       $.each( data.data, function(idx, rec) {
          
-          // If input.type === "seasoncities": colorize the guys who have
-         // not played all games.
-         if ( input.type === "seasoncities" && rec.played_now < data.meta.ntournaments )
-         { tdclass = " partial-participation"; } else { tdclass = ""; }
+         // If input.type === "seasoncities": colorize the guys who have
+         // not played all games. Or if input.type === "eternal" and parts < 100!
+         if ( (input.type === "seasoncities" && rec.played_now < data.meta.ntournaments)
+                 || (input.type === "eternal" && rec.played_now < 100) ) {
+             tdclass = " partial-participation";
+         } else { tdclass = ""; }
 
          // Append new table row and select the new html element (variable tr)
          $( body ).append("<tr class=\"" + rec.userclass + tdclass + "\"></tr>")
@@ -169,6 +172,7 @@ $.fn.show_ranking = function(ajaxurl, input ) {
                             .append("<td class=\"points\">"+rec.points_max+ "</td>")
                             .append("<td class=\"points\">"+rec.points_mean+"</td>")
                             .append("<td class=\"points\">"+rec.won_weekends+"</td>")
+                            .append("<td class=\"points\">"+rec.top3+        "</th>")
                             //.append("<td class=\"points\">"+rec.won_seasons+ "</td>")
                             //.append("<td class=\"points\">"+rec.played_seasons+"</td>")
                    }

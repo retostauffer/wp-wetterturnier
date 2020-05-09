@@ -108,7 +108,8 @@ class wetterturnier_rankingObject {
        $this->dict->points_mean  = __("Mean","wpwt");
        $this->dict->points_med   = __("&empty; > Median","wpwt");
        $this->dict->sd_ind       = __("Indiv SD","wpwt");
-       $this->dict->won_weekends = __("Wins (%)","wpwt");
+       $this->dict->won_weekends = __("Wins","wpwt");
+       $this->dict->top3         = __("Top3 (%)","wpwt");
        $this->dict->won_seasons  = __("Seasons (x/N)","wpwt");
        $this->dict->total_tournaments = __("The total number of tournaments is","wpwt");
     }
@@ -262,12 +263,14 @@ class wetterturnier_rankingObject {
             "s.sd_ind AS sd_ind, s.points_med AS points_med, s.max AS points_max, s.mean AS points_mean, s.part AS played\n" .
             "FROM " . $prefix . "users AS u RIGHT OUTER JOIN " . $prefix . 
             "wetterturnier_userstats AS s ON u.ID = s.userID\n" .
-            "WHERE cityID = " . $cityID . " AND ID IS NOT NULL AND s.points_adj != 0 GROUP BY u.ID";
+            "WHERE cityID = " .$cityID. " AND ID IS NOT NULL AND s.points_adj != 0 GROUP BY u.ID";
 
         } else {
             # If $deadman is set to true: only fetch deadman data
-            $deadman = get_user_by( "login", $this->deadman );
-            $where_user = ($deadman) ? " AND userID = " . (int)$deadman->ID : " ";
+            if ($deadman) {
+                $deadman = get_user_by( "login", $this->deadman );
+            }
+            $where_user = ($deadman) ? sprintf(" AND userID = %d \n", $deadman->ID) : " ";
 
             # Where city
             if ( is_array($this->cityObj) ) {
@@ -290,8 +293,7 @@ class wetterturnier_rankingObject {
             $usercol = ($deadman) ? "" : "u.ID, u.user_login, ";
 
             # Create SQL command
-            $sql = "SELECT b.tdate, " . $usercol . "\n" .
-                   "SUM(b.points) AS points,\n";
+            $sql = "SELECT b.tdate, " . $usercol . "SUM(b.points) AS points, ";
             if ( $d1d2 ) {
                 $sql .= "SUM(b.points_d1) AS points_d1,\n" .
                         "SUM(b.points_d2) AS points_d2,\n";
@@ -300,7 +302,7 @@ class wetterturnier_rankingObject {
                     "FROM " . $prefix . "users AS u RIGHT OUTER JOIN\n" .
                     $prefix . "wetterturnier_betstat AS b\n" .
                     "ON u.ID=b.userID WHERE\n" .
-                    $where_city . " AND " . $where_tdate . $where_user . "GROUP BY u.ID, b.tdate";
+                    $where_city . " AND " . $where_tdate . $where_user . "GROUP BY u.ID, b.tdate\n";
 
             # If calculating the ranking for multiple
             # cities we have to capsule the statement above: 
@@ -309,8 +311,7 @@ class wetterturnier_rankingObject {
                     $sql, $this->cities );
             }
         }
-
-        #printf("\n%s\n", join("\n",$sql));
+        
         $dbres = $this->wpdb->get_results($sql);
 
         # If deadman is requested: create one stdClass object containing
@@ -343,7 +344,9 @@ class wetterturnier_rankingObject {
                     }
                     # Append tournament date to city
                     $thash = sprintf("tdate_%d", $rec->tdate);
-                    if (!isset($res->data->$uhash->$thash)) $res->data->$uhash->$thash = new stdClass();
+                    if ( ! isset($res->data->$uhash->$thash) ) {
+                        $res->data->$uhash->$thash = new stdClass();
+                    }
                     $res->data->$uhash->$thash->points = $rec->points;
                     
                     if ($d1d2) {
@@ -352,7 +355,9 @@ class wetterturnier_rankingObject {
                     } 
                 } else {
                     $ranks = $rec->ranks_weekend;
-                    $res->data->$uhash->won_weekends = explode( ",", $ranks )[0];
+                    $ranks = explode( ",", $ranks );
+                    $res->data->$uhash->won_weekends = $ranks[0];
+                    $res->data->$uhash->top3         = array_sum( $ranks );
                     $res->data->$uhash->points       = $rec->points;
                     $res->data->$uhash->played       = $rec->played;
                     $res->data->$uhash->sd_ind       = $rec->sd_ind;
@@ -540,7 +545,7 @@ class wetterturnier_rankingObject {
      *
      * .. todo:: Explain caching.
      */
-    public function prepare_ranking( $type = "ranking" ) {
+    public function prepare_ranking( $type = "ranking", $d1d2 = true ) {
 
         $calc_trend = $this->calc_trend;
 
@@ -564,15 +569,9 @@ class wetterturnier_rankingObject {
             }
         }
 
-        if ( $type === "eternal" ) {
-            $d1d2    = false;
-            $deadman = NULL;
-        } else {
-            $d1d2    = true;
-            # Loading deadman points. Whenever a player did not participate he/she
-            # will get these points. May return "NULL" if the deadman is not defined.
-            $deadman = $this->_get_data_object(true);
-        }
+        # Loading deadman points. Whenever a player did not participate he/she
+        # will get these points. May return "NULL" if the deadman is not defined or eternal ranking.
+        $deadman = ($type === "eternal") ? NULL : $this->_get_data_object(true, false);
 
         # Loading user data
         $userdata = $this->_get_data_object(false, $d1d2=$d1d2, $type=$type);
@@ -654,6 +653,7 @@ class wetterturnier_rankingObject {
                 $ranking->now->$user->points       = $data->points;
                 $ranking->now->$user->played       = $data->played;
                 $ranking->now->$user->won_weekends = (int)$data->won_weekends;
+                $ranking->now->$user->top3         = $data->top3;
                 $ranking->now->$user->sd_ind       = $data->sd_ind;
                 $ranking->now->$user->points_max   = $data->points_max;
                 $ranking->now->$user->points_mean  = $data->points_mean;
@@ -744,11 +744,17 @@ class wetterturnier_rankingObject {
                     $final->$user->points_d2    = $this->WTuser->number_format($ranking->now->$user->points_d2,1);
                 }
             } else if ( $type === "eternal" ) {
-                $final->$user->sd_ind       = $this->WTuser->number_format($ranking->now->$user->sd_ind,1);
-                $final->$user->points_max   = $this->WTuser->number_format($ranking->now->$user->points_max,1);
-                $final->$user->points_mean  = $this->WTuser->number_format($ranking->now->$user->points_mean,1);
-                $final->$user->points_med   = $this->WTuser->number_format($ranking->now->$user->points_med,1);
-                $final->$user->won_weekends = $this->WTuser->number_format(round( 100 * ($ranking->now->$user->won_weekends / $final->$user->played_now),1 ),1);
+                $final->$user->sd_ind       = $this->WTuser->number_format(
+                    $ranking->now->$user->sd_ind, 1);
+                $final->$user->points_max   = $this->WTuser->number_format(
+                    $ranking->now->$user->points_max, 1);
+                $final->$user->points_mean  = $this->WTuser->number_format(
+                    $ranking->now->$user->points_mean, 1);
+                $final->$user->points_med   = $this->WTuser->number_format(
+                    $ranking->now->$user->points_med, 1);
+                $final->$user->won_weekends = $ranking->now->$user->won_weekends;
+                $final->$user->top3         = $this->WTuser->number_format(100 *
+                    ($ranking->now->$user->top3 / $ranking->now->$user->played), 1);
                 //$final->$user->won_seasons = $this->WTuser->number_format($ranking->now->$user->won_seasons);
             }
 

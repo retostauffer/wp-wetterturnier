@@ -321,7 +321,6 @@ switch ( $args->type ) {
 
       // Hide 'newer' button if this is the current year.
       if ( (int)date("Y") === $year ) { $tdates->newer = Null; }
-      print_r($tdates->newer);
 
       // Generate the title, using meta-info from the $ranking object
       $title = sprintf("%s %s %s %04d",
