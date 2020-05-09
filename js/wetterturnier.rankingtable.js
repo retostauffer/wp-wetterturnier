@@ -140,9 +140,11 @@ $.fn.show_ranking = function(ajaxurl, input) {
       $.each( data.data, function(idx, rec) {
 
          // If input.type === "seasoncities": colorize the guys who have
-         // not played all games.
-         if ( input.type === "seasoncities" && rec.played_now < data.meta.ntournaments )
-         { tdclass = " partial-participation"; } else { tdclass = ""; }
+         // not played all games. Or if input.type === "eternal" and parts < 100!
+         if ( (input.type === "seasoncities" && rec.played_now < data.meta.ntournaments)
+                 || (input.type === "eternal" && rec.played_now < 100) ) {
+             tdclass = " partial-participation";
+         } else { tdclass = ""; }
 
          // Append new table row and select the new html element (variable tr)
          $( body ).append("<tr class=\"" + rec.userclass + tdclass + "\"></tr>")
