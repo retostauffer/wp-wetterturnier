@@ -181,7 +181,7 @@ class wetterturnier_rankingObject {
      * See also :php:meth:`set_tdates`.
      */
     public function set_tdates($from, $to=Null, $from_prev=Null, $to_prev=Null, $calc_trend=false) {
- 
+
         if ( ! is_object($from) ) {
             $this->tdates = (object) array("from"      => $from,      "to"      => $to,
                                            "from_prev" => $from_prev, "to_prev" => $to_prev);
@@ -207,6 +207,9 @@ class wetterturnier_rankingObject {
                 $this->tdates->max = $this->tdates->latest;
             }
         }
+
+        $this->tdates->today = (int)floor(gmdate('U')/86400.);
+
     }
 
 
@@ -387,10 +390,14 @@ class wetterturnier_rankingObject {
             }
             $cityIDs = implode(",", $cityIDs);
         }
-        
+
+        # if today is a tournament day and last day of ranking: leave it out 
+        $this->tdates->last = ($this->tdates->today === $this->tdates->to) ?
+            ($this->tdates->today - 1) : $this->tdates->to;
+
         $sql = "SELECT COUNT(DISTINCT(tdate)) AS c FROM " . $prefix . 
                "wetterturnier_betstat WHERE tdate BETWEEN " . $this->tdates->from . " AND " . 
-               $this->tdates->to . " AND cityID IN(" . $cityIDs . ")";
+               ($this->tdates->last) . " AND cityID IN(" . $cityIDs . ")";
 
         $res->ntournaments = $this->wpdb->get_row($sql)->c;
         
