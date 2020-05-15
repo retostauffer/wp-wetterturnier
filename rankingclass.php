@@ -200,7 +200,7 @@ class wetterturnier_rankingObject {
         }
 
         $this->tdates->latest = $this->WTuser->latest_tournament(floor(time() / 86400))->tdate;
-        $this->tdates->current = $this->WTuser->current_tournament()->tdate;
+        $this->tdates->current = $this->WTuser->current_tournament(0, $check_access=false)->tdate;
 
         // If 'max' > 'latest':
         if ( property_exists($this->tdates, "latest") ) {
