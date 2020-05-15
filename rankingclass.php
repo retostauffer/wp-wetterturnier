@@ -200,6 +200,7 @@ class wetterturnier_rankingObject {
         }
 
         $this->tdates->latest = $this->WTuser->latest_tournament(floor(time() / 86400))->tdate;
+        $this->tdates->current = $this->WTuser->current_tournament()->tdate;
 
         // If 'max' > 'latest':
         if ( property_exists($this->tdates, "latest") ) {
@@ -209,6 +210,12 @@ class wetterturnier_rankingObject {
         }
 
         $this->tdates->today = (int)floor(gmdate('U')/86400.);
+
+        # if today is a tournament day and === max: max -= 1 (not included)
+        if ($this->tdates->today == $this->tdates->current
+            AND $this->tdates->current == $this->tdates->max) {
+            $this->tdates->max -= 1;
+        }
 
     }
 
@@ -391,13 +398,10 @@ class wetterturnier_rankingObject {
             $cityIDs = implode(",", $cityIDs);
         }
 
-        # if today is a tournament day and last day of ranking: leave it out 
-        $this->tdates->last = ($this->tdates->today === $this->tdates->to) ?
-            ($this->tdates->today - 1) : $this->tdates->to;
-
         $sql = "SELECT COUNT(DISTINCT(tdate)) AS c FROM " . $prefix . 
-               "wetterturnier_betstat WHERE tdate BETWEEN " . $this->tdates->from . " AND " . 
-               ($this->tdates->last) . " AND cityID IN(" . $cityIDs . ")";
+            "wetterturnier_betstat WHERE tdate BETWEEN " .
+            $this->tdates->from . " AND " . $this->tdates->max .
+            " AND cityID IN(" . $cityIDs . ")";
 
         $res->ntournaments = $this->wpdb->get_row($sql)->c;
         
