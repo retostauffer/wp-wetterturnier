@@ -803,9 +803,9 @@ class wetterturnier_rankingObject {
             $final->$user->display_name = $tmp->display_name;
             $final->$user->userclass    = $tmp->userclass;
 
-            // Create edit button for administrators
+            // Create edit button for administrators, on in weekend rankings
 
-            if ( ! is_array($this->cityObj) and $ntournaments === 1 and $total_tournaments === 1 ) {
+            if ( ! is_array($this->cityObj) and $type === "weekend" ) {
                 $final->$user->edit_button   = $this->_get_edit_button( $tmp->userclass, $userObj );
                 $final->$user->detail_button = $this->_get_detail_button( $userObj );
             }

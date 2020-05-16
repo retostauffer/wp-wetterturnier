@@ -39,7 +39,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
      }
 
   });
-  console.log(test);
+  //console.log(test);
 
 
   // Show status bar (return status bar html)
@@ -165,7 +165,7 @@ $.fn.show_ranking = function(ajaxurl, input) {
          }
 
          $(tr).append("<td class=\"user\">" +
-                      (( rec.detail_button != undefined && data.meta.ntournaments === 1 ) ? rec.detail_button : "") +
+                      (( rec.detail_button != undefined && data.meta.total_tournaments == 1 ) ? rec.detail_button : "") +
                       (( rec.edit_button != undefined ) ? rec.edit_button : "") +
                       rec.profile_link + "</td>")
                    .append("<td class=\"points-diff\">"+rec.points_diff+"</td>")
@@ -254,7 +254,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
     
         counter = 1
         $.each( data.data, function(user, rec) {
-        console.log(rec)
+        //console.log(rec)
         //console.log(rec.rank_now)
    
             if (rec.rank_now <= 3) {
