@@ -587,7 +587,7 @@ class wetterturnier_rankingObject {
 
         # If caching is enabled: check if we can load the
         # data from disc to dont re-calculate the ranking again.
-        if ( $this->cache ) {
+        if ( $this->cache and $type != "weekend" ) {
             $cache_file  = $this->_get_cache_file_name();
             if ( file_exists($cache_file) ) {
                 //TODO different caching times for each ranking type
