@@ -274,11 +274,12 @@ table.tablesorter tbody td {
 }
 
 .wttable-show * th { padding: 0 2px; }
-.wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 30px; }
+.wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 35px; }
 .wttable-show * th.trend,      .wttable-show * td.trend       { text-align: center; width: 30px; }
-.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 30px; }
+.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 35px; }
 .wttable-show * th.user,       .wttable-show * td.user        { text-align: left; width: 180px; }
 .wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 55px; }
+.wttable-show * th.points-et,  .wttable-show * td.points-et   { text-align: right; width: 65px; }
 .wttable-show * th.points-diff,     .wttable-show * td.points-diff { text-align: right; width: 55px; }
 .wttable-show * th.points-d1d2,     .wttable-show * td.points-d1d2 { text-align: right; width: 35px; }
 

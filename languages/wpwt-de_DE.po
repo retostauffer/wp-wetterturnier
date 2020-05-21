@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-04 01:11+0000\n"
-"PO-Revision-Date: 2020-05-04 01:12+0000\n"
+"PO-Revision-Date: 2020-05-21 07:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.3; wp-5.4"
+"X-Loco-Version: 2.3.4; wp-5.4.1"
 
 #: classes.php:602 user/userclass.php:864 admin/classes/webcams_list.php:49 admin/classes/api_list.php:72
 msgid "Description"
@@ -358,7 +358,7 @@ msgstr "Sorry, das Turnier ist bereits GESCHLOSSEN. Wir können deine Änderunge
 
 #: rankingclass.php:107 rankingclass_new.php:98 user/userclass.php:1071
 msgid "Max"
-msgstr "Maximum"
+msgstr "Max"
 
 #: rankingclass.php:108 rankingclass_new.php:99 user/userclass.php:1072
 msgid "Mean"

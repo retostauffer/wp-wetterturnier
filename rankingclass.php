@@ -107,7 +107,7 @@ class wetterturnier_rankingObject {
        $this->dict->points_max   = __("Max","wpwt");
        $this->dict->points_mean  = __("Mean","wpwt");
        $this->dict->points_med   = __("> Median","wpwt");
-       $this->dict->sd_ind       = __("Individ. SD","wpwt");
+       $this->dict->sd_ind       = __("Ind. SD","wpwt");
        $this->dict->won_weekends = __("Wins","wpwt");
        $this->dict->top3         = __("Top3 (%)","wpwt");
        $this->dict->won_seasons  = __("Seasons (x/N)","wpwt");
