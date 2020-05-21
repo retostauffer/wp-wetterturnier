@@ -273,30 +273,31 @@ table.tablesorter tbody td {
    background-image: url('sleepy.gif');
 }
 
-.wttable-show * th { padding: 0 2px; }
-.wttable-show * th.rank,       .wttable-show * td.rank        { text-align: center; width: 35px; }
-.wttable-show * th.trend,      .wttable-show * td.trend       { text-align: center; width: 30px; }
-.wttable-show * th.played,     .wttable-show * td.played      { text-align: center; width: 35px; }
-.wttable-show * th.user,       .wttable-show * td.user        { text-align: left; width: 180px; }
-.wttable-show * th.points,     .wttable-show * td.points      { text-align: right; width: 55px; }
-.wttable-show * th.points-et,  .wttable-show * td.points-et   { text-align: right; width: 65px; }
-.wttable-show * th.points-diff,     .wttable-show * td.points-diff { text-align: right; width: 55px; }
-.wttable-show * th.points-d1d2,     .wttable-show * td.points-d1d2 { text-align: right; width: 35px; }
+.wttable-show * th                                             { padding: 0 2px; }
+.wttable-show * th.rank,        .wttable-show * td.rank        { text-align: center; width: 35px; }
+.wttable-show * th.trend,       .wttable-show * td.trend       { text-align: center; width: 30px; }
+.wttable-show * th.played,      .wttable-show * td.played      { text-align: center; width: 35px; }
+.wttable-show * th.played-et,   .wttable-show * td.played-et   { text-align: center; width: 40px; }
+.wttable-show * th.user,        .wttable-show * td.user        { text-align: left; width: 180px; }
+.wttable-show * th.points,      .wttable-show * td.points      { text-align: right; width: 55px; }
+.wttable-show * th.points-et,   .wttable-show * td.points-et   { text-align: right; width: 65px; }
+.wttable-show * th.points-diff, .wttable-show * td.points-diff { text-align: right; width: 55px; }
+.wttable-show * th.points-d1d2, .wttable-show * td.points-d1d2 { text-align: right; width: 40px; }
 
-.wttable-show * th.statusbar,  .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
-.wttable-show * td.difference                                 { color: gray; }
+.wttable-show * th.statusbar,   .wttable-show * td.statusbar   { width: 200px; min-width: 100px; max-width: 200px; }
+.wttable-show * td.difference                                  { color: gray; }
 
-.wttable-show-bets,   .wttable-show-obs    { table-layout: auto; }
-.wttable-show-bets th,                .wttable-show-obs th { text-align: left; }
-.wttable-show-bets th.align-center,   .wttable-show-obs th.align-center  { text-align: center; }
-.wttable-show-bets th.align-right,    .wttable-show-obs th.align-right   { text-align: right; }
-.wttable-show-bets th.param-col,      .wttable-show-obs th.param-col     { width: 60px; min-width: 24px }
-.wttable-show-bets th.param-col-N,    .wttable-show-obs th.param-col-N   { width: 40px; min-width: 8px }
-.wttable-show-bets th.param-col-Wv,   .wttable-show-obs th.param-col-Wv  { width: 40px; min-width: 16px }
-.wttable-show-bets th.param-col-Wn,   .wttable-show-obs th.param-col-Wn  { width: 40px; min-width: 16px }
-.wttable-show-bets th.param-col-PPP,  .wttable-show-obs th.param-col-PPP { width: 80px; min-width: 40px }
-.wttable-show-bets th.param-col-RR,   .wttable-show-obs th.param-col-RR  { width: 70px; min-width: 28px }
-.wttable-show-bets th.user-name,      .wttable-show-obs th.user-name     { min-width: 180px; }
+.wttable-show-bets,                  .wttable-show-obs                  { table-layout: auto; }
+.wttable-show-bets th,               .wttable-show-obs th               { text-align: left; }
+.wttable-show-bets th.align-center,  .wttable-show-obs th.align-center  { text-align: center; }
+.wttable-show-bets th.align-right,   .wttable-show-obs th.align-right   { text-align: right; }
+.wttable-show-bets th.param-col,     .wttable-show-obs th.param-col     { width: 60px; min-width: 24px }
+.wttable-show-bets th.param-col-N,   .wttable-show-obs th.param-col-N   { width: 40px; min-width: 8px }
+.wttable-show-bets th.param-col-Wv,  .wttable-show-obs th.param-col-Wv  { width: 40px; min-width: 16px }
+.wttable-show-bets th.param-col-Wn,  .wttable-show-obs th.param-col-Wn  { width: 40px; min-width: 16px }
+.wttable-show-bets th.param-col-PPP, .wttable-show-obs th.param-col-PPP { width: 80px; min-width: 40px }
+.wttable-show-bets th.param-col-RR,  .wttable-show-obs th.param-col-RR  { width: 70px; min-width: 28px }
+.wttable-show-bets th.user-name,     .wttable-show-obs th.user-name     { min-width: 180px; }
 .wttable-show span.button.small {
    padding: 1px 3px;
    margin: 0px;

@@ -109,8 +109,9 @@ $.fn.show_ranking = function(ajaxurl, input) {
           $( head ).append("<th class=\"trend\">"+data.dict.trend+"</th>");
       }
       // Only show number of played games if begin/end date differ or in season/yearly rankings
+      var et = (input.type==="eternal") ? "-et" : "";
       if ( data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 || input.type=="eternal" ) {
-          $( head ).append("<th class=\"played\">"+data.dict.played+"</th>");
+          $( head ).append("<th class=\"played"+et+"\">"+data.dict.played+"</th>");
       }
       $( head ).append("<th class=\"user\">"+data.dict.user+"</th>")
                if ( input.type !== "eternal" ) {
@@ -156,9 +157,9 @@ $.fn.show_ranking = function(ajaxurl, input) {
          // Only show number of played games if begin/end date differ or for season/yearly rankings
          if (data.meta.ntournaments > 1 || data.meta.total_tournaments > 1 ) {
              if ( input.type == "eternal" ) {
-                 $(tr).append("<td class=\"played\">"+rec.played_now+"</td>");
+                 $(tr).append("<td class=\"played-et\">"+rec.played_now+"</td>");
              } else {
-             $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.ntournaments+"</td>");
+                 $(tr).append("<td class=\"played\">"+rec.played_now+"/"+data.meta.ntournaments+"</td>");
              }
          }
 
