@@ -939,7 +939,8 @@ class wetterturnier_generalclass
         }
         // If user is too early (bet form opens X days before, see 
         // plugin settings) return false.
-        if ( $today < ( $tdate - $this->options->wetterturnier_bet_open_days) ) {
+        $open_tdate = $tdate - $this->options->wetterturnier_bet_open_days;
+        if ( $today < $open_tdate ) {
             echo "<div class=\"wetterturnier-info error\">\n";
             printf("%s.<br>\n",__("Sorry, no access to these bet form","wpwt"));
             printf("%s.<br>\n",sprintf(__("The form to submit tips always opens %d days in advance.","wpwt"),
@@ -947,7 +948,7 @@ class wetterturnier_generalclass
             printf("%s.<br>\n",sprintf(__("Next tournament will take place on %s","wpwt"),
                      $this->date_format($tdate))); 
             printf("%s.\n",sprintf(__("The bet form opens %s","wpwt"),
-                     $this->datetime_format(86400*$tdate)));
+                     $this->datetime_format( 86400*$open_tdate )));
             echo "</div>\n";
 
             return( true ); # closed true 
