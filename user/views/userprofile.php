@@ -72,7 +72,9 @@ function get_city_stats( $cityID, $userID ) {
       $rankhistory->$tmp = $rec->count;
    }
     */
-   $ranks = $wpdb->get_row($sql)->medals;
+   if (! is_null($wpdb->get_row($sql))) {
+       $ranks = $wpdb->get_row($sql)->medals;
+   }
    if ( isset($ranks) ) {
       $ranks = explode(",", $ranks);
       $i=1;

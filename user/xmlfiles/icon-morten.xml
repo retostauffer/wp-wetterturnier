@@ -80,13 +80,17 @@
          <imgname>shear_eu</imgname>
       </station>
       <station>
-         <name>Storm relative helicity 0-3km</name>
-         <imgname>srh_eu</imgname>
+         <name>BRN shear</name>
+         <imgname>brnshear_eu</imgname>
       </station>
       <station>
          <name>ML WXSHEAR</name>
          <imgname>wxshear_eu</imgname>
       </station>
+      <station>
+         <name>Storm relative helicity 0-3km</name>
+         <imgname>srh_eu</imgname>
+      </station>      
       <station>
          <name>KO-Index</name>
          <imgname>ko_eu</imgname>

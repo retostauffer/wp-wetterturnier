@@ -3,7 +3,7 @@
 
    <!-- times for which the forecasts are availbale -->
    <times>
-      <time>9</time>
+      <!-- <time>9</time> -->
       <time>12</time>
       <time>15</time>
       <time>18</time>
@@ -29,6 +29,21 @@
          <name>Max dBZ + WMAXSHEAR</name>
          <imgname>wxdbz_D2</imgname>
          <run>03</run>
+      </station>
+      <station>
+         <name>Bulk shear 0-3km and 0-6km</name>
+         <imgname>bulkshr_D2</imgname>
+         <run>00</run>
+      </station>
+      <station>
+         <name>BRN shear and SRH</name>
+         <imgname>brnsrh_D2</imgname>
+         <run>00</run>
+      </station>
+      <station>
+         <name>MU CAPE and ML CAPE</name>
+         <imgname>cape_D2</imgname>
+         <run>00</run>
       </station>
       <station>
          <name>Max dBZ EPS</name>

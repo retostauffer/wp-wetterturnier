@@ -212,7 +212,7 @@ jQuery(document).on('ready',function() {
                 // Remove current selection
                 $("#wt-sounding-navigation .stations ul li.selected").removeClass("selected")
                 // Add new selection
-                $("#wt-sounding-navigation .stations ul li:nth-child(5)").addClass("selected")
+                $("#wt-sounding-navigation .stations ul li:nth-child(4)").addClass("selected")
                 $("#wt-sounding-navigation .types ul li.selected").attr("station", "leipzig")
                 showImage(); // Update image
             }
