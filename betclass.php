@@ -1219,6 +1219,8 @@ class wetterturnier_betclass
       print "  <input type=\"hidden\" name=\"tdate\" value=\"".$tournament->tdate."\"></input>\n";
       print "  <button type=\"submit\" id=\"save-submit\" name=\"submit\" value=\"save\">\n"
            .__("Save Observations","wpwt").": [".$stnObj->get("wmo")."] ".$stnObj->get("name")."</button><br>\n"
+           ."  <button type=\"submit\" id=\"save-submit\" name=\"submit\" value=\"save\">\n"
+           .__("Delete Observations","wpwt").": [".$stnObj->get("wmo")."] ".$stnObj->get("name")."</button><br>\n"
            ."</form>";
    
    } // End of print_bet_form()
