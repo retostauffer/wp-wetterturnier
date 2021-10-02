@@ -21,44 +21,36 @@
 
   <stations>
       <station>
-         <name>Synoptic overview</name>
-         <imgname>winter_D2</imgname>
-         <run>03</run>
+         <name>Reflectivity</name>
+         <imgname>dbz</imgname>
       </station>
       <station>
-         <name>Max dBZ + WMAXSHEAR</name>
-         <imgname>wxdbz_D2</imgname>
-         <run>03</run>
+         <name>Lightning potential index</name>
+         <imgname>lpi</imgname>
       </station>
       <station>
-         <name>Bulk shear 0-3km and 0-6km</name>
-         <imgname>bulkshr_D2</imgname>
-         <run>00</run>
+         <name>Low level cloud fraction</name>
+         <imgname>clcl</imgname>
       </station>
       <station>
-         <name>BRN shear and SRH</name>
-         <imgname>brnsrh_D2</imgname>
-         <run>00</run>
+         <name>Mid + high level cloud fraction</name>
+         <imgname>clcm</imgname>
       </station>
       <station>
-         <name>MU CAPE and ML CAPE</name>
-         <imgname>cape_D2</imgname>
-         <run>00</run>
+         <name>ML CAPE</name>
+         <imgname>cape</imgname>
       </station>
       <station>
-         <name>Max dBZ EPS</name>
-         <imgname>dbz_D2_eps</imgname>
-         <run>03</run>
+         <name>Updraft velocity</name>
+         <imgname>wmax</imgname>
       </station>
       <station>
-         <name>Max wind gusts 3h EPS</name>
-         <imgname>vmax_D2_wt</imgname>
-         <run>03</run>
+         <name>Supercell detection index</name>
+         <imgname>sdi</imgname>
       </station>
       <station>
-         <name>ML CAPE EPS</name>
-         <imgname>cape_D2_eps</imgname>
-         <run>03</run>
+         <name>Low-level rotation</name>
+         <imgname>vorw</imgname>
       </station>
       <!--
       <station>
@@ -76,7 +68,6 @@
          <imgname>uphelsdi_D2</imgname>
          <run>03</run>
       </station>
-      -->
       <station>
          <name>Low level clouds EPS</name>
          <imgname>clcl_D2_eps</imgname>
@@ -92,6 +83,7 @@
          <imgname>cluster_D2_eps</imgname>
          <run>00</run>
       </station>
+      -->
   </stations>
 
 </cosmomorten>

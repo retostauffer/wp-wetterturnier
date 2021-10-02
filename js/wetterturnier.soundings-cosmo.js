@@ -251,7 +251,7 @@ jQuery(document).on('ready',function() {
          // Load key of current selected model
          var station = $("#wt-sounding-navigation .stations   ul li.selected").attr("station")
          var time    = $("#wt-sounding-timeline               ul li.selected").attr("time")
-         var image = "https://userpage.fu-berlin.de/mammatus95/cosmo/00/soundings/"
+         var image = "https://userpage.fu-berlin.de/mammatus95/icond2/00/soundings/"
                    + "skewT_"+station+"_"+time+".png"
          $("#wt-sounding-image").attr("src",image).error( function() {
             $(this).attr("src","/referrerdata/soundings_missing_image.png");

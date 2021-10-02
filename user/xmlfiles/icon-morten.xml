@@ -32,10 +32,6 @@
    <!-- dwd surface analysis maps -->
    <stations>
       <station>
-         <name>Relative topography 1000-500 hPa</name>
-         <imgname>schicht_1000</imgname>
-      </station>
-      <station>
          <name>300 hPa wind speed</name>
          <imgname>300_eu</imgname>
       </station>

@@ -1356,7 +1356,7 @@ class wetterturnier_generalclass
     function get_station_data_for_city( $cityID, $betdate=NULL ) {
         global $wpdb;
         $sql = "SELECT * FROM %swetterturnier_stations WHERE cityID = %d";
-        if (isset($betdate)) { $sql .= " AND (since <= ". $betdate ." OR since = 0) AND (until >= ". $betdate ." OR until = 0)"; }
+        if (isset($betdate)) { $sql .= " AND (since < ". $betdate ." OR since = 0) AND (until > ". $betdate ." OR until = 0)"; }
         $res = $wpdb->get_results(sprintf( $sql, $wpdb->prefix, $cityID ));
         return( $res );
     }

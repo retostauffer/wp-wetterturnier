@@ -205,10 +205,6 @@ if ( $edit ) {
 
          foreach ( $data as $key => $value ) {
 
-            // Replace fucking "," with "."
-            $value = str_replace(",",".",$value);
-            // value empty: skip
-            if ( is_null($value) || strlen($value) == 0 )     { continue; }
             // Searching for properties like "day_X"
             if ( ! preg_match("/^[a-zA-Z]{1,}_[1-9]/",$key) ) { continue; }
             list($param,$day) = explode("_",$key); $day = (int)$day;
@@ -217,15 +213,23 @@ if ( $edit ) {
             // Loading full parameter object
             $param = $WTuser->get_param_by_name($param);
 
-            // If not numeric: set value to NULL (yeilds empty database entry)
-            if ( ! is_numeric($value) ) { $value = NULL; }
+            $tmp =     array("station"   => (int)$_GET['station'],
+                             "paramID"   => (int)$param->paramID,
+                             "betdate"   => (int)$betdate );
 
-            // Processing the data
-            $tmp = array("station"        => (int)$_GET['station'], 
-                         "paramID"        => (int)$param->paramID,
-                         "betdate"        => (int)$betdate,
-                         "value"          => (is_numeric($value) ? $value*10. : NULL),
-                         "placedby"       => $admin_userID );
+            // if value empty: delete it
+            if ( is_null($value) || strlen($value) == 0 )     {
+
+                $wpdb->delete($wpdb->prefix . "wetterturnier_obs", $tmp); 
+                continue;
+            }
+
+            // Replace fucking "," with "."
+            $value = str_replace(",",".",$value);
+
+            // append the data to temp array
+            $tmp["value"]    = (is_numeric($value) ? $value*10. : NULL);
+            $tmp["placedby"] = $admin_userID;
 
             // Admin mode: check if the admin really changed this value.
             $check = obs_changed($tmp,$existing);
@@ -235,7 +239,7 @@ if ( $edit ) {
                       array("value","placedby"),False);
             unset($tmp);
             // Save a rerun flag into the database such that we can re-run the
-            // computation of the requred tournaments as the observations changed.
+            // computation of the required tournaments as the observations changed.
             $rerun = array('userID'=>get_current_user_id(),'cityID'=>$city->ID,
                            'tdate'=>$selected_tdate);
             $wpdb->insert(sprintf("%swetterturnier_rerunrequest",$wpdb->prefix),$rerun);
@@ -252,6 +256,7 @@ if ( $edit ) {
          <input type="hidden" name="page"   value="<?php print $_REQUEST["page"]; ?>"></input>
          <input type="submit" value="<?php _e("Back to bet list","wpwt"); ?>"></input>
       </form>
+
    <?php }
 
 // Else show the overview with or without the modification message.

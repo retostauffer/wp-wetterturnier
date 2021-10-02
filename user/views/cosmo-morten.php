@@ -115,5 +115,5 @@ jQuery(document).on('ready',function() {
 
 <!-- Container will be filled by jQuery function later -->
 <div id="wt-cosmo-container"></div>
-<a href="https://userpage.fu-berlin.de/mammatus95/cosmo/cosmo_d2.html">Source: Mammatus95 Userpage</a>
+<a href="https://userpage.fu-berlin.de/mammatus95/icond2/icon_d2.html">Source: Mammatus95 Userpage</a>
 <br>

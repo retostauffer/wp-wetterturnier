@@ -199,12 +199,12 @@ jQuery(document).on('ready',function() {
       function showImage() {
 
          // Load key of current selected model
-         var station = $("#wt-cosmo-navigation .stations   ul li.selected").attr("station")
+         var type = $("#wt-cosmo-navigation .stations   ul li.selected").attr("station")
          //TODO add possibility to change run, default = 00z
          var run     = $("#wt-cosmo-navigation .stations   ul li.selected").attr("run")
          var time    = $("#wt-cosmo-timeline               ul li.selected").attr("time")
-         var image = "https://userpage.fu-berlin.de/mammatus95/cosmo/"+run+"/charts/"
-                   +station+"_"+time+".png"
+         var image = "https://userpage.fu-berlin.de/mammatus95/icond2/epscharts/"
+                   +type+"_D2_eps_"+time+".png"
          $("#wt-cosmo-image").attr("src",image).error( function() {
             $(this).attr("src","/referrerdata/soundings_missing_image.png");
          });

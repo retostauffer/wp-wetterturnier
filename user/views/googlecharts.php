@@ -199,7 +199,8 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
    <div id="plot-type">
       <b><?php _e("Select plot type:","wpwt"); ?></b>&nbsp;
       <select name="opt-plottype" class="observe">
-          <option value="timeseries_user_points" selected><?php _e("Timeseries points","wpwt"); ?></option>
+         <option value="participants_counts" selected><?php _e("Participants counts","wpwt"); ?></option>
+         <option value="timeseries_user_points"><?php _e("Timeseries points","wpwt"); ?></option>
          <!--TODO-->
          <!--<option value="timeseries_user_param_points">Timeseries Parameter Points</option>-->
          <!--<option value="median">Timeseries Parameter Points</option>-->
@@ -211,7 +212,6 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
          <!--<option value="sd_upp">Timeseries Parameter Points</option>-->
          <!--<option value="max">Timeseries Parameter Points</option>-->
          <!--<option value="min">Timeseries Parameter Points</option>-->
-         <option value="participants_counts"><?php _e("Participants counts","wpwt"); ?></option>
       </select>
    </div>
    <div id="paramID" style="display:none;">

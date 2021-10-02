@@ -59,10 +59,16 @@ function check_user_is_in_group( $userID, $groupName ) {
                        ."LEFT OUTER JOIN %swetterturnier_groupusers AS gu "
                        ."ON g.groupID = gu.groupID "
                        ."WHERE g.groupName = '%s' AND gu.userID = %d",
-                        $wpdb->prefix,$wpdb->prefix,$groupName,$userID));
-     if ( $res->active == 1 ) { return True; }
-     else { return False; }
+                       $wpdb->prefix,$wpdb->prefix,$groupName,$userID));
+     if (isset($res)) {
+         print("User is or was part of group " . $groupName . ".\n");
+         return ($res->active == 1 ) ? True : False;
+     } else {
+        print("User is not and was never in group " . $groupName . ".\n");
+        return False;
+     }
 }
+
 
 // Load betclass file if not yet loaded, initialize  WTbetclass
 if ( ! defined("loaded_betclass") ) {
@@ -133,6 +139,7 @@ $user = wp_signon( $creds, false );
 printf( "Hello, %s!\n", $user->data->user_login );
 
 // Check if current user can place bets as admin, if tournament is actually closed already.
+check_user_is_in_group($user->ID, 'FU-Studenten');
 $is_admin = isset( $user->allcaps["wetterturnier_admin"] ) || check_user_is_in_group($user->ID, 'Automaten');
 
 if ( $is_admin ) {
