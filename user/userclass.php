@@ -96,6 +96,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_action('wp_ajax_ranking_ajax',array($this,'ranking_ajax'));
         add_action('wp_ajax_nopriv_ranking_ajax',array($this,'ranking_ajax'));
 
+        // metmaps ajax action
+        add_action('wp_ajax_metmaps_ajax', array($this, 'metmaps_ajax'));
+
         // Adding the needed shortcodes
         add_shortcode( 'wetterturnier_linkcollection',   array($this,'shortcode_wetterturnier_linkcollection') );
         add_shortcode( 'wetterturnier_profilelink',      array($this,'shortcode_wetterturnier_profilelink') );
@@ -133,6 +136,10 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         add_shortcode( 'wetterturnier_mosescoefs', array($this,'shortcode_wetterturnier_mosescoefs') );
         // WINDY page
         add_shortcode( 'wetterturnier_windy', array($this,'shortcode_wetterturnier_windy') );
+
+        // METMAPS
+        add_shortcode( 'wetterturnier_metmaps', array($this,'shortcode_wetterturnier_metmaps') );
+
         // all webcams in one single view
         add_shortcode( 'wetterturnier_webcams', array($this, 'shortcode_wetterturnier_webcams') );
         // gdocs wetterturnier orga stuff
@@ -719,6 +726,13 @@ class wetterturnier_userclass extends wetterturnier_generalclass
 
         return($this->shortcode_include("views/windy.php", $args));
     }
+
+
+    // MetMaps page
+    function shortcode_wetterturnier_metmaps() {
+        return($this->shortcode_include("views/metmaps.php"));
+    }
+
 
     // --------------------------------------------------------------
     // Show judging-form where users can try out what the points 
@@ -2281,6 +2295,45 @@ public function debug_to_console($data) {
       die(0);
 
    }
+
+    public function metmaps_ajax() {
+        global $wpdb;
+
+        function is_mail($string) {
+            return filter_var($string, FILTER_VALIDATE_EMAIL);
+        }   
+
+        if( isset($_POST['mail']) && !empty($_POST['mail']) ) {
+            if (is_mail($_POST['mail']) ) {
+                $user_mail = filter_var($_POST['mail'], FILTER_SANITIZE_EMAIL);
+            } else {
+                echo __("Please enter a valid email!","wpwt");
+                wp_die();
+            }
+        } else { 
+            echo __("Field is empty!","wpwt");
+            wp_die();
+        } 
+        
+        $metmaps_mail = "info@metmaps.de";
+
+        $user       = wp_get_current_user();
+        $userID     = $user->ID;
+        $user_login = $user->user_login;
+
+        try {
+            wp_mail( $metmaps_mail, "Wetterturnier", $user_login . "\n" . $user_mail );
+            echo __("Mail successfully sent","wpwt") . "! (" . $user_mail  .  ")";
+            // created database entry that mail has been sent
+            $wpdb->replace("wp_wetterturnier_metmaps", array("userID"=>$userID, "user_mail"=>$user_mail, "mail_sent"=>1) );
+        } catch (Exception $e) {
+            echo __("Error while sending mail!","wpwt");
+            echo __("Exception: ","wpwt") . $e;
+            $wpdb->replace("wp_wetterturnier_metmaps", array("userID"=>$userID, "user_mail"=>$user_mail, "mail_sent"=>0) );
+        }
+        // important!
+        wp_die();
+    }
 
 
     /** Some pages are restricted for logged in users only. Instead
