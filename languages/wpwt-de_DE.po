@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-04 00:50+0000\n"
-"PO-Revision-Date: 2021-11-04 00:56+0000\n"
+"POT-Creation-Date: 2021-11-04 13:21+0000\n"
+"PO-Revision-Date: 2021-11-04 13:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: Deutsch\n"
 "Language: de_DE\n"
@@ -161,7 +161,7 @@ msgstr "Älter"
 msgid "Newer"
 msgstr "Neuer"
 
-#: rankingclass_bak.php:81 rankingclass.php:87 rankingclass_new.php:81 user/userclass.php:2496 user/userclass.php:2498
+#: rankingclass_bak.php:81 rankingclass.php:87 rankingclass_new.php:81 user/userclass.php:2494 user/userclass.php:2496
 msgid "place"
 msgstr "Platz"
 
@@ -169,7 +169,7 @@ msgstr "Platz"
 msgid "st"
 msgstr "."
 
-#: rankingclass_bak.php:82 rankingclass.php:88 rankingclass_new.php:82 user/userclass.php:2496
+#: rankingclass_bak.php:82 rankingclass.php:88 rankingclass_new.php:82 user/userclass.php:2494
 msgid "nd"
 msgstr "."
 
@@ -177,16 +177,16 @@ msgstr "."
 msgid "rd"
 msgstr "."
 
-#: rankingclass_bak.php:82 rankingclass.php:88 rankingclass_new.php:82 user/userclass.php:2498
+#: rankingclass_bak.php:82 rankingclass.php:88 rankingclass_new.php:82 user/userclass.php:2496
 msgid "th"
 msgstr "."
 
-#: rankingclass_bak.php:84 rankingclass.php:90 rankingclass_new.php:84 user/userclass.php:2528
+#: rankingclass_bak.php:84 rankingclass.php:90 rankingclass_new.php:84 user/userclass.php:2526
 msgid "points"
 msgstr "Punkte"
 
 #: rankingclass_bak.php:85 rankingclass.php:91 chartclass.php:136 rankingclass_new.php:85 user/userclass.php:2118
-#: user/userclass.php:2121 user/userclass.php:2161 user/userclass.php:2433 user/views/archive.php:68 user/views/archive.php:85
+#: user/userclass.php:2121 user/userclass.php:2161 user/userclass.php:2431 user/views/archive.php:68 user/views/archive.php:85
 #: user/views/current.php:75
 msgid "Points"
 msgstr "Punkte"
@@ -212,7 +212,7 @@ msgid "Rank"
 msgstr "Rang"
 
 #: rankingclass_bak.php:92 rankingclass.php:102 rankingclass_new.php:92 user/userclass.php:1374 user/userclass.php:1424
-#: user/userclass.php:2432 admin/classes/bets_list.php:51
+#: user/userclass.php:2430 admin/classes/bets_list.php:51
 msgid "User"
 msgstr "Benutzername"
 
@@ -738,31 +738,31 @@ msgstr "Bitte gib eine gültige E-Mail-Adresse ein!"
 msgid "Field is empty!"
 msgstr "Feld ist leer!"
 
-#: user/userclass.php:2327
+#: user/userclass.php:2325
 msgid "Mail successfully sent"
 msgstr "Mail erfolgreich versendet"
 
-#: user/userclass.php:2331
+#: user/userclass.php:2329
 msgid "Error while sending mail!"
 msgstr "Fehler beim Senden der E-Mail!"
 
-#: user/userclass.php:2332
+#: user/userclass.php:2330
 msgid "Exception: "
 msgstr "Fehlermeldung:"
 
-#: user/userclass.php:2350
+#: user/userclass.php:2348
 msgid "Access denied"
 msgstr "Zugriff verweigert"
 
-#: user/userclass.php:2352
+#: user/userclass.php:2350
 msgid "The access for some pages is restricted to "
 msgstr "Der Zugriff auf einige Seiten ist nur für "
 
-#: user/userclass.php:2352
+#: user/userclass.php:2350
 msgid "registered"
 msgstr "registrierte"
 
-#: user/userclass.php:2352
+#: user/userclass.php:2350
 msgid ""
 "and logged in users only. You are not logged in at the moment! To see the content of this specific page, please login first. "
 "Thank you for your understanding."
@@ -770,11 +770,11 @@ msgstr ""
 " und eingeloggte User freigeschaltet. Um den Inhalt dieser Seite zu sehen, logge dich bitte ein. Vielen Dank für dein "
 "Verständnis."
 
-#: user/userclass.php:2355 user/views/bet.php:27
+#: user/userclass.php:2353 user/views/bet.php:27
 msgid "Login form"
 msgstr "Login-Formular"
 
-#: user/userclass.php:2474
+#: user/userclass.php:2472
 msgid "Leaderboard"
 msgstr "Bestenliste"
 
@@ -935,28 +935,35 @@ msgstr "Im Moment keine Blitzaktivität in der Umgebung."
 
 #: user/views/metmaps.php:26
 #, php-format
+#| "<b>NOTE</b>: An email with your username (<b>%s</b>) and mail address (<b>%s</b>) has been sent to MetMaps support. You "
+#| "should receive your login data within the next 24h. Please be patient! If it takes longer than 2 days, please contact an "
+#| "<a href='%s/team'>admin</a>.\n"
 msgid ""
 "<b>NOTE</b>: An email with your username (<b>%s</b>) and mail address (<b>%s</b>) has been sent to MetMaps support. You "
 "should receive your login data within the next 24h. Please be patient! If it takes longer than 2 days, please contact an <a "
-"href='%s/team'>admin</a>.\n"
+"href='%s/team'>admin</a>. "
 msgstr ""
 "<b>HINWEIS</b>: Eine E-Mail mit deinem Nutzernamen (<b>%s</b>) und deiner Mailadresse (<b>%s</b>) wurde an den MetMaps-"
 "Support versendet. Du solltest deine Zugangsdaten im Laufe der nächsten 24h erhalten. Bitte gedulde dich ein wenig! Sollte es "
-"länger als 2 Tage dauern, kontaktiere bitte einen <a href='%s/team'>Admin</a>."
+"länger als 2 Tage dauern, kontaktiere bitte einen <a href='%s/team'>Admin</a>. "
 
 #: user/views/metmaps.php:28
 msgid "Did you enter your e-mail incorrectly? Please change it and click on '<b>RESUBMIT</b>'."
 msgstr "Hast du deine E-Mail falsch eingegeben? Bitte bearbeite sie und klicke auf '<b>ERNEUT ABSENDEN</b>'."
 
 #: user/views/metmaps.php:29
+msgid "After you received your login data via mail you can login here"
+msgstr "Nachdem du deine Logindaten erhalten hast, kannst du dich hier einloggen"
+
+#: user/views/metmaps.php:31
 msgid "RESUBMIT"
 msgstr "ERNEUT ABSENDEN"
 
-#: user/views/metmaps.php:31 user/views/metmaps.php:34
+#: user/views/metmaps.php:33 user/views/metmaps.php:36
 msgid "SUBMIT"
 msgstr "ABSENDEN"
 
-#: user/views/metmaps.php:40
+#: user/views/metmaps.php:42
 msgid "Enter or edit email:"
 msgstr "E-Mail hier eingeben bzw. bearbeiten:"
 

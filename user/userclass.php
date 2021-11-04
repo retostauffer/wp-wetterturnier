@@ -2316,7 +2316,6 @@ public function debug_to_console($data) {
         } 
         
         $metmaps_mail = "info@metmaps.de";
-
         $user       = wp_get_current_user();
         $userID     = $user->ID;
         $user_login = $user->user_login;
