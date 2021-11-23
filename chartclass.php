@@ -195,8 +195,9 @@ class wetterturnier_chartHandler {
 
       // Create SQL command
       $sql = array();
-      array_push($sql,"SELECT timestamp, SUM(referenz) AS referenz, SUM(gruppe) AS gruppe,");
-      array_push($sql,"SUM(automat) AS automat, SUM(human) AS human");
+      array_push($sql,"SELECT timestamp, SUM(referenz) AS referenz, SUM(gruppe) AS gruppe, ");
+      array_push($sql,"SUM(automat) AS automat, SUM(human) AS human, ");
+      array_push($sql,"SUM(referenz) + SUM(gruppe) + SUM(automat) + SUM(human) AS total\n");
       array_push($sql,"FROM (");
       array_push($sql,sprintf("   SELECT betstat.tdate*86400 AS timestamp,"));
       // Check if automatenforecast
@@ -228,12 +229,13 @@ class wetterturnier_chartHandler {
       $result = new stdClass();
       $result->sql = join("\n",$sql);
       
-      $result->line_colors = array("#cccccc","#E16A86","#9C9500","#00AD81");
+      $result->line_colors = array("#cccccc","#E16A86","#9C9500","#00AD81","#000000");
       $result->ylabel      = __("Particioners","wpwt");
       $result->xlabel      = __("Date","wpwt");
       $result->title       = __("Number of participants","wpwt");
 
-      $result->names = array(__("Reference methods","wpwt"),__("Groups","wpwt"),__("Automated forecasts","wpwt"),__("Human players","wpwt"));
+      $result->names = array( __("Reference methods","wpwt"), __("Groups","wpwt"), __("Automated forecasts","wpwt"),
+          __("Human players","wpwt"), __("Total","wpwt") );
 
       // Create proper data arrays
       $result->data       = array();

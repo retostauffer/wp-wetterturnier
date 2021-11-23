@@ -122,8 +122,10 @@ jQuery(document).on('ready',function() {
             // Draw chart
             var options = {
               title: wtdata.title,
+              legend: { position: 'top', alignment: 'center' },
               colors: wtdata.line_colors,
-              width: 1500, height: 500,
+              height: 900,
+              chartArea: {left: 32, right: 32, width: "80%", height: "80%"},
               hAxis: { title: wtdata.xlabel },
               vAxis: { title: wtdata.ylabel },
               //vAxis: {minValue: 0},
@@ -204,8 +206,10 @@ jQuery(document).on('ready',function() {
             // Draw chart
             var options = {
               title: wtdata.title,
+              legend: { position: 'top', alignment: 'center' },
               colors: wtdata.line_colors,
-              width: 1500, height: 500,
+              height: 900,
+              chartArea: {left: 32, right: 32, width: "80%", height: "80%"},
               hAxis: { title: wtdata.xlabel },
               vAxis: { title: wtdata.ylabel },
               //vAxis: {minValue: 0},
