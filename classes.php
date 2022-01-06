@@ -892,7 +892,7 @@ class wetterturnier_latestobsObject {
             foreach ( $dbres[0] as $param=>$deadend ) {
                 $factor = $this->get_desc( $param, "factor" );
                 if      ( ! is_numeric($factor) ) { $factor = 1.; }
-                else if ( (real)$factor == 0. )   { $factor = 1.; }
+                else if ( (float)$factor == 0. )   { $factor = 1.; }
                 for ( $i=0; $i < $this->nobs(); $i++ ) {
                     if ( is_numeric($dbres[$i]->$param) ) {
                         $dbres[$i]->$param = (float)$dbres[$i]->$param / $factor;
