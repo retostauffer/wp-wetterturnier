@@ -2347,7 +2347,7 @@ public function debug_to_console($data) {
        // Else the user is not logged in, show message and return True
        printf("<h1>%s</h1>\n",__("Access denied","wpwt"));
        printf("<div class=\"wetterturnier-info error\">%s%s%s%s%s</div>",
-          __("The access for some pages is restricted to ","wpwt"), "<a href=\"/mkoijnbhu?action=register\" target=\"_self\">", __("registered","wpwt"), "</a>", __("and logged in users only. You are not logged in at the moment! To see the content of this specific page, please login first. Thank you for your understanding.","wpwt") ); 
+          __("The access for some pages is restricted to ","wpwt"), "<a href=\"/wp-login.php?action=register\" target=\"_self\">", __("registered","wpwt"), "</a>", __("and logged in users only. You are not logged in at the moment! To see the content of this specific page, please login first. Thank you for your understanding.","wpwt") ); 
 
        // Show login form
        printf("<h1 class='entry-title'>%s</h1>",__("Login form","wpwt"));
