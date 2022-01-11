@@ -149,9 +149,9 @@ global $WTuser;
 // Some user infos
 show_row(__("Username","wpwt"),         str_replace('GRP_', '', $user->display_name));
 
-if (strpos($user->real_name==="", 0)) {
+if ( is_string($user->real_name) ) {
     show_row(__("Name","wpwt"), $user->real_name);
-} 
+}
 show_row(__("Registered since","wpwt"), date(__("d.m.Y","wpwt"), strtotime($user->user_registered)));
 
 // Loading user's current language

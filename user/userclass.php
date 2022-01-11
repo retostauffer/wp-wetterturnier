@@ -756,7 +756,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         if ( function_exists('bbp_get_user_profile_url') ) {
             global $wpdb;
             $user = $wpdb->get_row(sprintf("SELECT ID FROM %s WHERE user_login = '%s'",$wpdb->users,$args->user));
-            if ( count($user) > 0 ) {
+            if ( count((array)$user) > 0 ) {
                 $bbprofile = bbp_get_user_profile_url($user->ID);
                 return( ',&nbsp;<a href='.$bbprofile.' target=\"_self\">'.__('Profile','wpwt').'</a>' ); 
             }

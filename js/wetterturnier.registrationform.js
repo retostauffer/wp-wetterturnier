@@ -8,7 +8,7 @@ jQuery(document).on("ready",function(){
       if ( $("[name='registerform']").length ) {
          $("input#wp-submit").prop("disabled",true).css("background-color",col2);
 
-         $("input[name='wt_accept']").live("click",function() {
+         $("input[name='wt_accept']").click(function() {
             if ( $(this).is(":checked") ) {
                $("input#wp-submit").prop("disabled",false).css("background-color",col1);
             } else {

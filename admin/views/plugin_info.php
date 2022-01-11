@@ -7,6 +7,7 @@ function get_help_entries( $file ) {
    global $WTadmin;
    $path = parse_url( $WTadmin->plugins_url() ); $path = $path["path"];
    $abspath = realpath(sprintf("%s/%s",get_home_path(),$path));
+   //print_r($abspath);
    // Loading file content
    $content = file_get_contents( sprintf("%s/admin/views/%s",$abspath,$file) );
    // Extracting content of all <help></help> blocks.
