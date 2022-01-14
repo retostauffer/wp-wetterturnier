@@ -41,7 +41,7 @@ $WTuser->include_js_script("wetterturnier.googlecharts");
 
          // Execute whenever usersearch changes the userID to trigger the
          // regeneration of the googlechart. 
-         $("#selected-users").live("change",function() {
+         $("#selected-users").change(function() {
             refresh_chart( get_current_plottype() )
          });
          $("#selected-users").on("click","li.selected-user",function() {

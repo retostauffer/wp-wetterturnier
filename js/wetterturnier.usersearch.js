@@ -101,7 +101,7 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
    // ---------------------------------------------------------------
    // If a <li> gets clicked
    // ---------------------------------------------------------------
-   $(this).find('ul li').live('click',function() {
+   $(this).find('ul li').click(function() {
       var userID   = $(this).attr('userID')
       var username = $(this).html()
       $(base_elem).find('ul').hide();

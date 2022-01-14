@@ -986,7 +986,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         $date_sql = array();
         array_push($date_sql,'  SELECT tdate, COUNT(userID) AS players,');
         array_push($date_sql,'  MIN(points) AS pmin, MAX(points) AS pmax,');
-        array_push($date_sql,'  AVG(points) AS pavg, median(points) as pmed');
+        array_push($date_sql,'  AVG(points) AS pavg, MEDIAN(points) OVER (PARTITION BY userID) as pmed');
         array_push($date_sql,'  FROM %swetterturnier_betstat');
         array_push($date_sql,'  WHERE cityID = %d AND tdate <= %d');
         array_push($date_sql,'  GROUP BY tdate');
@@ -1043,6 +1043,9 @@ class wetterturnier_userclass extends wetterturnier_generalclass
         $sql = sprintf( join("\n",$sql), $date_sql, $maxp_sql, $wpdb->prefix );
         $data = $wpdb->get_results(sprintf($sql,$wpdb->prefix,(int)$cityObj->get('ID'),
                           $wpdb->prefix,$wpdb->prefix,$cityObj->get('ID')));
+
+	//print($sql);
+	//print_r($data);
 
         // Print dates in a ugly way
         if ( empty($data) ) {
