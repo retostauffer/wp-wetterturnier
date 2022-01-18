@@ -55,7 +55,7 @@ jQuery(document).on('ready',function() {
    function showSynopSymbols( target, show ) {
 
       // The image shown when a png is missing on the server
-      var missing = "/referrerdata/SynopSymbols/missing.png"
+      var missing = "/wp-content/uploads/SynopSymbols/missing.png"
       // We need to know what time it is at the moment.
       var now = date2obj(new Date());
       // Stations
@@ -70,7 +70,7 @@ jQuery(document).on('ready',function() {
          // Show date on top
          $(target).append("<h3>"+curDate.show+"</h3>");
          $.each(stations, function(key,val) {
-            var image = "/referrerdata/SynopSymbols/synop_"+curDate.YYYYmmdd
+            var image = "/wp-content/uploads/SynopSymbols/synop_"+curDate.YYYYmmdd
                        +"_"+curDate.HH+"00_"+val+".png"
             $(target).append("<div class='wt-synopsymbol'>"+val+"<br><img></img></div>")
             $(target).find("div").last().find("img").attr("src",image).error(function() {
@@ -78,7 +78,6 @@ jQuery(document).on('ready',function() {
             })
          });
       }
-
    }
 
 });

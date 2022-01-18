@@ -8,7 +8,7 @@
           $(".wttable-groups th").css('cursor', 'pointer');
 
          // Show inactive groupmembers
-         $('.groups-show-inactive').live('click',function() {
+         $('.groups-show-inactive').click( function() {
             // Getting group ID
             var groupID = $(this).attr('groupID');
             $('#wttable-group-'+groupID).find('td').show();

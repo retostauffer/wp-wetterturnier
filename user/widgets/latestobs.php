@@ -180,7 +180,7 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
             // Show latest synop symbols
             foreach ( $WTuser->get_current_cityObj()->stations() as $stnObj ) {
                if ( $stnObj->get("active") != 1 ) { continue; }
-	       $image = sprintf("/referrerdata/SynopSymbols/synop_current_%d.png",$stnObj->get('wmo'));
+	       $image = sprintf("/wp-content/uploads/SynopSymbols/synop_current_%d.png",$stnObj->get('wmo'));
                printf("<div class='wpwt-synopsymbol'>%s<br><img src=\"%s\"></img></div>\n",
                       $stnObj->get('wmo'), $image);
             } 
