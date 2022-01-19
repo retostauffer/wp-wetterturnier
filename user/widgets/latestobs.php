@@ -169,7 +169,7 @@ class WP_wetterturnier_widget_latestobs extends WP_Widget
                  $.each( $('div.wpwt-synopsymbol').find('img'), function() {
                     $(this).error(function() {
                        $(this).unbind('error')
-                         .attr('src','/referrerdata/SynopSymbols/missing.png');
+                         .attr('src','/wp-content/uploads/SynopSymbols/missing.png');
                     });
                  });
               })(jQuery);
