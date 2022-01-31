@@ -275,10 +275,10 @@ jQuery(document).on('ready',function() {
          if      ( time < 10 )  { time = "00"+time; }
          else if ( time < 100 ) { time = "0"+time;  }
 
-         var image = "/referrerdata/ForecastProducts/"+model+"/"
+         var image = "/wp-content/uploads/ForecastProducts/"+model+"/"
                     +model+"_"+region+"_"+product+"_"+time+".gif"
          $( target ).find("#wt-map-image").attr("src",image).error( function() {
-            $(this).attr("src","/referrerdata/maps_missing_image.png");
+            $(this).attr("src","/wp-content/uploads/maps_missing_image.png");
          });
 
       }

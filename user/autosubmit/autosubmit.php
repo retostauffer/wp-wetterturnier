@@ -139,7 +139,6 @@ $user = wp_signon( $creds, false );
 printf( "Hello, %s!\n", $user->data->user_login );
 
 // Check if current user can place bets as admin, if tournament is actually closed already.
-check_user_is_in_group($user->ID, 'FU-Studenten');
 $is_admin = isset( $user->allcaps["wetterturnier_admin"] ) || check_user_is_in_group($user->ID, 'Automaten');
 
 if ( $is_admin ) {
