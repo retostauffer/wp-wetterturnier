@@ -1,8 +1,8 @@
-jQuery(document).on("ready",function(){
+jQuery(window).on("load",function(){
    (function($) {
 
    // Adds the functionality that rows can be highlighted
-   $("table.wttable-show > tbody > tr > td").on("click",function() {
+   $("table.wttable-show > tbody > tr > td").click(function() {
       var userID = $(this).closest("tr").attr("userid");
       var elem = $("table.wttable-show > tbody > tr[userid='"+userID+"']").first()
       if ( elem.hasClass('highlighted') ) {
@@ -14,7 +14,7 @@ jQuery(document).on("ready",function(){
 
    // Functionality on the buttons to show the user details
    $("table.wttable-show > tbody > tr > td > span.button.detail").click(function(){
-
+      // window.console&&console.log('CLICK!'); 
       // --------------------
       // Ajaxing the calculation miniscript
       var userID = parseInt($(this).attr("userID"));
@@ -43,11 +43,11 @@ jQuery(document).on("ready",function(){
           sortReset: true, sortRestart: true, sortInitialOrder: "desc"});
       $(".wttable-show th").css('cursor', 'pointer'); 
 
-   });      
+   });
 
    // Functionality on the buttons to forward admins to 'edit user bets' page.
    $("table.wttable-show > tbody > tr > td > span.button.edit-bet").click(function(){
-
+      // window.console&&console.log('CLICK!'); 
       var userID  = parseInt($(this).attr("userID"));
       var cityID  = parseInt($(this).attr("cityID"));
       var tdate   = parseInt($(this).attr("tdate"));
@@ -58,7 +58,7 @@ jQuery(document).on("ready",function(){
    });
 
    // Functionality on the buttons to foward admins to 'edit observations' page.
-   $("table.wttable-show > tbody > tr > td > span.button.edit-obs").on("click",function(){
+   $("table.wttable-show > tbody > tr > td > span.button.edit-obs").click(function(){
 
       var station = parseInt($(this).attr("station"));
       var cityID  = parseInt($(this).attr("cityID"));
@@ -71,7 +71,7 @@ jQuery(document).on("ready",function(){
 
    // Functionality to show/hide certain types of players
    // on the bet tables.
-   $(".colorlegend-wrapper input[type='submit'].settings-button").on("click",function() {
+   $(".colorlegend-wrapper input[type='submit'].settings-button").click(function() {
       if ( $(this).hasClass("inactive") ) {
          $(this).removeClass("inactive")
          $("table.wttable-show-bets tbody tr."+$(this).attr("name")).show()

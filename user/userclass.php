@@ -2099,7 +2099,7 @@ public function debug_to_console($data) {
 
       // Getting maximum rank
       $sql = array();
-      array_push($sql,"SELECT max(rank) AS maxrank FROM");
+      array_push($sql,"SELECT MAX(rank) AS maxrank FROM");
       array_push($sql,sprintf("%swetterturnier_betstat",$wpdb->prefix));
       array_push($sql,sprintf("WHERE cityID = %d AND tdate = %d",$args->cityID,$args->tdate));
       $maxrank = $wpdb->get_row(join("\n",$sql));
@@ -2570,7 +2570,7 @@ public function debug_to_console($data) {
       // Create sql statement
       $sql = array();
       array_push($sql,"SELECT o.statnr, min(o.datumsec) AS min,");
-      array_push($sql,"max(o.datumsec) AS max, s.name");
+      array_push($sql,"MAX(o.datumsec) AS max, s.name");
       array_push($sql,sprintf("FROM obs.%s AS o",$table));
       array_push($sql,"LEFT JOIN obs.stations AS s");
       array_push($sql,"ON o.statnr=s.statnr WHERE stint='essential'");

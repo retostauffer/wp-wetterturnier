@@ -455,12 +455,13 @@ class wetterturnier_betclass
        $pconfig = $WTuser->get_param_by_name( $param );
        // If value is NULL simply return NULL
        if ( is_null($value) ) { return($res); }
-       // If parameter is out of range: return array(false,NULL);
-       if ( $value != $pconfig->valext && ( $value < $pconfig->valmin || $value > $pconfig->valmax ) ) {
+       // If parameter is out of range: return array(value->NULL,error->string);
+       // extra value (valext) has to be numeric, otherwise it will be ignored!
+       if ( ( is_null($pconfig->valext) || ($value != $pconfig->valext) ) && ( $value < $pconfig->valmin || $value > $pconfig->valmax ) ) {
            $res->value = NULL;
            $res->error = sprintf("Value was outside its limits for parameter \"%s\". "
-                    ."Defined range is %.1f to %.1f plus extra value %.1f. Your submitted value was \"%.1f\". "
-                    ."Set to NULL!",$param,$pconfig->valmin/10.,$pconfig->valmax/10.,$pconfig->valext/10, $value/10.);
+                    ."Defined range is %.1f to %.1f%s. Your submitted value was \"%.1f\". "
+                    ."Set to NULL!",$param,$pconfig->valmin/10.,$pconfig->valmax/10.,is_numeric($pconfig->valext) ? " plus extra value ".$pconfig->valext/10 : "", $value/10.);
 
            return( $res );
        }
