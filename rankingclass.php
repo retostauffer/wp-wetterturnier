@@ -482,7 +482,12 @@ class wetterturnier_rankingObject {
      * (featherlight window)
      */
     private function _get_detail_button( $userObj ) {
-        return sprintf("<span class=\"button small detail\" userid=\"%d\" "
+        if ($userObj->display_name === "Sleepy") {
+            $span_class = "button sleepy";
+         } else {
+            $span_class = "button small detail";
+         }
+        return sprintf("<span class=\"" . $span_class . "\" userid=\"%d\" "
                       ."cityid=\"%d\" tdate=\"%d\"></span>",
                       $userObj->ID, $this->cityObj->get("ID"), $this->tdates->max);
     }

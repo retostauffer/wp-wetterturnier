@@ -25,7 +25,7 @@ class wetterturnier_userclass extends wetterturnier_generalclass
                               "wetterturnier.judgingform",
                               "wetterturnier.registrationform",
                               "wetterturnier.rankingtable",
-                              "jquery.featherlight-1.5.0.min",
+                              "jquery.featherlight-1.7.13.min",
                               "jquery.tooltipster.min");
 
     // To store plugin options

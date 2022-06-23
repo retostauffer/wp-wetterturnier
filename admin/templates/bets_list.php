@@ -106,7 +106,7 @@ $actionlink =  sprintf('?page=%s',$_REQUEST['page']);
    </span></h3>
    <h3>Selected city: <span class="wt-admin-highlight"><?php print $city->name; ?></span></h3>
    <?php if ( ! empty($_REQUEST['userID']) ) {
-      $user = $WTadmin->get_user_by_ID( (int)$_REQUEST['userID'] );
+      $user = $WTadmin->get_user_by_ID( $_REQUEST['userID'] );
       ?>
       <h3>Selected user: <span class="wt-admin-highlight">
          <?php printf("%s [%s]",$user->display_name,$user->user_login); ?></span>
