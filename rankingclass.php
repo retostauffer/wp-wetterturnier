@@ -91,8 +91,11 @@ class wetterturnier_rankingObject {
        $this->dict->points = __("Points", "wpwt");
        
        // only if d1d2
-       $this->dict->points_d1    = __("Sat","wpwt");
-       $this->dict->points_d2    = __("Sun","wpwt");
+       $this->dict->points_d1    = __("Saturday","wpwt");
+       $this->dict->points_d2    = __("Sunday","wpwt");
+       // short names
+       $this->dict->d1 = __("Sa","wpwt");
+       $this->dict->d2 = __("So","wpwt");
 
        //normal rankings
        $this->dict->trend        = "+/-";

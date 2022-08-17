@@ -423,15 +423,15 @@ class wetterturnier_userclass extends wetterturnier_generalclass
     }
 
 
-    /** Loadaing wetterturnier.bet.tooltip.js and manipulate content.
+    /** Loading wetterturnier.bet.tooltip.js and manipulate content.
      * Add this (js) to the head of the wordpress. 
      */
-    function wetterturnier_add_tooltip_js() {
+    function wetterturnier_add_tooltip_js($tdate = NULL) {
 
         $content = file_get_contents(sprintf("%s/templates/wetterturnier.bet.tooltip.js",
                         dirname(__FILE__)));
         // Loading parameter
-        $param = $this->get_param_data();
+        $param = $this->get_param_data($tdate);
         // Generate dynamic content part
         $content = "<script>\n".$content."\n</script>";
         foreach ( $param as $rec ) {

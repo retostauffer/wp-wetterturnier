@@ -89,7 +89,7 @@ if ( ! $WTuser->scored_players_per_town( $args->tdate ) ) {
 
 $current = $WTuser->current_tournament(0,false,0,true);
 
-$params = $WTuser->get_param_data();
+$params = $WTuser->get_param_data($current->tdate);
 
 foreach ( $params as $param ) {
  

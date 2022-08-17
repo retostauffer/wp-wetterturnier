@@ -213,8 +213,9 @@ class wetterturnier_generalclass
         // Getting language
         if ( is_callable("pll_current_language") ) {
             $user_language = pll_current_language( $value );
-            if ( strlen((string)$user_language)==0 && $value == 'slug' ) { $user_language = 'en'; }
-            else if ( strlen((string)$user_language)==0 ) { $user_language = 'en_US'; }
+            if ( strlen((string)$user_language) === 0 && $value == 'slug' ) { $user_language = 'en'; }
+            else if ( strlen((string)$user_language) === 0 ) { $user_language = 'en_US'; }
+            else { return $user_language; }
         } else {
             if ( $value == 'slug' ) {
                 $user_language = 'en'; # default defined by wetterturnier plugin
@@ -226,9 +227,14 @@ class wetterturnier_generalclass
     }
 
     /** Setting locale based on the active polylang slug */
-    function set_locale( $locale = false ) {
-        $locale = $this->get_user_language( 'locale' );
-        setlocale(LC_ALL,$locale);
+    function set_locale( $locale = "slug" ) {
+        $locale = $this->get_user_language( $locale );
+        if ($locale === "en") {
+            $locale = "en_US.UTF8";
+        } else {
+            $locale .= "_" . strtoupper($locale) . ".UTF8";
+        }
+        setlocale(LC_ALL, $locale);
     }
 
     /** Depending on the current language configuration (based
@@ -338,6 +344,7 @@ class wetterturnier_generalclass
      */
     function date_format( $tdate, $fmt = NULL ) {
        if ( is_null($fmt) ) { $fmt = $this->date_format; }
+       $this->set_locale();
        return( strftime( $fmt, (int)$tdate * 86400 ) );
     }
 
@@ -1163,13 +1170,19 @@ class wetterturnier_generalclass
      *    defined? This is not a very general way of storing this
      *    information ...
      */
-    public function get_param_data() {
+    public function get_param_data($tdate = NULL) {
+        if (is_null($tdate) or empty($tdate)) {
+            $tdate = $this->current_tournament()->tdate;
+        }
         global $wpdb;
         $lang = strtoupper( $this->get_user_language() );
-        $res = $wpdb->get_results("SELECT paramID, paramName, ".$lang." AS thename, "
-                                 ."valformat, help".$lang." AS help, decimals, unit FROM "
+        $res = $wpdb->get_results("SELECT paramID, paramName, " . $lang
+                                 ." AS thename, " . "valformat, help" . $lang
+                                 ." AS help, decimals, unit FROM "
                                  .$wpdb->prefix."wetterturnier_param "
-                                 ."ORDER BY sort ASC");
+                                 ."WHERE active = 1 AND (since <= " . $tdate
+                                 ." OR SINCE = 0) AND (until > " . $tdate
+                                 ." OR until = 0) ORDER BY sort ASC");
         if ( ! $res ) { die('PROBLEMS LOADING PARAMETER DATA. THIS IS A BUG. CALL THE ADMIN.'); }
         // and unit which should be displayed.
         $params = new stdClass();
@@ -1181,7 +1194,6 @@ class wetterturnier_generalclass
             }
         }
         return($params);
-        // return($res);
     }
 
     /** Returns city ID based on the city hash from the $_SESSIONS
@@ -1338,7 +1350,10 @@ class wetterturnier_generalclass
     function get_station_wmo_for_city( $cityID, $betdate=NULL ) {
         global $wpdb;
         $sql = "SELECT wmo FROM %swetterturnier_stations WHERE cityID = %d";
-        if (isset($betdate)) { $sql .= " AND (since <= ". $betdate ." OR since = 0) AND (until >= ". $betdate ." OR until = 0)"; }
+        if (isset($betdate)) {
+            $sql .= " AND (since <= " . $betdate . " OR since = 0) AND (until > "
+            . $betdate . " OR until = 0)";
+        }
         $res = $wpdb->get_results(sprintf( $sql, $wpdb->prefix, $cityID ));
         return( $res );
     }
@@ -1356,7 +1371,10 @@ class wetterturnier_generalclass
     function get_station_data_for_city( $cityID, $betdate=NULL ) {
         global $wpdb;
         $sql = "SELECT * FROM %swetterturnier_stations WHERE cityID = %d";
-        if (isset($betdate)) { $sql .= " AND (since < ". $betdate ." OR since = 0) AND (until > ". $betdate ." OR until = 0)"; }
+        if (isset($betdate)) {
+            $sql .= " AND (since <= " . $betdate . " OR since = 0) AND (until > "
+            . $betdate . " OR until = 0)";
+        }
         $res = $wpdb->get_results(sprintf( $sql, $wpdb->prefix, $cityID ));
         return( $res );
     }
@@ -1492,7 +1510,7 @@ class wetterturnier_generalclass
      * cityID, tdate and betdate (integer, +1/+2)
      * If input $pionts is true, loading points from database.
      */
-    function get_bet_values($city,$tdate,$betday,$points,$userID = NULL,$mos = FALSE) {
+    function get_bet_values($city,$tdate,$betday,$points,$userID=NULL,$mos=FALSE) {
 
         global $wpdb;
 
@@ -1504,7 +1522,7 @@ class wetterturnier_generalclass
 
         // Loading parameter
         // Create nice vector with paramID=>paramName
-        $res->params = $this->get_param_data();
+        $res->params = $this->get_param_data($tdate);
         $res->lookup = array();
         foreach ( $res->params as $param ) {
             $res->lookup[$param->paramID] = $param->paramName;
@@ -1710,7 +1728,7 @@ class wetterturnier_generalclass
 
         // Loading parameter
         // Create nice vector with paramID=>paramName
-        $res->params = $this->get_param_data();
+        $res->params = $this->get_param_data($betdate);
         $res->lookup = array();
         foreach ( $res->params as $param ) {
             $res->lookup[$param->paramID] = $param->paramName;

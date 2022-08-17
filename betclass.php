@@ -458,10 +458,10 @@ class wetterturnier_betclass
        // If parameter is out of range: return array(false,NULL);
        if ( $value != $pconfig->valext && ( $value < $pconfig->valmin || $value > $pconfig->valmax ) ) {
            $res->value = NULL;
+           $ext = (!is_null($pconfig->valext)) ? " plus extra value ".$pconfig->valext/10 : "";
            $res->error = sprintf("Value was outside its limits for parameter \"%s\". "
-                    ."Defined range is %.1f to %.1f plus extra value %.1f. Your submitted value was \"%.1f\". "
-                    ."Set to NULL!",$param,$pconfig->valmin/10.,$pconfig->valmax/10.,$pconfig->valext/10, $value/10.);
-
+                    ."Defined range is %.1f to %.1f%s. Your submitted value was \"%.1f\". "
+                    ."Set to NULL!",$param,$pconfig->valmin/10.,$pconfig->valmax/10.,$ext, $value/10.);
            return( $res );
        }
        $pre = $pconfig->valpre;
@@ -813,7 +813,7 @@ class wetterturnier_betclass
          // Looping over parameters. If not necessary for this city
          // (then ID's not in $city->paramconfig) the parameter will
          // be skipped out of the $parameter object.
-         $obj->parameter = $WTuser->get_param_data();
+         $obj->parameter = $WTuser->get_param_data($tdate);
          foreach ( $obj->parameter as $key=>$val ) {
             if ( ! in_array($val->paramID,$cityObj->get('paramconfig')) ) {
                unset($obj->parameter->$key);
@@ -893,12 +893,12 @@ class wetterturnier_betclass
                setorientation( $(this) )
             });
             $(document).keypress(function(event){
-               if ( event.which == 120 ) { setorientation( $("span.orientation") ) }
+               if ( event.key == 16 ) { setorientation( $("span.orientation") ) }
             });
             function setorientation( input ) {
                var currentview = $(input).attr("orientation");
                if ( currentview == "portrait" )
-               { var newview = "landscape"; } else { var newview = "portrait"; }
+                  { var newview = "landscape"; } else { var newview = "portrait"; }
                $(input).attr("orientation",newview);
                $("#wetterturnier-bet-form").removeClass(currentview);
                $("#wetterturnier-bet-form").addClass(newview);
@@ -996,7 +996,7 @@ class wetterturnier_betclass
                clear: both;
             }
             #wetterturnier-bet-form.portrait #wt-betform-parameter-wrapper {
-               width: 30%;
+               width: 50%;
                min-width: 230px;
             }
             #wetterturnier-bet-form #wt-betform-parameter-wrapper > div { width: 100% }
@@ -1008,7 +1008,7 @@ class wetterturnier_betclass
             }
             #wetterturnier-bet-form.landscape div title {
                float: left;
-               width: 2.5%;
+               width: 4%;
                overflow: hidden;
             }
             #wetterturnier-bet-form div ul {
@@ -1114,11 +1114,14 @@ class wetterturnier_betclass
       }
       print "</ul>\n"
            ."</div>\n";
-   
+  
+
       // Adding data ul's
       for ( $day=1; $day <= $obj->betdays; $day++ ) {
          $data = $WTuser->get_user_bets_from_db($cityObj,$userID,$tournament,$day);
-         $day_string = $WTuser->date_format( (int)$tournament->tdate + $day, "%a" ); 
+         // TODO switching from long to short weekday name doesn't work with jQuery setorientation() function
+         // $Aa = ($obj->defaultview === "portrait") ? "%A" : "%a";
+         $day_string = $WTuser->date_format( (int)$tournament->tdate + $day, "%a" );
          printf("<div id=\"wt-betform-%d-wrapper\" class=\"wt-betform %s\">\n",$day,$obj->defaultview);
          printf("<title>%s</title>\n",$day_string);
          print "<ul>\n";
@@ -1166,7 +1169,8 @@ class wetterturnier_betclass
       // Getting propper current page url
       global $WTuser;
       $curURL = $WTuser->curPageURL();
-      $stnObj = new wetterturnier_stationObject( $station, "wmo" );
+      $tdate = $tournament->tdate;
+      $stnObj = new wetterturnier_stationObject( $station, "wmo", $tdate );
 
       // ------------------------------------------------------------
       // Looping over all necessary forecast days
@@ -1187,13 +1191,12 @@ class wetterturnier_betclass
                    sprintf("<long>%s</long>",  $param->thename),
                    sprintf("<short>%s</short>",$param->paramName));
       }
-      print "</ul>\n"
-           ."</div>\n";
+      print "</ul>\n" . "</div>\n";
 
       // Adding data ul's
       for ( $day=1; $day <= $obj->betdays; $day++ ) {
          $data = $WTuser->get_obs_from_db($stnObj->get("wmo"),$tournament,$day);
-         $day_string = $WTuser->date_format( (int)$tournament->tdate + $day, "%A" ); 
+         $day_string = $WTuser->date_format( (int)$tournament->tdate + $day, "%a");
          printf("<div id=\"wt-betform-%d-wrapper\" class=\"wt-betform %s\">\n",$day,$obj->defaultview);
          printf("<title>%s</title>\n",$day_string);
          print "<ul class=\"wt-betform\">\n";

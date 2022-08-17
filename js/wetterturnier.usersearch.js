@@ -61,9 +61,12 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
       var thisul = $(this).find('ul')
       thisul.empty();
       // Loading data from parent object
-      var data = $(this).data()
+      var data = $(this).data();
       // Search string
-      var search = $(this).find('input[name="user-search"]').attr('value').trim().toLowerCase();
+      // console.log($(this));
+      var search = $( this )[0].firstChild["value"];
+      // console.log(search)
+      search = search ? search.trim().toLowerCase() : "";
       if ( search.length > 0 ) {
          $.each( data, function(i) {
             if ( search.length > 0 ) {
@@ -75,13 +78,13 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
          if      ( num == 1 ) {
             var username = thisul.find("li").first().html()
             var userID   = thisul.find("li").first().attr("userid")
-            //console.log( " ----------- " + username )
-            //console.log( " ----------- " + userID )
+            // console.log( " ----------- " + username )
+            // console.log( " ----------- " + userID )
             $(this).find("input[name='user-search']").attr( "value",  username )
             $(this).find("input[name='user-search']").attr( "userid", userID )
             thisul.hide()
-            // and clear the field.
-            $(this).find('input[name="user-search"]').empty()
+            // and autocomplete the field.
+            $(this)[0].firstChild["value"] = username;
 
             // If inputs.addul is set: append the match to the ul 
             if ( inputs.ulmax !== undefined ) {
@@ -101,9 +104,12 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
    // ---------------------------------------------------------------
    // If a <li> gets clicked
    // ---------------------------------------------------------------
-   $(this).find('ul li').click(function() {
+   $(this).find('ul li.user-search-selectable').click(function() {
+      console.log($(this));
       var userID   = $(this).attr('userID')
       var username = $(this).html()
+      console.log(userID);
+      console.log(username);
       $(base_elem).find('ul').hide();
       // Add to ul if defined on inputs
       if ( inputs.addul !== undefined ) {

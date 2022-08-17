@@ -190,7 +190,7 @@ class wetterturnier_cityObject {
     *
     * @return Returns an array of :php:class:`wetterturnier_paramObject`.
     */
-   public function getParams() {
+   public function getParams($tdate=NULL) {
       $params = $this->stations[0]->getParams();
       for ( $i=0; $i<count($params); $i++ ) {
          $params[$i]->setActive( NULL );
@@ -223,7 +223,7 @@ class wetterturnier_stationObject {
    private $data = NULL;
    private $params = NULL;
 
-   function __construct( $init, $by='ID' ) {
+   function __construct( $init, $by='ID', $tdate=NULL ) {
       global $wpdb; $this->wpdb = $wpdb;
 
       if ( ! is_numeric($init) ) {
@@ -240,8 +240,13 @@ class wetterturnier_stationObject {
       }
 
       // Getting parameter config
+      $where = (isset($tdate)) ? " WHERE active = 1" : "";
+      if (isset($tdate)) {
+         $where .= " AND (SINCE <= " . $tdate . " OR SINCE = 0) AND (UNTIL > "
+         . $tdate . " OR UNTIL = 0)";
+      }
       $params = $this->wpdb->get_results(sprintf("SELECT paramID "
-         ." FROM %swetterturnier_param ORDER BY sort ASC", $wpdb->prefix));
+      . " FROM %swetterturnier_param".$where." ORDER BY sort ASC", $wpdb->prefix));
 
       $this->params = array();
       foreach ( $params as $rec ) {
@@ -282,7 +287,7 @@ class wetterturnier_stationObject {
     */
    function getParams() { return( $this->params ); }
 
-   /** Helper function for the admin interface. Showas checkboxes
+   /** Helper function for the admin interface. Show as checkboxes
     * for the parameters.
     *
     * @return Html code for the checkboxes. Each parameter gets a box which
@@ -386,7 +391,7 @@ class wetterturnier_paramObject {
       $since = ( is_null($tdate) ) ? date("Y-m-d H:i:s") :
                strftime("%Y-%m-%d %H:%M:%S",(int)($tdate)*86400);
       $sql = sprintf("SELECT stationID, CASE WHEN "
-             ." ( since <= '%s' AND (until = 0 OR until >= '%s') ) THEN 1 ELSE 0 END AS active"
+             ." ( since <= '%s' AND (until = 0 OR until > '%s') ) THEN 1 ELSE 0 END AS active"
              ." FROM %swetterturnier_stationparams WHERE paramID=%s",
              $since, $until, $wpdb->prefix, $this->data->paramID);
       $this->is_active = $wpdb->get_results($sql);
