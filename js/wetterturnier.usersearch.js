@@ -1,10 +1,10 @@
+// shortcut for jQuery
+$ = jQuery
 
 // ------------------------------------------------------------------
 // You can append init_user_search to any <div> object.
 // ------------------------------------------------------------------
-jQuery.fn.usersearch = function(ajaxurl,inputs) {
-   // Shortcut for jQuery
-   $ = jQuery
+$.fn.usersearch = function(ajaxurl,inputs) {
 
    // Store "this" to an explicit variable name
    var base_elem = this
@@ -98,22 +98,21 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
          else if ( num  > 1 ) { thisul.show() }
          else                 { thisul.hide(); }
       }
-   });
 
 
    // ---------------------------------------------------------------
    // If a <li> gets clicked
    // ---------------------------------------------------------------
-   $(this).find('ul li.user-search-selectable').click(function() {
-      console.log($(this));
+   $("ul li.user-search-selectable").click(function() {
+      console.log("CLICK!");
       var userID   = $(this).attr('userID')
       var username = $(this).html()
       console.log(userID);
       console.log(username);
       $(base_elem).find('ul').hide();
       // Add to ul if defined on inputs
-      if ( inputs.addul !== undefined ) {
-         if ( inputs.ulmax !== undefined ) {
+      if ( typeof inputs.addul !== "undefined" ) {
+         if ( typeof inputs.ulmax !== "undefined" ) {
             var count = $(inputs.addul).find(".selected-user").length
             if ( count >= inputs.ulmax )
             { alert("Not allowed to add more than " + inputs.ulmax + " users at a time."); return }
@@ -121,29 +120,31 @@ jQuery.fn.usersearch = function(ajaxurl,inputs) {
          $(inputs.addul).append("<li class='selected-user' userid='"+userID+"'>"+username+"</li>")
          $(inputs.addul).trigger("change")
       }
-      $(base_elem).find('input[name="user-search"]').attr('value',username);
-      $(base_elem).find('input[name="user-search"]').attr('userid',userID );
+
+      $('input[name="user-search"]').attr('value',username);
+      $('input[name="user-search"]').val(username);
+      $('input[name="user-search"]').attr('userid',userID );
       $(base_elem).closest('form').find('input[name="userID"]').attr('value',userID)
-   
-      // I "input" contains a function on "fun" call
+
+      // An "input" contains a function on "fun" call
       // the function! At the moment only functions are
       // allowed where the input is only the base element
       // and the ajaxurl (need them for some R-calls)
-      if ( typeof( inputs ) != "undefined" ) {
+      if ( typeof inputs !== "undefined" ) {
          console.log( inputs )
          if ( inputs.fun == 'form.submit' ) {
             $(this).closest('form').submit()
-         } else if ( typeof( inputs.fun ) == 'function' ) {
+         } else if ( typeof inputs.fun === 'function' ) {
             base_elem.find('ul').hide()
             inputs.userID = userID
             inputs.fun(ajaxurl,inputs);
             //$.when( base_elem.find('ul').hide() ).then(
-            // inputs.fun(base_elem,ajaxurl)
+            //   inputs.fun(base_elem,ajaxurl)
             //)
          }
       }
    });
 
+});
 
 }
-

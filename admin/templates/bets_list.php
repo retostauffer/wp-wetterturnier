@@ -123,14 +123,32 @@ $actionlink =  sprintf('?page=%s',$_REQUEST['page']);
       either select him/her from the list below, or just use this small form to find
       and edit the submitted values. 
       The form helps you searching for valid users:<br>
-      <?php $WTadmin->include_js_script("wetterturnier.usersearch"); ?>
+      <?php $WTadmin->include_js_script("wetterturnier.usersearch");?>
       <script>
+         function setCookie(name,value,days=1) {
+            var expires = "";
+            if (days) {
+               var date = new Date();
+               date.setTime(date.getTime() + (days*24*60*60*1000));
+               expires = "; expires=" + date.toUTCString();
+            }
+         document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+         }
+         
          jQuery(document).on('ready',function() {
             (function($) {
                var ajaxurl = <?php printf("'%s'\n",admin_url('admin-ajax.php')); ?>
                $("#bet-user-search").usersearch(ajaxurl,{});
                $("form#add-bet input[type='button']").on("click",function() {
-                  var userID = $(this).closest("form").find("input[name='user-search']").attr('userid')
+                  var user_search = $("input[name='user-search']");
+                  var userID = user_search.attr('userid')
+                  if (user_search.length == 1) {
+                     var username = user_search[0].value;
+                  } else {
+                     var username = undefined;
+                  }
+                  console.log(userID);
+                  console.log(username);
                   var cityID = $(this).closest("form").find("input[name='cityID']").val()
                   var tdate  = $(this).closest("form").find("input[name='tdate']").val()
                   var url = "<?php printf("%s?page=%s",$WTadmin->curPageURL(true),$_REQUEST['page']); ?>"
