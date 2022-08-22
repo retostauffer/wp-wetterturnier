@@ -297,6 +297,8 @@ table.tablesorter tbody td {
 .wttable-show-bets th.param-col-Wn,  .wttable-show-obs th.param-col-Wn  { width: 40px; min-width: 16px }
 .wttable-show-bets th.param-col-PPP, .wttable-show-obs th.param-col-PPP { width: 80px; min-width: 40px }
 .wttable-show-bets th.param-col-RR,  .wttable-show-obs th.param-col-RR  { width: 70px; min-width: 28px }
+/* SUM column in bet table */
+.wttable-show-bets th.filter-false { max-width: 80px; min-width: 40px }
 .wttable-show-bets th.user-name,     .wttable-show-obs th.user-name     { min-width: 180px; }
 .wttable-show span.button.small {
    padding: 1px 3px;
