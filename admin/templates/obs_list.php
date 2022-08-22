@@ -218,15 +218,12 @@ if ( $edit ) {
                              "paramID"   => (int)$param->paramID,
                              "betdate"   => (int)$betdate );
 
-            print_r($param->paramName);
-            //print_r($value);
             // if value empty: delete it
             if ( is_null($value) || strlen($value) == 0 ) {
                 print("IS NULL");
                 $wpdb->delete($wpdb->prefix . "wetterturnier_obs", $tmp); 
                 continue;
             }
-            print_r($value."\n");
 
             // Replace fucking "," with "."
             $value = str_replace(",",".",$value);
