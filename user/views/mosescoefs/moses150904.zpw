@@ -1,0 +1,81 @@
+N  
+0.50030 Uwetter                  
+0.18913 Schneehäuschen           
+0.10511 MM-UKMO-MOS              
+0.06683 Persistenz               
+0.13862 meteomara                
+ 
+Sd 
+0.41155 Hurricane                
+0.26514 MM-UKMO-MOS              
+0.17995 ww75                     
+0.14335 Uwetter                  
+ 
+dd 
+0.02137 MM-MOS                   
+0.20302 Persistenz               
+0.17769 DWD-ICON-MOS             
+0.21312 MM-UKMO-MOS              
+0.06117 MSwr-GFS-MOS             
+0.13779 DWD-EZ-MOS               
+0.12492 MM-GFS-MOS               
+0.06092 MSwr-HIR-MOS             
+ 
+ff 
+0.21385 ww75                     
+0.32468 Ms.Os                    
+0.26854 DWD-EZ-MOS               
+0.19292 MSwr-HIR-MOS             
+ 
+fx 
+0.28713 MSwr-MOS-Mix             
+0.28839 ww75                     
+0.18430 fresh                    
+0.11123 DWD-ICON-MOS             
+0.12894 Sven/Titisee-Neustadt    
+ 
+Wv 
+0.19215 ww75                     
+0.17633 MOS-T                    
+0.14250 Schneehäuschen           
+0.14795 Uwetter                  
+0.15068 Hurricane                
+0.11225 MM-UKMO-MOS              
+0.07813 Persistenz               
+ 
+Wn 
+0.46200 Schneehäuschen           
+0.25236 MOS-T                    
+0.16452 MM-UKMO-MOS              
+0.12113 MSwr-GFS-MOS             
+ 
+PPP
+0.12449 MM-MOS                   
+0.20680 Hurricane                
+0.30853 MM-UKMO-MOS              
+0.13385 MSwr-HIR-MOS             
+0.22633 MM-EZ-MOS                
+ 
+TTm
+0.33788 Hochfirst                
+0.25076 Uwetter                  
+0.28665 fresh                    
+0.12471 MM-UKMO-MOS              
+ 
+TTn
+0.31591 Hurricane                
+0.29825 meteomara                
+0.25373 Uwetter                  
+0.13212 MSwr-HIR-MOS             
+ 
+TTd
+0.20080 Hurricane                
+0.41231 Uwetter                  
+0.19890 MM-UKMO-MOS              
+0.18799 MM-EZ-MOS                
+ 
+RR 
+0.26550 ww75                     
+0.35376 Hurricane                
+0.21683 Uwetter                  
+0.16391 meteomara                

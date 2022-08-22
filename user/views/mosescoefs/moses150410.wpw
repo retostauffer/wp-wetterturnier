@@ -1,0 +1,79 @@
+N  
+0.28254 MetVienna                
+0.35293 Tjure                    
+0.12728 Persistenz               
+0.23725 Ms.Os                    
+ 
+Sd 
+0.50554 nik                      
+0.23583 Ms.Os                    
+0.25863 fleming                  
+ 
+dd 
+0.08980 DWD-MOSMix(EZ+GME)       
+0.31361 MM-EZ-MOS                
+0.21893 MM-UKMO-MOS              
+0.10415 Persistenz               
+0.05483 fresh                    
+0.08909 fleming                  
+0.12959 GME-MOS                  
+ 
+ff 
+0.33778 nik                      
+0.25703 MM-UKMO-MOS              
+0.20833 meteomara                
+0.19687 EZ-MOS                   
+ 
+fx 
+0.33577 nik                      
+0.29636 Tjure                    
+0.21444 Neptun                   
+0.15343 statical                 
+ 
+Wv 
+0.24782 Tjure                    
+0.25597 nik                      
+0.19035 Halber_Ösi               
+0.14184 MM-UKMO-MOS              
+0.16403 MeteoService-GFS-MOS     
+ 
+Wn 
+0.30524 Tjure                    
+0.29005 MetVienna                
+0.27570 UBIMET                   
+0.12901 MM-GFS-MOS               
+ 
+PPP
+0.24542 MM-MOS                   
+0.36199 nik                      
+0.19197 MM-UKMO-MOS              
+0.20063 fleming                  
+ 
+TTm
+0.20264 UBIMET                   
+0.24507 Tjure                    
+0.17365 MM-UKMO-MOS              
+0.23186 MOS-T                    
+0.14679 Uwetter                  
+ 
+TTn
+0.16164 MOS-T                    
+0.29837 Ms.Os                    
+0.15306 statical                 
+0.15520 Uwetter                  
+0.23173 Tjure                    
+ 
+TTd
+0.23273 UBIMET                   
+0.15500 Pfingstochse             
+0.06771 MM-UKMO-MOS              
+0.12003 Uwetter                  
+0.15884 Ms.Os                    
+0.26568 fleming                  
+ 
+RR 
+0.30885 nik                      
+0.18258 MeteoService-GFS-MOS     
+0.21634 statical                 
+0.12965 MM-UKMO-MOS              
+0.16258 meteomara                

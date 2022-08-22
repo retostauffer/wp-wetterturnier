@@ -1,0 +1,77 @@
+N  
+0.54339 Uwetter                  
+0.21404 meteomara                
+0.10258 Persistenz               
+0.13999 MM-UKMO-MOS              
+ 
+Sd 
+0.52072 Hurricane                
+0.21400 MM-UKMO-MOS              
+0.26528 Uwetter                  
+ 
+dd 
+0.03577 MM-MOS                   
+0.21498 Persistenz               
+0.16990 DWD-ICON-MOS             
+0.19472 MM-UKMO-MOS              
+0.15941 MM-GFS-MOS               
+0.11981 Züberle                  
+0.10540 Hurricane                
+ 
+ff 
+0.22218 MOS-T                    
+0.35128 Ms.Os                    
+0.17828 MSwr-HIR-MOS             
+0.24826 DWD-EZ-MOS               
+ 
+fx 
+0.25062 MSwr-MOS-Mix             
+0.24385 Sven/Titisee-Neustadt    
+0.21566 fresh                    
+0.16006 DWD-ICON-MOS             
+0.12981 rana_2002                
+ 
+Wv 
+0.19187 Hurricane                
+0.06934 rana_2002                
+0.12340 MM-UKMO-MOS              
+0.11994 Persistenz               
+0.11941 Hochfirst                
+0.12851 MOS-T                    
+0.14084 Sven/Titisee-Neustadt    
+0.10670 MM-GFS-MOS               
+ 
+Wn 
+0.50598 MOS-T                    
+0.34224 MM-UKMO-MOS              
+0.15178 Hurricane                
+ 
+PPP
+0.34480 MM-MOS                   
+0.30503 Hurricane                
+0.25257 MM-UKMO-MOS              
+0.09760 MSwr-HIR-MOS             
+ 
+TTm
+0.33098 Hochfirst                
+0.25192 Uwetter                  
+0.16381 MM-UKMO-MOS              
+0.25330 fresh                    
+ 
+TTn
+0.28597 Hurricane                
+0.34109 meteomara                
+0.24818 Uwetter                  
+0.12476 Sven/Titisee-Neustadt    
+ 
+TTd
+0.52422 Hurricane                
+0.22517 MM-MOS                   
+0.25060 Uwetter                  
+ 
+RR 
+0.17444 rana_2002                
+0.30410 Hurricane                
+0.24947 Uwetter                  
+0.15694 meteomara                
+0.11504 MSwr-HIR-MOS             

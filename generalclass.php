@@ -509,7 +509,7 @@ class wetterturnier_generalclass
      * @see older_tournament
      * @see newer_tournament
      */
-    public function next_tournament($row_offset=0,$check_access=true,$dayoffset=0,$backwards=false) { 
+    public function next_tournament($row_offset=0,$check_access=true,$dayoffset=0,$backwards=false,$quiet=FALSE) { 
 
         //printf("<br>Calling next_tournament with row_offset = %d,  check_access = %s,   dayoffset = %d,  and backwars = %s<br>\n",
         //       $row_offset,($check_access ? 'true' : 'false'), $dayoffset, ($backwards ? 'true' : 'false'));
@@ -570,7 +570,8 @@ class wetterturnier_generalclass
         // call check_view_is_closed because this will
         // crash (loop inside the class)
         if ( $row_offset == 0 & $check_access ) {
-            $next->closed = $this->check_view_is_closed( $row->tdate, $next ); //next ???
+            $next->closed = $this->check_view_is_closed( $row->tdate, $quiet );
+            //$next->closed = $this->check_view_is_closed( $row->tdate, $next ); //next ???
         } else if ( $row_offset > 0 ) {
             $next->closed = true;
         } else {
@@ -608,7 +609,7 @@ class wetterturnier_generalclass
      * @todo Reto should use the 'number of bet days' variable rather
      * than this fixed number of -2.
      */
-    public function current_tournament($row_offset=0,$check_access=true,$dayoffset=-2,$backwards=false) { 
+    public function current_tournament($row_offset=0,$check_access=true,$dayoffset=-2,$backwards=false,$quiet=FALSE) { 
         return $this->next_tournament($row_offset,$check_access,$dayoffset,$backwards);
     }
 
@@ -922,7 +923,7 @@ class wetterturnier_generalclass
      *
      * @see check_allowed_to_display_betdata
     */
-    function check_view_is_closed($tdate) {
+    function check_view_is_closed($tdate, $quiet=FALSE) {
 
     
         // STOP if user should not see these data!
@@ -948,28 +949,30 @@ class wetterturnier_generalclass
         // plugin settings) return false.
         $open_tdate = $tdate - $this->options->wetterturnier_bet_open_days;
         if ( $today < $open_tdate ) {
-            echo "<div class=\"wetterturnier-info error\">\n";
-            printf("%s.<br>\n",__("Sorry, no access to these bet form","wpwt"));
-            printf("%s.<br>\n",sprintf(__("The form to submit tips always opens %d days in advance.","wpwt"),
-                     $this->options->wetterturnier_bet_open_days));
-            printf("%s.<br>\n",sprintf(__("Next tournament will take place on %s","wpwt"),
-                     $this->date_format($tdate))); 
-            printf("%s.\n",sprintf(__("The bet form opens %s","wpwt"),
-                     $this->datetime_format( 86400*$open_tdate )));
-            echo "</div>\n";
-
+            if ( $quiet === FALSE ) {
+               echo "<div class=\"wetterturnier-info error\">\n";
+               printf("%s.<br>\n",__("Sorry, no access to these bet form","wpwt"));
+               printf("%s.<br>\n",sprintf(__("The form to submit tips always opens %d days in advance.","wpwt"),
+                        $this->options->wetterturnier_bet_open_days));
+               printf("%s.<br>\n",sprintf(__("Next tournament will take place on %s","wpwt"),
+                        $this->date_format($tdate))); 
+               printf("%s.\n",sprintf(__("The bet form opens %s","wpwt"),
+                        $this->datetime_format( 86400*$open_tdate )));
+               echo "</div>\n";
+            }
             return( true ); # closed true 
         }
         // Locked again
         if ( (int)gmdate('U') > $this->options->wetterturnier_bet_closing_timestamp ) {
             $nextnext = $this->next_tournament($row_offset=1);
-            echo "<div class=\"wetterturnier-info error\">\n";
-            printf("%s<br>\n",__("Sorry, no access to these bet form.","wpwt"));
-            printf("%s<br>\n",__("The form to submit tips for today's tournament is already closed.","wpwt"));
-            printf("%s<br>\n",sprintf("%s %s, %s.",__("The next tournament will take place on","wpwt"),
-                     $nextnext->weekday, $nextnext->readable));
-            echo "</div>\n";
-
+            if ( $quiet === FALSE ) {
+               echo "<div class=\"wetterturnier-info error\">\n";
+               printf("%s<br>\n",__("Sorry, no access to these bet form.","wpwt"));
+               printf("%s<br>\n",__("The form to submit tips for today's tournament is already closed.","wpwt"));
+               printf("%s<br>\n",sprintf("%s %s, %s.",__("The next tournament will take place on","wpwt"),
+                        $nextnext->weekday, $nextnext->readable));
+               echo "</div>\n";
+            }
             return( true ); # closed true 
         }
         return( false ); # closed = false (not closed)
@@ -1077,8 +1080,8 @@ class wetterturnier_generalclass
      */
     public function get_param_by_name($paramName) {
         global $wpdb;
-        $res = $wpdb->get_row(sprintf("SELECT * FROM %swetterturnier_param WHERE UPPER(paramName) = \"%s\"",
-                             $wpdb->prefix,strtoupper((string)$paramName)));
+        $res = $wpdb->get_row(sprintf("SELECT * FROM %swetterturnier_param WHERE paramName LIKE \"%s\"",
+                             $wpdb->prefix,(string)$paramName));
         if ( ! $res ) { return(false); } else { return($res); }
     }
 
@@ -1171,10 +1174,14 @@ class wetterturnier_generalclass
      *    information ...
      */
     public function get_param_data($tdate = NULL) {
+        
         if (is_null($tdate) or empty($tdate)) {
-            $tdate = $this->current_tournament()->tdate;
+            // with have to call this function "quiet" to not print warnings!
+            $tdate = $this->current_tournament($quiet=TRUE)->tdate;
         }
+        
         global $wpdb;
+        
         $lang = strtoupper( $this->get_user_language() );
         $res = $wpdb->get_results("SELECT paramID, paramName, " . $lang
                                  ." AS thename, " . "valformat, help" . $lang

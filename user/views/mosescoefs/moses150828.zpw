@@ -1,0 +1,81 @@
+N  
+0.52268 Uwetter                  
+0.23810 Schneehäuschen           
+0.17371 meteomara                
+0.06551 Persistenz               
+ 
+Sd 
+0.40492 Hurricane                
+0.22156 MM-UKMO-MOS              
+0.20251 ww75                     
+0.17100 Uwetter                  
+ 
+dd 
+0.10182 MM-MOS                   
+0.16892 Persistenz               
+0.09923 DWD-EZ-MOS               
+0.11260 DWD-ICON-MOS             
+0.16353 MM-UKMO-MOS              
+0.12503 MM-GFS-MOS               
+0.04672 MSwr-HIR-MOS             
+0.09314 Sven/Titisee-Neustadt    
+0.08902 Hurricane                
+ 
+ff 
+0.20544 ww75                     
+0.31531 Ms.Os                    
+0.28438 DWD-EZ-MOS               
+0.19487 MSwr-HIR-MOS             
+ 
+fx 
+0.25761 MSwr-MOS-Mix             
+0.27766 ww75                     
+0.20657 fresh                    
+0.15467 Sven/Titisee-Neustadt    
+0.10349 DWD-ICON-MOS             
+ 
+Wv 
+0.15424 ww75                     
+0.20904 MOS-T                    
+0.13605 Schneehäuschen           
+0.17880 Hurricane                
+0.11933 MM-UKMO-MOS              
+0.08316 Persistenz               
+0.11939 Uwetter                  
+ 
+Wn 
+0.46028 Schneehäuschen           
+0.19184 MM-UKMO-MOS              
+0.21669 MOS-T                    
+0.13118 MSwr-GFS-MOS             
+ 
+PPP
+0.13170 MM-MOS                   
+0.19092 Hurricane                
+0.30061 MM-UKMO-MOS              
+0.14004 MSwr-HIR-MOS             
+0.23673 MM-EZ-MOS                
+ 
+TTm
+0.33298 Hochfirst                
+0.23722 Uwetter                  
+0.29971 fresh                    
+0.13009 MM-UKMO-MOS              
+ 
+TTn
+0.35369 Hurricane                
+0.30026 meteomara                
+0.22160 Uwetter                  
+0.12445 MSwr-HIR-MOS             
+ 
+TTd
+0.21112 Hurricane                
+0.21899 MM-UKMO-MOS              
+0.22463 MM-EZ-MOS                
+0.34525 Uwetter                  
+ 
+RR 
+0.40714 Hurricane                
+0.19751 Uwetter                  
+0.17780 meteomara                
+0.21755 ww75                     

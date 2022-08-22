@@ -1,0 +1,79 @@
+N  
+0.18642 Schneegewitter           
+0.34877 Daniel1                  
+0.24801 MaBe-Leipzig             
+0.21680 MSwr-HIR-MOS             
+ 
+Sd 
+0.00221 meteo84                  
+0.31995 MM-UKMO-MOS              
+0.18571 Daniel1                  
+0.18203 MSwr-HIR-MOS             
+0.19516 MaBe-Leipzig             
+0.11493 MM-GFS-MOS               
+ 
+dd 
+0.10125 MaBe-Leipzig             
+0.28061 MM-UKMO-MOS              
+0.10870 Persistenz               
+0.29889 DWD-EZ-MOS               
+0.21055 Ms.Os                    
+ 
+ff 
+0.53120 MSwr-HIR-MOS             
+0.16033 MM-UKMO-MOS              
+0.19912 DWD-MOS-Mix              
+0.10936 MM-GFS-MOS               
+ 
+fx 
+0.09597 Halber_Ösi               
+0.32246 MSwr-HIR-MOS             
+0.13536 meteomara                
+0.11391 MM-EZ-MOS                
+0.20203 MOS-T                    
+0.13027 Pfingstochse             
+ 
+Wv 
+0.31956 MSwr-MOS-Mix             
+0.25042 DWD-ICON-MOS             
+0.24475 meteo84                  
+0.18527 meteomara                
+ 
+Wn 
+0.25057 Halber_Ösi               
+0.25486 MSwr-HIR-MOS             
+0.21240 meteo84                  
+0.14599 Daniel1                  
+0.13618 MSwr-GFS-MOS             
+ 
+PPP
+0.10133 MM-MOS                   
+0.31235 MSwr-HIR-MOS             
+0.18833 Schneegewitter           
+0.20498 MM-UKMO-MOS              
+0.19300 Ms.Os                    
+ 
+TTm
+0.03836 meteo84                  
+0.31307 MSwr-HIR-MOS             
+0.23398 Ms.Os                    
+0.31314 Pfingstochse             
+0.10145 MM-UKMO-MOS              
+ 
+TTn
+0.42172 meteomara                
+0.35060 MSwr-HIR-MOS             
+0.22768 MaBe-Leipzig             
+ 
+TTd
+0.33905 Schneegewitter           
+0.25705 MSwr-MOS-Mix             
+0.24210 meteomara                
+0.16180 MM-UKMO-MOS              
+ 
+RR 
+0.35697 meteo84                  
+0.18024 meteomara                
+0.10508 Persistenz               
+0.19633 MSwr-MOS-Mix             
+0.16138 MaBe-Leipzig             

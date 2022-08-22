@@ -1,0 +1,81 @@
+N  
+0.29380 humilis91                
+0.22668 Schneegewitter           
+0.17164 MM-UKMO-MOS              
+0.22160 MaBe-Leipzig             
+0.08628 Persistenz               
+ 
+Sd 
+0.32970 meteo84                  
+0.29766 MM-UKMO-MOS              
+0.16679 MM-GFS-MOS               
+0.20584 Schneehäuschen           
+ 
+dd 
+0.01098 MaBe-Leipzig             
+0.30276 MM-UKMO-MOS              
+0.25841 Halber_Ösi               
+0.08526 Persistenz               
+0.19169 Ms.Os                    
+0.15090 EZ-MOS                   
+ 
+ff 
+0.43624 meteo84                  
+0.36130 MM-MOS                   
+0.20246 meteomara                
+ 
+fx 
+0.05933 Halber_Ösi               
+0.27383 meteomara                
+0.19577 MM-EZ-MOS                
+0.30342 Pfingstochse             
+0.16765 MeteoService-GFS-MOS     
+ 
+Wv 
+0.30976 meteo84                  
+0.19102 MOS-T                    
+0.17122 GME-MOS                  
+0.12994 meteomara                
+0.13125 MeteoService-GFS-MOS     
+0.06681 Persistenz               
+ 
+Wn 
+0.41571 Schneehäuschen           
+0.15185 Halber_Ösi               
+0.20821 meteo84                  
+0.14934 MeteoService-GFS-MOS     
+0.07489 Persistenz               
+ 
+PPP
+0.12435 DWD-MOSMix(EZ+GME)       
+0.05407 MM-MOS                   
+0.13298 Schneegewitter           
+0.32542 Ms.Os                    
+0.16569 MM-UKMO-MOS              
+0.19748 meteo84                  
+ 
+TTm
+0.16787 meteo84                  
+0.31412 Pfingstochse             
+0.18912 Ms.Os                    
+0.22707 Schneehäuschen           
+0.10182 MM-UKMO-MOS              
+ 
+TTn
+0.47087 Schneehäuschen           
+0.33824 meteomara                
+0.19090 MaBe-Leipzig             
+ 
+TTd
+0.22742 humilis91                
+0.25093 Schneegewitter           
+0.14065 MM-UKMO-MOS              
+0.22855 Schneehäuschen           
+0.15246 meteomara                
+ 
+RR 
+0.19092 meteo84                  
+0.29500 MaBe-Leipzig             
+0.23526 meteomara                
+0.07726 Persistenz               
+0.20155 Schneehäuschen           

@@ -1,0 +1,75 @@
+N  
+0.21023 Georg                    
+0.21478 MSwr-HIR-MOS             
+0.16479 Oberbayer                
+0.18598 MM-UKMO-MOS              
+0.06358 Persistenz               
+0.16064 Auftrieb                 
+ 
+Sd 
+0.39123 Georg                    
+0.32885 fresh                    
+0.14655 Bibertaler               
+0.13337 MM-UKMO-MOS              
+ 
+dd 
+0.18960 DWD-ICON-MOS             
+0.20931 Persistenz               
+0.16169 meteomara                
+0.11111 David                    
+0.07576 DWD-EZ-MOS               
+0.12293 MOS-T                    
+0.07034 martingap                
+0.05925 MM-GFS-MOS               
+ 
+ff 
+0.72893 Georg                    
+0.18635 MM-UKMO-MOS              
+0.08471 Persistenz               
+ 
+fx 
+0.24563 fresh                    
+0.20943 MM-UKMO-MOS              
+0.20206 MSwr-GFS-MOS             
+0.14403 MM-GFS-MOS               
+0.14011 Georg                    
+0.05874 Persistenz               
+ 
+Wv 
+0.35524 Uni-Innsbruck            
+0.29512 MSwr-HIR-MOS             
+0.13550 Achentaler               
+0.12640 David                    
+0.08774 MM-UKMO-MOS              
+ 
+Wn 
+0.07588 MSwr-MOS-Mix             
+0.30834 David                    
+0.21388 DWD-ICON-MOS             
+0.25731 MSwr-HIR-MOS             
+0.14458 Oberbayer                
+ 
+PPP
+0.48902 Georg                    
+0.51098 MM-MOS                   
+ 
+TTm
+0.69316 Georg                    
+0.14849 David                    
+0.15835 fresh                    
+ 
+TTn
+0.45311 Uni-Innsbruck            
+0.36442 Georg                    
+0.18246 MSwr-HIR-MOS             
+ 
+TTd
+0.50836 Georg                    
+0.34420 LukasRtM                 
+0.14744 meteomara                
+ 
+RR 
+0.35541 Bibertaler               
+0.24381 David                    
+0.23923 MM-UKMO-MOS              
+0.16155 meteomara                

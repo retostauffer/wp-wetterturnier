@@ -1,0 +1,73 @@
+N  
+0.42168 Georg                    
+0.25784 MM-UKMO-MOS              
+0.17806 Auftrieb                 
+0.14241 Schneegewitter           
+ 
+Sd 
+0.37937 Georg                    
+0.26276 UBIMET                   
+0.15076 MM-UKMO-MOS              
+0.20711 nik                      
+ 
+dd 
+0.25765 DWD-ICON-MOS             
+0.20446 Persistenz               
+0.09706 DWD-EZ-MOS               
+0.09682 Ms.Os                    
+0.05627 MSwr-MOS-Mix             
+0.16069 MOS-T                    
+0.07175 Achentaler               
+0.05531 nik                      
+ 
+ff 
+0.49579 Georg                    
+0.31763 MSwr-MOS-Mix             
+0.18658 Ms.Os                    
+ 
+fx 
+0.09375 UBIMET                   
+0.25359 MSwr-GFS-MOS             
+0.19388 MSwr-EZ-MOS              
+0.15476 Schneegewitter           
+0.20865 nik                      
+0.09537 MM-UKMO-MOS              
+ 
+Wv 
+0.35807 Uni-Innsbruck            
+0.28283 Achentaler               
+0.22388 DWD-ICON-MOS             
+0.13522 nik                      
+ 
+Wn 
+0.35472 UBIMET                   
+0.18476 Achentaler               
+0.16523 MSwr-EZ-MOS              
+0.18948 Georg                    
+0.10580 DWD-EZ-MOS               
+ 
+PPP
+0.54669 Georg                    
+0.45331 MM-MOS                   
+ 
+TTm
+0.66987 Georg                    
+0.15698 MM-UKMO-MOS              
+0.17315 MSwr-MOS-Mix             
+ 
+TTn
+0.43076 Georg                    
+0.37342 Uni-Innsbruck            
+0.11165 Auftrieb                 
+0.08418 Ms.Os                    
+ 
+TTd
+0.54271 Georg                    
+0.18336 Ms.Os                    
+0.27393 Uni-Innsbruck            
+ 
+RR 
+0.50991 Georg                    
+0.18602 Bibertaler               
+0.17067 MM-MOS                   
+0.13339 Auftrieb                 

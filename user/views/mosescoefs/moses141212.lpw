@@ -1,0 +1,76 @@
+N  
+0.09307 Mammatus95               
+0.24542 MaBe-Leipzig             
+0.20546 Ms.Os                    
+0.24140 humilis91                
+0.13265 MM-UKMO-MOS              
+0.08201 Persistenz               
+ 
+Sd 
+0.27339 meteo84                  
+0.28711 MM-UKMO-MOS              
+0.22386 MM-GFS-MOS               
+0.21565 MaBe-Leipzig             
+ 
+dd 
+0.03033 MaBe-Leipzig             
+0.27455 MM-UKMO-MOS              
+0.11075 Persistenz               
+0.23881 Halber_Ösi               
+0.18224 meteomara                
+0.16332 EZ-MOS                   
+ 
+ff 
+0.12705 Halber_Ösi               
+0.28444 meteomara                
+0.30610 MM-MOS                   
+0.28240 EZ-MOS                   
+ 
+fx 
+0.35576 meteomara                
+0.32649 MaBe-Leipzig             
+0.20958 MeteoService-GFS-MOS     
+0.10817 Kaltlufttropfen          
+ 
+Wv 
+0.26724 meteo84                  
+0.29468 meteomara                
+0.20359 GME-MOS                  
+0.14631 MM-UKMO-MOS              
+0.08818 Persistenz               
+ 
+Wn 
+0.46705 meteo84                  
+0.42963 Schneehäuschen           
+0.10332 Persistenz               
+ 
+PPP
+0.07821 MM-MOS                   
+0.06209 Halber_Ösi               
+0.11126 Schneegewitter           
+0.32019 meteomara                
+0.20011 MeteoService-GFS-MOS     
+0.22814 MM-UKMO-MOS              
+ 
+TTm
+0.07968 meteo84                  
+0.34500 Züberle                  
+0.18556 Ms.Os                    
+0.27298 Schneehäuschen           
+0.11678 MM-UKMO-MOS              
+ 
+TTn
+0.59966 Schneehäuschen           
+0.40034 meteomara                
+ 
+TTd
+0.26786 humilis91                
+0.29108 Schneehäuschen           
+0.21588 meteomara                
+0.22518 Schneegewitter           
+ 
+RR 
+0.39639 MaBe-Leipzig             
+0.24597 meteomara                
+0.27703 Schneehäuschen           
+0.08061 Persistenz               

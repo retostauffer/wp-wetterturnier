@@ -1,0 +1,78 @@
+N  
+0.47429 Uwetter                  
+0.15036 meteomara                
+0.19813 Schneehäuschen           
+0.07897 Persistenz               
+0.09824 MM-UKMO-MOS              
+ 
+Sd 
+0.38677 Uwetter                  
+0.26413 MM-UKMO-MOS              
+0.18501 ww75                     
+0.16410 fresh                    
+ 
+dd 
+0.02674 MM-MOS                   
+0.19548 Persistenz               
+0.16708 DWD-EZ-MOS               
+0.13637 MM-GFS-MOS               
+0.17507 MM-UKMO-MOS              
+0.13089 DWD-ICON-MOS             
+0.09056 MSwr-GFS-MOS             
+0.07781 MSwr-HIR-MOS             
+ 
+ff 
+0.42727 Ms.Os                    
+0.38171 Schneehäuschen           
+0.19102 MSwr-MOS-Mix             
+ 
+fx 
+0.28117 MSwr-MOS-Mix             
+0.26576 ww75                     
+0.18507 fresh                    
+0.12939 DWD-ICON-MOS             
+0.13862 Sven/Titisee-Neustadt    
+ 
+Wv 
+0.30847 ww75                     
+0.26792 MOS-T                    
+0.25833 Schneehäuschen           
+0.16528 Uwetter                  
+ 
+Wn 
+0.54343 Schneehäuschen           
+0.18173 DWD-ICON-MOS             
+0.15533 MM-UKMO-MOS              
+0.11951 MSwr-GFS-MOS             
+ 
+PPP
+0.11790 MM-MOS                   
+0.23028 Hurricane                
+0.30201 MM-UKMO-MOS              
+0.13139 MSwr-HIR-MOS             
+0.21842 MM-EZ-MOS                
+ 
+TTm
+0.25268 Hochfirst                
+0.30045 Uwetter                  
+0.16583 MM-UKMO-MOS              
+0.28103 fresh                    
+ 
+TTn
+0.25267 Hurricane                
+0.28620 meteomara                
+0.33007 ww75                     
+0.13106 MM-UKMO-MOS              
+ 
+TTd
+0.24683 Hurricane                
+0.39487 Uwetter                  
+0.20075 MM-UKMO-MOS              
+0.15755 MM-EZ-MOS                
+ 
+RR 
+0.13557 ww75                     
+0.25612 MSwr-MOS-Mix             
+0.28502 Hurricane                
+0.15928 MM-UKMO-MOS              
+0.16401 Schneehäuschen           

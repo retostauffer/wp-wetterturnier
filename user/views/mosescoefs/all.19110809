@@ -1,0 +1,76 @@
+201911081045
+ BERLIN MSwr-GFS-MOS        
+  
+N           8         5
+rSd         0        37
+dd        270       290
+ff         10         5
+fx          0         0
+Wv          5         0
+Wn          6         0
+PPP    1007.2    1013.9
+TTm       8.4       6.9
+TTn       7.4       1.8
+TTd       5.4       3.3
+RR        1.9      -3.0
+  
+ WIEN MSwr-GFS-MOS        
+  
+N           8         7
+rSd         0        27
+dd        290       310
+ff         11         8
+fx         27         0
+Wv          6         0
+Wn          6         0
+PPP    1009.3    1011.1
+TTm      10.4       8.2
+TTn       7.8       4.9
+TTd       5.7       3.7
+RR        3.8      -3.0
+  
+ Innsbruck MSwr-GFS-MOS        
+  
+N           7         2
+rSd        32        76
+dd        280       190
+ff          3         5
+fx          0         0
+Wv          6         0
+Wn          8         0
+PPP    1012.2    1010.1
+TTm       6.8       8.0
+TTn       2.4      -1.7
+TTd       1.6      -2.1
+RR        1.3      -3.0
+  
+ Zuerich MSwr-GFS-MOS        
+  
+N           6         6
+rSd        29        34
+dd        260        50
+ff          3         3
+fx          0         0
+Wv          8         0
+Wn          0         0
+PPP    1013.2    1011.1
+TTm       6.7       5.5
+TTn       2.8       0.3
+TTd       1.9       0.3
+RR        0.3      -3.0
+  
+ LEIPZIG MSwr-GFS-MOS        
+  
+N           8         5
+rSd        14        40
+dd        270       320
+ff          7         3
+fx          0         0
+Wv          6         0
+Wn          0         0
+PPP    1008.4    1014.0
+TTm       8.2       7.0
+TTn       6.0       1.5
+TTd       4.5       2.6
+RR        0.6      -3.0
+  

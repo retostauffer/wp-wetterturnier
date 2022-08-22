@@ -206,8 +206,9 @@ if ( $edit ) {
          foreach ( $data as $key => $value ) {
 
             // Searching for properties like "day_X"
-            if ( ! preg_match("/^[a-zA-Z]{1,}_[1-9]/",$key) ) { continue; }
-            list($param,$day) = explode("_",$key); $day = (int)$day;
+            //TODO only d1/d2 in wetterturnier (Saturday+Sunday)
+            if ( ! preg_match("/^[a-zA-Z0-9]{1,}_[1-2]/", $key) ) { continue; }
+            list($param, $day) = explode("_",$key); $day = (int)$day;
             // Compute "betday" (tdate + day)
             $betdate = $tdate + $day;
             // Loading full parameter object
@@ -217,12 +218,15 @@ if ( $edit ) {
                              "paramID"   => (int)$param->paramID,
                              "betdate"   => (int)$betdate );
 
+            print_r($param->paramName);
+            //print_r($value);
             // if value empty: delete it
-            if ( is_null($value) || strlen($value) == 0 )     {
-
+            if ( is_null($value) || strlen($value) == 0 ) {
+                print("IS NULL");
                 $wpdb->delete($wpdb->prefix . "wetterturnier_obs", $tmp); 
                 continue;
             }
+            print_r($value."\n");
 
             // Replace fucking "," with "."
             $value = str_replace(",",".",$value);
@@ -269,13 +273,17 @@ if ( $edit ) {
        echo "<div id='message' class='updated fade'><p><strong>"
            .__("Successfully changed the observation entry","wpwt")
            ."</strong></p></div>";
-   } 
+   } else {
+      echo "<div id='message' class='error fade'><p><strong>"
+         .__("ERROR: Not updated observations entry!","wpwt")
+         ."</strong></p></div>";
+   }
 
    // prepare data/items with search string, if set
    if ( ! empty($_REQUEST['s']) ) { $search = $_REQUEST['s']; }
    else                           { $search = false; }
 
-   $wp_list_table = new Wetterturnier_Obs_List_Table( $city,$selected_tdate,$search );
+   $wp_list_table = new Wetterturnier_Obs_List_Table($city,$selected_tdate,$search);
    $wp_list_table->prepare_items();
 
    // Show search form

@@ -1,0 +1,81 @@
+N  
+0.47067 Uwetter                  
+0.20276 Schneehäuschen           
+0.10071 MM-UKMO-MOS              
+0.07993 Persistenz               
+0.14593 meteomara                
+ 
+Sd 
+0.40738 Uwetter                  
+0.23589 Hurricane                
+0.20654 MM-UKMO-MOS              
+0.15020 fresh                    
+ 
+dd 
+0.03126 MM-MOS                   
+0.19574 Persistenz               
+0.15776 DWD-EZ-MOS               
+0.14353 MM-GFS-MOS               
+0.18272 MM-UKMO-MOS              
+0.13540 DWD-ICON-MOS             
+0.08840 MSwr-GFS-MOS             
+0.06518 MSwr-HIR-MOS             
+ 
+ff 
+0.42739 Ms.Os                    
+0.37759 Schneehäuschen           
+0.19502 MSwr-MOS-Mix             
+ 
+fx 
+0.29556 MSwr-MOS-Mix             
+0.25953 ww75                     
+0.18782 fresh                    
+0.12478 DWD-ICON-MOS             
+0.13232 Sven/Titisee-Neustadt    
+ 
+Wv 
+0.26582 ww75                     
+0.19049 Uwetter                  
+0.15372 MOS-T                    
+0.13842 Schneehäuschen           
+0.14539 Hurricane                
+0.10616 MM-UKMO-MOS              
+ 
+Wn 
+0.55048 Schneehäuschen           
+0.17005 DWD-ICON-MOS             
+0.15516 MM-UKMO-MOS              
+0.12431 MSwr-GFS-MOS             
+ 
+PPP
+0.10760 MM-MOS                   
+0.22830 Hurricane                
+0.30205 MM-UKMO-MOS              
+0.13575 MSwr-HIR-MOS             
+0.22630 MM-EZ-MOS                
+ 
+TTm
+0.35775 Hochfirst                
+0.31597 Uwetter                  
+0.11755 MM-UKMO-MOS              
+0.20873 fresh                    
+ 
+TTn
+0.21162 Hurricane                
+0.25879 Ms.Os                    
+0.22667 ww75                     
+0.13651 MSwr-HIR-MOS             
+0.16642 Uwetter                  
+ 
+TTd
+0.20821 Hurricane                
+0.42642 Uwetter                  
+0.20573 MM-UKMO-MOS              
+0.15964 MM-EZ-MOS                
+ 
+RR 
+0.16585 ww75                     
+0.24386 MSwr-MOS-Mix             
+0.25848 Hurricane                
+0.16211 MM-UKMO-MOS              
+0.16971 Schneehäuschen           

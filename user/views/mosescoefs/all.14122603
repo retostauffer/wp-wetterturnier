@@ -1,0 +1,376 @@
+201412260700
+ BERLIN DWD-MOS-Mix         
+  
+N           4         3
+rSd        62        87
+dd        120        30
+ff          9         5
+fx          0         0
+Wv          0         0
+Wn          0         0
+PPP    1011.6    1020.5
+TTm      -0.7      -2.3
+TTn      -4.5      -7.5
+TTd      -5.7      -9.1
+RR       -3.0       0.5
+  
+ BERLIN EZM-MOS             
+  
+N           5         3
+rSd        56        74
+dd        120        40
+ff          9         5
+fx          0         0
+Wv          0         0
+Wn          0         0
+PPP    1010.6    1020.2
+TTm      -1.1      -1.8
+TTn      -5.0      -6.7
+TTd      -5.8      -7.2
+RR       -3.0       2.1
+  
+ BERLIN GFS-MOS             
+  
+N           5         4
+rSd        53        58
+dd        110        10
+ff          9         8
+fx          0         0
+Wv          0         0
+Wn          0         0
+PPP    1009.8    1021.8
+TTm      -1.2      -0.9
+TTn      -4.8      -5.2
+TTd      -6.2      -6.6
+RR       -3.0      -3.0
+  
+ BERLIN GME-MOS             
+  
+N           3         4
+rSd        82        67
+dd        120        10
+ff          8         4
+fx          0         0
+Wv          0         0
+Wn          0         7
+PPP    1012.4    1020.0
+TTm      -0.6      -2.0
+TTn      -5.6      -7.0
+TTd      -5.9      -6.4
+RR       -3.0       0.1
+  
+ BERLIN MOS-Mix             
+  
+N           5         3
+rSd        59        77
+dd        120        20
+ff          9         6
+fx          0         0
+Wv          0         0
+Wn          0         0
+PPP    1011.0    1021.0
+TTm      -0.9      -1.8
+TTn      -4.6      -6.7
+TTd      -5.8      -8.2
+RR       -3.0       0.4
+  
+ WIEN DWD-MOS-Mix         
+  
+N           5         8
+rSd        47         0
+dd        120        10
+ff          7         7
+fx          0         0
+Wv          0         7
+Wn          0         7
+PPP    1013.8    1012.7
+TTm       0.6      -1.8
+TTn      -3.2      -3.7
+TTd      -5.6      -5.4
+RR        1.9       1.8
+  
+ WIEN EZM-MOS             
+  
+N           8         8
+rSd        34         0
+dd        130        20
+ff         10         8
+fx          0         0
+Wv          0         7
+Wn          7         7
+PPP    1012.5    1012.8
+TTm       0.7      -0.8
+TTn      -3.2      -2.5
+TTd      -5.1      -5.0
+RR        2.4       1.6
+  
+ WIEN GFS-MOS             
+  
+N           6         8
+rSd        37         0
+dd        140       350
+ff         11         9
+fx         28        30
+Wv          0         7
+Wn          0         7
+PPP    1010.7    1013.8
+TTm       1.2      -1.6
+TTn      -2.1      -2.9
+TTd      -3.8      -4.6
+RR        1.8       3.8
+  
+ WIEN GME-MOS             
+  
+N           5         8
+rSd        58         0
+dd        120       360
+ff          7         8
+fx          0        25
+Wv          0         7
+Wn          7         7
+PPP    1014.1    1012.8
+TTm       0.4      -1.7
+TTn      -3.6      -4.2
+TTd      -5.7      -5.8
+RR        3.4       2.9
+  
+ WIEN MOS-Mix             
+  
+N           6         8
+rSd        44         0
+dd        130       360
+ff          8         8
+fx          0        25
+Wv          0         7
+Wn          0         7
+PPP    1012.8    1013.0
+TTm       0.8      -1.7
+TTn      -2.8      -3.4
+TTd      -5.0      -5.1
+RR        1.8       2.5
+  
+ Innsbruck DWD-MOS-Mix         
+  
+N           8         8
+rSd        28         0
+dd        250       290
+ff          9         5
+fx          0         0
+Wv          7         7
+Wn          7         7
+PPP    1009.4    1010.2
+TTm       0.8      -1.2
+TTn      -5.3      -3.2
+TTd      -4.3      -4.1
+RR        1.7       4.3
+  
+ Innsbruck EZM-MOS             
+  
+N           8         8
+rSd        30         0
+dd        260       280
+ff         10         4
+fx         25         0
+Wv          7         7
+Wn          8         7
+PPP    1009.0    1010.3
+TTm       0.4      -1.0
+TTn      -4.0      -3.6
+TTd      -4.4      -3.8
+RR        1.7       5.4
+  
+ Innsbruck GFS-MOS             
+  
+N           7         8
+rSd        20         0
+dd        250       270
+ff          9         5
+fx         29         0
+Wv          0         7
+Wn          0         7
+PPP    1007.5    1010.6
+TTm       2.0      -1.8
+TTn      -4.3      -2.9
+TTd      -4.9      -2.9
+RR        1.1       1.9
+  
+ Innsbruck GME-MOS             
+  
+N           8         8
+rSd        34         0
+dd        250       350
+ff          7         6
+fx         25         0
+Wv          0         7
+Wn          0         7
+PPP    1009.0    1010.4
+TTm       1.6      -1.6
+TTn      -5.0      -3.3
+TTd      -4.2      -4.2
+RR        1.1       3.9
+  
+ Innsbruck MOS-Mix             
+  
+N           8         8
+rSd        25         0
+dd        250       280
+ff          9         5
+fx          0         0
+Wv          0         7
+Wn          0         7
+PPP    1008.8    1010.3
+TTm       1.2      -1.4
+TTn      -5.0      -3.1
+TTd      -4.5      -3.7
+RR        1.5       3.5
+  
+ Zuerich DWD-MOS-Mix         
+  
+N           8         8
+rSd         0         0
+dd        210        30
+ff          7         5
+fx         27         0
+Wv          7         8
+Wn          8         8
+PPP    1003.1    1010.6
+TTm       1.6       0.2
+TTn      -2.0      -0.8
+TTd      -0.6      -2.2
+RR       10.2       1.5
+  
+ Zuerich EZM-MOS             
+  
+N           8         8
+rSd         0         0
+dd        220        50
+ff          6         5
+fx         26         0
+Wv          7         8
+Wn          8         8
+PPP    1004.5    1011.0
+TTm       1.6       0.6
+TTn      -1.4      -1.9
+TTd      -0.3      -2.2
+RR        8.4       1.0
+  
+ Zuerich GFS-MOS             
+  
+N           8         8
+rSd         0         0
+dd        230        30
+ff          7         5
+fx         33         0
+Wv          7         7
+Wn          8         7
+PPP    1003.5    1011.9
+TTm       3.4       0.7
+TTn      -1.8      -0.1
+TTd      -0.9      -2.5
+RR       11.4       0.4
+  
+ Zuerich GME-MOS             
+  
+N           8         8
+rSd         0         0
+dd        190        40
+ff          6         8
+fx          0         0
+Wv          7         8
+Wn          7         8
+PPP    1002.6    1010.6
+TTm       1.6      -0.2
+TTn      -3.1      -0.7
+TTd      -1.1      -2.7
+RR       10.8       1.7
+  
+ Zuerich MOS-Mix             
+  
+N           8         8
+rSd         0         0
+dd        210        30
+ff          7         5
+fx         29         0
+Wv          7         8
+Wn          8         8
+PPP    1003.2    1011.1
+TTm       2.2       0.4
+TTn      -1.9      -0.5
+TTd      -0.7      -2.3
+RR       10.6       1.1
+  
+ LEIPZIG DWD-MOS-Mix         
+  
+N           6         4
+rSd        40        64
+dd        100        30
+ff          9         7
+fx          0         0
+Wv          0         0
+Wn          0         0
+PPP    1008.2    1020.0
+TTm      -0.4      -4.2
+TTn      -5.2      -7.2
+TTd      -5.7      -8.9
+RR       -3.0       0.8
+  
+ LEIPZIG EZM-MOS             
+  
+N           8         3
+rSd        33        68
+dd        100        50
+ff          9         6
+fx          0         0
+Wv          0         0
+Wn          7         0
+PPP    1007.1    1019.8
+TTm      -0.7      -2.9
+TTn      -4.5      -6.0
+TTd      -5.3      -7.7
+RR        0.5       1.0
+  
+ LEIPZIG GFS-MOS             
+  
+N           7         4
+rSd        32        58
+dd        100        20
+ff         10         9
+fx          0         0
+Wv          0         0
+Wn          0         0
+PPP    1006.5    1021.5
+TTm      -1.0      -2.9
+TTn      -5.7      -5.8
+TTd      -5.6      -5.8
+RR       -3.0       0.0
+  
+ LEIPZIG GME-MOS             
+  
+N           4         4
+rSd        62        50
+dd        100        20
+ff          9         6
+fx          0         0
+Wv          0         0
+Wn          0         0
+PPP    1009.8    1020.2
+TTm      -0.6      -4.0
+TTn      -6.3      -8.9
+TTd      -5.8      -7.9
+RR       -3.0       0.6
+  
+ LEIPZIG MOS-Mix             
+  
+N           6         4
+rSd        38        62
+dd        100        20
+ff          9         8
+fx          0         0
+Wv          0         0
+Wn          0         0
+PPP    1007.6    1020.5
+TTm      -0.6      -3.7
+TTn      -5.4      -6.8
+TTd      -5.6      -7.9
+RR       -3.0       0.5
+  

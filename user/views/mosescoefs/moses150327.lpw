@@ -1,0 +1,80 @@
+N  
+0.13305 Schneegewitter           
+0.33526 Daniel1                  
+0.27104 MaBe-Leipzig             
+0.17993 MM-UKMO-MOS              
+0.08072 Persistenz               
+ 
+Sd 
+0.15068 meteo84                  
+0.32557 MM-UKMO-MOS              
+0.18522 Daniel1                  
+0.14359 MM-GFS-MOS               
+0.19493 MaBe-Leipzig             
+ 
+dd 
+0.00378 MaBe-Leipzig             
+0.28043 MM-UKMO-MOS              
+0.24450 Halber_Ösi               
+0.09273 Persistenz               
+0.19423 meteomara                
+0.18433 EZ-MOS                   
+ 
+ff 
+0.29110 Halber_Ösi               
+0.40925 MM-MOS                   
+0.29964 Pfingstochse             
+ 
+fx 
+0.00073 Halber_Ösi               
+0.17386 MM-EZ-MOS                
+0.27552 Pfingstochse             
+0.17707 meteomara                
+0.23988 MOS-T                    
+0.13294 MeteoService-GFS-MOS     
+ 
+Wv 
+0.34984 meteo84                  
+0.25744 GME-MOS                  
+0.17768 meteomara                
+0.08323 Persistenz               
+0.13181 Daniel1                  
+ 
+Wn 
+0.22616 meteo84                  
+0.17889 Halber_Ösi               
+0.19642 Daniel1                  
+0.16852 MeteoService-GFS-MOS     
+0.08589 Persistenz               
+0.14412 MaBe-Leipzig             
+ 
+PPP
+0.16892 MM-MOS                   
+0.23676 Schneegewitter           
+0.17800 Ms.Os                    
+0.18192 MM-UKMO-MOS              
+0.23440 Pfingstochse             
+ 
+TTm
+0.41207 Züberle                  
+0.16985 MM-UKMO-MOS              
+0.25761 meteomara                
+0.16048 Kaltlufttropfen          
+ 
+TTn
+0.42426 meteomara                
+0.27000 MaBe-Leipzig             
+0.17022 Schneegewitter           
+0.13552 Daniel1                  
+ 
+TTd
+0.29537 humilis91                
+0.33438 Schneegewitter           
+0.16970 MM-UKMO-MOS              
+0.20056 meteomara                
+ 
+RR 
+0.34576 meteo84                  
+0.32133 MaBe-Leipzig             
+0.24191 meteomara                
+0.09099 Persistenz               

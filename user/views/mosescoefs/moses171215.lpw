@@ -1,0 +1,83 @@
+N  
+0.08096 universLE                
+0.25263 Ms.Os                    
+0.17927 Kaltlufttropfen          
+0.17793 Schneegewitter           
+0.05936 Persistenz               
+0.15603 MSwr-EZ-MOS              
+0.09383 DWD-ICON-MOS             
+ 
+Sd 
+0.07222 universLE                
+0.43440 Shinji                   
+0.27586 Kaltlufttropfen          
+0.21752 Ms.Os                    
+ 
+dd 
+0.04182 liebetruth               
+0.26003 Ms.Os                    
+0.13111 Persistenz               
+0.23550 DWD-EZ-MOS               
+0.23081 meteo84                  
+0.10073 meteoleipzig             
+ 
+ff 
+0.31437 DWD-MOS-Mix              
+0.29004 Ms.Os                    
+0.17236 meteoleipzig             
+0.22322 MSwr-MOS-Mix             
+ 
+fx 
+0.12595 universLE                
+0.14840 Pfingstochse             
+0.26365 Ms.Os                    
+0.11675 Kaltlufttropfen          
+0.16380 Mammatus95               
+0.09723 DWD-ICON-MOS             
+0.08421 Schneegewitter           
+ 
+Wv 
+0.17805 universLE                
+0.23939 meteoleipzig             
+0.26533 meteo84                  
+0.19191 Pfingstochse             
+0.12532 DWD-ICON-MOS             
+ 
+Wn 
+0.29273 meteo84                  
+0.24972 meteoleipzig             
+0.18891 MSwr-GFS-MOS             
+0.14442 Schneegewitter           
+0.12422 fresh                    
+ 
+PPP
+0.05391 Neptun                   
+0.42855 Pfingstochse             
+0.23865 Schneegewitter           
+0.13944 Ms.Os                    
+0.13945 MSwr-MOS-Mix             
+ 
+TTm
+0.05768 meteo84                  
+0.35045 Ms.Os                    
+0.16053 MSwr-MOS-Mix             
+0.27964 Pfingstochse             
+0.15169 meteoleipzig             
+ 
+TTn
+0.40972 meteo84                  
+0.35717 Schneegewitter           
+0.23311 Ms.Os                    
+ 
+TTd
+0.43851 Ms.Os                    
+0.21786 meteo84                  
+0.19816 MSwr-MOS-Mix             
+0.14548 Schneegewitter           
+ 
+RR 
+0.35630 meteo84                  
+0.23081 MSwr-MOS-Mix             
+0.17482 Ms.Os                    
+0.05482 Persistenz               
+0.18325 universLE                

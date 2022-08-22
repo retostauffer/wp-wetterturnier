@@ -1,0 +1,61 @@
+N  
+0.43731 nik                      
+0.27543 Föhni                    
+0.28726 MSwr-MOS-Mix             
+ 
+Sd 
+0.46538 nik                      
+0.25531 meteoleipzig             
+0.27931 fleming                  
+ 
+dd 
+0.18189 fleming                  
+0.17874 nik                      
+0.21254 DWD-ICON-MOS             
+0.19087 Neptun                   
+0.23596 Ms.Os                    
+ 
+ff 
+0.59061 Oberbayer                
+0.40939 Ms.Os                    
+ 
+fx 
+0.38928 fleming                  
+0.29900 DWD-MOS-MIX-test         
+0.31172 nik                      
+ 
+Wv 
+0.46234 Föhni                    
+0.29418 Oberbayer                
+0.24348 Ms.Os                    
+ 
+Wn 
+0.59532 wetteregon               
+0.21199 meteoleipzig             
+0.19269 fleming                  
+ 
+PPP
+0.48133 Bibertaler               
+0.33469 Grisuji-EZ-L1-MOS        
+0.18397 Föhni                    
+ 
+TTm
+0.05859 DWD-MOS-Mix              
+0.61168 nik                      
+0.32973 MSwr-EZ-MOS              
+ 
+TTn
+0.38529 Bibertaler               
+0.24836 Ms.Os                    
+0.36635 DWD-MOS-MIX-test         
+ 
+TTd
+0.24378 DWD-MOS-MIX-test         
+0.34629 meteoleipzig             
+0.40993 nik                      
+ 
+RR 
+0.26674 DWD-MOS-MIX-test         
+0.29362 fleming                  
+0.29463 DWD-EZ-MOS               
+0.14501 Föhni                    

@@ -1,0 +1,81 @@
+N  
+0.26464 Hurricane                
+0.19104 MM-UKMO-MOS              
+0.24557 Ms.Os                    
+0.11014 Persistenz               
+0.18860 Mammatus95               
+ 
+Sd 
+0.53131 Hurricane                
+0.26813 MM-UKMO-MOS              
+0.11049 Sven/Titisee-Neustadt    
+0.09007 DWD-EZ-MOS               
+ 
+dd 
+0.18179 DWD-EZ-MOS               
+0.14432 MM-GFS-MOS               
+0.17238 Persistenz               
+0.12213 Ms.Os                    
+0.07879 MM-EZ-MOS                
+0.07657 MSwr-MOS-Mix             
+0.07457 DWD-ICON-MOS             
+0.08161 Hurricane                
+0.06784 MM-UKMO-MOS              
+ 
+ff 
+0.37535 Ms.Os                    
+0.25715 liebetruth               
+0.20931 DWD-EZ-MOS               
+0.15819 MM-GFS-MOS               
+ 
+fx 
+0.08747 MSwr-MOS-Mix             
+0.25978 MSwr-GFS-MOS             
+0.16939 Mammatus95               
+0.17128 Hochfirst                
+0.22741 MSwr-EZ-MOS              
+0.08466 MM-GFS-MOS               
+ 
+Wv 
+0.37621 Hurricane                
+0.18220 MM-UKMO-MOS              
+0.14917 Persistenz               
+0.17063 MOS-T                    
+0.12179 Sven/Titisee-Neustadt    
+ 
+Wn 
+0.17148 Hurricane                
+0.24068 MSwr-MOS-Mix             
+0.08269 Schneegewitter           
+0.14154 DWD-ICON-MOS             
+0.13204 MM-UKMO-MOS              
+0.12025 DWD-EZ-MOS               
+0.11131 MM-EZ-MOS                
+ 
+PPP
+0.26528 Hurricane                
+0.40217 MM-MOS                   
+0.18336 Schneegewitter           
+0.14919 MSwr-MOS-Mix             
+ 
+TTm
+0.41630 Hurricane                
+0.20943 Ms.Os                    
+0.19748 Sven/Titisee-Neustadt    
+0.17679 Schneegewitter           
+ 
+TTn
+0.33715 Hurricane                
+0.35748 Schneegewitter           
+0.30537 Ms.Os                    
+ 
+TTd
+0.38334 Hurricane                
+0.17381 MM-UKMO-MOS              
+0.31329 Schneegewitter           
+0.12956 Ms.Os                    
+ 
+RR 
+0.39851 Hurricane                
+0.26627 MM-UKMO-MOS              
+0.33522 Ms.Os                    

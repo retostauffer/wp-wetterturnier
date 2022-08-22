@@ -1,0 +1,73 @@
+N  
+0.31115 Tjure                    
+0.34249 Ms.Os                    
+0.11073 Persistenz               
+0.23563 Uwetter                  
+ 
+Sd 
+0.49209 nik                      
+0.27274 Schneehäuschen           
+0.23518 Tjure                    
+ 
+dd 
+0.29262 MM-EZ-MOS                
+0.15079 MOS-T                    
+0.17267 MM-UKMO-MOS              
+0.10523 Persistenz               
+0.14777 DWD-ICON-MOS             
+0.13091 DWD-EZ-MOS               
+ 
+ff 
+0.28546 nik                      
+0.26373 Tjure                    
+0.18926 MM-UKMO-MOS              
+0.26154 Schneehäuschen           
+ 
+fx 
+0.33753 nik                      
+0.23006 MSwr-HIR-MOS             
+0.23436 MetVienna                
+0.19804 Tjure                    
+ 
+Wv 
+0.37440 MSwr-MOS-Mix             
+0.32679 nik                      
+0.13396 fleming                  
+0.16485 Tjure                    
+ 
+Wn 
+0.35262 UBIMET                   
+0.24203 statical                 
+0.20574 Schneehäuschen           
+0.19961 MetVienna                
+ 
+PPP
+0.14216 MM-MOS                   
+0.31713 nik                      
+0.21848 fleming                  
+0.15013 MM-UKMO-MOS              
+0.17210 Pfingstochse             
+ 
+TTm
+0.26706 MOS-T                    
+0.29317 UBIMET                   
+0.22376 Tjure                    
+0.13424 MSwr-HIR-MOS             
+0.08178 MM-UKMO-MOS              
+ 
+TTn
+0.31456 Schneehäuschen           
+0.20643 Ms.Os                    
+0.24098 Uwetter                  
+0.23803 DWD-EZ-MOS               
+ 
+TTd
+0.46622 Ms.Os                    
+0.28454 MetVienna                
+0.24924 Schneehäuschen           
+ 
+RR 
+0.41080 nik                      
+0.23939 MSwr-HIR-MOS             
+0.18113 MM-MOS                   
+0.16868 MOS-T                    

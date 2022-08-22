@@ -1,0 +1,73 @@
+N  
+0.45078 Georg                    
+0.30021 Schneegewitter           
+0.24901 Schneehäuschen           
+ 
+Sd 
+0.27332 ambot_lang               
+0.28973 Schneehäuschen           
+0.21594 MSwr-HIR-MOS             
+0.22101 Jade                     
+ 
+dd 
+0.16311 Georg                    
+0.23245 ambot_lang               
+0.24819 Kaltlufttropfen          
+0.06394 Persistenz               
+0.15857 Mammatus95               
+0.13374 MM-UKMO-MOS              
+ 
+ff 
+0.40650 MM-MOS                   
+0.40850 MSwr-MOS-Mix             
+0.18500 Jade                     
+ 
+fx 
+0.41332 Georg                    
+0.35638 Auftrieb                 
+0.11139 Kaltlufttropfen          
+0.11891 Jade                     
+ 
+Wv 
+0.16755 MSwr-MOS-Mix             
+0.23495 MM-GFS-MOS               
+0.23071 Nikosik                  
+0.18666 MaBe-Leipzig             
+0.18013 MOS-T                    
+ 
+Wn 
+0.38715 MSwr-HIR-MOS             
+0.22338 snowthom                 
+0.19850 ambot_lang               
+0.19097 Greg                     
+ 
+PPP
+0.11181 Georg                    
+0.20149 Schneegewitter           
+0.15326 MSwr-HIR-MOS             
+0.31538 Nikosik                  
+0.21805 Pfingstochse             
+ 
+TTm
+0.19602 adri_der_pinner          
+0.25189 Georg                    
+0.17650 Uwetter                  
+0.12116 MSwr-HIR-MOS             
+0.12649 meteomara                
+0.12795 Kaltlufttropfen          
+ 
+TTn
+0.38777 Georg                    
+0.41120 Schneegewitter           
+0.20103 MSwr-HIR-MOS             
+ 
+TTd
+0.33194 Greg                     
+0.40202 Schneegewitter           
+0.10909 MM-UKMO-MOS              
+0.15695 meteomara                
+ 
+RR 
+0.35931 Nikosik                  
+0.30124 MSwr-HIR-MOS             
+0.33945 Halber_Ösi               

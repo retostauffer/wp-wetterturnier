@@ -240,7 +240,7 @@ class wetterturnier_stationObject {
       }
 
       // Getting parameter config
-      $where = (isset($tdate)) ? " WHERE active = 1" : "";
+      $where = " WHERE active = 1";
       if (isset($tdate)) {
          $where .= " AND (SINCE <= " . $tdate . " OR SINCE = 0) AND (UNTIL > "
          . $tdate . " OR UNTIL = 0)";

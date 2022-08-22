@@ -1,0 +1,81 @@
+N  
+0.44364 Uwetter                  
+0.21886 Schneehäuschen           
+0.10626 MM-UKMO-MOS              
+0.15639 meteomara                
+0.07486 Persistenz               
+ 
+Sd 
+0.33223 Hurricane                
+0.24494 MM-UKMO-MOS              
+0.22839 Uwetter                  
+0.19445 ww75                     
+ 
+dd 
+0.13371 MM-MOS                   
+0.14963 Persistenz               
+0.13094 DWD-EZ-MOS               
+0.11725 DWD-ICON-MOS             
+0.13191 MM-GFS-MOS               
+0.12561 MM-UKMO-MOS              
+0.11169 MM-EZ-MOS                
+0.09927 Sven/Titisee-Neustadt    
+ 
+ff 
+0.45146 Ms.Os                    
+0.34099 Schneehäuschen           
+0.20755 DWD-EZ-MOS               
+ 
+fx 
+0.31563 MSwr-MOS-Mix             
+0.25740 ww75                     
+0.18308 fresh                    
+0.12276 DWD-ICON-MOS             
+0.12113 Sven/Titisee-Neustadt    
+ 
+Wv 
+0.28017 ww75                     
+0.18085 MOS-T                    
+0.14634 Schneehäuschen           
+0.20008 Hurricane                
+0.11388 MM-UKMO-MOS              
+0.07868 Persistenz               
+ 
+Wn 
+0.49685 Schneehäuschen           
+0.17978 DWD-ICON-MOS             
+0.16859 MM-UKMO-MOS              
+0.15478 MSwr-GFS-MOS             
+ 
+PPP
+0.07378 MM-MOS                   
+0.21148 Hurricane                
+0.31805 MM-UKMO-MOS              
+0.25958 MM-EZ-MOS                
+0.13711 MSwr-HIR-MOS             
+ 
+TTm
+0.36615 Hochfirst                
+0.21010 Uwetter                  
+0.15935 MM-UKMO-MOS              
+0.26440 ww75                     
+ 
+TTn
+0.22528 Hurricane                
+0.26017 meteomara                
+0.20502 ww75                     
+0.19228 Uwetter                  
+0.11724 MSwr-HIR-MOS             
+ 
+TTd
+0.21246 Pfingstochse             
+0.39879 Uwetter                  
+0.19286 MM-UKMO-MOS              
+0.19589 MM-EZ-MOS                
+ 
+RR 
+0.17037 ww75                     
+0.25558 MSwr-MOS-Mix             
+0.17441 MM-UKMO-MOS              
+0.26005 Hurricane                
+0.13959 meteomara                

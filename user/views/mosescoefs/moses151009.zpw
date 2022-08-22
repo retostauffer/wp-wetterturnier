@@ -1,0 +1,81 @@
+N  
+0.46246 Uwetter                  
+0.15778 meteomara                
+0.10308 MM-UKMO-MOS              
+0.20037 Schneehäuschen           
+0.07632 Persistenz               
+ 
+Sd 
+0.26422 Hurricane                
+0.34830 Uwetter                  
+0.20388 MM-UKMO-MOS              
+0.18360 ww75                     
+ 
+dd 
+0.12608 MM-MOS                   
+0.15238 Persistenz               
+0.12467 DWD-EZ-MOS               
+0.12010 DWD-ICON-MOS             
+0.12059 MM-GFS-MOS               
+0.12416 MM-UKMO-MOS              
+0.09554 MM-EZ-MOS                
+0.08989 Sven/Titisee-Neustadt    
+0.04658 MSwr-HIR-MOS             
+ 
+ff 
+0.45190 Ms.Os                    
+0.33474 Schneehäuschen           
+0.21336 liebetruth               
+ 
+fx 
+0.30227 MSwr-MOS-Mix             
+0.26567 ww75                     
+0.18918 fresh                    
+0.12106 DWD-ICON-MOS             
+0.12181 Sven/Titisee-Neustadt    
+ 
+Wv 
+0.28595 ww75                     
+0.18275 MOS-T                    
+0.15916 Schneehäuschen           
+0.19368 Hurricane                
+0.10808 MM-UKMO-MOS              
+0.07038 Persistenz               
+ 
+Wn 
+0.50278 Schneehäuschen           
+0.17469 DWD-ICON-MOS             
+0.17184 MM-UKMO-MOS              
+0.15069 MSwr-GFS-MOS             
+ 
+PPP
+0.10066 MM-MOS                   
+0.21646 Hurricane                
+0.30300 MM-UKMO-MOS              
+0.24434 MM-EZ-MOS                
+0.13554 MSwr-HIR-MOS             
+ 
+TTm
+0.37308 Hochfirst                
+0.27178 Uwetter                  
+0.23053 fresh                    
+0.12461 MM-UKMO-MOS              
+ 
+TTn
+0.21741 Hurricane                
+0.31106 meteomara                
+0.31476 ww75                     
+0.15678 Uwetter                  
+ 
+TTd
+0.39449 Uwetter                  
+0.22311 MM-UKMO-MOS              
+0.19126 MM-EZ-MOS                
+0.19114 MSwr-HIR-MOS             
+ 
+RR 
+0.16723 ww75                     
+0.25430 MSwr-MOS-Mix             
+0.27408 Hurricane                
+0.16413 MM-UKMO-MOS              
+0.14025 meteomara                

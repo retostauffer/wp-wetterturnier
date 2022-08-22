@@ -1,0 +1,79 @@
+N  
+0.24894 Tjure                    
+0.22993 Ms.Os                    
+0.09199 Persistenz               
+0.18084 fleming                  
+0.15072 Uwetter                  
+0.09757 MM-UKMO-MOS              
+ 
+Sd 
+0.37808 nik                      
+0.34707 fleming                  
+0.27485 Schneehäuschen           
+ 
+dd 
+0.05215 DWD-MOS-Mix              
+0.17863 Ms.Os                    
+0.09872 MSwr-HIR-MOS             
+0.10623 Persistenz               
+0.17107 MM-EZ-MOS                
+0.18516 DWD-ICON-MOS             
+0.09272 MM-UKMO-MOS              
+0.11530 DWD-EZ-MOS               
+ 
+ff 
+0.44516 Schneehäuschen           
+0.26451 MM-MOS                   
+0.29034 nik                      
+ 
+fx 
+0.25303 Tjure                    
+0.25180 fleming                  
+0.18532 MSwr-HIR-MOS             
+0.22474 DWD-EZ-MOS               
+0.08512 MM-GFS-MOS               
+ 
+Wv 
+0.09336 nik                      
+0.19761 statical                 
+0.15469 MSwr-GFS-MOS             
+0.17965 MSwr-HIR-MOS             
+0.24862 UBIMET                   
+0.12606 Schneehäuschen           
+ 
+Wn 
+0.34658 Schneehäuschen           
+0.29927 statical                 
+0.20540 nik                      
+0.14875 Ms.Os                    
+ 
+PPP
+0.14558 MM-MOS                   
+0.30996 DWD-EZ-MOS               
+0.09362 MSwr-HIR-MOS             
+0.16088 Pfingstochse             
+0.15855 MM-UKMO-MOS              
+0.13143 Uwetter                  
+ 
+TTm
+0.34992 fleming                  
+0.27423 MOS-T                    
+0.23227 Schneehäuschen           
+0.14358 Uwetter                  
+ 
+TTn
+0.04861 DWD-EZ-MOS               
+0.42846 Schneehäuschen           
+0.32696 Greg                     
+0.19597 Tjure                    
+ 
+TTd
+0.30666 Greg                     
+0.25230 Schneehäuschen           
+0.30148 Ms.Os                    
+0.13957 Uwetter                  
+ 
+RR 
+0.17376 MSwr-MOS-Mix             
+0.49515 nik                      
+0.33109 MSwr-HIR-MOS             

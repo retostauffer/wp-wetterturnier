@@ -1,0 +1,79 @@
+N  
+0.44367 Uwetter                  
+0.16732 meteomara                
+0.21990 Schneehäuschen           
+0.10353 MM-UKMO-MOS              
+0.06558 Persistenz               
+ 
+Sd 
+0.41608 Hurricane                
+0.23460 MM-UKMO-MOS              
+0.18430 Uwetter                  
+0.16502 ww75                     
+ 
+dd 
+0.14796 MM-MOS                   
+0.14528 Persistenz               
+0.11824 DWD-EZ-MOS               
+0.11226 DWD-ICON-MOS             
+0.15262 MM-UKMO-MOS              
+0.12326 MM-GFS-MOS               
+0.10420 MM-EZ-MOS                
+0.09618 Sven/Titisee-Neustadt    
+ 
+ff 
+0.41583 Schneehäuschen           
+0.41351 Ms.Os                    
+0.17066 MSwr-HIR-MOS             
+ 
+fx 
+0.33131 MSwr-MOS-Mix             
+0.33124 ww75                     
+0.19688 fresh                    
+0.14058 DWD-ICON-MOS             
+ 
+Wv 
+0.34432 ww75                     
+0.16545 MOS-T                    
+0.12421 Schneehäuschen           
+0.18072 Hurricane                
+0.11254 MM-UKMO-MOS              
+0.07277 Persistenz               
+ 
+Wn 
+0.49706 Schneehäuschen           
+0.20097 DWD-ICON-MOS             
+0.15790 MM-UKMO-MOS              
+0.14408 MSwr-GFS-MOS             
+ 
+PPP
+0.08927 MM-MOS                   
+0.20954 Hurricane                
+0.32046 MM-UKMO-MOS              
+0.25011 MM-EZ-MOS                
+0.13062 MSwr-HIR-MOS             
+ 
+TTm
+0.34749 Hochfirst                
+0.21482 Uwetter                  
+0.15482 MM-UKMO-MOS              
+0.28287 ww75                     
+ 
+TTn
+0.32616 Hurricane                
+0.26714 meteomara                
+0.24631 Uwetter                  
+0.16040 MSwr-HIR-MOS             
+ 
+TTd
+0.16446 Hurricane                
+0.41868 Uwetter                  
+0.20214 MM-UKMO-MOS              
+0.21472 MM-EZ-MOS                
+ 
+RR 
+0.17213 ww75                     
+0.25133 MSwr-MOS-Mix             
+0.18500 MM-UKMO-MOS              
+0.25016 Hurricane                
+0.14137 meteomara                

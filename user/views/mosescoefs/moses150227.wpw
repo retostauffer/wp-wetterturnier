@@ -1,0 +1,79 @@
+N  
+0.25826 MetVienna                
+0.35618 Tjure                    
+0.14354 Persistenz               
+0.24202 Ms.Os                    
+ 
+Sd 
+0.59548 UBIMET                   
+0.24149 Schneehäuschen           
+0.16303 GERHARD                  
+ 
+dd 
+0.04191 DWD-MOSMix(EZ+GME)       
+0.25950 MM-EZ-MOS                
+0.24108 MM-UKMO-MOS              
+0.10725 Persistenz               
+0.09949 GERHARD                  
+0.13978 GME-MOS                  
+0.11099 fleming                  
+ 
+ff 
+0.28163 nik                      
+0.25964 MM-UKMO-MOS              
+0.23037 meteomara                
+0.22837 EZ-MOS                   
+ 
+fx 
+0.30073 EZ-MOS                   
+0.24288 nik                      
+0.13959 Neptun                   
+0.19499 MetVienna                
+0.12181 meteomara                
+ 
+Wv 
+0.34533 Tjure                    
+0.15314 nik                      
+0.17588 statical                 
+0.16227 MM-UKMO-MOS              
+0.16338 Schneehäuschen           
+ 
+Wn 
+0.24572 Tjure                    
+0.25445 MetVienna                
+0.24368 UBIMET                   
+0.10744 MM-GFS-MOS               
+0.09011 GME-MOS                  
+0.05860 Persistenz               
+ 
+PPP
+0.25950 MM-MOS                   
+0.34614 nik                      
+0.19348 MM-UKMO-MOS              
+0.20087 fleming                  
+ 
+TTm
+0.26946 nik                      
+0.29496 Tjure                    
+0.13168 MM-UKMO-MOS              
+0.18200 Schneehäuschen           
+0.12189 Uwetter                  
+ 
+TTn
+0.14147 MOS-T                    
+0.18381 UBIMET                   
+0.16846 statical                 
+0.26453 Schneehäuschen           
+0.24173 Tjure                    
+ 
+TTd
+0.08171 Halber_Ösi               
+0.39431 Schneehäuschen           
+0.23977 fleming                  
+0.17522 GERHARD                  
+0.10898 MM-UKMO-MOS              
+ 
+RR 
+0.47117 nik                      
+0.31601 statical                 
+0.21282 MM-MOS                   

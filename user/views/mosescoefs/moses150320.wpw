@@ -1,0 +1,80 @@
+N  
+0.14975 MetVienna                
+0.28577 Tjure                    
+0.14492 Persistenz               
+0.21874 Ms.Os                    
+0.20082 Uwetter                  
+ 
+Sd 
+0.55122 nik                      
+0.24226 fleming                  
+0.20653 meteomara                
+ 
+dd 
+0.08708 DWD-MOSMix(EZ+GME)       
+0.31258 MM-EZ-MOS                
+0.23051 MM-UKMO-MOS              
+0.10629 Persistenz               
+0.05759 fresh                    
+0.12141 GME-MOS                  
+0.08454 fleming                  
+ 
+ff 
+0.34377 nik                      
+0.25159 MM-UKMO-MOS              
+0.21268 meteomara                
+0.19195 EZ-MOS                   
+ 
+fx 
+0.27821 EZ-MOS                   
+0.30429 nik                      
+0.19659 Neptun                   
+0.22091 Tjure                    
+ 
+Wv 
+0.31137 Tjure                    
+0.17025 nik                      
+0.18987 MeteoService-GFS-MOS     
+0.17195 MM-UKMO-MOS              
+0.15657 statical                 
+ 
+Wn 
+0.25423 Tjure                    
+0.28381 MetVienna                
+0.26712 UBIMET                   
+0.10178 MM-GFS-MOS               
+0.09307 GME-MOS                  
+ 
+PPP
+0.23971 MM-MOS                   
+0.38991 nik                      
+0.16339 MM-UKMO-MOS              
+0.20698 fleming                  
+ 
+TTm
+0.21869 nik                      
+0.28711 Tjure                    
+0.17855 MM-UKMO-MOS              
+0.13792 Uwetter                  
+0.17774 MOS-T                    
+ 
+TTn
+0.16304 MOS-T                    
+0.30547 Tjure                    
+0.17970 statical                 
+0.18392 meteomara                
+0.16787 Uwetter                  
+ 
+TTd
+0.11918 Halber_Ösi               
+0.21057 fleming                  
+0.24889 Pfingstochse             
+0.09133 MM-UKMO-MOS              
+0.14904 Uwetter                  
+0.18099 Ms.Os                    
+ 
+RR 
+0.48825 nik                      
+0.23340 statical                 
+0.12422 MM-UKMO-MOS              
+0.15414 MeteoService-GFS-MOS     

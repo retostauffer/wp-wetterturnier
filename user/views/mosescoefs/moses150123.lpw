@@ -1,0 +1,80 @@
+N  
+0.19927 Shinji                   
+0.24074 Ms.Os                    
+0.20196 MaBe-Leipzig             
+0.17302 MM-UKMO-MOS              
+0.18501 Schneehäuschen           
+ 
+Sd 
+0.26797 meteo84                  
+0.32796 MM-UKMO-MOS              
+0.18779 MM-GFS-MOS               
+0.21628 MaBe-Leipzig             
+ 
+dd 
+0.08126 MaBe-Leipzig             
+0.25630 MM-UKMO-MOS              
+0.15507 Schneehäuschen           
+0.10083 Persistenz               
+0.18462 meteomara                
+0.22192 EZ-MOS                   
+ 
+ff 
+0.26848 meteo84                  
+0.05943 MM-MOS                   
+0.17717 Ms.Os                    
+0.22868 MM-GFS-MOS               
+0.26624 EZ-MOS                   
+ 
+fx 
+0.38687 meteomara                
+0.28759 Pfingstochse             
+0.19840 MM-GFS-MOS               
+0.12715 MeteoService-GFS-MOS     
+ 
+Wv 
+0.24245 meteo84                  
+0.22627 meteomara                
+0.21365 GME-MOS                  
+0.12829 MM-UKMO-MOS              
+0.07738 Persistenz               
+0.11196 MeteoService-GFS-MOS     
+ 
+Wn 
+0.40649 Schneehäuschen           
+0.35980 meteo84                  
+0.23371 martin_le                
+ 
+PPP
+0.13380 MM-MOS                   
+0.17244 Züberle                  
+0.06935 Schneegewitter           
+0.22125 MM-UKMO-MOS              
+0.24328 meteomara                
+0.15988 MM-GFS-MOS               
+ 
+TTm
+0.07145 meteo84                  
+0.33587 Pfingstochse             
+0.20845 Ms.Os                    
+0.26054 Schneehäuschen           
+0.12370 MM-UKMO-MOS              
+ 
+TTn
+0.52256 Schneehäuschen           
+0.34568 meteomara                
+0.13176 MaBe-Leipzig             
+ 
+TTd
+0.22579 humilis91                
+0.24783 Schneehäuschen           
+0.21536 meteomara                
+0.21285 Schneegewitter           
+0.09817 MM-UKMO-MOS              
+ 
+RR 
+0.31186 MaBe-Leipzig             
+0.17717 meteomara                
+0.18030 Schneehäuschen           
+0.09923 Persistenz               
+0.23144 meteo84                  

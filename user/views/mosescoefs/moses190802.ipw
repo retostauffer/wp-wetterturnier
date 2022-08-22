@@ -1,0 +1,63 @@
+N  
+0.30061 Georg                    
+0.31770 MSwr-GFS-MOS             
+0.27617 Ms.Os                    
+0.10552 Persistenz               
+ 
+Sd 
+0.50287 Georg                    
+0.22747 Mammatus95               
+0.26966 juerga                   
+ 
+dd 
+0.34976 DWD-ICON-MOS             
+0.19068 Ms.Os                    
+0.17206 DWD-EZ-MOS               
+0.10271 Achentaler               
+0.09934 Persistenz               
+0.08544 MSwr-EZ-MOS              
+ 
+ff 
+0.64049 adri_der_pinner          
+0.35951 Achentaler               
+ 
+fx 
+0.39270 fleming                  
+0.27767 Georg                    
+0.18511 DWD-ICON-MOS             
+0.14451 MSwr-GFS-MOS             
+ 
+Wv 
+0.31696 DWD-MOS-MIX-test         
+0.36331 Georg                    
+0.15399 Persistenz               
+0.16574 Ms.Os                    
+ 
+Wn 
+0.28246 Meteoclee                
+0.19989 ambot_lang               
+0.24041 meteoleipzig             
+0.27723 DWD-EZ-MOS               
+ 
+PPP
+0.36228 DWD-MOS-MIX-test         
+0.48045 Georg                    
+0.15727 Ms.Os                    
+ 
+TTm
+0.70363 Georg                    
+0.29637 DWD-EZ-MOS               
+ 
+TTn
+0.52119 Georg                    
+0.33213 adri_der_pinner          
+0.14668 Ms.Os                    
+ 
+TTd
+0.80749 Georg                    
+0.19251 Ms.Os                    
+ 
+RR 
+0.30742 adri_der_pinner          
+0.30548 MSwr-GFS-MOS             
+0.38710 Auftrieb                 

@@ -1,0 +1,80 @@
+N  
+0.44971 Uwetter                  
+0.14336 Persistenz               
+0.14635 meteomara                
+0.09869 MM-UKMO-MOS              
+0.16189 Schneehäuschen           
+ 
+Sd 
+0.24171 Hurricane                
+0.34874 Uwetter                  
+0.23148 MM-UKMO-MOS              
+0.17808 fresh                    
+ 
+dd 
+0.03299 MM-MOS                   
+0.20335 Persistenz               
+0.17062 DWD-EZ-MOS               
+0.13511 DWD-ICON-MOS             
+0.14833 MM-UKMO-MOS              
+0.14267 MM-GFS-MOS               
+0.07239 MSwr-HIR-MOS             
+0.09455 meteomara                
+ 
+ff 
+0.46309 Greg                     
+0.26177 Schneehäuschen           
+0.27515 Ms.Os                    
+ 
+fx 
+0.36429 MSwr-MOS-Mix             
+0.22691 Sven/Titisee-Neustadt    
+0.23714 fresh                    
+0.08509 MM-EZ-MOS                
+0.08657 DWD-ICON-MOS             
+ 
+Wv 
+0.21893 Pfingstochse             
+0.19613 MOS-T                    
+0.15881 MM-UKMO-MOS              
+0.22806 Hurricane                
+0.12729 Schneehäuschen           
+0.07078 Persistenz               
+ 
+Wn 
+0.54871 Schneehäuschen           
+0.15502 DWD-ICON-MOS             
+0.17250 MM-UKMO-MOS              
+0.12378 MSwr-GFS-MOS             
+ 
+PPP
+0.09052 MM-MOS                   
+0.29036 Hurricane                
+0.29176 MM-UKMO-MOS              
+0.21796 MM-EZ-MOS                
+0.10940 MSwr-HIR-MOS             
+ 
+TTm
+0.20686 Hurricane                
+0.24699 Uwetter                  
+0.19444 Sven/Titisee-Neustadt    
+0.12786 MM-UKMO-MOS              
+0.22385 fresh                    
+ 
+TTn
+0.38523 Hurricane                
+0.33247 Ms.Os                    
+0.12284 MM-UKMO-MOS              
+0.15945 Uwetter                  
+ 
+TTd
+0.54225 Greg                     
+0.30208 Uwetter                  
+0.15567 MM-UKMO-MOS              
+ 
+RR 
+0.30531 Hurricane                
+0.26595 MSwr-MOS-Mix             
+0.13133 MM-UKMO-MOS              
+0.14049 Uwetter                  
+0.15692 Schneehäuschen           

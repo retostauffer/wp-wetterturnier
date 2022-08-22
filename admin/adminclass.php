@@ -103,7 +103,10 @@ class wetterturnier_adminclass extends wetterturnier_generalclass
     /** Datepicker for the admin interface */
     function tournament_datepicker_admin() {
         ?>
-
+        <!-- reload jQuery UI script, else $('*').datepicker() throws an error -->
+        <script src = <?php echo WP_PLUGIN_URL .
+            "/wp-wetterturnier/js/jquery-ui.min.js" ?> >
+        </script>
         <script>
         jQuery(document).on('ready',function() {
             (function($) {

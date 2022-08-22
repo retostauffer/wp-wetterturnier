@@ -1,0 +1,81 @@
+N  
+0.48592 Uwetter                  
+0.21682 Schneehäuschen           
+0.09496 MM-UKMO-MOS              
+0.14546 meteomara                
+0.05685 Persistenz               
+ 
+Sd 
+0.39459 Hurricane                
+0.25470 MM-UKMO-MOS              
+0.19814 ww75                     
+0.15256 Uwetter                  
+ 
+dd 
+0.15303 MM-MOS                   
+0.14101 Persistenz               
+0.11836 DWD-EZ-MOS               
+0.10939 DWD-ICON-MOS             
+0.15138 MM-UKMO-MOS              
+0.12298 MM-GFS-MOS               
+0.11058 MM-EZ-MOS                
+0.09328 Sven/Titisee-Neustadt    
+ 
+ff 
+0.28724 Schneehäuschen           
+0.34934 Ms.Os                    
+0.16337 MSwr-HIR-MOS             
+0.20005 DWD-EZ-MOS               
+ 
+fx 
+0.28390 MSwr-MOS-Mix             
+0.29080 ww75                     
+0.19106 fresh                    
+0.10774 DWD-ICON-MOS             
+0.12650 Sven/Titisee-Neustadt    
+ 
+Wv 
+0.30264 ww75                     
+0.15902 MOS-T                    
+0.13975 Uwetter                  
+0.08988 Schneehäuschen           
+0.07873 Persistenz               
+0.13137 Hurricane                
+0.09860 MM-UKMO-MOS              
+ 
+Wn 
+0.46468 Schneehäuschen           
+0.23686 MOS-T                    
+0.16440 MM-UKMO-MOS              
+0.13407 MSwr-GFS-MOS             
+ 
+PPP
+0.10098 MM-MOS                   
+0.21486 Hurricane                
+0.32024 MM-UKMO-MOS              
+0.24357 MM-EZ-MOS                
+0.12034 MSwr-HIR-MOS             
+ 
+TTm
+0.26281 Hochfirst                
+0.25212 Uwetter                  
+0.16468 Hurricane                
+0.11218 MM-UKMO-MOS              
+0.20821 fresh                    
+ 
+TTn
+0.30312 Hurricane                
+0.28750 meteomara                
+0.27317 Uwetter                  
+0.13620 MSwr-HIR-MOS             
+ 
+TTd
+0.55187 Uwetter                  
+0.20937 MM-UKMO-MOS              
+0.23876 MM-EZ-MOS                
+ 
+RR 
+0.26000 ww75                     
+0.29790 MSwr-MOS-Mix             
+0.18169 MM-UKMO-MOS              
+0.26042 Hurricane                

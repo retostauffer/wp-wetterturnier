@@ -1,0 +1,79 @@
+N  
+0.16689 MetVienna                
+0.27485 Tjure                    
+0.14337 Persistenz               
+0.21834 Ms.Os                    
+0.19655 Uwetter                  
+ 
+Sd 
+0.46969 nik                      
+0.32050 fleming                  
+0.20981 GERHARD                  
+ 
+dd 
+0.05336 DWD-MOSMix(EZ+GME)       
+0.25765 MM-EZ-MOS                
+0.24806 MM-UKMO-MOS              
+0.09974 Persistenz               
+0.10740 GERHARD                  
+0.11327 fleming                  
+0.12052 GME-MOS                  
+ 
+ff 
+0.32170 nik                      
+0.22927 MM-UKMO-MOS              
+0.28759 Schneehäuschen           
+0.16143 MM-EZ-MOS                
+ 
+fx 
+0.26170 EZ-MOS                   
+0.26903 nik                      
+0.13959 Neptun                   
+0.19197 Tjure                    
+0.13772 statical                 
+ 
+Wv 
+0.32292 Tjure                    
+0.15290 nik                      
+0.18345 MM-UKMO-MOS              
+0.16916 statical                 
+0.17157 Schneehäuschen           
+ 
+Wn 
+0.29872 Tjure                    
+0.29734 MetVienna                
+0.26729 UBIMET                   
+0.13666 MM-GFS-MOS               
+ 
+PPP
+0.27289 MM-MOS                   
+0.34247 nik                      
+0.19003 MM-UKMO-MOS              
+0.19461 meteomara                
+ 
+TTm
+0.26317 nik                      
+0.37137 Tjure                    
+0.15907 MM-UKMO-MOS              
+0.20638 Schneehäuschen           
+ 
+TTn
+0.29950 Tjure                    
+0.22256 Schneehäuschen           
+0.15729 Uwetter                  
+0.16393 meteomara                
+0.15673 statical                 
+ 
+TTd
+0.13613 Halber_Ösi               
+0.30144 Schneehäuschen           
+0.19527 fleming                  
+0.15621 GERHARD                  
+0.10501 MM-UKMO-MOS              
+0.10594 Uwetter                  
+ 
+RR 
+0.37533 nik                      
+0.28949 statical                 
+0.11415 MM-UKMO-MOS              
+0.22103 Schneehäuschen           

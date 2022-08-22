@@ -1,0 +1,81 @@
+N  
+0.26416 nik                      
+0.39567 Daniel1                  
+0.23983 MaBe-Leipzig             
+0.10035 Persistenz               
+ 
+Sd 
+0.54976 nik                      
+0.25739 MM-UKMO-MOS              
+0.19284 Daniel1                  
+ 
+dd 
+0.11414 MaBe-Leipzig             
+0.26448 DWD-EZ-MOS               
+0.09574 Persistenz               
+0.16326 MM-UKMO-MOS              
+0.15489 Ms.Os                    
+0.10525 MM-GFS-MOS               
+0.10224 nik                      
+ 
+ff 
+0.46864 MSwr-HIR-MOS             
+0.29416 Ms.Os                    
+0.23720 MM-GFS-MOS               
+ 
+fx 
+0.12166 nik                      
+0.24028 meteomara                
+0.21800 Kaltlufttropfen          
+0.26590 Schneehäuschen           
+0.15416 MM-GFS-MOS               
+ 
+Wv 
+0.08515 universLE                
+0.13751 Pfingstochse             
+0.22968 DWD-ICON-MOS             
+0.18875 meteo84                  
+0.09859 MM-EZ-MOS                
+0.11602 MaBe-Leipzig             
+0.06483 Persistenz               
+0.07947 MM-UKMO-MOS              
+ 
+Wn 
+0.27873 Schneehäuschen           
+0.25038 MM-MOS                   
+0.16797 Daniel1                  
+0.16525 MaBe-Leipzig             
+0.13767 MSwr-HIR-MOS             
+ 
+PPP
+0.25957 MM-MOS                   
+0.21114 MSwr-HIR-MOS             
+0.19790 Schneegewitter           
+0.19827 meteomara                
+0.13311 MM-UKMO-MOS              
+ 
+TTm
+0.07214 meteo84                  
+0.22101 MSwr-HIR-MOS             
+0.25805 Kaltlufttropfen          
+0.17634 meteomara                
+0.18241 Schneehäuschen           
+0.09005 MM-UKMO-MOS              
+ 
+TTn
+0.43877 Schneehäuschen           
+0.24510 MSwr-HIR-MOS             
+0.21328 meteomara                
+0.10285 MM-UKMO-MOS              
+ 
+TTd
+0.45346 Greg                     
+0.21639 MM-UKMO-MOS              
+0.29904 Schneegewitter           
+0.03111 Persistenz               
+ 
+RR 
+0.42623 meteo84                  
+0.29549 MaBe-Leipzig             
+0.21803 MSwr-HIR-MOS             
+0.06026 Persistenz               

@@ -1008,7 +1008,7 @@ class wetterturnier_betclass
             }
             #wetterturnier-bet-form.landscape div title {
                float: left;
-               width: 4%;
+               width: 3.5%;
                overflow: hidden;
             }
             #wetterturnier-bet-form div ul {
@@ -1204,9 +1204,9 @@ class wetterturnier_betclass
          foreach ( $stnObj->getParams() as $paramObj ) {
             if ( ! $paramObj->isParameterActive( $stnObj->get("ID") ) )
             { $disabled = true; } else { $disabled = false; }
-            $input_name  = sprintf("%s_%d",$paramObj->get("paramName"),$day);
-            if ( property_exists($data,$input_name) ) {
-               $input_value = (is_null($data->$input_name) ? "-xxx-" : $data->$input_name);
+            $input_name  = sprintf("%s_%d", $paramObj->get("paramName") ,$day);
+            if ( property_exists($data, $input_name) ) {
+               $input_value = (is_null($data->$input_name) ? "-xxx-" : $WTuser->number_format($data->$input_name, $paramObj->get("decimals")) );
                $nullclass   = (is_null($data->$input_name) ? "setnull" : "");
             } else {
                $input_value = "";
@@ -1262,7 +1262,7 @@ class wetterturnier_betclass
          return;
       }
 
-      ##print_r( $input );
+      // print_r( $input );
        
       // Save current page url, load tournament  
       global $WTuser;
@@ -1297,7 +1297,7 @@ class wetterturnier_betclass
 
       list($data,$checkflag) = $this->check_received_data( $data, false );
       $data = $this->check_correct_values( $data );
-      $this->write_to_database( $user, $next, $data, $checkflag, false, $adminuser, NULL );
+      $this->write_to_database($user, $next, $data, $checkflag, false, $adminuser);
       
       if ( (count($data->ignored) + count($data->checknotes)) > 0 ) {
          echo "<div class=\"wetterturnier-info error\">\n";

@@ -1,0 +1,74 @@
+N  
+0.37579 Tjure                    
+0.23743 MetVienna                
+0.27162 Ms.Os                    
+0.11516 Persistenz               
+ 
+Sd 
+0.50974 nik                      
+0.28444 Tjure                    
+0.20582 Ms.Os                    
+ 
+dd 
+0.11494 DWD-MOS-Mix              
+0.32642 MM-EZ-MOS                
+0.21913 MM-UKMO-MOS              
+0.09800 Persistenz               
+0.04372 MSwr-HIR-MOS             
+0.11652 DWD-ICON-MOS             
+0.08128 fleming                  
+ 
+ff 
+0.43053 nik                      
+0.27407 MM-MOS                   
+0.29540 Tjure                    
+ 
+fx 
+0.44817 nik                      
+0.26994 MSwr-HIR-MOS             
+0.28189 Tjure                    
+ 
+Wv 
+0.26700 MSwr-MOS-Mix             
+0.17587 nik                      
+0.21039 Tjure                    
+0.20556 MSwr-GFS-MOS             
+0.14119 fleming                  
+ 
+Wn 
+0.21069 UBIMET                   
+0.30492 MetVienna                
+0.12258 MM-GFS-MOS               
+0.10583 DWD-ICON-MOS             
+0.25598 nik                      
+ 
+PPP
+0.16869 MM-MOS                   
+0.19268 nik                      
+0.11905 MSwr-HIR-MOS             
+0.17010 Pfingstochse             
+0.15061 MM-UKMO-MOS              
+0.19887 Ms.Os                    
+ 
+TTm
+0.22510 nik                      
+0.21143 MSwr-HIR-MOS             
+0.21211 Uwetter                  
+0.13172 MM-UKMO-MOS              
+0.21964 MOS-T                    
+ 
+TTn
+0.34194 DWD-EZ-MOS               
+0.26087 Uwetter                  
+0.22320 meteomara                
+0.17398 MSwr-HIR-MOS             
+ 
+TTd
+0.45423 Ms.Os                    
+0.28540 fleming                  
+0.26036 MetVienna                
+ 
+RR 
+0.56737 nik                      
+0.31513 MSwr-MOS-Mix             
+0.11750 MM-UKMO-MOS              

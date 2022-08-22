@@ -1,0 +1,73 @@
+N  
+0.22281 humilis91                
+0.34603 Daniel1                  
+0.26815 MaBe-Leipzig             
+0.16300 MM-UKMO-MOS              
+ 
+Sd 
+0.13265 MM-MOS                   
+0.21051 MaBe-Leipzig             
+0.30266 MM-UKMO-MOS              
+0.19260 MSwr-HIR-MOS             
+0.16157 Daniel1                  
+ 
+dd 
+0.02457 MaBe-Leipzig             
+0.26786 MM-UKMO-MOS              
+0.23351 Halber_Ösi               
+0.09075 Persistenz               
+0.20517 Ms.Os                    
+0.17816 EZ-MOS                   
+ 
+ff 
+0.58229 MSwr-HIR-MOS             
+0.24791 MM-MOS                   
+0.16980 Daniel1                  
+ 
+fx 
+0.32941 MSwr-MOSMix(GFS+HIR)     
+0.17968 MOS-T                    
+0.12642 MM-EZ-MOS                
+0.20157 Pfingstochse             
+0.16292 meteomara                
+ 
+Wv 
+0.33798 MSwr-MOSMix(GFS+HIR)     
+0.20894 GME-MOS                  
+0.24310 meteo84                  
+0.20998 meteomara                
+ 
+Wn 
+0.28461 meteo84                  
+0.32426 MSwr-HIR-MOS             
+0.19533 MaBe-Leipzig             
+0.19580 Halber_Ösi               
+ 
+PPP
+0.14304 meteo84                  
+0.00149 MM-MOS                   
+0.32582 MSwr-HIR-MOS             
+0.28437 MM-UKMO-MOS              
+0.24529 Ms.Os                    
+ 
+TTm
+0.33729 Pfingstochse             
+0.32944 MSwr-HIR-MOS             
+0.24214 Ms.Os                    
+0.09113 MM-UKMO-MOS              
+ 
+TTn
+0.05212 meteo84                  
+0.33877 MaBe-Leipzig             
+0.30727 meteomara                
+0.30185 MSwr-HIR-MOS             
+ 
+TTd
+0.73742 MSwr-MOSMix(GFS+HIR)     
+0.26258 MM-UKMO-MOS              
+ 
+RR 
+0.38211 meteo84                  
+0.28732 MaBe-Leipzig             
+0.09701 Persistenz               
+0.23355 meteomara                

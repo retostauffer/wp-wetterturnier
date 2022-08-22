@@ -1,0 +1,71 @@
+N  
+0.57774 Georg                    
+0.18378 MM-UKMO-MOS              
+0.17866 martingap                
+0.05982 Persistenz               
+ 
+Sd 
+0.44482 Georg                    
+0.42242 fresh                    
+0.13277 MM-UKMO-MOS              
+ 
+dd 
+0.24024 GME-MOS                  
+0.24784 Persistenz               
+0.15650 nik                      
+0.15217 meteomara                
+0.10724 martingap                
+0.09601 adri_der_pinner          
+ 
+ff 
+0.63322 Georg                    
+0.25410 GME-MOS                  
+0.11267 Persistenz               
+ 
+fx 
+0.27307 Georg                    
+0.15269 MM-GFS-MOS               
+0.13335 fresh                    
+0.18894 nik                      
+0.09270 MM-UKMO-MOS              
+0.11048 MeteoService-GFS-MOS     
+0.04877 Persistenz               
+ 
+Wv 
+0.39382 Uni-Innsbruck            
+0.27946 Auftrieb                 
+0.19833 MM-UKMO-MOS              
+0.12839 martingap                
+ 
+Wn 
+0.19605 Uni-Innsbruck            
+0.24586 MM-EZ-MOS                
+0.17907 GME-MOS                  
+0.15998 MM-GFS-MOS               
+0.21904 Oberbayer                
+ 
+PPP
+0.52927 MM-MOS                   
+0.36762 Georg                    
+0.10311 Ms.Os                    
+ 
+TTm
+0.63861 Georg                    
+0.23647 fresh                    
+0.12492 MM-UKMO-MOS              
+ 
+TTn
+0.31939 adri_der_pinner          
+0.42682 Georg                    
+0.17145 Oberbayer                
+0.08234 MM-EZ-MOS                
+ 
+TTd
+0.75241 Georg                    
+0.24759 meteomara                
+ 
+RR 
+0.34652 Georg                    
+0.26753 MM-UKMO-MOS              
+0.17502 meteomara                
+0.21093 Oberbayer                

@@ -1,0 +1,79 @@
+N  
+0.48859 Uwetter                  
+0.21633 Schneehäuschen           
+0.09579 MM-UKMO-MOS              
+0.13860 meteomara                
+0.06069 Persistenz               
+ 
+Sd 
+0.40659 Hurricane                
+0.24289 MM-UKMO-MOS              
+0.17912 Uwetter                  
+0.17140 ww75                     
+ 
+dd 
+0.15212 MM-MOS                   
+0.14171 Persistenz               
+0.12155 DWD-EZ-MOS               
+0.11093 DWD-ICON-MOS             
+0.14867 MM-UKMO-MOS              
+0.12557 MM-GFS-MOS               
+0.10262 MM-EZ-MOS                
+0.09684 Sven/Titisee-Neustadt    
+ 
+ff 
+0.34527 Schneehäuschen           
+0.41752 Ms.Os                    
+0.23721 DWD-EZ-MOS               
+ 
+fx 
+0.29094 MSwr-MOS-Mix             
+0.29083 ww75                     
+0.17836 fresh                    
+0.11046 DWD-ICON-MOS             
+0.12941 Sven/Titisee-Neustadt    
+ 
+Wv 
+0.30630 ww75                     
+0.13661 MOS-T                    
+0.10473 Schneehäuschen           
+0.15154 Hurricane                
+0.10933 MM-UKMO-MOS              
+0.07459 Persistenz               
+0.11689 Uwetter                  
+ 
+Wn 
+0.48695 Schneehäuschen           
+0.19398 DWD-ICON-MOS             
+0.16272 MM-UKMO-MOS              
+0.15635 MSwr-GFS-MOS             
+ 
+PPP
+0.11372 MM-MOS                   
+0.21039 Hurricane                
+0.31010 MM-UKMO-MOS              
+0.24159 MM-EZ-MOS                
+0.12420 MSwr-HIR-MOS             
+ 
+TTm
+0.33989 Hochfirst                
+0.25896 Uwetter                  
+0.26113 fresh                    
+0.14003 MM-UKMO-MOS              
+ 
+TTn
+0.28363 Hurricane                
+0.27430 meteomara                
+0.28672 Uwetter                  
+0.15535 MSwr-HIR-MOS             
+ 
+TTd
+0.56217 Uwetter                  
+0.19961 MM-UKMO-MOS              
+0.23822 MM-EZ-MOS                
+ 
+RR 
+0.20554 ww75                     
+0.31996 MSwr-MOS-Mix             
+0.19261 MM-UKMO-MOS              
+0.28189 Hurricane                

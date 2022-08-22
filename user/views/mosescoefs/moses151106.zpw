@@ -1,0 +1,79 @@
+N  
+0.41511 Uwetter                  
+0.15090 Persistenz               
+0.16626 Hurricane                
+0.09836 MM-UKMO-MOS              
+0.16937 Schneehäuschen           
+ 
+Sd 
+0.34220 Uwetter                  
+0.24980 MM-UKMO-MOS              
+0.23612 Hurricane                
+0.17188 fresh                    
+ 
+dd 
+0.03114 MM-MOS                   
+0.21251 Persistenz               
+0.16237 DWD-EZ-MOS               
+0.13453 DWD-ICON-MOS             
+0.13127 MM-GFS-MOS               
+0.17588 MM-UKMO-MOS              
+0.07804 MSwr-HIR-MOS             
+0.07425 MSwr-GFS-MOS             
+ 
+ff 
+0.38474 Schneehäuschen           
+0.43155 Ms.Os                    
+0.18371 liebetruth               
+ 
+fx 
+0.33939 MSwr-MOS-Mix             
+0.20826 Sven/Titisee-Neustadt    
+0.22575 fresh                    
+0.15299 DWD-ICON-MOS             
+0.07361 MM-EZ-MOS                
+ 
+Wv 
+0.28062 Hurricane                
+0.21500 MM-UKMO-MOS              
+0.16085 Schneehäuschen           
+0.17817 MOS-T                    
+0.16535 Pfingstochse             
+ 
+Wn 
+0.53631 Schneehäuschen           
+0.17548 DWD-ICON-MOS             
+0.16806 MM-UKMO-MOS              
+0.12015 MSwr-GFS-MOS             
+ 
+PPP
+0.09138 MM-MOS                   
+0.20191 Hurricane                
+0.31567 MM-UKMO-MOS              
+0.26329 MM-EZ-MOS                
+0.12775 MSwr-HIR-MOS             
+ 
+TTm
+0.23447 Hurricane                
+0.22292 Uwetter                  
+0.15342 MM-UKMO-MOS              
+0.22293 fresh                    
+0.16625 Sven/Titisee-Neustadt    
+ 
+TTn
+0.49704 Hurricane                
+0.34758 meteomara                
+0.15538 MM-UKMO-MOS              
+ 
+TTd
+0.37513 Uwetter                  
+0.19730 MM-UKMO-MOS              
+0.29207 Hurricane                
+0.13551 MM-EZ-MOS                
+ 
+RR 
+0.31744 Hurricane                
+0.24375 MSwr-MOS-Mix             
+0.14270 MM-UKMO-MOS              
+0.16838 Schneehäuschen           
+0.12773 Uwetter                  

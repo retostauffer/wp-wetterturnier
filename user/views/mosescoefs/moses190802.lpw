@@ -1,0 +1,64 @@
+N  
+0.45285 Ms.Os                    
+0.32038 Kaltlufttropfen          
+0.22677 Schneegewitter           
+ 
+Sd 
+0.25935 Schneegewitter           
+0.30253 Snab_LE                  
+0.22275 Kaltlufttropfen          
+0.21536 Ms.Os                    
+ 
+dd 
+0.48656 Mammatus95               
+0.16210 meteoleipzig             
+0.10108 Persistenz               
+0.25026 humilis91                
+ 
+ff 
+0.48263 humilis91                
+0.29397 Snab_LE                  
+0.22340 Ms.Os                    
+ 
+fx 
+0.12771 Pfingstochse             
+0.20215 MSwr-GFS-MOS             
+0.24170 Snab_LE                  
+0.29345 fresh                    
+0.13500 meteoleipzig             
+ 
+Wv 
+0.10813 DWD-MOS-MIX-test         
+0.24388 Snab_LE                  
+0.30700 Kaltlufttropfen          
+0.25674 Pfingstochse             
+0.08425 Persistenz               
+ 
+Wn 
+0.45623 Schneegewitter           
+0.38742 Snab_LE                  
+0.15635 humilis91                
+ 
+PPP
+0.52833 fresh                    
+0.47167 Pfingstochse             
+ 
+TTm
+0.00715 Bibertaler               
+0.57148 Wolkenteiler             
+0.42137 Ms.Os                    
+ 
+TTn
+0.30249 MSwr-MOS-Mix             
+0.40577 Snab_LE                  
+0.29174 Ms.Os                    
+ 
+TTd
+0.32599 humilis91                
+0.34830 Pfingstochse             
+0.32571 Snab_LE                  
+ 
+RR 
+0.44405 MSwr-MOS-Mix             
+0.33691 Ms.Os                    
+0.21905 meteoleipzig             

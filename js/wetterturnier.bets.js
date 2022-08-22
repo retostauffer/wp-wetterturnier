@@ -57,7 +57,7 @@ jQuery(document).on("ready",function(){
       window.location.replace(  url )
    });
 
-   // Functionality on the buttons to foward admins to 'edit observations' page.
+   // Functionality on the buttons to forward admins to 'edit observations' page.
    $("table.wttable-show > tbody > tr > td > span.button.edit-obs").on("click",function(){
 
       var station = parseInt($(this).attr("station"));
