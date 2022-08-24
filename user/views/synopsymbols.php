@@ -13,10 +13,13 @@ ini_set("display_errors", 1);
 // Including jQuery scripts to display the synop symbols here
 $WTuser->include_js_script("wetterturnier.synopsymbols");
 
+$tdate = $WTuser->current_tournament()->tdate;
+
 // Loading all available stations for current city
 $res = $wpdb->get_results(sprintf("SELECT wmo FROM %swetterturnier_stations "
 //               ."WHERE cityID = %d AND active = 1 ORDER BY wmo ASC", 
-               ."WHERE active = 1 ORDER BY wmo ASC",
+   . "WHERE active = 1 AND (since <= " . $tdate
+   . " OR SINCE = 0) AND (until > " . $tdate . " OR until = 0) ORDER BY wmo ASC",
 //               $wpdb->prefix, $cityObj->get("ID")));
                $wpdb->prefix));
 $stations = array();
