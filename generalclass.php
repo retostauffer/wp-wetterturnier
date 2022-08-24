@@ -553,7 +553,7 @@ class wetterturnier_generalclass
         }
 
         // Else take row with offset, if set
-        if ( array_key_exists($row_offset, $rows)) {
+        if ( array_key_exists( (int)$row_offset, $rows ) ) {
            $row = $rows[$row_offset];
         } else { $row = $rows[0]; }
 
@@ -609,8 +609,8 @@ class wetterturnier_generalclass
      * @todo Reto should use the 'number of bet days' variable rather
      * than this fixed number of -2.
      */
-    public function current_tournament($row_offset=0,$check_access=true,$dayoffset=-2,$backwards=false,$quiet=FALSE) { 
-        return $this->next_tournament($row_offset,$check_access,$dayoffset,$backwards);
+    public function current_tournament($row_offset=0,$check_access=true,$dayoffset=-2,$backwards=false,$quiet=false) { 
+        return $this->next_tournament($row_offset,$check_access,$dayoffset,$backwards,$quiet);
     }
 
     /** This method is based on @ref next_tournament and returns
@@ -685,13 +685,16 @@ class wetterturnier_generalclass
         $res = $wpdb->get_row( sprintf("SELECT COUNT(value) AS vals FROM %swetterturnier_bets "
                ." WHERE userID = %d AND cityID = %d AND tdate = %d",
                $wpdb->prefix, $userID, $cityObj->get('ID'), $tdate));
+               
+        //$params = $wpdb->get_row( sprintf("SELECT paramconfig AS params FROM %swetterturnier_cities "
+        //        ."WHERE ID = %d", $wpdb->prefix, $cityObj->get('ID')) )->params;
+        $params = $wpdb->get_results( "SELECT paramName AS param FROM ".$wpdb->prefix."wetterturnier_param "
+                ."WHERE active = 1 AND (since <= " . $tdate ." OR SINCE = 0) AND (until > " . $tdate
+                                 ." OR until = 0)" );
+        //$nparams = count( explode(",", substr($params );
+        $nparams = count( $params );
 
-        //"24" should rather be defined by a variable, TODO: so ndays
-
-        $params = $wpdb->get_row( sprintf("SELECT paramconfig AS params FROM %swetterturnier_cities "
-                ."WHERE ID = %d", $wpdb->prefix, $cityObj->get('ID')) )->params;
-        $nparams = count( explode(",", substr($params, 1, -1) ) );
-
+        //TODO: ndays var instead of constant 2
         //if ( $res->vals == 24 )                        { $return->submitted = true; }
         if ( $res->vals == $nparams*2 )                  { $return->submitted = true; }
 
@@ -1176,7 +1179,7 @@ class wetterturnier_generalclass
     public function get_param_data($tdate = NULL) {
         
         if (is_null($tdate) or empty($tdate)) {
-            // with have to call this function "quiet" to not print warnings!
+            // we have to call this function "quiet" to not print warnings!
             $tdate = $this->current_tournament($quiet=TRUE)->tdate;
         }
         

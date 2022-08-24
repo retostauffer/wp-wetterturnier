@@ -39,7 +39,7 @@ class wetterturnier_betclass
    /// @see convert_old_post_data
    /// @see parse_post_data
    // ---------------------------------------------------------------
-   function parse_parameters( $data ) {
+   function parse_parameters( $data, $autosubmit=true ) {
    
       $msg = "Parsing POST parameters";
       printf("%s\n",strtoupper($msg));
@@ -55,7 +55,7 @@ class wetterturnier_betclass
       }
    
       // Parsing data with new config parser
-      $res = $this->parse_post_data( $data );
+      $res = $this->parse_post_data( $data, $autosubmit );
    
       // Return result
       return( $res );
@@ -183,20 +183,21 @@ class wetterturnier_betclass
    ///   the python package (to be able to trace back errors or see
    ///   whether it was working or not).
    // ---------------------------------------------------------------
-   function parse_post_data( $data, $autosubmit=true ) {
+   function parse_post_data( $data, $autosubmit=false ) {
 
       global $WTuser;
       $ndays = (int)$WTuser->options->wetterturnier_betdays;
-   
+      $tdate = property_exists($data,"tdate") ? $data->tdate : NULL;
+
       if ( $autosubmit ) { printf("%s\n","Parsing parameters."); }
 
       // Loading proper city object
       if ( $autosubmit ) {
-         $cityObj = new wetterturnier_cityObject( $data->city );
+         $cityObj = new wetterturnier_cityObject( $data->city, $tdate );
       } elseif ( property_exists($data,"cityID") ) {
-         $cityObj = new wetterturnier_cityObject( $data->cityID );
+         $cityObj = new wetterturnier_cityObject( $data->cityID, $tdate );
       } else {
-         $cityObj = new wetterturnier_cityObject( );
+         $cityObj = new wetterturnier_cityObject( $tdate=$tdate );
       }
       $cityObj->paramconfig_string = $this->get_paramconfig_string( $cityObj );
    
@@ -235,7 +236,7 @@ class wetterturnier_betclass
             
             //For MOS belated submit use "tdate"
             if ( property_exists( $data , "tdate") ) {
-            $res->tdate = round(strtotime($data->tdate) / 86400);
+               $res->tdate = round(strtotime($data->tdate) / 86400);
             }
             // TODO: write a global function for this handy function
          }
@@ -355,14 +356,13 @@ class wetterturnier_betclass
                } else { $check = false; }
             }
          }
-   
       }
    
       // Checks if there were parameters which were additional but
       // not requested by the wetterturnier or the current city.
       // If there are, add ignore message and drop the parameter. 
       foreach ( $data as $key=>$arr ) {
-         if ( ! preg_match("/^day_[1-9]{1,}/",$key) ) { continue; }
+         if ( ! preg_match("/^day_[1-2]{1,}/",$key) ) { continue; }
          list($param,$day) = explode("_",$key); 
          if ( (int)$day > $data->betdays ) {
             unset($data->$key); 
@@ -407,9 +407,9 @@ class wetterturnier_betclass
       global $WTuser;
    
       // Looping over requested forecast days
-      for($day=1;$day<=$data->betdays;$day++) {
+      for( $day=1; $day <= $data->betdays; $day++ ) {
          $hash = sprintf("day_%d",$day);
-         if ( ! property_exists($data,$hash) ) { continue; }
+         if ( ! property_exists( $data, $hash ) ) { continue; }
          // Looping over all parameters
          foreach ( $data->$hash as $param=>$val ) {
             // Checking/correcting the value
@@ -608,8 +608,8 @@ class wetterturnier_betclass
    /// @param $adminuser. Default `NULL`. If not `NULL` this indicates
    ///   that an administrator currently changes the data/forecast.
    // --------------------------------------------------------------
-   function write_to_database( $user, $next, $data, $checkflag, $verbose = true, $adminuser=NULL, $whoami=NULL ) {
-   
+   function write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=NULL, $whoami=NULL ) {
+
       global $WTuser;
       global $wpdb;
 
@@ -625,7 +625,7 @@ class wetterturnier_betclass
 
       // Helper method which will be used below, checking if a certain value
       // has been changed by the admin or not.
-      function set_placedby_if_changed($tmp,$existing,$adminID) {
+      function set_placedby_if_changed( $tmp, $existing, $adminID ) {
          // If not "existing", the admin added a new value. Return adminID 
          $placedby = (int)$adminID;
          foreach ( $existing as $rec ) {
@@ -633,7 +633,9 @@ class wetterturnier_betclass
             if ( $rec->paramID == $tmp['paramID'] && $rec->betdate == $tmp['betdate'] ) {
                // Value changed: admin changed an existing value, return
                // the userID of the admin who is manipulating the data.
-               if ( (int)$rec->value != (int)$tmp['value'] ) { $placedby = $adminID; }
+               if ( (int)$rec->value != (int)$tmp['value'] ) {
+                  $placedby = $adminID;
+               }
                // Else return the userID currently in the database.
                else { $placedby = $rec->placedby; }
                // End loop
@@ -647,7 +649,7 @@ class wetterturnier_betclass
       $data4db = array();
       foreach ( $data as $key => $params ) {
          // Searching for properties like "day_X"
-         if ( ! preg_match("/^day_[1-9]/",$key) ) { continue; }
+         if ( ! preg_match("/^day_[1-2]/",$key) ) { continue; }
          $tmp = explode("_",$key); $day = (int)$tmp[1];
    
          // If betdate entry does not exist (from $next): continue
@@ -736,6 +738,9 @@ class wetterturnier_betclass
          if ( $verbose ) { print "  - Update betstat table\n"; }
          $dbcheck = $WTuser->insertonduplicate(sprintf("%swetterturnier_betstat",$wpdb->prefix),$data);
       } else {
+         if ($verbose) {
+            echo "NO CHECKFLAG!";
+         }
          $where = array("userID" => $user->data->ID,
                         "cityID" => $data->cityObj->get('ID'),
                         "tdate"  => $next->tdate);
@@ -768,7 +773,7 @@ class wetterturnier_betclass
    /// @see print_bet_form
    /// @see print_obs_form
    // ------------------------------------------------------------------
-   function print_form( $cityID=NULL, $targetID=NULL, $isstation=false, $tdate=NULL ) {
+   function print_form($cityID=NULL,$targetID=NULL,$isstation=false,$tdate=NULL) {
 
       global $WTuser;
    
@@ -777,6 +782,7 @@ class wetterturnier_betclass
          $tournament = $WTuser->next_tournament();
          $admin_mode = false;
          $userID     = get_current_user_id();
+         $tdate      = $tournament->tdate;
       } else {
          // It's actually not next, but latest when using in admin mode!
          $tdate = (is_null($tdate) ? (int)date("%s")/86400 : (int)$tdate );
@@ -807,9 +813,9 @@ class wetterturnier_betclass
             // Load pre-fetched city information of the current city
             $cityObj = $WTuser->get_current_cityObj();
          } else {
-            $cityObj = new wetterturnier_cityObject( $cityID );
+            $cityObj = new wetterturnier_cityObject( $cityID, $tdate );
          }
-   
+          
          // Looping over parameters. If not necessary for this city
          // (then ID's not in $city->paramconfig) the parameter will
          // be skipped out of the $parameter object.
@@ -1240,10 +1246,10 @@ class wetterturnier_betclass
    ///   used). If an admin changes bets for a specific user, this
    ///   has to be the user which the modifications should affect.
    // ----------------------------------------------------------------
-   function update_bet_database($next=NULL,$user=NULL) {
+   function update_bet_database( $next = NULL, $user = NULL) {
    
       function error($msg) {
-         printf("<div class=\"wetterturnier-info error\">%s</div>",$msg);
+         printf( "<div class=\"wetterturnier-info error\">%s</div>", $msg );
       }
    
       // If 'submit' not equal to 'save' this is some unexpected input.
@@ -1293,9 +1299,10 @@ class wetterturnier_betclass
 
       // Checking data
       $data = (object)$_POST;
-      $data = $this->parse_post_data( $data, false );
+      $data->tdate = $next->tdate; 
+      $data = $this->parse_post_data( $data, $autosubmit=false );
 
-      list($data,$checkflag) = $this->check_received_data( $data, false );
+      list($data,$checkflag) = $this->check_received_data($data, false);
       $data = $this->check_correct_values( $data );
       $this->write_to_database($user, $next, $data, $checkflag, false, $adminuser);
       

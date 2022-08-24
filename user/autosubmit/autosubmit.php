@@ -28,6 +28,8 @@
 //                error 13:     tournament is closed 
 //                error 14:     at least one required input missing
 //                              (e.g, user, password, ...)
+//                error 403:    no permission (tournament closed)
+//                error 404:    tournament not found (wrong date etc.)
 // -------------------------------------------------------------------
 // - EDITORIAL:   2015-07-29, RS: Created file on thinkreto.
 // -------------------------------------------------------------------
@@ -90,7 +92,7 @@ print("   -----------   option.\n\n\n");
 // ------------------------------------------------------------------
 // Parsing input data
 // ------------------------------------------------------------------
-$data = $WTbetclass->parse_parameters( $_REQUEST );
+$data = $WTbetclass->parse_parameters( $_REQUEST, $autosubmit=true );
 
 // First, set $admin to NULL and $is_admin to FALSE. If an admin submits a bet (eg. a MOS becaus of belated submission) this will be changed later on and passed into write_to_database(...,$adminuser=$admin); in the very end of this script
 $admin = NULL;
@@ -98,31 +100,6 @@ $is_admin = FALSE;
 // If we are just in time for the current tournament (like usually), the placedby value does not get changed. For a belated MOS we gonna assign its "userID" to $whoami later on.
 $whoami = NULL;
 
-// ------------------------------------------------------------------
-// Checks if the user has delivered ALL necessary parameters for this
-// town (depends on $cityObj->paramconfig) and all forecast days
-// (depends on option 'wetterturnier_betdays'. 
-// ------------------------------------------------------------------
-list($data,$checkflag) = $WTbetclass->check_received_data( $data );
-
-// The function should never return $checkflag=false for the autosubmit
-// procedure (will exit internally). Anyway, if this happens: stop.
-if ( ! $checkflag ) {
-   print "OHOH checkflag false, but not stopped. Should never run into here. ";
-   $WTbetclass->error(99);
-}
-
-// ------------------------------------------------------------------
-// Parsing input data
-// ------------------------------------------------------------------
-$maxdays = $WTuser->options->wetterturnier_betdays;
-$data = $WTbetclass->check_correct_values( $data, $maxdays );
-
-
-// ------------------------------------------------------------------
-// Shows parsed data and ignore messages
-// ------------------------------------------------------------------
-$WTbetclass->show_parsed_data( $data, $maxdays );
 
 // ------------------------------------------------------------------
 // Login and check if login was ok
@@ -191,19 +168,19 @@ if ( property_exists ( $data, 'tdate' ) ) {
    }
    else if ( $is_admin ) {
       $rerun = True;
-      $next = $WTuser->next_tournament(0,true);
+      $next = $WTuser->next_tournament(0, true);
       if ( strcmp($tdate, $next->tdate) == 0 ) {
          print "No admin mode needed since given tdate == current tournament. Back to user mode\n";
       }
       else {
          // The handy function next_tournament() allows us to trick the system by inserting the custom tournament date for our belated submission :D
-	 if ( round(strtotime( date("Y-m-d") ) / 86400) >= $tdate ) {
+	      if ( round(strtotime( date("Y-m-d") ) / 86400) >= $tdate ) {
             printf("You're pretty late my dear friend ;) Anyway, choosing %s as old tournament date...\n", convert_tdate($tdate));
          }
          else {
             printf("You're pretty early my dear friend ;) Anyway, choosing %s as future tournament date...\n", convert_tdate($tdate));
             }
-         $next = $WTuser->next_tournament($row_offset=0, $check_access=false,$tdate);
+         $next = $WTuser->next_tournament($row_offset=0, $check_access=0, $tdate);
          $admin = $user;
          $whoami = $admin->ID;    
       }
@@ -224,6 +201,32 @@ else {
 }
 
 // ------------------------------------------------------------------
+// Checks if the user has delivered ALL necessary parameters for this
+// town (depends on $cityObj->paramconfig) and all forecast days
+// (depends on option 'wetterturnier_betdays'. 
+// ------------------------------------------------------------------
+list($data,$checkflag) = $WTbetclass->check_received_data( $data );
+
+// The function should never return $checkflag=false for the autosubmit
+// procedure (will exit internally). Anyway, if this happens: stop.
+if ( ! $checkflag ) {
+   print "OHOH checkflag false, but not stopped. Should never run into here. ";
+   $WTbetclass->error(99);
+}
+
+// ------------------------------------------------------------------
+// Parsing input data
+// ------------------------------------------------------------------
+$maxdays = $WTuser->options->wetterturnier_betdays;
+$data = $WTbetclass->check_correct_values( $data, $maxdays );
+
+
+// ------------------------------------------------------------------
+// Shows parsed data and ignore messages
+// ------------------------------------------------------------------
+$WTbetclass->show_parsed_data( $data, $maxdays );
+
+// ------------------------------------------------------------------
 // Write data to database 
 // ------------------------------------------------------------------
 print "\n"; $msg = "Write data to database";
@@ -240,7 +243,8 @@ print("\n");
 #print_r($data);
 */
 
-$WTbetclass->write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=$admin, $whoami);
+list($data,$checkflag) = $WTbetclass->check_received_data($data, true);
+$WTbetclass->write_to_database($user,$next,$data,$checkflag,true,$admin,$whoami);
 
 // Save a rerun flag into the database such that we can re-run the computation of the requred tournaments as the observations changed.
 if ( isset($rerun) ) {

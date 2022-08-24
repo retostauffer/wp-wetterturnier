@@ -29,6 +29,7 @@
  * :php:class:`wetterturnier_stationObject` and
  * :php:class:`wetterturnier_paramObject`.
  */
+
 class wetterturnier_cityObject {
 
    /** Will contain a copy of the global $wpdb instance. Used as
@@ -45,9 +46,16 @@ class wetterturnier_cityObject {
    /** Used to store number of observations. */
    private $number_of_observations = Null;
 
-   function __construct( $init = NULL ) {
+
+   function __construct( $init = NULL, $tdate = NULL ) {
 
       global $wpdb; $this->wpdb = $wpdb;
+      $WTuser = new wetterturnier_generalclass;
+
+      if (is_null($tdate) or !isset($tdate)) {
+         // we have to call this function "quiet" to not print warnings!
+         $tdate = $WTuser->current_tournament($quiet=true)->tdate;
+      }
 
       if ( is_null( $init ) ) {
          if ( empty( $_SESSION['wetterturnier_city'] ) ) {
@@ -74,8 +82,8 @@ class wetterturnier_cityObject {
       // Decode parameter config (JSON->array) and load
       // stations attached to this city.
       if ( ! is_null( $this->data ) ) {
-         $this->_decode_paramconfig();
-         $this->_load_stations();
+         $this->_decode_paramconfig($tdate);
+         $this->_load_stations($activeonly=TRUE, $tdate);
       }
 
    }
@@ -84,9 +92,24 @@ class wetterturnier_cityObject {
     * the parameter configuration (basically an array of parameter ID's).
     * this function converts the string into an array and stores
     * the result on `$this->data->paramconfig`.
+    * CHANGED WITH 2022 rule update: We only load this config when no $tdate
+    * is provided. Otherwise we reproduce the shape of the json_decode array
+    * and fill it with the active parameters, depending on the given $tdate.
     */
-   private function _decode_paramconfig() {
-      $this->data->paramconfig = json_decode( $this->get('paramconfig') );
+   private function _decode_paramconfig($tdate=NULL) {
+      
+      if ( is_null($tdate) || (! isset($tdate)) ) {
+         $this->data->paramconfig = json_decode( $this->get('paramconfig') );
+      } else {
+         $this->data->paramconfig = array();
+         $sql = "SELECT paramID FROM ".$this->wpdb->prefix."wetterturnier_param "
+         . "WHERE active = 1 AND (since <= " . $tdate
+         . " OR SINCE = 0) AND (until > " . $tdate . " OR until = 0)";
+         $params = $this->wpdb->get_results( $sql );
+         for ( $i = 0; $i < count( $params ); $i++ ) {
+            array_push( $this->data->paramconfig, $params[$i]->paramID );
+         }
+      }
    }
 
    /** Loading city information from database given the
@@ -161,16 +184,16 @@ class wetterturnier_cityObject {
     * @return The method has no return, writes the results into an `array` on the
     *   attribute `stations` of the this object.
     */
-   private function _load_stations($activeonly = true) {
+   private function _load_stations($activeonly = true, $tdate = NULL) {
 
-      $sql = sprintf("SELECT ID FROM %swetterturnier_stations WHERE cityID = %d%s;",
-                     $this->wpdb->prefix,$this->get('ID'), ($activeonly ? " AND active = 1" : "") );
+      $sql = sprintf("SELECT ID FROM %swetterturnier_stations WHERE cityID = %d%s%s;", $this->wpdb->prefix,$this->get('ID'), ($activeonly ? " AND active = 1" :""), ($tdate ? " AND (since <= " . $tdate . " OR SINCE = 0) AND (until > " . $tdate
+      . " OR until = 0)" : ""));
       $res = $this->wpdb->get_results($sql);
 
       // Loading station information
       $this->stations = array();
       foreach ( $res as $rec ) {
-         array_push($this->stations,new wetterturnier_stationObject($rec->ID));
+         array_push($this->stations,new wetterturnier_stationObject($rec->ID, $tdate));
       }
    }
 
@@ -379,8 +402,10 @@ class wetterturnier_paramObject {
       }
 
       // Loading all parameters
-      $sql = sprintf("SELECT * FROM %swetterturnier_param WHERE %s", $this->wpdb->prefix,
-             ( $by == "ID" ) ? sprintf("paramID = %d",$init) : sprintf("paramName = '%s'",$init) );
+      $active = (isset($tdate)) ? " AND (since <= " . $tdate
+         . " OR since = 0) AND (until > " . $tdate . " OR until = 0)" : "";
+      $sql = sprintf("SELECT * FROM %swetterturnier_param WHERE %s AND active=1%s", $this->wpdb->prefix,
+             ( $by == "ID" ) ? sprintf("paramID = %d",$init) : sprintf("paramName = '%s'",$init), $active );
              
       $this->data = $wpdb->get_row($sql);
 
