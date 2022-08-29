@@ -86,3 +86,39 @@ jQuery(window).load(function(){
    })(jQuery);
 
 });
+
+jQuery(document).ready(function(){
+      // Functionality on the buttons to show the user details
+      $("table.wttable-show > tbody > tr > td > span.button.detail").click(function(){
+         window.console&&console.log('CLICK!');
+         // --------------------
+         // Ajaxing the calculation miniscript
+         var userID = parseInt($(this).attr("userID"));
+         var cityID = parseInt($(this).attr("cityID"));
+         var tdate  = parseInt($(this).attr("tdate"));
+         var foo = $("<div>Error loading the data!</div>");
+         // Loading requested information
+         $.ajax({
+            cache: false,
+            //cache: true,
+            url: $.ajaxurl, dataType: 'json', type: 'post', async: false,
+            data: {cache:false,action:'wttable_show_details_ajax',userID:userID,cityID:cityID,tdate:tdate},
+            success: function(results) {
+               foo = $("<div></div>").html(results[0])
+            },
+            error: function(e) {
+               $error = e; console.log('errorlog'); console.log(e);
+               console.log(e.responseText);
+            }
+         });
+         // --------------------
+         // Show featherlight lightbox now
+         $.featherlight(foo,{afterClose:function() { $(this).remove() }});
+
+         // Allow user to sort the tables
+         $(".wttable-show").tablesorter({sortList: [], stringTo: "bottom",
+             sortReset: true, sortRestart: true, sortInitialOrder: "desc"});
+         $(".wttable-show th").css('cursor', 'pointer');
+
+      });
+});
