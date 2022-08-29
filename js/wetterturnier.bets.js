@@ -1,4 +1,4 @@
-jQuery(document).on("ready",function(){
+jQuery(window).load(function(){
    (function($) {
 
    // Adds the functionality that rows can be highlighted
