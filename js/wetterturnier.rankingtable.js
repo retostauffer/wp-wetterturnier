@@ -299,7 +299,7 @@ $.fn.show_leaderboard = function(ajaxurl, input) {
 // ------------------------------------------------------------------
 // Initialization function
 // ------------------------------------------------------------------
-$(document).on('ready',function() {
+$(document).ready(function() {
     // Looking for wt-ranking-container divs and call the show_ranking
     // plugin on each of these to load/display ranking data.
     $("div.wt-ranking-container").each(function() {
