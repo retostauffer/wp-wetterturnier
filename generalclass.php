@@ -22,24 +22,24 @@ class wetterturnier_generalclass
     public $date_format = "%Y-%m-%d"; // Default date format on initialization
     public $datetime_format = "%Y-%m-%d %H:%M"; // Default datetime format on init
 
-    /// Private attribute to store the current @ref wetterturnier_cityObject
-    /// object. Try to avoid to call/load the same information multiple times
-    /// as this object is used in many methods.
-    /// @see get_current_cityObj
+    // Private attribute to store the current @ref wetterturnier_cityObject
+    // object. Try to avoid to call/load the same information multiple times
+    // as this object is used in many methods.
+    // @see get_current_cityObj
     private $current_cityObj = NULL;
 
-    /// Private attribute to store an array with all ACTIVE cities as
-    /// @ref wetterturnier_cityObject. This is used to create the navigation
-    /// menu on top and for some other methods. Not to load the data several
-    /// times I am using the attribute all_cityObj to store the information.
-    /// Once initialized other methods will just return them.
+    // Private attribute to store an array with all ACTIVE cities as
+    // @ref wetterturnier_cityObject. This is used to create the navigation
+    // menu on top and for some other methods. Not to load the data several
+    // times I am using the attribute all_cityObj to store the information.
+    // Once initialized other methods will just return them.
     private $all_cityObj_active = NULL;
 
-    /// Private attribute to store an array with all ACTIVE AND INACTIVE cities
-    /// as @ref wetterturnier_cityObject.
+    // Private attribute to store an array with all ACTIVE AND INACTIVE cities
+    // as @ref wetterturnier_cityObject.
     private $all_cityObj_all = NULL;
 
-    /// Attribute to store the 'next tournament' once.
+    // Attribute to store the 'next tournament' once.
     public $current_tournament = false;
 
     /** The current city is used in varous scripts and methods. Not to

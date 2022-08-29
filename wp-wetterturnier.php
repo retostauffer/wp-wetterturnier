@@ -84,7 +84,7 @@ if(!class_exists('WP_wetterturnier'))
        * required tables when activating the plugin the first
        * time.
        *
-       * @todo Reto develop and test activate/deactivate/uninstall
+       * @todo develop and test activate/deactivate/uninstall
        *   procedures for the plugin. Not yet done properly.
        */
       public static function activate()
@@ -119,15 +119,15 @@ if(!class_exists('WP_wetterturnier'))
           $tables = array("api", "bets", "betstat", "cities", "citystats", "coefs", "groups", "dates", "groups", "groupsusers", "obs", "param", "rerunrequest", "stationparams", "stations", "tdatestats", "userstats", "webcams");
 
           foreach ($tables as $table) {
-	     $table = $wpdb->prefix . "wetterturnier_".$table;
-	     if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
-		 $sql = file_get_contents(sprintf("%s/demodb/".$table.".sql", dirname(__FILE__)));
-		 $sql = explode(";",str_replace("%table%",$table,$sql));
-		 foreach ( $sql as $cmd ) {
-		     $wpdb->query($cmd);
-		 }
-	     }
-          }
+            $table = $wpdb->prefix . "wetterturnier_".$table;
+	         if($wpdb->get_var("SHOW TABLES LIKE '".$table."'") != $table) {
+		         $sql = file_get_contents(sprintf("%s/demodb/".$table.".sql", dirname(__FILE__)));
+		         $sql = explode(";",str_replace("%table%",$table,$sql));
+		         foreach ( $sql as $cmd ) {
+		            $wpdb->query($cmd);
+		         }
+	         }
+         }
 
 
 /***
