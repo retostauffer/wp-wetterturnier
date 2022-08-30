@@ -7,9 +7,6 @@ if ( $WTuser->access_denied() ) { return; }
 
 $cityObj  = $WTuser->get_current_cityObj();
 
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
-
 // Including jQuery scripts to display the synop symbols here
 $WTuser->include_js_script("wetterturnier.synopsymbols");
 
