@@ -456,13 +456,14 @@ class wetterturnier_betclass
        // If value is NULL simply return NULL
        if ( is_null($value) ) { return($res); }
        // If parameter is out of range: return array(false,NULL);
-       if ( $value != $pconfig->valext && ( $value < $pconfig->valmin || $value > $pconfig->valmax ) ) {
-           $res->value = NULL;
-           $ext = (!is_null($pconfig->valext)) ? " plus extra value ".$pconfig->valext/10 : "";
-           $res->error = sprintf("Value was outside its limits for parameter \"%s\". "
-                    ."Defined range is %.1f to %.1f%s. Your submitted value was \"%.1f\". "
-                    ."Set to NULL!",$param,$pconfig->valmin/10.,$pconfig->valmax/10.,$ext, $value/10.);
-           return( $res );
+       if ( ( is_null($pconfig->valext) || ($value != $pconfig->valext) ) && ( $value < $pconfig->valmin || $value > $pconfig->valmax ) ) {
+         $res->value = NULL;
+         $res->error = sprintf('Value was outside its limits for parameter "%s". '
+         . "Defined range is %.1f to %.1f%s. Your submitted value was \"%.1f\". "
+         . "Set to NULL!",$param,$pconfig->valmin/10.,$pconfig->valmax/10.,
+         is_numeric($pconfig->valext) ? " plus extra value "
+         . $pconfig->valext/10 : "", $value/10.);
+         return( $res );
        }
        $pre = $pconfig->valpre;
        // Else return this object but round it first, if neccesary because of ruling defined in valpre (0,-1,-2 decimal places).
