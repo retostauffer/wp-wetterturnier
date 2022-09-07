@@ -205,7 +205,7 @@ else {
 // town (depends on $cityObj->paramconfig) and all forecast days
 // (depends on option 'wetterturnier_betdays'. 
 // ------------------------------------------------------------------
-list($data,$checkflag) = $WTbetclass->check_received_data( $data );
+list($data,$checkflag) = $WTbetclass->check_received_data( $data, true );
 
 // The function should never return $checkflag=false for the autosubmit
 // procedure (will exit internally). Anyway, if this happens: stop.
