@@ -176,7 +176,7 @@ foreach ( $showdays as $showday ) {
          // Allows user to sort the tables
          $(".wttable-show").tablesorter({sortList: [[0,0]],
              sortInitialOrder: "desc", stringTo: "bottom",
-             sortReset: true, sortRestart: true}});
+             sortReset: true, sortRestart: true});
          $(".wttable-show th").css('cursor', 'pointer'); 
       })(jQuery);
     });
