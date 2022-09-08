@@ -85,7 +85,7 @@ print("\n");
 print("        ^        THIS IS JUST A REMINDER:\n");
 print("       / \       If something does not work please double-check\n");
 print("      / | \      that you are using https://www.wetterturnier.de\n");
-print("     /  |  \     (not http://...) and, if you are sending data via\n");
+print("     /  |  \     (not https://...) and, if you are sending data via\n");
 print("    /   .   \    wget please do not forget the --no-check-certificate\n");
 print("   -----------   option.\n\n\n");
 

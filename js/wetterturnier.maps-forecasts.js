@@ -1,7 +1,7 @@
 //TODO implement
 
-//DWD  http://wind.met.fu-berlin.de/loops/DWD_Karten/gme_tkb_na_p_{zzz}_000.gif
-//00z  http://wind.met.fu-berlin.de/loops/DWD_Karten/ana_bwk_na_p_000_000.gif
+//DWD  https://wind.met.fu-berlin.de/loops/DWD_Karten/gme_tkb_na_p_{zzz}_000.gif
+//00z  https://wind.met.fu-berlin.de/loops/DWD_Karten/ana_bwk_na_p_000_000.gif
 
 //UKMO www1.wetter3.de/Fax/UKMet_Boden+{zz}.gif
 //HD   https://www.weathercharts.net/noaa_ukmo_analysis/previous/PPVA89_fullsize_{zz}z_last.gif
@@ -12,7 +12,7 @@
 
 //NOAA https://ocean.weather.gov/shtml/A_{zz}hrsfc.gif
 
-//FRA  http://www.meteofrance.com/previsions-meteo-marine/carte-frontologie/fronts/proche_atl
+//FRA  https://www.meteofrance.com/previsions-meteo-marine/carte-frontologie/fronts/proche_atl
 
 // Initialize demo table
 jQuery(document).on('ready',function() {

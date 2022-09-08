@@ -15,7 +15,7 @@ global $WTadmin;
 $cityObj = new wetterturnier_cityObject( $_GET['city'] );
 
 $REQ_URL = explode("?",$_SERVER['REQUEST_URI'],2);
-$CURRENT = sprintf("http://%s%s?page=%s",$_SERVER['HTTP_HOST'],$REQ_URL[0],$_REQUEST['page']);
+$CURRENT = sprintf("https://%s%s?page=%s",$_SERVER['HTTP_HOST'],$REQ_URL[0],$_REQUEST['page']);
 ?>
 
 

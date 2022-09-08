@@ -58,7 +58,7 @@ function end_form()   {
             </a>
         </li>
         <li>
-            <a href="http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/" target="_blank">
+            <a href="https://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/" target="_blank">
                 Documentation on readthedocs
             </a>
         </li>

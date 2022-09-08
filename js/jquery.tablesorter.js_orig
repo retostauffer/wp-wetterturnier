@@ -5,10 +5,10 @@
  * @requires jQuery v1.2.3
  * 
  * Copyright (c) 2007 Christian Bach
- * Examples and docs at: http://tablesorter.com
+ * Examples and docs at: https://tablesorter.com
  * Dual licensed under the MIT and GPL licenses:
- * http://www.opensource.org/licenses/mit-license.php
- * http://www.gnu.org/licenses/gpl.html
+ * https://www.opensource.org/licenses/mit-license.php
+ * https://www.gnu.org/licenses/gpl.html
  * 
  */
 /**
@@ -415,8 +415,8 @@
             };
 
             // from:
-            // http://www.javascripttoolbox.com/lib/table/examples.php
-            // http://www.javascripttoolbox.com/temp/table_cellindex.html
+            // https://www.javascripttoolbox.com/lib/table/examples.php
+            // https://www.javascripttoolbox.com/temp/table_cellindex.html
 
 
             function computeTableHeaderCellIndexes(t) {

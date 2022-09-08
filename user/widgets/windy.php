@@ -94,7 +94,7 @@ class WP_wetterturnier_widget_windy extends WP_Widget
 
         echo $before_widget;
         // Display the widget if no mobile device. Maybe use mobile detect in the future
-        // http://mobiledetect.net/
+        // https://mobiledetect.net/
         //$width = (int)$_get['width'];
         //echo $window_width = "<script>document.write(window_width);</script>";
 

@@ -3,7 +3,7 @@
 //UKMO         ...
 //NOAA         https://ocean.weather.gov/Loops/eatlsfc/image_2020021621.gif
 //ZAMG         https://www.zamg.ac.at/fix/wetter/bodenkarte/2020/02/16/BK_BodAna_Sat_2002160000.png
-//IMGW         http://pogodynka.pl/http/assets/products/archiwum_map_synoptycznych/mapa_current_{zz}.png
+//IMGW         https://pogodynka.pl/http/assets/products/archiwum_map_synoptycznych/mapa_current_{zz}.png
 //wetterkontor https://img.wetterkontor.de/wetterlage/20200217.jpg
 //BWK          https://berliner-wetterkarte.de/archiv/abo_user/dd3a322ebb5123d56be69bab545561d1/2020/Tagesordner/200216/eu_gnd_h.png
 //FMI          https://www.ilmatieteenlaitos.fi/euroopan-saakartta

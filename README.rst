@@ -5,7 +5,7 @@ The "Berliner Wetterturnier" as it has been known as in the beginning was
 launched in the year 2000 at the Institute of Meteorology at the FU Berlin.
 Since 2005 five cities in Central Europe are included.
 
-`Wetterturnier <http://wetterturnier.de>`_ is a platform where *hobby meteorologists*,
+`Wetterturnier <https://wetterturnier.de>`_ is a platform where *hobby meteorologists*,
 *experts* and *statistical forecast model developer* battle against each other. The
 goal is to predict a set of meteorological variables, such as sunshine duration, wind speed,
 or temperature as good as possible for the consecutive two days.
@@ -27,20 +27,20 @@ running the `Wetterturnier backend
 <https://github.com/retostauffer/wetterturnier-backend>`_ is needed which
 prepares the observations, computes mean bets for specific groups, and computes
 the points for the ranking system.  For more information please visit the
-`documentation on readthedocs <http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/overview.html>_`.
+`documentation on readthedocs <https://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/overview.html>_`.
 
 Documentation
 =============
 
-The `documentation <http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest>`_
+The `documentation <https://wetterturnier-wordpress-plugin.readthedocs.io/en/latest>`_
 for this repository can be found on
-`readthedocs <http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest>`_. An
+`readthedocs <https://wetterturnier-wordpress-plugin.readthedocs.io/en/latest>`_. An
 overview of the full **wetterturnier system** (which this plugin is the frontend core)
-can be found under `documentation > overview <http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/overview.html>`_.
+can be found under `documentation > overview <https://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/overview.html>`_.
 
 If there are any questions please do not hesitate to contact one of our
 `contributers trough github <https://github.com/retostauffer/wp-wetterturnier/graphs/contributors>`_
-or via the `Wetterturnier.de Website <http://www.wetterturnier.de/the-team/>`_.
+or via the `Wetterturnier.de Website <https://www.wetterturnier.de/the-team/>`_.
 
 
 License Information
@@ -60,8 +60,8 @@ We care about oterhs, their attitude, and their ideology wherefore we follow the
 is included in the repository. If you wanna share ideas and/or contribute to this
 repository please follow these rules.
 
-[cochomepage]: http://contributor-covenant.org
-[cocversion]: http://contributor-covenant.org/version/1/4/
+[cochomepage]: https://contributor-covenant.org
+[cocversion]: https://contributor-covenant.org/version/1/4/
 
 
 

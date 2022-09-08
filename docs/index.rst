@@ -2,7 +2,7 @@ Wetterturnier Wordpress Plugin
 ===============================
 
 This is the documentation for the 
-`wetterturnier.de <http://www.wetterturnier.de>`_
+`wetterturnier.de <https://www.wetterturnier.de>`_
 `wordpress <https://wordpress.com>`_ plugin (`wp-wetterturnier`) providing full
 wordpress integration.
 **Please note** that the plugin is not yet ready-to-go (installation procedure

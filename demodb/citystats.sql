@@ -1,6 +1,6 @@
 -- phpMyAdmin SQL Dump
 -- version 4.0.10
--- http://www.phpmyadmin.net
+-- https://www.phpmyadmin.net
 --
 -- Host: localhost
 -- Generation Time: Feb 01, 2020 at 01:36 AM

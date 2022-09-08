@@ -1882,8 +1882,8 @@ msgstr "Das Wetterturnier Tipp-Plugin"
 
 #. URI of the plugin
 #. Author URI of the plugin
-msgid "http://www.wetterturnier.de"
-msgstr "http://www.wetterturnier.de"
+msgid "https://www.wetterturnier.de"
+msgstr "https://www.wetterturnier.de"
 
 #. Author of the plugin
 msgid "Reto Stauffer"

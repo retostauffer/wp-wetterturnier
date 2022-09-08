@@ -5,10 +5,10 @@
 * Copyright (c) 2007 Christian Bach
 * fork maintained by Rob Garrison
 *
-* Examples and original docs at: http://tablesorter.com
+* Examples and original docs at: https://tablesorter.com
 * Dual licensed under the MIT and GPL licenses:
-* http://www.opensource.org/licenses/mit-license.php
-* http://www.gnu.org/licenses/gpl.html
+* https://www.opensource.org/licenses/mit-license.php
+* https://www.gnu.org/licenses/gpl.html
 *
 * @type jQuery
 * @name tablesorter (FORK)
@@ -477,7 +477,7 @@
 				.join( namespace + ' ' );
 			// apply event handling to headers and/or additional headers (stickyheaders, scroller, etc)
 			$headers
-			// http://stackoverflow.com/questions/5312849/jquery-find-self;
+			// https://stackoverflow.com/questions/5312849/jquery-find-self;
 			.find( c.selectorSort )
 			.add( $headers.filter( c.selectorSort ) )
 			.unbind( tmp )
@@ -823,11 +823,11 @@
 			var tmp,
 				extract = c.textExtraction || '',
 				// node could be a jquery object
-				// http://jsperf.com/jquery-vs-instanceof-jquery/2
+				// https://jsperf.com/jquery-vs-instanceof-jquery/2
 				$node = node.jquery ? node : $( node );
 			if ( typeof extract === 'string' ) {
 				// check data-attribute first when set to 'basic'; don't use node.innerText - it's really slow!
-				// http://www.kellegous.com/j/2013/02/27/innertext-vs-textcontent/
+				// https://www.kellegous.com/j/2013/02/27/innertext-vs-textcontent/
 				if ( extract === 'basic' && typeof ( tmp = $node.attr( c.textAttribute ) ) !== 'undefined' ) {
 					return $.trim( tmp );
 				}
@@ -980,7 +980,7 @@
 								while ( index <= span ) {
 									// duplicate text (or not) to spanned columns
 									// instead of setting duplicate span to empty string, use textExtraction to try to get a value
-									// see http://stackoverflow.com/q/36449711/145346
+									// see https://stackoverflow.com/q/36449711/145346
 									txt = c.duplicateSpan || index === 0 ?
 										txt :
 										typeof c.textExtraction !== 'string' ?
@@ -2278,8 +2278,8 @@
 		},
 
 		// computeTableHeaderCellIndexes from:
-		// http://www.javascripttoolbox.com/lib/table/examples.php
-		// http://www.javascripttoolbox.com/temp/table_cellindex.html
+		// https://www.javascripttoolbox.com/lib/table/examples.php
+		// https://www.javascripttoolbox.com/temp/table_cellindex.html
 		computeColumnIndex : function( $rows, c ) {
 			var i, j, k, l, cell, cells, rowIndex, rowSpan, colSpan, firstAvailCol,
 				// total columns has been calculated, use it to set the matrixrow
@@ -2589,7 +2589,7 @@
 			// remove widget added rows, just in case
 			$h.find( 'tr' ).not( $r ).remove();
 			// disable tablesorter - not using .unbind( namespace ) because namespacing was
-			// added in jQuery v1.4.3 - see http://api.jquery.com/event.namespace/
+			// added in jQuery v1.4.3 - see https://api.jquery.com/event.namespace/
 			events = 'sortReset update updateRows updateAll updateHeaders updateCell addRows updateComplete sorton ' +
 				'appendCache updateCache applyWidgetId applyWidgets refreshWidgets removeWidget destroy mouseup mouseleave ' +
 				'keypress sortBegin sortEnd resetToLoadState '.split( ' ' )
@@ -2828,7 +2828,7 @@
 		type : 'numeric'
 	});
 
-	// match 24 hour time & 12 hours time + am/pm - see http://regexr.com/3c3tk
+	// match 24 hour time & 12 hours time + am/pm - see https://regexr.com/3c3tk
 	ts.regex.timeTest = /^(0?[1-9]|1[0-2]):([0-5]\d)(\s[AP]M)$|^((?:[01]\d|[2][0-4]):[0-5]\d)$/i;
 	ts.regex.timeMatch = /(0?[1-9]|1[0-2]):([0-5]\d)(\s[AP]M)|((?:[01]\d|[2][0-4]):[0-5]\d)/i;
 	ts.addParser({

@@ -28,14 +28,14 @@
 	});
 
 	// *** Store data in local storage, with a cookie fallback ***
-	/* IE7 needs JSON library for JSON.stringify - (http://caniuse.com/#search=json)
+	/* IE7 needs JSON library for JSON.stringify - (https://caniuse.com/#search=json)
 	   if you need it, then include https://github.com/douglascrockford/JSON-js
 
 	   $.parseJSON is not available is jQuery versions older than 1.4.1, using older
 	   versions will only allow storing information for one page at a time
 
 	   // *** Save data (JSON format only) ***
-	   // val must be valid JSON... use http://jsonlint.com/ to ensure it is valid
+	   // val must be valid JSON... use https://jsonlint.com/ to ensure it is valid
 	   var val = { "mywidget" : "data1" }; // valid JSON uses double quotes
 	   // $.tablesorter.storage(table, key, val);
 	   $.tablesorter.storage(table, 'tablesorter-mywidget', val);
@@ -1409,7 +1409,7 @@
 				.find( '.' + tscss.filterRow )
 				.addClass( tscss.filterRowHide )
 				.bind( 'mouseenter mouseleave', function( e ) {
-					// save event object - http://bugs.jquery.com/ticket/12140
+					// save event object - https://bugs.jquery.com/ticket/12140
 					var event = e,
 						$row = $( this );
 					clearTimeout( timer );
@@ -2212,7 +2212,7 @@
 							txt = t[1];
 						}
 						// replace quotes - fixes #242 & ignore empty strings
-						// see http://stackoverflow.com/q/14990971/145346
+						// see https://stackoverflow.com/q/14990971/145346
 						options += option !== '' ?
 							'<option ' +
 								( val === txt ? '' : 'data-function-name="' + option + '" ' ) +
@@ -2423,7 +2423,7 @@
 	}
 
 	// Sticky headers based on this awesome article:
-	// http://css-tricks.com/13465-persistent-headers/
+	// https://css-tricks.com/13465-persistent-headers/
 	// and https://github.com/jmosbech/StickyTableHeaders by Jonas Mosbech
 	// **************************
 	ts.addWidget({
@@ -2743,7 +2743,7 @@
 
 			/*
 			// Hacky method to determine if table width is set to 'auto'
-			// http://stackoverflow.com/a/20892048/145346
+			// https://stackoverflow.com/a/20892048/145346
 			if ( !vars.fullWidth ) {
 				tmp = $table.width();
 				$header = $table.wrap('<span>').parent(); // temp variable

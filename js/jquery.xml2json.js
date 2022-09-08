@@ -1,13 +1,13 @@
 /*
  ### jQuery XML to JSON Plugin v1.3 - 2013-02-18 ###
- * http://www.fyneworks.com/ - diego@fyneworks.com
-	* Licensed under http://en.wikipedia.org/wiki/MIT_License
+ * https://www.fyneworks.com/ - diego@fyneworks.com
+	* Licensed under https://en.wikipedia.org/wiki/MIT_License
  ###
- Website: http://www.fyneworks.com/jquery/xml-to-json/
+ Website: https://www.fyneworks.com/jquery/xml-to-json/
 *//*
- # INSPIRED BY: http://www.terracoder.com/
-           AND: http://www.thomasfrank.se/xml_to_json.html
-											AND: http://www.kawa.net/works/js/xml/objtree-e.html
+ # INSPIRED BY: https://www.terracoder.com/
+           AND: https://www.thomasfrank.se/xml_to_json.html
+											AND: https://www.kawa.net/works/js/xml/objtree-e.html
 *//*
  This simple script converts XML (document of code) into a JSON object. It is the combination of 2
  'xml to json' great parsers (see below) which allows for both 'simple' and 'extended' parsing modes.
@@ -57,7 +57,7 @@
         if(obj[cnn]){
          /*DBG*/ //if(window.console) console.log(['x2j',nn,'node>f',cnn,'ARRAY']);
          
-									// http://forum.jquery.com/topic/jquery-jquery-xml2json-problems-when-siblings-of-the-same-tagname-only-have-a-textnode-as-a-child
+									// https://forum.jquery.com/topic/jquery-jquery-xml2json-problems-when-siblings-of-the-same-tagname-only-have-a-textnode-as-a-child
 									if(!obj[cnn].length) obj[cnn] = myArr(obj[cnn]);
 									obj[cnn] = myArr(obj[cnn]);
          
@@ -82,7 +82,7 @@
        if(obj[atn]){
         /*DBG*/ //if(window.console) console.log(['x2j',nn,'attr>',atn,'ARRAY']);
         
-								// http://forum.jquery.com/topic/jquery-jquery-xml2json-problems-when-siblings-of-the-same-tagname-only-have-a-textnode-as-a-child
+								// https://forum.jquery.com/topic/jquery-jquery-xml2json-problems-when-siblings-of-the-same-tagname-only-have-a-textnode-as-a-child
 								//if(!obj[atn].length) obj[atn] = myArr(obj[atn]);//[ obj[ atn ] ];
         obj[cnn] = myArr(obj[cnn]);
 								
@@ -121,7 +121,7 @@
 			// NEW isNum function: 01/09/2010
 			// Thanks to Emile Grau, GigaTecnologies S.L., www.gigatransfer.com, www.mygigamail.com
 			function isNum(s){
-				// based on utility function isNum from xml2json plugin (http://www.fyneworks.com/ - diego@fyneworks.com)
+				// based on utility function isNum from xml2json plugin (https://www.fyneworks.com/ - diego@fyneworks.com)
 				// few bugs corrected from original function :
 				// - syntax error : regexp.test(string) instead of string.test(reg)
 				// - regexp modified to accept  comma as decimal mark (latin syntax : 25,24 )
@@ -135,7 +135,7 @@
 																
    var myArr = function(o){
     
-				// http://forum.jquery.com/topic/jquery-jquery-xml2json-problems-when-siblings-of-the-same-tagname-only-have-a-textnode-as-a-child
+				// https://forum.jquery.com/topic/jquery-jquery-xml2json-problems-when-siblings-of-the-same-tagname-only-have-a-textnode-as-a-child
 				//if(!o.length) o = [ o ]; o.length=o.length;
     if(!$.isArray(o)) o = [ o ]; o.length=o.length;
 				

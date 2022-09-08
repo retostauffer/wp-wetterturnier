@@ -1,7 +1,7 @@
 Overview
 ==============
 
-This is an overvie over the whole `Wetterturnier.de <http://www.wetterturnier.de>`_
+This is an overvie over the whole `Wetterturnier.de <https://www.wetterturnier.de>`_
 system wich consists of a set of different tools split into separate
 repositories.
 
@@ -14,23 +14,23 @@ trough `<github <https://github.com/retostauffer>`_. Some links to the repositor
 
 * Wetterturnier Wordpress Plugin (you are looking at):
   `github repository <https://github.com/retostauffer/wp-wetterturnier>`_,
-  this `documentation on readthedocs <http://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/>`_.
+  this `documentation on readthedocs <https://wetterturnier-wordpress-plugin.readthedocs.io/en/latest/>`_.
   As the name says: contains the wordpress plugin. Depends on the "Wetterturnier Backend"
   to get the points and rankings.
 * Wetterturnier Wordpress Theme:
   `github repository <https://github.com/retostauffer/wp-wetterturnier-theme>`_,
-  contains the theme used on `Wetterturnier.de <http://www.wetterturnier.de>`_,
+  contains the theme used on `Wetterturnier.de <https://www.wetterturnier.de>`_,
   a Wordpress child theme based on the
   `Wordpress twentyfourteen theme <https://wordpress.org/themes/twentyfourteen/>`_.
 * Wetterturnier Backend:
   `github repository <https://github.com/retostauffer/wetterturnier-backend>`_,
-  `documentation on readthedocs <http://wetterturnier-backend.readthedocs.io/en/latest/>`_,
+  `documentation on readthedocs <https://wetterturnier-backend.readthedocs.io/en/latest/>`_,
   contains the python code to compute automatons, points, and rankings.
 * Wetterturnier Data Backend:
   `github repository  <https://github.com/retostauffer/wetterturnier-data>`_,
-  `documentation on readthedocs <http://wetterturnier-data.readthedocs.io/en/latest/>`_.
+  `documentation on readthedocs <https://wetterturnier-data.readthedocs.io/en/latest/>`_.
   Contains a set of tools to process/prepare data. Relatively specific for
-  `Wetterturnier.de <http://www.wetterturnier.de>`_ but might be a starting point.
+  `Wetterturnier.de <https://www.wetterturnier.de>`_ but might be a starting point.
 	
 .. image:: images/overview.svg
    :width: 800px

@@ -3,11 +3,11 @@
 Plugin Name: WP Wetterturnier 
 Text Domain: wtlang
 Domain Path: /languages
-Plugin URI: http://www.wetterturnier.de
+Plugin URI: https://www.wetterturnier.de
 Description: The Wetterturnier bet plugin 
 Version: 1.1-3
 Author: Reto Stauffer
-Author URI: http://www.wetterturnier.de
+Author URI: https://www.wetterturnier.de
 License: GPL2
 */
 

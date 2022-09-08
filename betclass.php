@@ -968,7 +968,7 @@ class wetterturnier_betclass
                //}
 
                // Crate base64 svg on the fly
-               var bgsvg = "<svg xmlns='http://www.w3.org/2000/svg' width='15' height='31'>"
+               var bgsvg = "<svg xmlns='https://www.w3.org/2000/svg' width='15' height='31'>"
                           +"<text id='wtinputbg' x='14' y='30' style='text-align: center; "
                           +"font-family: sans-serif; font-size: 13px; fill: #b2b2b2;' "
                           +"transform='rotate(-90 14,30)'>"

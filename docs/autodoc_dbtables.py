@@ -194,7 +194,7 @@ class setup( object ):
         """This is the function why this script exists.
         Create output of databas table structure using
         CSV table style for sphinx documentation.
-        see http://docutils.sourceforge.net/docs/ref/rst/directives.html#csv-table
+        see https://docutils.sourceforge.net/docs/ref/rst/directives.html#csv-table
 
         Args:
             db (:obj:`MySQLdb.connect`): MySQLdb database connection handler.
