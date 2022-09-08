@@ -1108,10 +1108,14 @@ class wetterturnier_generalclass
      * as specified in the database.
      * @return See description :).
      */
-    public function get_param_names() {
+    public function get_param_names($tdate="") {
         global $wpdb;
+        if ( isset($tdate) && ! empty($tdate) ) {
+           $tdate = " WHERE active = 1 AND (SINCE <= " . $tdate .
+           " OR SINCE = 0) AND (UNTIL > " . $tdate . " OR UNTIL = 0)";
+        }
         $res = $wpdb->get_results(sprintf("SELECT paramID, paramName FROM "
-                              ."%swetterturnier_param ORDER BY sort ASC",$wpdb->prefix));
+                              ."%swetterturnier_param%s ORDER BY sort ASC",$wpdb->prefix,$tdate));
         if ( ! $res ) { die('PROBLEMS LOADING PARAMETERS. THIS IS A BUG. CALL THE ADMIN.'); }
         return($res);
     }
@@ -1383,7 +1387,7 @@ class wetterturnier_generalclass
         $sql = "SELECT * FROM %swetterturnier_stations WHERE cityID = %d";
         if (isset($betdate)) {
             $sql .= " AND (since <= " . $betdate . " OR since = 0) AND (until > "
-            . $betdate . " OR until = 0)";
+            . $betdate . " OR until = 0) AND hidden = 0";
         }
         $res = $wpdb->get_results(sprintf( $sql, $wpdb->prefix, $cityID ));
         return( $res );

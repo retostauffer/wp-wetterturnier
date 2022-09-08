@@ -2083,6 +2083,8 @@ public function debug_to_console($data) {
       global $wpdb;
       global $WTuser;
 
+      
+
       $args = (object)$_POST;
 
       // Create SQL statement
@@ -2131,7 +2133,9 @@ public function debug_to_console($data) {
 
       // Adding observations
       $ndays    = (int)$this->options->wetterturnier_betdays;
-      $params   = $this->get_param_names();
+      $current  = $WTuser->current_tournament;
+      $tdate    = (int)$current->tdate;
+      $params   = $this->get_param_names($tdate);
       $stations = $this->get_station_data_for_city( (int)$args->cityID, (int)$args->tdate );
                   //$this->debug_to_console($stations);
  
