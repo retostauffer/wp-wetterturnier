@@ -869,7 +869,7 @@ class wetterturnier_generalclass
             $userclass = "EZ"; $text = "Integrated Forecasted System (ECMWF)";
           } else if ( strpos($usr->user_login, 'GFS') ) {
             $userclass = "GFS"; $text = "Global Forecasting System (NOAA)";
-          } else if ( strpos($usr->user_login, 'ICON') ) {
+          } else if ( strpos($usr->user_login, 'ICON') || $usr->user_login == "MammatusMOS" ) {
             $userclass = "ICON"; $text = "ICOsahedral Nonhydrostatic (DWD)";
           } else if ( strpos($usr->user_login, 'MIX') || strpos($usr->user_login, 'Mix') || $usr->user_login == "Ms.Os" ) {
             $userclass = "MIX"; $text = __("Multi-Model-Mix","wpwt");

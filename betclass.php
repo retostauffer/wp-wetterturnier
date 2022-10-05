@@ -364,7 +364,7 @@ class wetterturnier_betclass
       foreach ( $data as $key=>$arr ) {
          if ( ! preg_match("/^day_[1-2]{1,}/",$key) ) { continue; }
          list($param,$day) = explode("_",$key); 
-         if ( (int)$day > $data->betdays ) {
+         if ( (int)$day > (int)$data->betdays ) {
             unset($data->$key); 
             $data->ignored[$key] = sprintf("Forecasts for day %s ignored. They were not "
                    ."requested. Everything fine. This is just a note that you are sending "
@@ -378,6 +378,7 @@ class wetterturnier_betclass
          if ( ! property_exists($data,$hash) & ! $stoponerror ) { continue; }
          $haystack = array($data->$hash);
          $haystack = $haystack[0];
+         //print_r($data->cityObj->paramconfig_string);
          foreach ( $haystack as $param => $value ) {
             $param = strtoupper($param);
             if ( ! in_array($param,$data->cityObj->paramconfig_string) ) {
@@ -1302,6 +1303,8 @@ class wetterturnier_betclass
       $data = (object)$_POST;
       $data->tdate = $next->tdate; 
       $data = $this->parse_post_data( $data, $autosubmit=false );
+      //print_r($data);
+      //$data->cityObject = new wetterturnier_cityObject( $cityID, $data->tdate );
 
       list($data,$checkflag) = $this->check_received_data($data, false);
       $data = $this->check_correct_values( $data );

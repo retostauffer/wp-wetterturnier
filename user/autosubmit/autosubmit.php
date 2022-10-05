@@ -91,8 +91,10 @@ print("   -----------   option.\n\n\n");
 
 // ------------------------------------------------------------------
 // Parsing input data
-// ------------------------------------------------------------------
+// ------------------------------------------------------------------;
+//print_r($_REQUESTS);
 $data = $WTbetclass->parse_parameters( $_REQUEST, $autosubmit=true );
+//print_r($data->cityObj->get("ID"));
 
 // First, set $admin to NULL and $is_admin to FALSE. If an admin submits a bet (eg. a MOS becaus of belated submission) this will be changed later on and passed into write_to_database(...,$adminuser=$admin); in the very end of this script
 $admin = NULL;
@@ -205,14 +207,16 @@ else {
 // town (depends on $cityObj->paramconfig) and all forecast days
 // (depends on option 'wetterturnier_betdays'. 
 // ------------------------------------------------------------------
-list($data,$checkflag) = $WTbetclass->check_received_data( $data, true );
+list($data,$checkflag) = $WTbetclass->check_received_data( $data, false );
 
 // The function should never return $checkflag=false for the autosubmit
 // procedure (will exit internally). Anyway, if this happens: stop.
+/**
 if ( ! $checkflag ) {
    print "OHOH checkflag false, but not stopped. Should never run into here. ";
    $WTbetclass->error(99);
 }
+*/
 
 // ------------------------------------------------------------------
 // Parsing input data
@@ -243,7 +247,7 @@ print("\n");
 #print_r($data);
 */
 
-list($data,$checkflag) = $WTbetclass->check_received_data($data, true);
+//list($data,$checkflag) = $WTbetclass->check_received_data($data, true);
 $WTbetclass->write_to_database($user,$next,$data,$checkflag,true,$admin,$whoami);
 
 // Save a rerun flag into the database such that we can re-run the computation of the requred tournaments as the observations changed.
