@@ -187,7 +187,7 @@ class wetterturnier_betclass
 
       global $WTuser;
       $ndays = (int)$WTuser->options->wetterturnier_betdays;
-      $tdate = property_exists($data,"tdate") ? $data->tdate : NULL;
+      $tdate = property_exists($data,"tdate") ? round(strtotime($data->tdate)                   / 86400) : NULL;
 
       if ( $autosubmit ) { printf("%s\n","Parsing parameters."); }
 
@@ -236,7 +236,7 @@ class wetterturnier_betclass
             
             //For MOS belated submit use "tdate"
             if ( property_exists( $data , "tdate") ) {
-               $res->tdate = round(strtotime($data->tdate) / 86400);
+               $res->tdate = $tdate;
             }
             // TODO: write a global function for this handy function
          }
