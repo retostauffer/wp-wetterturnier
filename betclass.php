@@ -191,7 +191,7 @@ class wetterturnier_betclass
 
       if ( $autosubmit ) {
          printf("%s\n","Parsing parameters.");
-         $tdate = round(strtotime($data->tdate) / 86400);
+         $tdate = property_exists($data,"tdate") ? round(strtotime($data->tdate) / 86400) : NULL;
       }
 
       // Loading proper city object
