@@ -1228,8 +1228,8 @@ class wetterturnier_generalclass
         }
         $res = $this->get_city_info( $_SESSION['wetterturnier_city'] ); 
         if ( ! $res ) {
-            die('CANNOT FIND CITY ID IN DATABASE FOR '
-               .$_SESSION['wetterturnier_city'].'. BUG. CALL THE ADMIN.');
+            //die('CANNOT FIND CITY ID IN DATABASE FOR '
+            //   .$_SESSION['wetterturnier_city'].'. BUG. CALL THE ADMIN.');
             return( false );
         } else {
             return( $res );
@@ -1300,7 +1300,7 @@ class wetterturnier_generalclass
      */
     public function get_city_info( $input ) {
         global $wpdb;
-        if ( is_integer($input) ) {
+        if ( is_integer($input) || strlen($input) == 1 ) {
             $res = $wpdb->get_row(sprintf("SELECT * FROM %swetterturnier_cities WHERE ID = %d",
                                   $wpdb->prefix,$input));
         } else {
