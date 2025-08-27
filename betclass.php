@@ -612,7 +612,7 @@ class wetterturnier_betclass
    /// @param $adminuser. Default `NULL`. If not `NULL` this indicates
    ///   that an administrator currently changes the data/forecast.
    // --------------------------------------------------------------
-   function write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=NULL, $whoami=NULL ) {
+   function write_to_database( $user, $next, $data, $checkflag, $verbose=true, $adminuser=NULL ) {
 
       global $WTuser;
       global $wpdb;
@@ -682,11 +682,7 @@ class wetterturnier_betclass
             // Admin mode: check if the admin really changed this value.
             
             if ( ! is_null($adminuser) ) {
-               if ( is_null($whoami) ) {
-               
                $tmp['placedby'] = set_placedby_if_changed($tmp,$existing,$adminuser->ID);
-
-               } else { $tmp['placedby'] = $whoami; }
             }
             
             array_push($data4db,$tmp);

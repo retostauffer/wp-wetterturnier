@@ -99,8 +99,6 @@ $data = $WTbetclass->parse_parameters( $_REQUEST, $autosubmit=true );
 // First, set $admin to NULL and $is_admin to FALSE. If an admin submits a bet (eg. a MOS becaus of belated submission) this will be changed later on and passed into write_to_database(...,$adminuser=$admin); in the very end of this script
 $admin = NULL;
 $is_admin = FALSE;
-// If we are just in time for the current tournament (like usually), the placedby value does not get changed. For a belated MOS we gonna assign its "userID" to $whoami later on.
-$whoami = NULL;
 
 
 // ------------------------------------------------------------------
@@ -184,7 +182,6 @@ if ( property_exists ( $data, 'tdate' ) ) {
             }
          $next = $WTuser->next_tournament($row_offset=0, $check_access=0, $tdate);
          $admin = $user;
-         $whoami = $admin->ID;    
       }
    }
    else {
@@ -248,7 +245,7 @@ print("\n");
 */
 
 //list($data,$checkflag) = $WTbetclass->check_received_data($data, true);
-$WTbetclass->write_to_database($user,$next,$data,$checkflag,true,$admin,$whoami);
+$WTbetclass->write_to_database($user,$next,$data,$checkflag,true,$admin);
 
 // Save a rerun flag into the database such that we can re-run the computation of the requred tournaments as the observations changed.
 if ( isset($rerun) ) {

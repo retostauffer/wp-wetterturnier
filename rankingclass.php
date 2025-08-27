@@ -485,11 +485,16 @@ class wetterturnier_rankingObject {
      * (featherlight window)
      */
     private function _get_detail_button( $userObj ) {
-        return sprintf("<span class=\"button small detail\" userid=\"%d\" "
+        if ( $userObj->display_name === "Sleepy" ) {
+            return sprintf("<span class=\"button small sleepy\" userid=\"%d\" "
                       ."cityid=\"%d\" tdate=\"%d\"></span>",
                       $userObj->ID, $this->cityObj->get("ID"), $this->tdates->max);
+        } else {
+            return sprintf("<span class=\"button small detail\" userid=\"%d\" "
+                      ."cityid=\"%d\" tdate=\"%d\"></span>",
+                      $userObj->ID, $this->cityObj->get("ID"), $this->tdates->max);
+        }
     }
-
 
     /** Returns the file name for the cache file (only used if cache is set
      * to ``true``, see initialization arguments of this class).

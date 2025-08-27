@@ -109,8 +109,10 @@ if(!class_exists('WP_wetterturnier'))
           add_option(   'wetterturnier_calendar_ndays', 50, '', 'yes');
 
           // Add new role
-          //remove_role('wetterturnier_admin');
-          $capabilities = array('read'=>true);
+	  //remove_role('wetterturnier_admin');
+	  //$capabilities = array('read'=>true)
+	  // add read and all *_users capabilities except delete/remove_users
+          $capabilities	= array('read'=>true, 'create_users'=>true, 'edit_users'=>true, 'list_users'=>true, 'promote_users'=>true);
           $result = add_role( 'wetterturnier_admin', __('Wetterturnier Admin' ), $capabilities );
 
           // THE PLUGIN INSERTS SOME

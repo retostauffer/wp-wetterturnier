@@ -514,12 +514,24 @@ class wetterturnier_webcamObject {
          return $this->data->$key;
       } else { return(false); }
    }
-
+   
    /** Prints html to display the webcam image. */
    function display_webcam($width=300) {
+      
+      $uri = $this->get("uri");
+      $datetime_utc_8   = date("Ymd_Hi", strtotime('-8 minutes'));
+
+      if ( strpos($uri, "%dt%") ) {
+         $round_down_mins  = (string) floor((int)substr($datetime_utc_8, -2) / 10) * 10;
+         $datetime_utc_10  = substr($datetime_utc_8, 0, -2) . $round_down_mins;
+         $uri = str_replace( "%dt%", $datetime_utc_10, $uri );
+      } elseif ( strpos($uri, "%DT%") ) {
+         $uri = str_replace( "%DT%", $datetime_utc_8 . "00", $uri );
+      }
+      
       print("<div class='wtwebcam'>\n");
       printf("   <a href=\"%s\" target=\"_blank\">", $this->get("source"));
-      printf("      <img style=\"width: %dpx; height: auto\" src=\"%s\" alt=\"%s\"></img><br>\n", $width, $this->get("uri"), $this->get("source"));
+      printf("      <img style=\"width: %dpx; height: auto\" src=\"%s\" alt=\"%s\"></img><br>\n", $width, $uri, $this->get("source"));
       printf("      <span class=\"wtwebcam-source\">%s</span>\n", $this->get("desc"));
       print("   </a>\n");
       print("</div>\n");

@@ -185,33 +185,11 @@ if ( empty( $_GET['tdate'] ) ) {
         
         $call = sprintf("[wetterturnier_ranking type='weekend' hidebuttons=true tdate=%d city=%d]",
                         $_GET["tdate"],$WTuser->get_current_cityObj()->get('ID'));
-               
+        
+        $WTuser->include_js_script( "wetterturnier.bets" );
         print do_shortcode( $call );
-
+        $WTuser->include_js_script( "wetterturnier.bets" );
     }
 }
 
 ?>
-<script>
-    jQuery(document).on('ready',function($) {
-      (function($) {
-          // Allows user to sort the tables
-          // we need to tell tablesorter our special local date format, but first convert it
-          var datestr = "<?php _e($WTuser->date_format,"wpwt"); ?>";
-          if (datestr === "%d.%m.%Y") { datestr = "ddmmyyyy"; }
-          else { datestr = "yyyymmdd"; }
-           
-          $(".wttable-archive").tablesorter({sortList: [[0,1]],
-              dateFormat : datestr, sortInitialOrder: "desc", stringTo: "bottom",
-              sortReset: true, sortRestart: true
-          });
-          
-          $(".wttable-show").tablesorter({sortList: [[0,0]],
-              dateFormat : datestr, sortInitialOrder: "desc", stringTo: "bottom",
-              sortReset: true, sortRestart: true
-          });
-
-          $(".wttable-show th, .wttable-archive th").css('cursor', 'pointer');
-      })(jQuery);
-    });
-</script>

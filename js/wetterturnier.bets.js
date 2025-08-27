@@ -15,6 +15,8 @@ jQuery(window).load(function(){
    // Functionality on the buttons to show the user details
    $("table.wttable-show > tbody > tr > td > span.button.detail").click(function(){
 
+      window.console&&console.log('CLICK!');
+
       // --------------------
       // Ajaxing the calculation miniscript
       var userID = parseInt($(this).attr("userID"));

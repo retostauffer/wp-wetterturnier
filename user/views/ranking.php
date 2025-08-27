@@ -15,6 +15,9 @@
 # - L@ST MODIFIED: 2018-11-02 13:01 on marvin
 # -------------------------------------------------------------------
 
+# turn off irrelevant error reporting
+error_reporting(error_reporting() & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+
 global $wpdb;
 global $WTuser;
 $args = (object)$args;
